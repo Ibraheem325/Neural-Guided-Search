@@ -4,6 +4,7 @@ import pymimir_rgnn as rgnn
 import torch
 
 from pathlib import Path
+from typing import Union
 from utils import create_device
 
 
@@ -12,8 +13,11 @@ class NeuralHeuristic(mm.Heuristic):
         super().__init__()
         self._model = model
 
-    def compute_value(self, state: mm.State, is_goal_state: bool) -> float:
-        if is_goal_state: return 0.0
+    def compute_value(self, state: mm.State, goal: Union[mm.GroundConjunctiveCondition, None] = None) -> float:
+        if goal is None:
+            goal = state.get_problem().get_goal_condition()
+        if goal.holds(state):
+            return 0.0
         with torch.no_grad():
             self._model.eval()
             problem = state.get_problem()
@@ -21,12 +25,16 @@ class NeuralHeuristic(mm.Heuristic):
             value = self._model.forward([(state, goal)]).readout('value')[0]
             return value
 
+    def get_preferred_actions(self) -> set[mm.GroundAction]:
+        return set()  # No preferred actions for this heuristic.
+
 
 def _parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Settings for testing')
     parser.add_argument('--domain', required=True, type=Path, help='Path to the domain file')
     parser.add_argument('--problem', required=True, type=Path, help='Path to the problem file')
     parser.add_argument('--model', required=True, type=Path, help='Path to a pre-trained model')
+    parser.add_argument('--optimize', action='store_true', help='Whether to optimize the model with torch.compile and TF32')
     args = parser.parse_args()
     return args
 
@@ -36,8 +44,13 @@ def _main(args: argparse.Namespace) -> None:
     domain = mm.Domain(args.domain)
     problem = mm.Problem(domain, args.problem)
     print(f'Loading model... ({args.model})')
-    device = create_device()
+    device = create_device(False)
     model, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.model, device)
+    # Compile the model for faster inference, and use TF32 for faster computation.
+    if args.optimize:
+        rgnn.set_tf32_enabled(True)
+        compile_mode = model.enable_torch_compile('inference')
+        print(f'Model loaded and compiled with mode: {compile_mode}')
     initial_state = problem.get_initial_state()
     neural_heuristic = NeuralHeuristic(model)
     # Initialize counters for statistics.
@@ -64,6 +77,7 @@ def _main(args: argparse.Namespace) -> None:
     print(f'[Final] Expanded: {num_expanded}, Generated: {num_generated}')
     # Print the result of the search.
     if result.status == "solved":
+        assert result.solution is not None
         print(f'Found a solution of length {len(result.solution)}!')
         for index, action in enumerate(result.solution):
             print(f'{index + 1:>4}: {str(action)}')

@@ -106,7 +106,7 @@ def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggre
 
     module_config = rgnn.ModuleConfig(
         aggregation_function=aggregation_function,
-        message_function=rgnn.PredicateMLPMessages(hparam_config, input_spec),
+        message_function=rgnn.AttentionMessages(hparam_config, input_spec, num_heads=8, num_layers=4),
         update_function=rgnn.MLPUpdates(hparam_config)
     )
 

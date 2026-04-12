@@ -25,12 +25,12 @@ Training and testing files for Blocks are located in `example/blocks` and `examp
 
 ### Training
 
-You can call `train.py` with `--help` to see the possible arguments for the training procedure.
+You can call `train_supervised.py` with `--help` to see the possible arguments for the training procedure.
 The only required input is a path to either a single PDDL problem file or a directory containing them.
 
 ```
-$ python3 train.py --help
-usage: train.py [-h] --input INPUT [--model MODEL] [--embedding_size EMBEDDING_SIZE] [--layers LAYERS] [--batch_size BATCH_SIZE] [--learning_rate LEARNING_RATE] [--num_epochs NUM_EPOCHS]
+$ python3 train_supervised.py --help
+usage: train_supervised.py [-h] --input INPUT [--model MODEL] [--embedding_size EMBEDDING_SIZE] [--layers LAYERS] [--batch_size BATCH_SIZE] [--learning_rate LEARNING_RATE] [--num_epochs NUM_EPOCHS]
 
 Settings for training
 
@@ -52,7 +52,7 @@ options:
 The following command was used to train the model for Blocks.
 
 ```
-$ python3 train.py --input example/blocks
+$ python3 train_supervised.py --input example/blocks
 Torch: 2.3.0+cu121
 GPU is available. Using GPU: NVIDIA GeForce RTX 3090
 Parsing files...
@@ -90,7 +90,7 @@ The second model, `best.pth`, is the one with the lowest error on the validation
 The pre-trained model can be run on an instance, even if it is not part of the training set, using the following command:
 
 ```
-$ python3 plan.py --model example/blocks.pth --input example/blocks/test/probBLOCKS-17-0.pddl
+$ python3 plan.py --model example/blocks.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
 Torch: 2.3.0+cu121
 GPU is available. Using GPU: NVIDIA GeForce RTX 3090
 Creating parser...
@@ -119,7 +119,7 @@ If a plan is found, it is also printed at the end.
 It is also possible to use the learned model as a heuristic function for A*:
 
 ```
-$ python3 search.py --model example/blocks.pth --input example/blocks/test/probBLOCKS-17-0.pddl
+$ python3 search.py --model example/blocks.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
 Torch: 2.3.0+cu121
 GPU is available. Using GPU: NVIDIA GeForce RTX 3090
 Creating parser...
