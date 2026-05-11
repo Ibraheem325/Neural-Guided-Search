@@ -78,7 +78,7 @@ def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggre
     if aggregation == 'smax': aggregation_function = rgnn.SmoothMaximumAggregation()
     elif aggregation == 'hmax': aggregation_function = rgnn.HardMaximumAggregation()
     elif aggregation == 'mean': aggregation_function = rgnn.MeanAggregation()
-    elif aggregation == 'add': aggregation_function = rgnn.SumAggregation()
+    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.SumAggregation()
     else: raise RuntimeError(f'Unknown aggregation function: {aggregation}.')
 
     hparam_config = rgnn.HyperparameterConfig(
@@ -99,6 +99,18 @@ def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggre
     return rgnn.RelationalGraphNeuralNetwork(hparam_config, module_config, input_spec, output_spec)  # type: ignore
 
 
+def _create_trajectory_refiner(hindsight: str, train_problems: list[mm.Problem], max_new_trajectories: int) -> rl.TrajectoryRefiner:
+    if hindsight == 'lifted':
+        return rl.LiftedHindsightTrajectoryRefiner(train_problems, max_new_trajectories)
+    if hindsight == 'propositional':
+        return rl.PropositionalHindsightTrajectoryRefiner(train_problems, max_new_trajectories)
+    if hindsight == 'state':
+        return rl.StateHindsightTrajectoryRefiner(max_new_trajectories)
+    if hindsight == 'state_fluent':
+        return rl.PartialStateHindsightTrajectoryRefiner(max_new_trajectories)
+    raise RuntimeError(f'Unknown hindsight mode: {hindsight}.')
+
+
 def _train(model: rgnn.RelationalGraphNeuralNetwork,
            optimizer: torch.optim.Optimizer,
            lr_scheduler: torch.optim.lr_scheduler.LRScheduler,
@@ -114,7 +126,7 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
     problem_sampler = rl.UniformProblemSampler()
     initial_state_sampler = rl.OriginalInitialStateSampler()
     goal_sampler = rl.OriginalGoalConditionSampler()
-    trajectory_refiner = rl.LiftedHindsightTrajectoryRefiner(train_problems, args.max_new_trajectories)
+    trajectory_refiner = _create_trajectory_refiner(args.hindsight, train_problems, args.max_new_trajectories)
     rl_algorithm = rl.OffPolicyAlgorithm(train_problems,
                                          loss_function,
                                          reward_function,

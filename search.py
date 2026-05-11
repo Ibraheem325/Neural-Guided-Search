@@ -20,10 +20,8 @@ class NeuralHeuristic(mm.Heuristic):
             return 0.0
         with torch.no_grad():
             self._model.eval()
-            problem = state.get_problem()
-            goal = problem.get_goal_condition()
             value = self._model.forward([(state, goal)]).readout('value')[0]
-            return value
+            return float(value.item())
 
     def get_preferred_actions(self) -> set[mm.GroundAction]:
         return set()  # No preferred actions for this heuristic.
@@ -48,9 +46,13 @@ def _main(args: argparse.Namespace) -> None:
     model, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.model, device)
     # Compile the model for faster inference, and use TF32 for faster computation.
     if args.optimize:
-        rgnn.set_tf32_enabled(True)
-        compile_mode = model.enable_torch_compile('inference')
-        print(f'Model loaded and compiled with mode: {compile_mode}')
+        torch.set_float32_matmul_precision('high')
+        enable_torch_compile = getattr(model, 'enable_torch_compile', None)
+        if callable(enable_torch_compile):
+            compile_mode = enable_torch_compile('inference')
+            print(f'Model loaded and compiled with mode: {compile_mode}')
+        else:
+            print('Optimization requested, but torch.compile integration is unavailable for this pymimir-rgnn version.')
     initial_state = problem.get_initial_state()
     neural_heuristic = NeuralHeuristic(model)
     # Initialize counters for statistics.

@@ -25,6 +25,8 @@ def _plan(problem: mm.Problem, model: rgnn.RelationalGraphNeuralNetwork) -> Unio
         current_state = problem.get_initial_state()
         while not goal.holds(current_state) and (len(solution) < 1_000):
             applicable_actions = current_state.generate_applicable_actions()
+            if len(applicable_actions) == 0:
+                return None
             input = [(action.apply(current_state), goal) for action in applicable_actions]
             values = model.forward(input).readout('value')
             assert isinstance(values, torch.Tensor), 'Model should return a tensor of values.'

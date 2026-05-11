@@ -32,7 +32,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--input', required=True, type=Path, help='Path to the training dataset')
     parser.add_argument('--model', default=None, type=Path, help='Path to a pre-trained model to continue training from')
     parser.add_argument('--embedding_size', default=32, type=int, help='Dimension of the embedding vector for each object')
-    parser.add_argument('--aggregation', default='hmax', type=str, help='Aggregation function ("smax", "hmax", "sum", or "mean")')
+    parser.add_argument('--aggregation', default='hmax', type=str, help='Aggregation function ("smax", "hmax", "sum"/"add", or "mean")')
     parser.add_argument('--layers', default=30, type=int, help='Number of layers in the model')
     parser.add_argument('--batch_size', default=64, type=int, help='Number of samples per batch')
     parser.add_argument('--learning_rate', default=0.0002, type=float, help='Learning rate for the training process')
@@ -80,7 +80,13 @@ def _generate_state_spaces(problems: list[mm.Problem], seed: int) -> list[mm.Sta
 
 def _create_datasets(state_space_samplers: list[mm.StateSpaceSampler]) -> tuple[StateDataset, StateDataset]:
     print('Creating state samplers...')
-    train_size = int(len(state_space_samplers) * 0.8)
+    if len(state_space_samplers) == 0:
+        raise ValueError('No state space samplers were generated from the provided problems.')
+    if len(state_space_samplers) == 1:
+        train_state_space_samplers = state_space_samplers.copy()
+        validation_state_space_samplers = state_space_samplers.copy()
+        return StateDataset(train_state_space_samplers), StateDataset(validation_state_space_samplers)
+    train_size = max(1, min(len(state_space_samplers) - 1, int(len(state_space_samplers) * 0.8)))
     train_state_space_samplers = state_space_samplers[:train_size]
     validation_state_space_samplers = state_space_samplers[train_size:]
     train_dataset = StateDataset(train_state_space_samplers)
@@ -92,7 +98,7 @@ def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggre
     if aggregation == 'smax': aggregation_function = rgnn.SmoothMaximumAggregation()
     elif aggregation == 'hmax': aggregation_function = rgnn.HardMaximumAggregation()
     elif aggregation == 'mean': aggregation_function = rgnn.MeanAggregation()
-    elif aggregation == 'add': aggregation_function = rgnn.SumAggregation()
+    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.SumAggregation()
     else: raise RuntimeError(f'Unknown aggregation function: {aggregation}.')
 
     hparam_config = rgnn.HyperparameterConfig(
@@ -123,6 +129,13 @@ def _sample_batch(state_sampler: StateDataset, batch_size: int, device: torch.de
         inputs.append((state, goal))
         targets.append(1000.0 if label.is_dead_end else label.steps_to_goal)
     return inputs, torch.tensor(targets,  dtype=torch.float, requires_grad=False, device=device)
+
+
+def _load_optimizer_state(optimizer: optim.Optimizer, extras: dict, model_path: Path) -> None:
+    optimizer_state = extras.get('optimizer')
+    if optimizer_state is None:
+        raise RuntimeError(f'Checkpoint {model_path} does not contain optimizer state.')
+    optimizer.load_state_dict(optimizer_state)
 
 
 def _train(model: rgnn.RelationalGraphNeuralNetwork,
@@ -185,7 +198,7 @@ def _main(args: argparse.Namespace) -> None:
         print(f'Loading an existing model and optimizer... ({args.model})')
         model, extras = rgnn.RelationalGraphNeuralNetwork.load(domain, args.model, device)
         optimizer = optim.Adam(model.parameters(), lr=args.learning_rate)
-        optimizer.load_state_dict(extras['optimizer'])
+        _load_optimizer_state(optimizer, extras, args.model)
     _train(model, optimizer, train_dataset, validation_dataset, args.num_epochs, args.batch_size, device)
 
 
