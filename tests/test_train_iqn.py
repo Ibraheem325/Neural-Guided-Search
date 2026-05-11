@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 import torch
 
@@ -161,3 +163,48 @@ def test_save_checkpoint_stores_iqn_and_policy_state(load_module):
     assert 'quantile_head.0.weight' in extras['iqn_wrapper']['state_dict']
     assert extras['policy_wrapper']['risk_averseness'] == pytest.approx(0.25)
     assert extras['policy_wrapper']['num_policy_quantiles'] == 11
+
+
+def test_load_model_reconstructs_iqn_and_policy_wrappers(load_module, monkeypatch):
+    module = load_module('train_iqn')
+
+    saved_model = module._create_model(object(), 8, 3, 'sum', 16)
+    saved_policy = module.RiskSensitivePolicyWrapper(saved_model, risk_averseness=0.25, num_policy_quantiles=11)
+    optimizer = torch.optim.Adam(saved_model.parameters(), lr=0.321)
+    module._save_checkpoint(saved_model, saved_policy, optimizer, 'latest.pth')
+    _, extras = saved_model.model.saved[0]
+
+    base_model = module._create_base_model(object(), 8, 3, 'sum')
+
+    def fake_load(domain, path, device):
+        return base_model, extras
+
+    monkeypatch.setattr(module.rgnn.RelationalGraphNeuralNetwork, 'load', staticmethod(fake_load))
+
+    loaded_model, loaded_policy, loaded_extras = module._load_model(object(), Path('latest.pth'), torch.device('cpu'))
+
+    assert loaded_extras is extras
+    assert loaded_model.num_cosines == 16
+    assert loaded_policy.risk_averseness == pytest.approx(0.25)
+    assert loaded_policy.num_policy_quantiles == 11
+
+
+def test_load_model_allows_policy_overrides(load_module, monkeypatch):
+    module = load_module('train_iqn')
+    saved_model = module._create_model(object(), 8, 3, 'sum', 16)
+    saved_policy = module.RiskSensitivePolicyWrapper(saved_model, risk_averseness=0.25, num_policy_quantiles=11)
+    optimizer = torch.optim.Adam(saved_model.parameters(), lr=0.321)
+    module._save_checkpoint(saved_model, saved_policy, optimizer, 'latest.pth')
+    _, extras = saved_model.model.saved[0]
+
+    base_model = module._create_base_model(object(), 8, 3, 'sum')
+
+    def fake_load(domain, path, device):
+        return base_model, extras
+
+    monkeypatch.setattr(module.rgnn.RelationalGraphNeuralNetwork, 'load', staticmethod(fake_load))
+
+    _, loaded_policy, _ = module._load_model(object(), Path('latest.pth'), torch.device('cpu'), risk_averseness=0.6, num_policy_quantiles=5)
+
+    assert loaded_policy.risk_averseness == pytest.approx(0.6)
+    assert loaded_policy.num_policy_quantiles == 5

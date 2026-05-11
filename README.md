@@ -118,6 +118,12 @@ If a plan is found, it is also printed at the end.
 
 Models trained with DQN expose Q-values instead of state values, and should therefore be evaluated with `greedy_q_plan.py` rather than `greedy_value_plan.py`.
 
+Models trained with IQN expose a return distribution for each applicable action. They can be evaluated with `greedy_iqn_plan.py`, which prints the selected action together with its predicted quantile distribution and supports a `--risk_averseness` override to bias planning toward the lower tail of the return distribution and `--num_quantiles` to control the planning/printing resolution.
+
+```
+$ python3 greedy_iqn_plan.py --model best.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl --risk_averseness 0.25 --num_quantiles 64
+```
+
 It is also possible to use a value model as a heuristic function for A*:
 
 ```

@@ -80,9 +80,16 @@ class RiskSensitivePolicyWrapper(rl.ActionScalarModel):
         self.risk_averseness = risk_averseness
         self.num_policy_quantiles = num_policy_quantiles
 
+    def get_tau_upper_bound(self) -> float:
+        return max(1e-3, 1.0 - self.risk_averseness)
+
     def _sample_policy_taus(self, batch_size: int, device: torch.device) -> torch.Tensor:
-        upper_tau = max(1e-3, 1.0 - self.risk_averseness)
-        return torch.rand(batch_size, self.num_policy_quantiles, device=device) * upper_tau
+        return torch.rand(batch_size, self.num_policy_quantiles, device=device) * self.get_tau_upper_bound()
+
+    def reduce_quantiles(self, q_values: torch.Tensor) -> torch.Tensor:
+        if q_values.shape[0] == 0:
+            return torch.empty((0,), device=q_values.device)
+        return q_values.mean(dim=1)
 
     def forward(self, state_goals: list[tuple[mm.State, mm.GroundConjunctiveCondition]]) -> list[tuple[torch.Tensor, list[mm.GroundAction]]]:
         device = next(self.parameters()).device
@@ -90,10 +97,7 @@ class RiskSensitivePolicyWrapper(rl.ActionScalarModel):
         quantile_outputs = self.model.forward(state_goals, taus=taus)
         outputs: list[tuple[torch.Tensor, list[mm.GroundAction]]] = []
         for q_values, actions in quantile_outputs:
-            if q_values.shape[0] == 0:
-                scalar_values = torch.empty((0,), device=device)
-            else:
-                scalar_values = q_values.mean(dim=1)
+            scalar_values = self.reduce_quantiles(q_values)
             outputs.append((scalar_values, actions))
         return outputs
 
@@ -196,6 +200,16 @@ def _get_iqn_head_state(model: IQNModelWrapper) -> dict[str, torch.Tensor]:
     }
 
 
+def _load_iqn_head_state(model: IQNModelWrapper, state_dict: dict[str, torch.Tensor]) -> None:
+    missing_keys, unexpected_keys = model.load_state_dict(state_dict, strict=False)
+    unexpected_non_model = [key for key in unexpected_keys if not key.startswith('model.')]
+    missing_non_model = [key for key in missing_keys if not key.startswith('model.')]
+    if unexpected_non_model or missing_non_model:
+        raise RuntimeError(
+            f'Failed to load IQN wrapper state. Missing keys: {missing_non_model}; unexpected keys: {unexpected_non_model}'
+        )
+
+
 def _save_checkpoint(
     model: IQNModelWrapper,
     policy_model: RiskSensitivePolicyWrapper,
@@ -216,6 +230,33 @@ def _save_checkpoint(
             },
         },
     )
+
+
+def _load_model(
+    domain: mm.Domain,
+    path: Path,
+    device: torch.device,
+    risk_averseness: float | None = None,
+    num_policy_quantiles: int | None = None,
+) -> tuple[IQNModelWrapper, RiskSensitivePolicyWrapper, dict]:
+    base_model, extras = rgnn.RelationalGraphNeuralNetwork.load(domain, path, device)
+    iqn_wrapper_extras = extras.get('iqn_wrapper')
+    if iqn_wrapper_extras is None:
+        raise RuntimeError(f'Checkpoint {path} does not contain IQN wrapper state.')
+
+    num_cosines = iqn_wrapper_extras.get('num_cosines')
+    iqn_state_dict = iqn_wrapper_extras.get('state_dict')
+    if not isinstance(num_cosines, int) or iqn_state_dict is None:
+        raise RuntimeError(f'Checkpoint {path} is missing IQN wrapper metadata.')
+
+    model = IQNModelWrapper(base_model, num_cosines).to(device)
+    _load_iqn_head_state(model, iqn_state_dict)
+
+    policy_wrapper_extras = extras.get('policy_wrapper', {})
+    resolved_risk_averseness = risk_averseness if risk_averseness is not None else policy_wrapper_extras.get('risk_averseness', 0.0)
+    resolved_num_policy_quantiles = num_policy_quantiles if num_policy_quantiles is not None else policy_wrapper_extras.get('num_policy_quantiles', 32)
+    policy_model = RiskSensitivePolicyWrapper(model, resolved_risk_averseness, resolved_num_policy_quantiles).to(device)
+    return model, policy_model, extras
 
 
 def _train(
