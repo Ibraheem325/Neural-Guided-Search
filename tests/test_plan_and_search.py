@@ -24,9 +24,10 @@ class FakeGoal:
 
 
 class FakeState:
-    def __init__(self, problem, actions):
+    def __init__(self, problem, actions, is_goal=False):
         self._problem = problem
         self._actions = list(actions)
+        self.is_goal = is_goal
 
     def get_problem(self):
         return self._problem
@@ -70,8 +71,18 @@ class RecordingModel:
         return self
 
 
+class RecordingQModel:
+    def __init__(self, q_values):
+        self._q_values = q_values
+        self.forward_calls = []
+
+    def forward(self, inputs):
+        self.forward_calls.append(inputs)
+        return FakeReadout([self._q_values.clone()])
+
+
 def test_plan_returns_empty_solution_without_model_call_when_initial_state_is_goal(load_module):
-    module = load_module('plan')
+    module = load_module('greedy_value_plan')
     goal = FakeGoal(True)
     initial_state = FakeState(None, [])
     problem = FakeProblem(goal, initial_state)
@@ -84,11 +95,48 @@ def test_plan_returns_empty_solution_without_model_call_when_initial_state_is_go
 
 
 def test_plan_returns_none_when_state_has_no_applicable_actions(load_module):
-    module = load_module('plan')
+    module = load_module('greedy_value_plan')
     goal = FakeGoal(False)
     initial_state = FakeState(None, [])
     problem = FakeProblem(goal, initial_state)
     model = RecordingModel(torch.tensor([]))
+
+    solution = module._plan(problem, model)
+
+    assert solution is None
+    assert model.forward_calls == []
+
+
+def test_q_plan_chooses_action_with_highest_q_value(load_module):
+    module = load_module('greedy_q_plan')
+
+    class StateGoal:
+        def holds(self, state):
+            return state.is_goal
+
+    goal = StateGoal()
+    terminal_state = FakeState(None, [], is_goal=True)
+    problem = FakeProblem(goal, FakeState(None, []))
+    good_action = FakeAction(terminal_state, '(good)')
+    bad_action = FakeAction(FakeState(None, []), '(bad)')
+    initial_state = FakeState(problem, [bad_action, good_action])
+    problem._initial_state = initial_state
+    model = RecordingQModel(torch.tensor([1.0, 5.0]))
+
+    solution = module._plan(problem, model)
+
+    assert [str(action) for action in solution] == ['(good)']
+    assert model.forward_calls[0][0][0] is initial_state
+    assert model.forward_calls[0][0][1] == [bad_action, good_action]
+    assert model.forward_calls[0][0][2] is goal
+
+
+def test_q_plan_returns_none_when_state_has_no_applicable_actions(load_module):
+    module = load_module('greedy_q_plan')
+    goal = FakeGoal(False)
+    initial_state = FakeState(None, [])
+    problem = FakeProblem(goal, initial_state)
+    model = RecordingQModel(torch.tensor([]))
 
     solution = module._plan(problem, model)
 

@@ -105,6 +105,9 @@ def _build_rgnn_stub() -> ModuleType:
         def __init__(self, hparam_config):
             self.hparam_config = hparam_config
 
+    class ActionEmbeddingDecoder:
+        pass
+
     class AttentionMessages:
         def __init__(self, *args, **kwargs):
             self.args = args
@@ -130,7 +133,7 @@ def _build_rgnn_stub() -> ModuleType:
             self._outputs = outputs
 
         def readout(self, key):
-            return self._outputs
+            return self._outputs[key]
 
     class RelationalGraphNeuralNetwork(torch.nn.Module):
         def __init__(self, hparam_config, module_config, input_spec, output_spec):
@@ -152,7 +155,16 @@ def _build_rgnn_stub() -> ModuleType:
             return self._hparam_config
 
         def forward(self, inputs):
-            return ReadoutResult(self.weight.repeat(len(inputs)))
+            outputs = {}
+            for name, decoder in self.output_spec:
+                if name == 'action_embedding':
+                    embedding_size = self._hparam_config.embedding_size
+                    outputs[name] = tuple(
+                        self.weight.expand(len(sample[1]), embedding_size).clone() for sample in inputs
+                    )
+                else:
+                    outputs[name] = self.weight.repeat(len(inputs))
+            return ReadoutResult(outputs)
 
         def save(self, path, extras):
             self.saved.append((path, extras))
@@ -186,6 +198,7 @@ def _build_rgnn_stub() -> ModuleType:
     module.GroundActionsEncoder = GroundActionsEncoder
     module.ObjectsScalarDecoder = ObjectsScalarDecoder
     module.ActionScalarDecoder = ActionScalarDecoder
+    module.ActionEmbeddingDecoder = ActionEmbeddingDecoder
     module.AttentionMessages = AttentionMessages
     module.PredicateMLPMessages = PredicateMLPMessages
     module.MLPUpdates = MLPUpdates
@@ -202,6 +215,10 @@ def _build_rl_stub() -> ModuleType:
         def __init__(self):
             super().__init__()
 
+    class ActionQuantileModel(ActionScalarModel):
+        def forward(self, state_goals, taus=None, num_quantiles=32):
+            raise NotImplementedError
+
     class TrajectoryRefiner:
         pass
 
@@ -211,6 +228,9 @@ def _build_rl_stub() -> ModuleType:
             self.kwargs = kwargs
 
     class DQNOptimization(_Base):
+        pass
+
+    class IQNOptimization(_Base):
         pass
 
     class ConstantRewardFunction(_Base):
@@ -292,8 +312,10 @@ def _build_rl_stub() -> ModuleType:
             return False, {}
 
     module.ActionScalarModel = ActionScalarModel
+    module.ActionQuantileModel = ActionQuantileModel
     module.TrajectoryRefiner = TrajectoryRefiner
     module.DQNOptimization = DQNOptimization
+    module.IQNOptimization = IQNOptimization
     module.ConstantRewardFunction = ConstantRewardFunction
     module.PrioritizedReplayBuffer = PrioritizedReplayBuffer
     module.BoltzmannTrajectorySampler = BoltzmannTrajectorySampler

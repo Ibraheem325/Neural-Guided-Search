@@ -87,10 +87,10 @@ The second model, `best.pth`, is the one with the lowest error on the validation
 
 ### Testing
 
-The pre-trained model can be run on an instance, even if it is not part of the training set, using the following command:
+Supervised value models can be run greedily on an instance, even if it is not part of the training set, using the following command:
 
 ```
-$ python3 plan.py --model example/blocks.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
+$ python3 greedy_value_plan.py --model example/blocks.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
 Torch: 2.3.0+cu121
 GPU is available. Using GPU: NVIDIA GeForce RTX 3090
 Creating parser...
@@ -116,7 +116,9 @@ In the output, the selected action is printed along with the predicted value of 
 Here, the network predicted the final solution would require at least 49 steps, but it ended up taking 46 steps.
 If a plan is found, it is also printed at the end.
 
-It is also possible to use the learned model as a heuristic function for A*:
+Models trained with DQN expose Q-values instead of state values, and should therefore be evaluated with `greedy_q_plan.py` rather than `greedy_value_plan.py`.
+
+It is also possible to use a value model as a heuristic function for A*:
 
 ```
 $ python3 search.py --model example/blocks.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl

@@ -9,16 +9,25 @@ from utils import create_device
 
 
 def _parse_arguments() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description='Settings for testing')
+    parser = argparse.ArgumentParser(description='Settings for greedy planning with a Q-value model')
     parser.add_argument('--domain', required=True, type=Path, help='Path to the domain file')
     parser.add_argument('--problem', required=True, type=Path, help='Path to the problem file')
-    parser.add_argument('--model', required=True, type=Path, help='Path to a pre-trained model')
+    parser.add_argument('--model', required=True, type=Path, help='Path to a pre-trained Q-value model')
     args = parser.parse_args()
     return args
 
 
+def _read_q_values(model_output: object) -> torch.Tensor:
+    if isinstance(model_output, list):
+        assert len(model_output) == 1, 'Model should return one tensor of Q-values for the current state.'
+        q_values = model_output[0]
+    else:
+        q_values = model_output
+    assert isinstance(q_values, torch.Tensor), 'Model should return Q-values as tensors.'
+    return q_values.cpu()
+
+
 def _plan(problem: mm.Problem, model: rgnn.RelationalGraphNeuralNetwork) -> Union[None, List[mm.GroundAction]]:
-    # Disable gradient as we are not optimizing.
     with torch.no_grad():
         solution = []
         goal = problem.get_goal_condition()
@@ -27,17 +36,14 @@ def _plan(problem: mm.Problem, model: rgnn.RelationalGraphNeuralNetwork) -> Unio
             applicable_actions = current_state.generate_applicable_actions()
             if len(applicable_actions) == 0:
                 return None
-            input = [(action.apply(current_state), goal) for action in applicable_actions]
-            values = model.forward(input).readout('value')
-            assert isinstance(values, torch.Tensor), 'Model should return a tensor of values.'
-            values = values.cpu()  # Move the result to the CPU.
-            min_index = int(values.argmin().item())
-            min_value = values[min_index].item()
-            selected_action = applicable_actions[min_index]
-            selected_successor = input[min_index][0]
-            current_state = selected_successor
+            q_values = model.forward([(current_state, applicable_actions, goal)]).readout('q')
+            q_values = _read_q_values(q_values)
+            max_index = int(q_values.argmax().item())
+            max_value = q_values[max_index].item()
+            selected_action = applicable_actions[max_index]
+            current_state = selected_action.apply(current_state)
             solution.append(selected_action)
-            print(f'{min_value:.3f}: {str(selected_action)}')
+            print(f'{max_value:.3f}: {str(selected_action)}')
         return solution if goal.holds(current_state) else None
 
 
