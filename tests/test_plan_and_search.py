@@ -24,16 +24,26 @@ class FakeGoal:
 
 
 class FakeState:
-    def __init__(self, problem, actions, is_goal=False):
+    def __init__(self, problem, actions, is_goal=False, key=None):
         self._problem = problem
         self._actions = list(actions)
         self.is_goal = is_goal
+        self._key = object() if key is None else key
 
     def get_problem(self):
         return self._problem
 
     def generate_applicable_actions(self):
         return list(self._actions)
+
+    def get_index(self):
+        return self._key
+
+    def __hash__(self):
+        return hash(self._key)
+
+    def __eq__(self, other):
+        return isinstance(other, FakeState) and self._key == other._key
 
 
 class FakeAction:
@@ -107,6 +117,24 @@ class RecordingRiskPolicy:
         return q_values.mean(dim=1)
 
 
+def _create_revisit_problem():
+    class StateGoal:
+        def holds(self, state):
+            return state.is_goal
+
+    goal = StateGoal()
+    goal_state = FakeState(None, [], is_goal=True, key='goal')
+    revisit_state = FakeState(None, [], key='start')
+    revisit_action = FakeAction(revisit_state, '(revisit)')
+    goal_action = FakeAction(goal_state, '(goal)')
+    initial_state = FakeState(None, [revisit_action, goal_action], key='start')
+    problem = FakeProblem(goal, initial_state)
+    initial_state._problem = problem
+    revisit_state._problem = problem
+    goal_state._problem = problem
+    return problem, revisit_action, goal_action
+
+
 def test_plan_returns_empty_solution_without_model_call_when_initial_state_is_goal(load_module):
     module = load_module('greedy_value_plan')
     goal = FakeGoal(True)
@@ -131,6 +159,42 @@ def test_plan_returns_none_when_state_has_no_applicable_actions(load_module):
 
     assert solution is None
     assert model.forward_calls == []
+
+
+def test_value_plan_avoids_revisiting_states_by_default(load_module):
+    module = load_module('greedy_value_plan')
+    problem, _, goal_action = _create_revisit_problem()
+    model = RecordingModel(torch.tensor([0.0, 1.0]))
+
+    solution = module._plan(problem, model)
+
+    assert [str(action) for action in solution] == [str(goal_action)]
+
+
+def test_value_plan_can_disable_closed_set(load_module):
+    module = load_module('greedy_value_plan')
+    problem, _, _ = _create_revisit_problem()
+    model = RecordingModel(torch.tensor([0.0, 1.0]))
+
+    solution = module._plan(problem, model, use_closed_set=False)
+
+    assert solution is None
+
+
+def test_value_plan_falls_back_to_visited_successors_when_necessary(load_module):
+    module = load_module('greedy_value_plan')
+    goal = FakeGoal(False)
+    revisit_state = FakeState(None, [], key='start')
+    revisit_action = FakeAction(revisit_state, '(revisit)')
+    initial_state = FakeState(None, [revisit_action], key='start')
+    problem = FakeProblem(goal, initial_state)
+    initial_state._problem = problem
+    revisit_state._problem = problem
+    model = RecordingModel(torch.tensor([0.0]))
+
+    solution = module._plan(problem, model)
+
+    assert solution is None
 
 
 def test_q_plan_chooses_action_with_highest_q_value(load_module):
@@ -170,6 +234,26 @@ def test_q_plan_returns_none_when_state_has_no_applicable_actions(load_module):
     assert model.forward_calls == []
 
 
+def test_q_plan_avoids_revisiting_states_by_default(load_module):
+    module = load_module('greedy_q_plan')
+    problem, _, goal_action = _create_revisit_problem()
+    model = RecordingQModel(torch.tensor([5.0, 1.0]))
+
+    solution = module._plan(problem, model)
+
+    assert [str(action) for action in solution] == [str(goal_action)]
+
+
+def test_q_plan_can_disable_closed_set(load_module):
+    module = load_module('greedy_q_plan')
+    problem, _, _ = _create_revisit_problem()
+    model = RecordingQModel(torch.tensor([5.0, 1.0]))
+
+    solution = module._plan(problem, model, use_closed_set=False)
+
+    assert solution is None
+
+
 def test_iqn_plan_chooses_action_with_highest_risk_adjusted_mean_and_prints_distribution(load_module, capsys):
     module = load_module('greedy_iqn_plan')
 
@@ -196,6 +280,28 @@ def test_iqn_plan_chooses_action_with_highest_risk_adjusted_mean_and_prints_dist
     _, taus = model.forward_calls[0]
     assert taus.shape == (1, 4)
     assert float(taus.max()) <= 0.75 + 1e-6
+
+
+def test_iqn_plan_avoids_revisiting_states_by_default(load_module):
+    module = load_module('greedy_iqn_plan')
+    problem, _, goal_action = _create_revisit_problem()
+    model = RecordingIQNModel(torch.tensor([[5.0, 5.0, 5.0, 5.0], [1.0, 1.0, 1.0, 1.0]]))
+    policy_model = RecordingRiskPolicy()
+
+    solution = module._plan(problem, model, policy_model)
+
+    assert [str(action) for action in solution] == [str(goal_action)]
+
+
+def test_iqn_plan_can_disable_closed_set(load_module):
+    module = load_module('greedy_iqn_plan')
+    problem, _, _ = _create_revisit_problem()
+    model = RecordingIQNModel(torch.tensor([[5.0, 5.0, 5.0, 5.0], [1.0, 1.0, 1.0, 1.0]]))
+    policy_model = RecordingRiskPolicy()
+
+    solution = module._plan(problem, model, policy_model, use_closed_set=False)
+
+    assert solution is None
 
 
 def test_iqn_plan_returns_none_when_state_has_no_applicable_actions(load_module):
@@ -240,6 +346,25 @@ def test_iqn_parse_arguments_accepts_num_quantiles(load_module, monkeypatch):
 
     assert args.risk_averseness == 0.25
     assert args.num_quantiles == 17
+
+
+def test_iqn_parse_arguments_accepts_disable_closed_set(load_module, monkeypatch):
+    module = load_module('greedy_iqn_plan')
+
+    monkeypatch.setattr(
+        'sys.argv',
+        [
+            'greedy_iqn_plan.py',
+            '--domain', 'domain.pddl',
+            '--problem', 'problem.pddl',
+            '--model', 'best.pth',
+            '--disable_closed_set',
+        ],
+    )
+
+    args = module._parse_arguments()
+
+    assert args.disable_closed_set is True
 
 
 def test_neural_heuristic_returns_zero_for_goal_states_without_model_call(load_module):

@@ -18,7 +18,7 @@ The packages, `pymimir` and `pymimir-rgnn`, can be installed by running `pip ins
 ## Example
 
 A pre-trained model for Blocks is included in the repository to demonstrate the architecture's capabilities.
-This model can be found in `example/blocks.pth`.
+This model can be found in `example/blocks-supervised.pth`.
 This file contains the hyperparameters to initialize the model, the model weights, and the state of the optimizer.
 The last part is useful for pausing and resuming training.
 Training and testing files for Blocks are located in `example/blocks` and `example/blocks/test`, respectively.
@@ -90,11 +90,11 @@ The second model, `best.pth`, is the one with the lowest error on the validation
 Supervised value models can be run greedily on an instance, even if it is not part of the training set, using the following command:
 
 ```
-$ python3 greedy_value_plan.py --model example/blocks.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
+$ python3 greedy_value_plan.py --model example/blocks-supervised.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
 Torch: 2.3.0+cu121
 GPU is available. Using GPU: NVIDIA GeForce RTX 3090
 Creating parser...
-Loading model... (example/blocks.pth)
+Loading model... (example/blocks-supervised.pth)
 49.440: (unstack l f)
 48.403: (put-down l)
 47.138: (unstack g d)
@@ -115,6 +115,7 @@ Found a solution of length 46!
 In the output, the selected action is printed along with the predicted value of the resulting successor state.
 Here, the network predicted the final solution would require at least 49 steps, but it ended up taking 46 steps.
 If a plan is found, it is also printed at the end.
+By default, the greedy planners maintain a closed set and avoid revisiting previously seen states when an unvisited successor is available. This can be disabled with `--disable_closed_set`.
 
 Models trained with DQN expose Q-values instead of state values, and should therefore be evaluated with `greedy_q_plan.py` rather than `greedy_value_plan.py`.
 
@@ -127,11 +128,11 @@ $ python3 greedy_iqn_plan.py --model best.pth --domain example/blocks/test/domai
 It is also possible to use a value model as a heuristic function for A*:
 
 ```
-$ python3 search.py --model example/blocks.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
+$ python3 search.py --model example/blocks-supervised.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
 Torch: 2.3.0+cu121
 GPU is available. Using GPU: NVIDIA GeForce RTX 3090
 Creating parser...
-Loading model... (example/blocks.pth)
+Loading model... (example/blocks-supervised.pth)
 [f = 50.755] Expanded: 0; Generated: 0
 [Final] Expanded: 50; Generated: 338
 Solved using 46 actions
