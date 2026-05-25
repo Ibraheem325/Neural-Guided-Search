@@ -112,28 +112,21 @@ def _create_datasets(train_samplers: list[mm.StateSpaceSampler],
 
 
 def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, device: torch.device) -> rgnn.RelationalGraphNeuralNetwork:
-    if aggregation == 'smax': aggregation_function = rgnn.SmoothMaximumAggregation()
-    elif aggregation == 'hmax': aggregation_function = rgnn.HardMaximumAggregation()
-    elif aggregation == 'mean': aggregation_function = rgnn.MeanAggregation()
-    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.SumAggregation()
+    if aggregation == 'smax': aggregation_function = rgnn.AggregationFunction.SmoothMaximum
+    elif aggregation == 'hmax': aggregation_function = rgnn.AggregationFunction.HardMaximum
+    elif aggregation == 'mean': aggregation_function = rgnn.AggregationFunction.Mean
+    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.AggregationFunction.Add
     else: raise RuntimeError(f'Unknown aggregation function: {aggregation}.')
 
-    hparam_config = rgnn.HyperparameterConfig(
+    config = rgnn.RelationalGraphNeuralNetworkConfig(
         domain=domain,
         embedding_size=embedding_size,
-        num_layers=num_layers
+        num_layers=num_layers,
+        message_aggregation=aggregation_function,
+        input_specification=(rgnn.InputType.State, rgnn.InputType.Goal),
+        output_specification=[('value', rgnn.OutputNodeType.Objects, rgnn.OutputValueType.Scalar)],
     )
-
-    input_spec=(rgnn.StateEncoder(), rgnn.GoalEncoder())
-    output_spec=[('value', rgnn.ObjectsScalarDecoder(hparam_config))]
-
-    module_config = rgnn.ModuleConfig(
-        aggregation_function=aggregation_function,
-        message_function=rgnn.AttentionMessages(hparam_config, input_spec, num_heads=8, num_layers=4),
-        update_function=rgnn.MLPUpdates(hparam_config)
-    )
-
-    return rgnn.RelationalGraphNeuralNetwork(hparam_config, module_config, input_spec, output_spec).to(device)  # type: ignore
+    return rgnn.RelationalGraphNeuralNetwork(config).to(device)
 
 
 def _sample_batch(state_sampler: StateDataset, batch_size: int, device: torch.device) -> tuple[list[tuple[mm.State, mm.GroundConjunctiveCondition]], torch.Tensor]:
