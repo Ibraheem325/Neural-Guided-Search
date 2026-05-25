@@ -29,7 +29,8 @@ class StateDataset:
 
 def _parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Settings for training')
-    parser.add_argument('--input', required=True, type=Path, help='Path to the training dataset')
+    parser.add_argument('--input', default=Path('examples'), type=Path, help='Path to the folder containing all domain folders')
+    parser.add_argument('--domain', required=True, type=str, help='Name of the domain folder under --input (e.g., "grid", "blocks")')
     parser.add_argument('--model', default=None, type=Path, help='Path to a pre-trained model to continue training from')
     parser.add_argument('--embedding_size', default=32, type=int, help='Dimension of the embedding vector for each object')
     parser.add_argument('--aggregation', default='hmax', type=str, help='Aggregation function ("smax", "hmax", "sum"/"add", or "mean")')
@@ -42,25 +43,43 @@ def _parse_arguments() -> argparse.Namespace:
     return args
 
 
-def _get_instance_paths(input: Path) -> tuple[str, list[str]]:
+def _get_instance_paths(input: Path) -> tuple[str, list[str], list[str]]:
     print('Finding paths...')
     if input.is_file():
         domain_file = str(input.parent / 'domain.pddl')
-        problem_files = [str(input)]
+        train_problem_files = [str(input)]
+        val_problem_files = []
     else:
         domain_file = str(input / 'domain.pddl')
-        problem_files = [str(file) for file in input.glob('*.pddl') if file.name != 'domain.pddl']
-        problem_files.sort()
-    return domain_file, problem_files
+        train_dir = input / 'train'
+        val_dir = input / 'val'
+        if train_dir.is_dir():
+            # New layout: domain.pddl at root, instances under train/ and val/
+            train_problem_files = [str(f) for f in train_dir.glob('*.pddl') if f.name != 'domain.pddl']
+            train_problem_files.sort()
+            if val_dir.is_dir():
+                val_problem_files = [str(f) for f in val_dir.glob('*.pddl') if f.name != 'domain.pddl']
+                val_problem_files.sort()
+            else:
+                val_problem_files = []
+        else:
+            # Old layout: domain.pddl and instances in the same folder
+            train_problem_files = [str(f) for f in input.glob('*.pddl') if f.name != 'domain.pddl']
+            train_problem_files.sort()
+            val_problem_files = []
+    return domain_file, train_problem_files, val_problem_files
 
 
-def _parse_instances(domain_path: str, problem_paths: list[str]) -> tuple[mm.Domain, list[mm.Problem]]:
+
+def _parse_instances(domain_path: str, train_paths: list[str], val_paths: list[str]) -> tuple[mm.Domain, list[mm.Problem], list[mm.Problem]]:
     print('Parsing instances...')
     domain = mm.Domain(domain_path)
-    problems = [mm.Problem(domain, problem_path) for problem_path in problem_paths]
+    train_problems = [mm.Problem(domain, p) for p in train_paths]
+    val_problems = [mm.Problem(domain, p) for p in val_paths]
     print(f'- Domain: {domain.get_name()}')
-    print(f'- # Problems: {len(problems)}')
-    return domain, problems
+    print(f'- # Train problems: {len(train_problems)}')
+    print(f'- # Val problems: {len(val_problems)}')
+    return domain, train_problems, val_problems
 
 
 def _generate_state_spaces(problems: list[mm.Problem], seed: int) -> list[mm.StateSpaceSampler]:
@@ -78,20 +97,18 @@ def _generate_state_spaces(problems: list[mm.Problem], seed: int) -> list[mm.Sta
     return state_space_samplers
 
 
-def _create_datasets(state_space_samplers: list[mm.StateSpaceSampler]) -> tuple[StateDataset, StateDataset]:
+def _create_datasets(train_samplers: list[mm.StateSpaceSampler],
+                    val_samplers: list[mm.StateSpaceSampler]) -> tuple[StateDataset, StateDataset]:
     print('Creating state samplers...')
-    if len(state_space_samplers) == 0:
-        raise ValueError('No state space samplers were generated from the provided problems.')
-    if len(state_space_samplers) == 1:
-        train_state_space_samplers = state_space_samplers.copy()
-        validation_state_space_samplers = state_space_samplers.copy()
-        return StateDataset(train_state_space_samplers), StateDataset(validation_state_space_samplers)
-    train_size = max(1, min(len(state_space_samplers) - 1, int(len(state_space_samplers) * 0.8)))
-    train_state_space_samplers = state_space_samplers[:train_size]
-    validation_state_space_samplers = state_space_samplers[train_size:]
-    train_dataset = StateDataset(train_state_space_samplers)
-    validation_dataset = StateDataset(validation_state_space_samplers)
-    return train_dataset, validation_dataset
+    if len(train_samplers) == 0:
+        raise ValueError('No training state space samplers were generated.')
+    if len(val_samplers) == 0:
+        # Fall back: use train set for validation (or do the old 80/20 split)
+        if len(train_samplers) == 1:
+            return StateDataset(train_samplers.copy()), StateDataset(train_samplers.copy())
+        split = max(1, min(len(train_samplers) - 1, int(len(train_samplers) * 0.8)))
+        return StateDataset(train_samplers[:split]), StateDataset(train_samplers[split:])
+    return StateDataset(train_samplers), StateDataset(val_samplers)
 
 
 def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, device: torch.device) -> rgnn.RelationalGraphNeuralNetwork:
@@ -186,10 +203,15 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
 def _main(args: argparse.Namespace) -> None:
     print(f'Torch: {torch.__version__}')
     device = create_device(False)
-    domain_path, problem_paths = _get_instance_paths(args.input)
-    domain, problems = _parse_instances(domain_path, problem_paths)
-    state_spaces = _generate_state_spaces(problems, args.seed)
-    train_dataset, validation_dataset = _create_datasets(state_spaces)
+    domain_dir = args.input / args.domain
+    if not domain_dir.is_dir():
+        raise FileNotFoundError(f'Domain folder not found: {domain_dir}')
+    print(f'Using domain folder: {domain_dir}')
+    domain_path, train_paths, val_paths = _get_instance_paths(domain_dir)
+    domain, train_problems, val_problems = _parse_instances(domain_path, train_paths, val_paths)
+    train_state_spaces = _generate_state_spaces(train_problems, args.seed)
+    val_state_spaces = _generate_state_spaces(val_problems, args.seed)
+    train_dataset, validation_dataset = _create_datasets(train_state_spaces, val_state_spaces)
     if args.model is None:
         print('Creating a new model and optimizer...')
         model = _create_model(domain, args.embedding_size, args.layers, args.aggregation, device)
