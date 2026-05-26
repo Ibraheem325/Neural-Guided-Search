@@ -194,17 +194,20 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
             last_print_time = time.time()
             # Train step
             for index in range(TRAIN_SIZE):
+                t0 = time.time()
                 inputs, targets = train_prefetcher.next()
+                t1 = time.time()
                 outputs: torch.Tensor = model.forward(inputs).readout('value')
                 loss = (outputs - targets).abs().mean()
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
+                t2 = time.time()
                 # Print loss every 100 steps (printing every step forces synchronization with CPU)
                 if (index + 1) % 100 == 0:
                     current_time = time.time()
                     elapsed = current_time - last_print_time
-                    print(f'[{epoch + 1}/{num_epochs}; {index + 1}/{TRAIN_SIZE}] Loss: {loss.item():.4f} ({elapsed:.2f} seconds)')
+                    print(f'[{epoch + 1}/{num_epochs}; {index + 1}/{TRAIN_SIZE}] Loss: {loss.item():.4f} ({elapsed:.2f}s) [sample={t1-t0:.2f}s gpu={t2-t1:.2f}s]')
                     last_print_time = current_time
             # Validation step
             with torch.no_grad():
