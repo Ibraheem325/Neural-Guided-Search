@@ -11,10 +11,11 @@ from utils import create_device
 
 
 class IQNModelWrapper(rl.ActionQuantileModel):
-    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, num_cosines: int = 64) -> None:
+    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, num_cosines: int = 64, random_layer_count: bool = False) -> None:
         super().__init__()
         self.model = model
         self.num_cosines = num_cosines
+        self.random_layer_count = random_layer_count
         embedding_size = model.get_hparam_config().embedding_size
         self.cosine_projection = torch.nn.Linear(num_cosines, embedding_size)
         self.quantile_head = torch.nn.Sequential(
@@ -41,11 +42,14 @@ class IQNModelWrapper(rl.ActionQuantileModel):
             input_list.append((state, actions, goal))
             actions_list.append(actions)
 
-        original_layer_count = self.model.get_hparam_config().num_layers
-        new_layer_count = random.randint(original_layer_count // 2, original_layer_count)
-        self.model.get_hparam_config().num_layers = new_layer_count
-        action_embeddings_batch = self.model.forward(input_list).readout('action_embedding')
-        self.model.get_hparam_config().num_layers = original_layer_count
+        if self.random_layer_count:
+            original_layer_count = self.model.get_hparam_config().num_layers
+            new_layer_count = random.randint(original_layer_count // 2, original_layer_count)
+            self.model.get_hparam_config().num_layers = new_layer_count
+            action_embeddings_batch = self.model.forward(input_list).readout('action_embedding')
+            self.model.get_hparam_config().num_layers = original_layer_count
+        else:
+            action_embeddings_batch = self.model.forward(input_list).readout('action_embedding')
 
         assert isinstance(action_embeddings_batch, tuple), 'Model should return a tuple of action embeddings.'
 
@@ -107,9 +111,10 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--train', required=True, type=Path, help='Path to directory with training instances')
     parser.add_argument('--validation', required=True, type=Path, help='Path to directory with validation instances')
     parser.add_argument('--hindsight', required=True, type=str, choices=['lifted', 'propositional', 'state', 'state_fluent'], help='Type of hindsight to use')
-    parser.add_argument('--aggregation', default='hmax', type=str, help='Aggregation function used by the model ("add", "mean", "smax", "hmax")')
+    parser.add_argument('--aggregation', default='smax', type=str, help='Aggregation function used by the model ("add", "mean", "smax", "hmax")')
     parser.add_argument('--embedding_size', default=32, type=int, help='Dimension of the embedding vector for each object')
-    parser.add_argument('--layers', default=60, type=int, help='Number of layers in the model')
+    parser.add_argument('--layers', default=12, type=int, help='Number of layers in the model')
+    parser.add_argument('--random_layer_count', action='store_true', help='At each forward pass, randomly use between num_layers//2 and num_layers layers (acts as a depth dropout regularizer)')
     parser.add_argument('--batch_size', default=32, type=int, help='Number of samples per batch')
     parser.add_argument('--bt_initial', default=1.0, type=float, help='Initial Boltzmann temperature')
     parser.add_argument('--bt_final', default=0.1, type=float, help='Final Boltzmann temperature')
@@ -175,9 +180,9 @@ def _create_base_model(domain: mm.Domain, embedding_size: int, num_layers: int, 
     return rgnn.RelationalGraphNeuralNetwork(hparam_config, module_config, input_spec, output_spec)  # type: ignore
 
 
-def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, num_cosines: int) -> IQNModelWrapper:
+def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, num_cosines: int, random_layer_count: bool = False) -> IQNModelWrapper:
     base_model = _create_base_model(domain, embedding_size, num_layers, aggregation)
-    return IQNModelWrapper(base_model, num_cosines)
+    return IQNModelWrapper(base_model, num_cosines, random_layer_count)
 
 
 def _create_trajectory_refiner(hindsight: str, train_problems: list[mm.Problem], max_new_trajectories: int) -> rl.TrajectoryRefiner:
@@ -349,7 +354,7 @@ def _main(args: argparse.Namespace) -> None:
     _, validation_problems = _parse_instances(args.validation)
     print(f'Parsed {len(validation_problems)} validation instances.', flush=True)
     print('Creating model...', flush=True)
-    model = _create_model(domain, args.embedding_size, args.layers, args.aggregation, args.num_cosines).to(device)
+    model = _create_model(domain, args.embedding_size, args.layers, args.aggregation, args.num_cosines, args.random_layer_count).to(device)
     policy_model = RiskSensitivePolicyWrapper(model, args.risk_averseness, args.num_policy_quantiles).to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.lr_initial)
     lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, args.lr_steps, args.lr_final)

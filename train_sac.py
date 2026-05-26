@@ -13,10 +13,11 @@ from utils import create_device
 
 
 class ModelWrapper(rl.ActionScalarModel):
-    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, readout_name: str) -> None:
+    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, readout_name: str, random_layer_count: bool = False) -> None:
         super().__init__()
         self.model = model
         self.readout_name = readout_name
+        self.random_layer_count = random_layer_count
 
     def forward(self, state_goals: list[tuple[mm.State, mm.GroundConjunctiveCondition]]) -> list[tuple[torch.Tensor, list[mm.GroundAction]]]:
         input_list: list[tuple[mm.State, list[mm.GroundAction], mm.GroundConjunctiveCondition]] = []
@@ -25,11 +26,14 @@ class ModelWrapper(rl.ActionScalarModel):
             actions = state.generate_applicable_actions()
             input_list.append((state, actions, goal))
             actions_list.append(actions)
-        original_layer_count = self.model.get_hparam_config().num_layers
-        new_layer_count = random.randint(original_layer_count // 2, original_layer_count)
-        self.model.get_hparam_config().num_layers = new_layer_count
-        values_list: list[torch.Tensor] = self.model.forward(input_list).readout(self.readout_name)  # type: ignore
-        self.model.get_hparam_config().num_layers = original_layer_count
+        if self.random_layer_count:
+            original_layer_count = self.model.get_hparam_config().num_layers
+            new_layer_count = random.randint(original_layer_count // 2, original_layer_count)
+            self.model.get_hparam_config().num_layers = new_layer_count
+            values_list: list[torch.Tensor] = self.model.forward(input_list).readout(self.readout_name)  # type: ignore
+            self.model.get_hparam_config().num_layers = original_layer_count
+        else:
+            values_list = self.model.forward(input_list).readout(self.readout_name)  # type: ignore
         output = list(zip(values_list, actions_list))
         return output
 
@@ -126,9 +130,10 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--train', required=True, type=Path, help='Path to directory with training instances')
     parser.add_argument('--validation', required=True, type=Path, help='Path to directory with validation instances')
     parser.add_argument('--hindsight', required=True, type=str, choices=['lifted', 'propositional', 'state', 'state_fluent'], help='Type of hindsight to use')
-    parser.add_argument('--aggregation', default='hmax', type=str, help='Aggregation function used by the model ("add", "mean", "smax", "hmax")')
+    parser.add_argument('--aggregation', default='smax', type=str, help='Aggregation function used by the model ("add", "mean", "smax", "hmax")')
     parser.add_argument('--embedding_size', default=32, type=int, help='Dimension of the embedding vector for each object')
-    parser.add_argument('--layers', default=60, type=int, help='Number of layers in the model')
+    parser.add_argument('--layers', default=12, type=int, help='Number of layers in the model')
+    parser.add_argument('--random_layer_count', action='store_true', help='At each forward pass, randomly use between num_layers//2 and num_layers layers (acts as a depth dropout regularizer)')
     parser.add_argument('--batch_size', default=32, type=int, help='Number of samples per batch')
     parser.add_argument('--discount_factor', default=0.999, type=float, help='Discount factor')
     parser.add_argument('--polyak_factor', default=0.005, type=float, help='Polyak averaging factor for target critic updates')
@@ -237,11 +242,11 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
            validation_problems: list[mm.Problem],
            args: argparse.Namespace,
            device: torch.device):
-    policy_wrapper = ModelWrapper(policy_model, 'policy').to(device)
-    q1_wrapper = ModelWrapper(q1_model, 'q').to(device)
-    q2_wrapper = ModelWrapper(q2_model, 'q').to(device)
-    q1_target_wrapper = ModelWrapper(q1_model.clone(), 'q')
-    q2_target_wrapper = ModelWrapper(q2_model.clone(), 'q')
+    policy_wrapper = ModelWrapper(policy_model, 'policy', args.random_layer_count).to(device)
+    q1_wrapper = ModelWrapper(q1_model, 'q', args.random_layer_count).to(device)
+    q2_wrapper = ModelWrapper(q2_model, 'q', args.random_layer_count).to(device)
+    q1_target_wrapper = ModelWrapper(q1_model.clone(), 'q', args.random_layer_count)
+    q2_target_wrapper = ModelWrapper(q2_model.clone(), 'q', args.random_layer_count)
 
     loss_function = _SACBase(
         policy_wrapper, policy_optimizer, policy_scheduler,

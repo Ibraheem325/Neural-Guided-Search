@@ -11,9 +11,10 @@ from utils import create_device
 
 
 class ModelWrapper(rl.ActionScalarModel):
-    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork) -> None:
+    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, random_layer_count: bool = False) -> None:
         super().__init__()
         self.model = model
+        self.random_layer_count = random_layer_count
 
     def forward(self, state_goals: list[tuple[mm.State, mm.GroundConjunctiveCondition]]) -> list[tuple[torch.Tensor, list[mm.GroundAction]]]:
         input_list: list[tuple[mm.State, list[mm.GroundAction], mm.GroundConjunctiveCondition]] = []
@@ -22,11 +23,14 @@ class ModelWrapper(rl.ActionScalarModel):
             actions = state.generate_applicable_actions()
             input_list.append((state, actions, goal))
             actions_list.append(actions)
-        original_layer_count = self.model.get_hparam_config().num_layers
-        new_layer_count = random.randint(original_layer_count // 2, original_layer_count)
-        self.model.get_hparam_config().num_layers = new_layer_count
-        q_values_list: list[torch.Tensor] = self.model.forward(input_list).readout('q')  # type: ignore
-        self.model.get_hparam_config().num_layers = original_layer_count
+        if self.random_layer_count:
+            original_layer_count = self.model.get_hparam_config().num_layers
+            new_layer_count = random.randint(original_layer_count // 2, original_layer_count)
+            self.model.get_hparam_config().num_layers = new_layer_count
+            q_values_list: list[torch.Tensor] = self.model.forward(input_list).readout('q')  # type: ignore
+            self.model.get_hparam_config().num_layers = original_layer_count
+        else:
+            q_values_list = self.model.forward(input_list).readout('q')  # type: ignore
         output = list(zip(q_values_list, actions_list))
         return output
 
@@ -37,9 +41,10 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--validation', required=True, type=Path, help='Path to directory with validation instances')
     parser.add_argument('--hindsight', required=True, type=str, choices=['lifted', 'propositional', 'state', 'state_fluent'], help='Type of hindsight to use')
     parser.add_argument('--model', default=None, type=Path, help='Path to the model file to resume from')
-    parser.add_argument('--aggregation', default='hmax', type=str, help='Aggregation function used by the model ("add", "mean", "smax", "hmax")')
+    parser.add_argument('--aggregation', default='smax', type=str, help='Aggregation function used by the model ("add", "mean", "smax", "hmax")')
     parser.add_argument('--embedding_size', default=32, type=int, help='Dimension of the embedding vector for each object')
-    parser.add_argument('--layers', default=60, type=int, help='Number of layers in the model')
+    parser.add_argument('--layers', default=12, type=int, help='Number of layers in the model')
+    parser.add_argument('--random_layer_count', action='store_true', help='At each forward pass, randomly use between num_layers//2 and num_layers layers (acts as a depth dropout regularizer)')
     parser.add_argument('--batch_size', default=32, type=int, help='Number of samples per batch')
     parser.add_argument('--bt_initial', default=1.0, type=float, help='Initial Boltzmann temperature')
     parser.add_argument('--bt_final', default=0.1, type=float, help='Final Boltzmann temperature')
@@ -122,7 +127,7 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
            validation_problems: list[mm.Problem],
            args: argparse.Namespace,
            device: torch.device):
-    wrapped_model = ModelWrapper(model).to(device)
+    wrapped_model = ModelWrapper(model, args.random_layer_count).to(device)
     loss_function = rl.DQNOptimization(wrapped_model, optimizer, lr_scheduler, wrapped_model, args.discount_factor, 10.0, True)
     reward_function = rl.ConstantRewardFunction(-1)
     replay_buffer = rl.PrioritizedReplayBuffer(args.max_buffer_size)

@@ -33,7 +33,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--model', default=None, type=Path, help='Path to a pre-trained model to continue training from')
     parser.add_argument('--embedding_size', default=32, type=int, help='Dimension of the embedding vector for each object')
     parser.add_argument('--aggregation', default='hmax', type=str, help='Aggregation function ("smax", "hmax", "sum"/"add", or "mean")')
-    parser.add_argument('--layers', default=30, type=int, help='Number of layers in the model')
+    parser.add_argument('--layers', default=12, type=int, help='Number of layers in the model')
     parser.add_argument('--batch_size', default=64, type=int, help='Number of samples per batch')
     parser.add_argument('--learning_rate', default=0.0002, type=float, help='Learning rate for the training process')
     parser.add_argument('--num_epochs', default=1_000, type=int, help='Number of epochs for the training process')
