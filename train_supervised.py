@@ -1,7 +1,9 @@
 import argparse
 import pymimir as mm
 import pymimir_rgnn as rgnn
+import queue
 import random
+import threading
 import torch
 import torch.optim as optim
 
@@ -25,6 +27,33 @@ class StateDataset:
         sampled_state = state_space.sample_dead_end_state() if goal_distance < 0 else state_space.sample_state_n_steps_from_goal(goal_distance)
         sampled_label = state_space.get_state_label(sampled_state)
         return (sampled_state, sampled_label)
+
+
+class BatchPrefetcher:
+    def __init__(self, state_sampler: StateDataset, batch_size: int, device: torch.device, queue_size: int = 4):
+        self._queue: queue.Queue = queue.Queue(maxsize=queue_size)
+        self._stop_event = threading.Event()
+        self._thread = threading.Thread(
+            target=self._worker, args=(state_sampler, batch_size, device), daemon=True
+        )
+        self._thread.start()
+
+    def _worker(self, state_sampler: StateDataset, batch_size: int, device: torch.device) -> None:
+        while not self._stop_event.is_set():
+            batch = _sample_batch(state_sampler, batch_size, device)
+            while not self._stop_event.is_set():
+                try:
+                    self._queue.put(batch, timeout=0.1)
+                    break
+                except queue.Full:
+                    continue
+
+    def next(self) -> tuple:
+        return self._queue.get()
+
+    def stop(self) -> None:
+        self._stop_event.set()
+        self._thread.join(timeout=5.0)
 
 
 def _parse_arguments() -> argparse.Namespace:
@@ -157,40 +186,43 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
            device: torch.device) -> None:
     TRAIN_SIZE = 1000
     VALIDATION_SIZE = 100
-    # Training loop
     best_error = None  # Track the best validation loss to detect overfitting.
     print('Training model...')
-    for epoch in range(0, num_epochs):
-        last_print_time = time.time()
-        # Train step
-        for index in range(TRAIN_SIZE):
-            inputs, targets = _sample_batch(train_states, batch_size, device)
-            outputs: torch.Tensor = model.forward(inputs).readout('value')
-            loss = (outputs - targets).abs().mean()
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-            # Print loss every 100 steps (printing every step forces synchronization with CPU)
-            if (index + 1) % 100 == 0:
-                current_time = time.time()
-                elapsed = current_time - last_print_time
-                print(f'[{epoch + 1}/{num_epochs}; {index + 1}/{TRAIN_SIZE}] Loss: {loss.item():.4f} ({elapsed:.2f} seconds)')
-                last_print_time = current_time
-        # Validation step
-        with torch.no_grad():
-            error = torch.zeros([1], dtype=torch.float, device=device)
-            for index in range(VALIDATION_SIZE):
-                inputs, targets = _sample_batch(validation_states, batch_size, device)
-                outputs = model.forward(inputs).readout('value')
-                error += (outputs - targets).abs().sum()
-            total_samples = VALIDATION_SIZE * batch_size
-            error = error / total_samples
-            print(f'[{epoch + 1}/{num_epochs}] Absolute error: {error.item():.4f}')
-            model.save('latest.pth', { 'optimizer': optimizer.state_dict() })
-            if (best_error is None) or (error < best_error):
-                best_error = error
-                model.save('best.pth', { 'optimizer': optimizer.state_dict() })
-                print(f'[{epoch + 1}/{num_epochs}] Saved new best model')
+    train_prefetcher = BatchPrefetcher(train_states, batch_size, device)
+    try:
+        for epoch in range(0, num_epochs):
+            last_print_time = time.time()
+            # Train step
+            for index in range(TRAIN_SIZE):
+                inputs, targets = train_prefetcher.next()
+                outputs: torch.Tensor = model.forward(inputs).readout('value')
+                loss = (outputs - targets).abs().mean()
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+                # Print loss every 100 steps (printing every step forces synchronization with CPU)
+                if (index + 1) % 100 == 0:
+                    current_time = time.time()
+                    elapsed = current_time - last_print_time
+                    print(f'[{epoch + 1}/{num_epochs}; {index + 1}/{TRAIN_SIZE}] Loss: {loss.item():.4f} ({elapsed:.2f} seconds)')
+                    last_print_time = current_time
+            # Validation step
+            with torch.no_grad():
+                error = torch.zeros([1], dtype=torch.float, device=device)
+                for index in range(VALIDATION_SIZE):
+                    inputs, targets = _sample_batch(validation_states, batch_size, device)
+                    outputs = model.forward(inputs).readout('value')
+                    error += (outputs - targets).abs().sum()
+                total_samples = VALIDATION_SIZE * batch_size
+                error = error / total_samples
+                print(f'[{epoch + 1}/{num_epochs}] Absolute error: {error.item():.4f}')
+                model.save('latest.pth', { 'optimizer': optimizer.state_dict() })
+                if (best_error is None) or (error < best_error):
+                    best_error = error
+                    model.save('best.pth', { 'optimizer': optimizer.state_dict() })
+                    print(f'[{epoch + 1}/{num_epochs}] Saved new best model')
+    finally:
+        train_prefetcher.stop()
 
 
 def _main(args: argparse.Namespace) -> None:
