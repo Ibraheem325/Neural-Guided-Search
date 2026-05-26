@@ -145,7 +145,8 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--entropy_target_scale_std_threshold', default=0.05, type=float, help='TES-SAC max policy-entropy EWMA stddev to count as stable')
     parser.add_argument('--entropy_target_scale_conditioned_steps', default=1000, type=int, help='TES-SAC number of stable steps required between target-scale drops')
     parser.add_argument('--entropy_target_scale_max_steps_per_drop', default=5000, type=int, help='Pity timer: force a target-scale drop after this many total updates at the current target, even if the stability check has not fired')
-    parser.add_argument('--entropy_alpha_max', default=1.0, type=float, help='Hard upper bound on the SAC entropy temperature alpha; protects against unbounded growth if the TES target is unreachable')
+    parser.add_argument('--entropy_alpha_max', default=0.1, type=float, help='Hard upper bound on the SAC entropy temperature alpha. The per-step entropy bonus alpha*H[pi] should not dominate the per-step reward magnitude or the agent loses incentive to optimise reward; pick alpha_max <= |max_per_step_reward| / max_policy_entropy. Defaults to 0.1 for r=-1/step domains.')
+    parser.add_argument('--use_bounds_loss', action=argparse.BooleanOptionalAction, default=True, help='Add a Huber regularizer to each critic that pulls the predicted soft Q value back toward the per-transition feasible interval from the reward function (upper bound expanded by alpha*log|A|/(1-gamma) entropy slack). Pass --no-use_bounds_loss to disable.')
     parser.add_argument('--train_horizon', default=100, type=int, help='Maximum rollout length for the training set')
     parser.add_argument('--validation_horizon', default=400, type=int, help='Maximum rollout length for the validation set')
     parser.add_argument('--lr_initial', default=0.001, type=float, help='Initial learning rate')
@@ -253,6 +254,7 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
         q1_target_wrapper, q1_wrapper, q1_optimizer, q1_scheduler,
         q2_target_wrapper, q2_wrapper, q2_optimizer, q2_scheduler,
         args.discount_factor, args.polyak_factor, args.entropy_target_scale_initial, args.entropy_lr,
+        use_bounds_loss=args.use_bounds_loss,
         max_log_alpha=math.log(args.entropy_alpha_max),
     )
 
