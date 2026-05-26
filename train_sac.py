@@ -8,7 +8,6 @@ import torch
 import torch.optim as optim
 
 from pathlib import Path
-from typing import Callable
 from utils import create_device
 
 
@@ -38,91 +37,20 @@ class ModelWrapper(rl.ActionScalarModel):
         return output
 
 
-class _SACBase(rl.DiscreteSoftActorCriticOptimization):
-    # Exposes the per-step mean normalized policy entropy via an injected callback. Used to drive
-    # the external TES-SAC scheduler. `_compute_entropy_loss` is invoked once per training step
-    # inside the base class's `__call__`, so this is the natural injection point.
-    # Also clamps `log_entropy_alpha` after each step so α can never run away when the TES target
-    # entropy is unreachable (the dual of the paper's "target too low → α → 0" failure mode).
+class _AlphaClampedSAC(rl.DiscreteSoftActorCriticOptimization):
+    # Clamps log_entropy_alpha after each step so the per-step entropy bonus α·H[π] cannot
+    # grow larger than the per-step reward magnitude. Without this clamp, SAC's auto-tuning
+    # can raise α until the entropy bonus dominates the reward signal and the agent loses
+    # incentive to reach goals (the runaway-α failure mode for sparse-reward planning).
     def __init__(self, *args, max_log_alpha: float, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self._max_log_alpha = max_log_alpha
-        self._on_step_entropy: Callable[[float], None] | None = None
-
-    def set_on_step_entropy(self, callback: Callable[[float], None]) -> None:
-        self._on_step_entropy = callback
 
     def __call__(self, transitions, weights):
         result = super().__call__(transitions, weights)
         with torch.no_grad():
             self.log_entropy_alpha.clamp_(max=self._max_log_alpha)
         return result
-
-    def _compute_entropy_loss(self, batch_policy_logits):
-        result = super()._compute_entropy_loss(batch_policy_logits)
-        if self._on_step_entropy is not None:
-            with torch.no_grad():
-                normalized: list[float] = []
-                for logits, _ in batch_policy_logits:
-                    n = logits.numel()
-                    if n <= 1:
-                        continue
-                    probs = logits.softmax(dim=-1)
-                    log_probs = logits.log_softmax(dim=-1)
-                    entropy = -(probs * log_probs).sum(dim=-1)
-                    normalized.append((entropy / math.log(n)).item())
-                if normalized:
-                    self._on_step_entropy(sum(normalized) / len(normalized))
-        return result
-
-
-class _TESScheduler:
-    # Algorithm 1 from Xu et al., "Target Entropy Annealing for Discrete Soft Actor-Critic"
-    # (NeurIPS workshop 2021), Appendix B. Operates in normalized entropy units (e_i / log|A_i|)
-    # so thresholds are independent of per-state action count.
-    # `max_steps_per_drop` is a pity timer not in the paper: when the policy entropy can't reach
-    # the current target (which can happen if the initial target is set higher than what's
-    # achievable for the env + network init), the paper's stability check never fires and the
-    # target never drops. The pity timer forces a drop after this many updates regardless.
-    def __init__(self,
-                 initial_scale: float,
-                 ewma_lambda: float,
-                 avg_threshold: float,
-                 std_threshold: float,
-                 discount: float,
-                 conditioned_steps: int,
-                 max_steps_per_drop: int) -> None:
-        self.target_scale = initial_scale
-        self.ewma_lambda = ewma_lambda
-        self.avg_threshold = avg_threshold
-        self.std_threshold = std_threshold
-        self.discount = discount
-        self.conditioned_steps = conditioned_steps
-        self.max_steps_per_drop = max_steps_per_drop
-        self.mu_hat = initial_scale
-        self.sigma_sq = 0.0
-        self.counter = 0
-        self.steps_at_current = 0
-
-    def update(self, normalized_entropy: float) -> float:
-        self.steps_at_current += 1
-        delta = normalized_entropy - self.mu_hat
-        self.mu_hat = self.mu_hat + (1.0 - self.ewma_lambda) * delta
-        self.sigma_sq = self.ewma_lambda * (self.sigma_sq + (1.0 - self.ewma_lambda) * delta * delta)
-        sigma_hat = math.sqrt(self.sigma_sq)
-        is_close = abs(self.target_scale - self.mu_hat) < self.avg_threshold
-        is_low_std = sigma_hat <= self.std_threshold
-        is_stuck = self.steps_at_current >= self.max_steps_per_drop
-        if not is_stuck:
-            if not (is_close and is_low_std):
-                return self.target_scale
-            self.counter += 1
-            if self.counter < self.conditioned_steps:
-                return self.target_scale
-        self.counter = 0
-        self.steps_at_current = 0
-        self.target_scale *= self.discount
-        return self.target_scale
 
 
 def _parse_arguments() -> argparse.Namespace:
@@ -138,15 +66,8 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--discount_factor', default=0.999, type=float, help='Discount factor')
     parser.add_argument('--polyak_factor', default=0.005, type=float, help='Polyak averaging factor for target critic updates')
     parser.add_argument('--entropy_lr', default=0.0003, type=float, help='Learning rate for the entropy temperature optimizer')
-    parser.add_argument('--entropy_target_scale_initial', default=0.98, type=float, help='Initial target entropy scale in [0, 1]')
-    parser.add_argument('--entropy_target_scale_discount', default=0.9, type=float, help='TES-SAC multiplicative shrink factor applied to the target entropy scale on each drop')
-    parser.add_argument('--entropy_target_scale_ewma_lambda', default=0.999, type=float, help='TES-SAC exponential moving window discount for the policy-entropy EWMA')
-    parser.add_argument('--entropy_target_scale_avg_threshold', default=0.01, type=float, help='TES-SAC max distance between current target scale and policy-entropy EWMA mean to count as stable')
-    parser.add_argument('--entropy_target_scale_std_threshold', default=0.05, type=float, help='TES-SAC max policy-entropy EWMA stddev to count as stable')
-    parser.add_argument('--entropy_target_scale_conditioned_steps', default=1000, type=int, help='TES-SAC number of stable steps required between target-scale drops')
-    parser.add_argument('--entropy_target_scale_max_steps_per_drop', default=5000, type=int, help='Pity timer: force a target-scale drop after this many total updates at the current target, even if the stability check has not fired')
+    parser.add_argument('--entropy_target_scale', default=0.98, type=float, help='Target entropy scale in [0, 1] for SAC auto-tuning (target entropy = scale * log|A|). Fixed; with the alpha cap below, no annealing schedule is needed.')
     parser.add_argument('--entropy_alpha_max', default=0.1, type=float, help='Hard upper bound on the SAC entropy temperature alpha. The per-step entropy bonus alpha*H[pi] should not dominate the per-step reward magnitude or the agent loses incentive to optimise reward; pick alpha_max <= |max_per_step_reward| / max_policy_entropy. Defaults to 0.1 for r=-1/step domains.')
-    parser.add_argument('--use_bounds_loss', action=argparse.BooleanOptionalAction, default=True, help='Add a Huber regularizer to each critic that pulls the predicted soft Q value back toward the per-transition feasible interval from the reward function (upper bound expanded by alpha*log|A|/(1-gamma) entropy slack). Pass --no-use_bounds_loss to disable.')
     parser.add_argument('--train_horizon', default=100, type=int, help='Maximum rollout length for the training set')
     parser.add_argument('--validation_horizon', default=400, type=int, help='Maximum rollout length for the validation set')
     parser.add_argument('--lr_initial', default=0.001, type=float, help='Initial learning rate')
@@ -154,7 +75,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--lr_steps', default=300, type=float, help='Steps to reach the final learning rate')
     parser.add_argument('--max_new_trajectories', default=100, type=int, help='Max number of new trajectories to derive')
     parser.add_argument('--min_buffer_size', default=100, type=int, help='Minimum size of the experience buffer to update model')
-    parser.add_argument('--max_buffer_size', default=1000, type=int, help='Maximum size of the experience buffer')
+    parser.add_argument('--max_buffer_size', default=10000, type=int, help='Maximum size of the experience buffer')
     parser.add_argument('--num_rollouts', default=4, type=int, help='Number of trajectories to compute in parallel')
     parser.add_argument('--train_steps', default=32, type=int, help='Number of training steps per iteration')
     parser.add_argument('--seed', default=42, type=int, help='Random seed for reproducibility')
@@ -249,29 +170,14 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
     q1_target_wrapper = ModelWrapper(q1_model.clone(), 'q', args.random_layer_count)
     q2_target_wrapper = ModelWrapper(q2_model.clone(), 'q', args.random_layer_count)
 
-    loss_function = _SACBase(
+    loss_function = _AlphaClampedSAC(
         policy_wrapper, policy_optimizer, policy_scheduler,
         q1_target_wrapper, q1_wrapper, q1_optimizer, q1_scheduler,
         q2_target_wrapper, q2_wrapper, q2_optimizer, q2_scheduler,
-        args.discount_factor, args.polyak_factor, args.entropy_target_scale_initial, args.entropy_lr,
-        use_bounds_loss=args.use_bounds_loss,
+        args.discount_factor, args.polyak_factor, args.entropy_target_scale, args.entropy_lr,
+        use_bounds_loss=True,
         max_log_alpha=math.log(args.entropy_alpha_max),
     )
-
-    tes_scheduler = _TESScheduler(
-        initial_scale=args.entropy_target_scale_initial,
-        ewma_lambda=args.entropy_target_scale_ewma_lambda,
-        avg_threshold=args.entropy_target_scale_avg_threshold,
-        std_threshold=args.entropy_target_scale_std_threshold,
-        discount=args.entropy_target_scale_discount,
-        conditioned_steps=args.entropy_target_scale_conditioned_steps,
-        max_steps_per_drop=args.entropy_target_scale_max_steps_per_drop,
-    )
-
-    def on_step_entropy(normalized_entropy: float) -> None:
-        loss_function.set_entropy_target_scale(tes_scheduler.update(normalized_entropy))
-
-    loss_function.set_on_step_entropy(on_step_entropy)
 
     reward_function = rl.ConstantRewardFunction(-1)
     replay_buffer = rl.PrioritizedReplayBuffer(args.max_buffer_size)
@@ -319,9 +225,6 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
     loss_function.register_on_losses(lambda actor, c1, c2, ent: print(
         f'[{episode}] > SAC: actor={actor.mean().item():.5f} q1={c1.mean().item():.5f} q2={c2.mean().item():.5f} entropy={ent.mean().item():.5f} alpha={loss_function.get_entropy_alpha():.5f}', flush=True))
     while True:
-        print(f'[{episode}] Target entropy scale: {tes_scheduler.target_scale:.5f} '
-              f'(ewma_mean={tes_scheduler.mu_hat:.5f}, ewma_std={math.sqrt(tes_scheduler.sigma_sq):.5f}, '
-              f'stable_steps={tes_scheduler.counter})', flush=True)
         rl_algorithm.fit()
         best, evaluation = rl_evaluator.evaluate()
         print(f'[{episode}] Best: {best}, Evaluation: {evaluation}', flush=True)

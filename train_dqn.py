@@ -57,7 +57,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--lr_steps', default=300, type=float, help='Steps to reach the final learning rate')
     parser.add_argument('--max_new_trajectories', default=100, type=int, help='Max number of new trajectories to derive')
     parser.add_argument('--min_buffer_size', default=100, type=int, help='Minimum size of the experience buffer to update model')
-    parser.add_argument('--max_buffer_size', default=1000, type=int, help='Maximum size of the experience buffer')
+    parser.add_argument('--max_buffer_size', default=10000, type=int, help='Maximum size of the experience buffer')
     parser.add_argument('--num_rollouts', default=4, type=int, help='Number of trajectories to compute in parallel')
     parser.add_argument('--train_steps', default=32, type=int, help='Number of training steps per iteration')
     parser.add_argument('--seed', default=42, type=int, help='Random seed for reproducibility')
