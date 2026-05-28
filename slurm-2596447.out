@@ -1,0 +1,995 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2596447
+Job name: wrap
+Host: cn-426
+Date: Wed May 27 13:12:22 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2595493 rleap_gpu rgnet-ac daniel.s  R   10:18:49      1 cn-426
+2595494 rleap_gpu rgnet-ac daniel.s  R   10:18:49      1 cn-426
+2595057 rleap_gpu rgnet-ac daniel.s  R   16:24:46      1 cn-426
+2596447 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-426
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+Using domain folder: example/barman_dataset
+Finding paths...
+Parsing instances...
+- Domain: barman
+- # Train problems: 156
+- # Val problems: 78
+Generating state spaces...
+> Expanding: prob
+- Added with 406 states
+> Expanding: prob
+- Added with 406 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 6058 states
+> Expanding: prob
+- Added with 6058 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 53833 states
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+Generating state spaces...
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Added with 92144 states
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+Creating state samplers...
+Creating a new model and optimizer...
+Training model...
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+[1/1000; 100/1000] Loss: 35.3953 (31.55s) [sample=0.00s gpu=0.28s]
+[1/1000; 200/1000] Loss: 64.6384 (28.67s) [sample=0.00s gpu=0.29s]
+[1/1000; 300/1000] Loss: 17.2414 (29.83s) [sample=0.00s gpu=0.30s]
+[1/1000; 400/1000] Loss: 47.6843 (31.37s) [sample=0.00s gpu=0.34s]
+[1/1000; 500/1000] Loss: 2.2522 (32.77s) [sample=0.00s gpu=0.32s]
+[1/1000; 600/1000] Loss: 17.1562 (33.61s) [sample=0.00s gpu=0.32s]
+[1/1000; 700/1000] Loss: 48.0553 (33.94s) [sample=0.00s gpu=0.33s]
+[1/1000; 800/1000] Loss: 32.7129 (32.94s) [sample=0.00s gpu=0.34s]
+[1/1000; 900/1000] Loss: 47.3714 (33.31s) [sample=0.00s gpu=0.33s]
+[1/1000; 1000/1000] Loss: 47.0091 (33.13s) [sample=0.00s gpu=0.33s]
+[1/1000] Absolute error: 47.6690
+[1/1000] Saved new best model
+[2/1000; 100/1000] Loss: 62.5743 (33.05s) [sample=0.00s gpu=0.31s]
+[2/1000; 200/1000] Loss: 0.9415 (33.30s) [sample=0.00s gpu=0.34s]
+[2/1000; 300/1000] Loss: 1.0578 (33.72s) [sample=0.00s gpu=0.34s]
+[2/1000; 400/1000] Loss: 77.8378 (33.39s) [sample=0.00s gpu=0.33s]
+[2/1000; 500/1000] Loss: 16.4171 (33.92s) [sample=0.00s gpu=0.33s]
+[2/1000; 600/1000] Loss: 47.0067 (33.79s) [sample=0.00s gpu=0.34s]
+[2/1000; 700/1000] Loss: 62.5837 (33.41s) [sample=0.00s gpu=0.34s]
+[2/1000; 800/1000] Loss: 16.2410 (33.02s) [sample=0.00s gpu=0.33s]
+[2/1000; 900/1000] Loss: 62.3757 (28.40s) [sample=0.00s gpu=0.28s]
+[2/1000; 1000/1000] Loss: 46.5910 (28.19s) [sample=0.00s gpu=0.29s]
+[2/1000] Absolute error: 47.3274
+[2/1000] Saved new best model
+[3/1000; 100/1000] Loss: 62.2072 (29.18s) [sample=0.00s gpu=0.29s]
+[3/1000; 200/1000] Loss: 76.9873 (29.70s) [sample=0.00s gpu=0.30s]
+[3/1000; 300/1000] Loss: 0.8287 (31.79s) [sample=0.00s gpu=0.34s]
+[3/1000; 400/1000] Loss: 15.7211 (33.42s) [sample=0.00s gpu=0.34s]
+[3/1000; 500/1000] Loss: 31.4379 (33.24s) [sample=0.00s gpu=0.29s]
+[3/1000; 600/1000] Loss: 16.3700 (29.71s) [sample=0.00s gpu=0.27s]
+[3/1000; 700/1000] Loss: 15.7868 (31.17s) [sample=0.00s gpu=0.34s]
+[3/1000; 800/1000] Loss: 16.5825 (33.35s) [sample=0.00s gpu=0.34s]
+[3/1000; 900/1000] Loss: 60.5572 (28.30s) [sample=0.00s gpu=0.25s]
+[3/1000; 1000/1000] Loss: 30.8847 (25.49s) [sample=0.00s gpu=0.24s]
+[3/1000] Absolute error: 48.6121
+[4/1000; 100/1000] Loss: 15.3417 (25.42s) [sample=0.00s gpu=0.32s]
+[4/1000; 200/1000] Loss: 15.8687 (30.76s) [sample=0.00s gpu=0.31s]
+[4/1000; 300/1000] Loss: 43.3742 (31.71s) [sample=0.00s gpu=0.44s]
+[4/1000; 400/1000] Loss: 46.1021 (31.82s) [sample=0.00s gpu=0.32s]
+[4/1000; 500/1000] Loss: 1.3561 (29.33s) [sample=0.00s gpu=0.29s]
+[4/1000; 600/1000] Loss: 27.9585 (28.63s) [sample=0.00s gpu=0.29s]
+[4/1000; 700/1000] Loss: 33.9723 (30.34s) [sample=0.00s gpu=0.29s]
+[4/1000; 800/1000] Loss: 31.0179 (29.15s) [sample=0.00s gpu=0.29s]
+[4/1000; 900/1000] Loss: 16.5529 (29.78s) [sample=0.00s gpu=0.29s]
+[4/1000; 1000/1000] Loss: 33.9247 (28.73s) [sample=0.00s gpu=0.29s]
+[4/1000] Absolute error: 34.2386
+[4/1000] Saved new best model
+[5/1000; 100/1000] Loss: 19.9205 (30.50s) [sample=0.00s gpu=0.29s]
+[5/1000; 200/1000] Loss: 15.5593 (33.02s) [sample=0.00s gpu=0.30s]
+[5/1000; 300/1000] Loss: 27.4806 (31.68s) [sample=0.00s gpu=0.28s]
+[5/1000; 400/1000] Loss: 5.1652 (30.18s) [sample=0.00s gpu=0.28s]
+[5/1000; 500/1000] Loss: 8.3806 (28.40s) [sample=0.00s gpu=0.27s]
+[5/1000; 600/1000] Loss: 3.3884 (29.09s) [sample=0.00s gpu=0.29s]
+[5/1000; 700/1000] Loss: 20.5202 (31.19s) [sample=0.00s gpu=0.31s]
+[5/1000; 800/1000] Loss: 9.8740 (30.62s) [sample=0.00s gpu=0.29s]
+[5/1000; 900/1000] Loss: 2.1114 (30.40s) [sample=0.00s gpu=0.29s]
+[5/1000; 1000/1000] Loss: 2.2020 (31.46s) [sample=0.00s gpu=0.34s]
+[5/1000] Absolute error: 7.1173
+[5/1000] Saved new best model
+[6/1000; 100/1000] Loss: 4.0485 (30.45s) [sample=0.00s gpu=0.28s]
+[6/1000; 200/1000] Loss: 1.3823 (27.99s) [sample=0.00s gpu=0.29s]
+[6/1000; 300/1000] Loss: 2.7581 (27.04s) [sample=0.00s gpu=0.27s]
+[6/1000; 400/1000] Loss: 2.1078 (27.61s) [sample=0.00s gpu=0.28s]
+[6/1000; 500/1000] Loss: 2.4884 (27.73s) [sample=0.00s gpu=0.29s]
+[6/1000; 600/1000] Loss: 6.8170 (28.22s) [sample=0.00s gpu=0.26s]
+[6/1000; 700/1000] Loss: 2.0321 (28.32s) [sample=0.00s gpu=0.27s]
+[6/1000; 800/1000] Loss: 10.2675 (28.68s) [sample=0.00s gpu=0.28s]
+[6/1000; 900/1000] Loss: 0.7204 (28.25s) [sample=0.00s gpu=0.42s]
+[6/1000; 1000/1000] Loss: 10.3657 (29.66s) [sample=0.00s gpu=0.29s]
+[6/1000] Absolute error: 4.7307
+[6/1000] Saved new best model
+[7/1000; 100/1000] Loss: 1.4822 (30.99s) [sample=0.00s gpu=0.34s]
+[7/1000; 200/1000] Loss: 2.3651 (33.89s) [sample=0.00s gpu=0.33s]
+[7/1000; 300/1000] Loss: 6.6050 (32.48s) [sample=0.00s gpu=0.30s]
+[7/1000; 400/1000] Loss: 1.7374 (30.57s) [sample=0.00s gpu=0.31s]
+[7/1000; 500/1000] Loss: 2.5481 (33.39s) [sample=0.00s gpu=0.31s]
+[7/1000; 600/1000] Loss: 1.3388 (33.56s) [sample=0.00s gpu=0.33s]
+[7/1000; 700/1000] Loss: 2.4244 (33.19s) [sample=0.00s gpu=0.34s]
+[7/1000; 800/1000] Loss: 2.0966 (32.90s) [sample=0.00s gpu=0.32s]
+[7/1000; 900/1000] Loss: 5.6778 (32.77s) [sample=0.00s gpu=0.33s]
+[7/1000; 1000/1000] Loss: 4.9718 (33.93s) [sample=0.00s gpu=0.34s]
+[7/1000] Absolute error: 7.6552
+[8/1000; 100/1000] Loss: 1.5392 (33.17s) [sample=0.00s gpu=0.34s]
+[8/1000; 200/1000] Loss: 1.8248 (33.14s) [sample=0.00s gpu=0.32s]
+[8/1000; 300/1000] Loss: 2.0431 (33.84s) [sample=0.00s gpu=0.32s]
+[8/1000; 400/1000] Loss: 0.9105 (31.06s) [sample=0.00s gpu=0.28s]
+[8/1000; 500/1000] Loss: 1.7249 (27.84s) [sample=0.00s gpu=0.29s]
+[8/1000; 600/1000] Loss: 1.9943 (29.31s) [sample=0.00s gpu=0.29s]
+[8/1000; 700/1000] Loss: 0.8467 (28.48s) [sample=0.00s gpu=0.28s]
+[8/1000; 800/1000] Loss: 2.4815 (28.73s) [sample=0.00s gpu=0.29s]
+[8/1000; 900/1000] Loss: 0.7881 (29.04s) [sample=0.00s gpu=0.28s]
+[8/1000; 1000/1000] Loss: 1.0377 (28.69s) [sample=0.00s gpu=0.26s]
+[8/1000] Absolute error: 2.0520
+[8/1000] Saved new best model
+[9/1000; 100/1000] Loss: 0.7047 (28.44s) [sample=0.00s gpu=0.29s]
+[9/1000; 200/1000] Loss: 1.3053 (29.63s) [sample=0.00s gpu=0.29s]
+[9/1000; 300/1000] Loss: 0.9440 (28.81s) [sample=0.00s gpu=0.28s]
+[9/1000; 400/1000] Loss: 1.2845 (28.10s) [sample=0.00s gpu=0.28s]
+[9/1000; 500/1000] Loss: 1.1179 (28.84s) [sample=0.00s gpu=0.27s]
+[9/1000; 600/1000] Loss: 0.8359 (28.46s) [sample=0.00s gpu=0.28s]
+[9/1000; 700/1000] Loss: 1.3051 (28.54s) [sample=0.00s gpu=0.27s]
+[9/1000; 800/1000] Loss: 1.2129 (28.44s) [sample=0.00s gpu=0.28s]
+[9/1000; 900/1000] Loss: 3.4331 (27.97s) [sample=0.00s gpu=0.29s]
+[9/1000; 1000/1000] Loss: 2.0437 (29.34s) [sample=0.00s gpu=0.29s]
+[9/1000] Absolute error: 3.3538
+[10/1000; 100/1000] Loss: 0.7760 (28.35s) [sample=0.00s gpu=0.28s]
+[10/1000; 200/1000] Loss: 1.0875 (28.76s) [sample=0.00s gpu=0.26s]
+[10/1000; 300/1000] Loss: 1.2427 (28.79s) [sample=0.00s gpu=0.28s]
+[10/1000; 400/1000] Loss: 1.9934 (29.61s) [sample=0.00s gpu=0.32s]
+[10/1000; 500/1000] Loss: 0.7482 (32.32s) [sample=0.00s gpu=0.32s]
+[10/1000; 600/1000] Loss: 0.5979 (33.60s) [sample=0.00s gpu=0.34s]
+[10/1000; 700/1000] Loss: 1.3391 (33.81s) [sample=0.00s gpu=0.34s]
+[10/1000; 800/1000] Loss: 1.1917 (33.60s) [sample=0.00s gpu=0.34s]
+[10/1000; 900/1000] Loss: 2.8251 (34.19s) [sample=0.00s gpu=0.34s]
+[10/1000; 1000/1000] Loss: 1.0024 (34.17s) [sample=0.00s gpu=0.34s]
+[10/1000] Absolute error: 2.7548
+[11/1000; 100/1000] Loss: 0.8224 (33.37s) [sample=0.00s gpu=0.33s]
+[11/1000; 200/1000] Loss: 1.0663 (33.02s) [sample=0.00s gpu=0.34s]
+[11/1000; 300/1000] Loss: 1.6843 (33.53s) [sample=0.00s gpu=0.34s]
+[11/1000; 400/1000] Loss: 1.4453 (34.05s) [sample=0.01s gpu=0.33s]
+[11/1000; 500/1000] Loss: 0.7662 (33.35s) [sample=0.00s gpu=0.31s]
+[11/1000; 600/1000] Loss: 0.9392 (31.23s) [sample=0.00s gpu=0.31s]
+[11/1000; 700/1000] Loss: 0.5452 (32.08s) [sample=0.00s gpu=0.34s]
+[11/1000; 800/1000] Loss: 0.6125 (33.87s) [sample=0.00s gpu=0.32s]
+[11/1000; 900/1000] Loss: 0.6128 (33.97s) [sample=0.00s gpu=0.31s]
+[11/1000; 1000/1000] Loss: 0.7944 (32.20s) [sample=0.00s gpu=0.33s]
+[11/1000] Absolute error: 1.5103
+[11/1000] Saved new best model
+[12/1000; 100/1000] Loss: 1.0020 (29.39s) [sample=0.00s gpu=0.28s]
+[12/1000; 200/1000] Loss: 0.9900 (27.82s) [sample=0.00s gpu=0.29s]
+[12/1000; 300/1000] Loss: 0.8000 (28.04s) [sample=0.00s gpu=0.27s]
+[12/1000; 400/1000] Loss: 0.9224 (28.24s) [sample=0.00s gpu=0.25s]
+[12/1000; 500/1000] Loss: 0.7732 (27.60s) [sample=0.00s gpu=0.28s]
+[12/1000; 600/1000] Loss: 0.6474 (28.68s) [sample=0.00s gpu=0.28s]
+[12/1000; 700/1000] Loss: 1.7176 (29.02s) [sample=0.00s gpu=0.33s]
+[12/1000; 800/1000] Loss: 0.9186 (30.86s) [sample=0.00s gpu=0.29s]
+[12/1000; 900/1000] Loss: 1.1654 (31.33s) [sample=0.00s gpu=0.32s]
+[12/1000; 1000/1000] Loss: 0.7175 (32.87s) [sample=0.00s gpu=0.33s]
+[12/1000] Absolute error: 0.7784
+[12/1000] Saved new best model
+[13/1000; 100/1000] Loss: 0.9149 (27.95s) [sample=0.00s gpu=0.29s]
+[13/1000; 200/1000] Loss: 0.7136 (28.09s) [sample=0.00s gpu=0.26s]
+[13/1000; 300/1000] Loss: 1.5466 (28.60s) [sample=0.00s gpu=0.29s]
+[13/1000; 400/1000] Loss: 1.1279 (29.13s) [sample=0.00s gpu=0.27s]
+[13/1000; 500/1000] Loss: 1.0878 (28.34s) [sample=0.00s gpu=0.29s]
+[13/1000; 600/1000] Loss: 1.3750 (32.90s) [sample=0.00s gpu=0.32s]
+[13/1000; 700/1000] Loss: 1.6666 (33.60s) [sample=0.01s gpu=0.32s]
+[13/1000; 800/1000] Loss: 7.5979 (31.90s) [sample=0.00s gpu=0.31s]
+[13/1000; 900/1000] Loss: 0.9123 (33.85s) [sample=0.00s gpu=0.33s]
+[13/1000; 1000/1000] Loss: 0.8562 (33.65s) [sample=0.00s gpu=0.30s]
+[13/1000] Absolute error: 1.7670
+[14/1000; 100/1000] Loss: 0.7280 (32.58s) [sample=0.00s gpu=0.34s]
+[14/1000; 200/1000] Loss: 0.6248 (33.48s) [sample=0.00s gpu=0.31s]
+[14/1000; 300/1000] Loss: 0.6941 (33.24s) [sample=0.00s gpu=0.33s]
+[14/1000; 400/1000] Loss: 0.9056 (33.92s) [sample=0.00s gpu=0.34s]
+[14/1000; 500/1000] Loss: 0.7146 (33.47s) [sample=0.00s gpu=0.32s]
+[14/1000; 600/1000] Loss: 0.9480 (33.30s) [sample=0.00s gpu=0.32s]
+[14/1000; 700/1000] Loss: 1.3989 (29.88s) [sample=0.00s gpu=0.29s]
+[14/1000; 800/1000] Loss: 0.3943 (27.90s) [sample=0.00s gpu=0.29s]
+[14/1000; 900/1000] Loss: 0.5560 (31.04s) [sample=0.00s gpu=0.31s]
+[14/1000; 1000/1000] Loss: 0.8510 (33.91s) [sample=0.00s gpu=0.33s]
+[14/1000] Absolute error: 1.1404
+[15/1000; 100/1000] Loss: 0.6397 (31.64s) [sample=0.00s gpu=0.29s]
+[15/1000; 200/1000] Loss: 1.1053 (30.98s) [sample=0.00s gpu=0.31s]
+[15/1000; 300/1000] Loss: 0.5202 (31.04s) [sample=0.00s gpu=0.31s]
+[15/1000; 400/1000] Loss: 0.5899 (31.21s) [sample=0.00s gpu=0.31s]
+[15/1000; 500/1000] Loss: 0.4770 (32.70s) [sample=0.00s gpu=0.32s]
+[15/1000; 600/1000] Loss: 0.7394 (30.43s) [sample=0.00s gpu=0.26s]
+[15/1000; 700/1000] Loss: 0.4225 (31.22s) [sample=0.00s gpu=0.35s]
+[15/1000; 800/1000] Loss: 0.5505 (34.27s) [sample=0.00s gpu=0.33s]
+[15/1000; 900/1000] Loss: 0.6832 (33.92s) [sample=0.00s gpu=0.34s]
+[15/1000; 1000/1000] Loss: 0.4583 (31.81s) [sample=0.00s gpu=0.29s]
+[15/1000] Absolute error: 0.7985
+[16/1000; 100/1000] Loss: 1.4171 (31.43s) [sample=0.00s gpu=0.34s]
+[16/1000; 200/1000] Loss: 0.6762 (33.46s) [sample=0.00s gpu=0.31s]
+[16/1000; 300/1000] Loss: 0.4711 (33.71s) [sample=0.00s gpu=0.34s]
+[16/1000; 400/1000] Loss: 0.6077 (34.11s) [sample=0.00s gpu=0.32s]
+[16/1000; 500/1000] Loss: 0.4927 (27.49s) [sample=0.00s gpu=0.26s]
+[16/1000; 600/1000] Loss: 0.6051 (26.45s) [sample=0.00s gpu=0.29s]
+[16/1000; 700/1000] Loss: 0.6865 (29.73s) [sample=0.00s gpu=0.29s]
+[16/1000; 800/1000] Loss: 0.8687 (30.46s) [sample=0.00s gpu=0.33s]
+[16/1000; 900/1000] Loss: 0.5541 (30.14s) [sample=0.00s gpu=0.33s]
+[16/1000; 1000/1000] Loss: 0.9460 (32.35s) [sample=0.00s gpu=0.32s]
+[16/1000] Absolute error: 0.7650
+[16/1000] Saved new best model
+[17/1000; 100/1000] Loss: 0.5667 (32.97s) [sample=0.00s gpu=0.34s]
+[17/1000; 200/1000] Loss: 0.8175 (32.49s) [sample=0.00s gpu=0.32s]
+[17/1000; 300/1000] Loss: 0.7371 (33.50s) [sample=0.00s gpu=0.32s]
+[17/1000; 400/1000] Loss: 0.4923 (32.20s) [sample=0.00s gpu=0.31s]
+[17/1000; 500/1000] Loss: 0.3503 (30.73s) [sample=0.00s gpu=0.31s]
+[17/1000; 600/1000] Loss: 1.2226 (30.82s) [sample=0.00s gpu=0.31s]
+[17/1000; 700/1000] Loss: 0.6334 (30.99s) [sample=0.00s gpu=0.29s]
+[17/1000; 800/1000] Loss: 62.7441 (32.20s) [sample=0.00s gpu=0.49s]
+[17/1000; 900/1000] Loss: 32.3123 (31.12s) [sample=0.00s gpu=0.29s]
+[17/1000; 1000/1000] Loss: 2.3515 (30.32s) [sample=0.00s gpu=0.31s]
+[17/1000] Absolute error: 1.4274
+[18/1000; 100/1000] Loss: 1.4281 (32.33s) [sample=0.00s gpu=0.32s]
+[18/1000; 200/1000] Loss: 1.1789 (31.95s) [sample=0.00s gpu=0.31s]
+[18/1000; 300/1000] Loss: 0.8568 (32.18s) [sample=0.00s gpu=0.31s]
+[18/1000; 400/1000] Loss: 0.7369 (32.57s) [sample=0.00s gpu=0.34s]
+[18/1000; 500/1000] Loss: 0.9491 (33.43s) [sample=0.00s gpu=0.33s]
+[18/1000; 600/1000] Loss: 0.6914 (31.57s) [sample=0.00s gpu=0.28s]
+[18/1000; 700/1000] Loss: 0.6653 (29.22s) [sample=0.00s gpu=0.27s]
+[18/1000; 800/1000] Loss: 0.9428 (27.76s) [sample=0.00s gpu=0.29s]
+[18/1000; 900/1000] Loss: 0.5879 (28.02s) [sample=0.00s gpu=0.27s]
+[18/1000; 1000/1000] Loss: 1.3201 (29.32s) [sample=0.00s gpu=0.32s]
+[18/1000] Absolute error: 1.7090
+[19/1000; 100/1000] Loss: 1.1634 (32.81s) [sample=0.00s gpu=0.34s]
+[19/1000; 200/1000] Loss: 0.6425 (32.99s) [sample=0.00s gpu=0.32s]
+[19/1000; 300/1000] Loss: 0.4876 (30.43s) [sample=0.00s gpu=0.28s]
+[19/1000; 400/1000] Loss: 0.6206 (31.18s) [sample=0.00s gpu=0.31s]
+[19/1000; 500/1000] Loss: 0.8904 (32.94s) [sample=0.00s gpu=0.34s]
+[19/1000; 600/1000] Loss: 0.4239 (32.42s) [sample=0.00s gpu=0.31s]
+[19/1000; 700/1000] Loss: 0.6016 (31.10s) [sample=0.00s gpu=0.29s]
+[19/1000; 800/1000] Loss: 0.6310 (29.78s) [sample=0.00s gpu=0.26s]
+[19/1000; 900/1000] Loss: 0.4891 (28.07s) [sample=0.00s gpu=0.27s]
+[19/1000; 1000/1000] Loss: 0.6866 (27.85s) [sample=0.00s gpu=0.28s]
+[19/1000] Absolute error: 1.2031
+[20/1000; 100/1000] Loss: 15.8717 (28.20s) [sample=0.00s gpu=0.31s]
+[20/1000; 200/1000] Loss: 0.7464 (30.79s) [sample=0.00s gpu=0.30s]
+[20/1000; 300/1000] Loss: 0.5396 (32.63s) [sample=0.00s gpu=0.35s]
+[20/1000; 400/1000] Loss: 1.0231 (33.57s) [sample=0.00s gpu=0.33s]
+[20/1000; 500/1000] Loss: 0.5873 (33.22s) [sample=0.00s gpu=0.33s]
+[20/1000; 600/1000] Loss: 0.8361 (32.02s) [sample=0.00s gpu=0.33s]
+[20/1000; 700/1000] Loss: 0.9483 (33.79s) [sample=0.00s gpu=0.33s]
+[20/1000; 800/1000] Loss: 1.3033 (33.42s) [sample=0.00s gpu=0.32s]
+[20/1000; 900/1000] Loss: 0.4902 (33.91s) [sample=0.00s gpu=0.34s]
+[20/1000; 1000/1000] Loss: 0.3630 (34.03s) [sample=0.00s gpu=0.34s]
+[20/1000] Absolute error: 0.5464
+[20/1000] Saved new best model
+[21/1000; 100/1000] Loss: 0.5598 (33.71s) [sample=0.00s gpu=0.34s]
+[21/1000; 200/1000] Loss: 0.5953 (33.12s) [sample=0.00s gpu=0.31s]
+[21/1000; 300/1000] Loss: 0.5009 (32.05s) [sample=0.00s gpu=0.31s]
+[21/1000; 400/1000] Loss: 0.4166 (30.00s) [sample=0.00s gpu=0.28s]
+[21/1000; 500/1000] Loss: 0.6922 (32.01s) [sample=0.00s gpu=0.34s]
+[21/1000; 600/1000] Loss: 1.1073 (33.23s) [sample=0.00s gpu=0.31s]
+[21/1000; 700/1000] Loss: 0.4740 (32.85s) [sample=0.00s gpu=0.32s]
+[21/1000; 800/1000] Loss: 0.6800 (31.60s) [sample=0.00s gpu=0.27s]
+[21/1000; 900/1000] Loss: 0.6432 (31.02s) [sample=0.00s gpu=0.34s]
+[21/1000; 1000/1000] Loss: 0.5247 (33.37s) [sample=0.00s gpu=0.32s]
+[21/1000] Absolute error: 0.4818
+[21/1000] Saved new best model
+[22/1000; 100/1000] Loss: 0.4729 (29.49s) [sample=0.00s gpu=0.31s]
+[22/1000; 200/1000] Loss: 0.6532 (30.30s) [sample=0.00s gpu=0.39s]
+[22/1000; 300/1000] Loss: 0.8548 (29.24s) [sample=0.00s gpu=0.28s]
+[22/1000; 400/1000] Loss: 0.8126 (29.18s) [sample=0.00s gpu=0.26s]
+[22/1000; 500/1000] Loss: 0.4130 (30.46s) [sample=0.00s gpu=0.32s]
+[22/1000; 600/1000] Loss: 0.4137 (28.81s) [sample=0.00s gpu=0.27s]
+[22/1000; 700/1000] Loss: 0.4375 (28.23s) [sample=0.00s gpu=0.27s]
+[22/1000; 800/1000] Loss: 0.3761 (28.25s) [sample=0.00s gpu=0.27s]
+[22/1000; 900/1000] Loss: 0.7564 (28.12s) [sample=0.00s gpu=0.27s]
+[22/1000; 1000/1000] Loss: 0.3796 (28.26s) [sample=0.00s gpu=0.30s]
+[22/1000] Absolute error: 0.9704
+[23/1000; 100/1000] Loss: 0.3254 (28.85s) [sample=0.00s gpu=0.29s]
+[23/1000; 200/1000] Loss: 0.3969 (29.27s) [sample=0.00s gpu=0.26s]
+[23/1000; 300/1000] Loss: 0.7818 (29.01s) [sample=0.00s gpu=0.27s]
+[23/1000; 400/1000] Loss: 0.5797 (29.41s) [sample=0.00s gpu=0.29s]
+[23/1000; 500/1000] Loss: 0.4887 (30.83s) [sample=0.00s gpu=0.31s]
+[23/1000; 600/1000] Loss: 0.6189 (31.37s) [sample=0.00s gpu=0.31s]
+[23/1000; 700/1000] Loss: 0.6891 (30.55s) [sample=0.00s gpu=0.31s]
+[23/1000; 800/1000] Loss: 1.2009 (30.86s) [sample=0.00s gpu=0.31s]
+[23/1000; 900/1000] Loss: 0.7295 (30.87s) [sample=0.00s gpu=0.30s]
+[23/1000; 1000/1000] Loss: 0.7422 (31.01s) [sample=0.00s gpu=0.31s]
+[23/1000] Absolute error: 0.6942
+[24/1000; 100/1000] Loss: 0.4258 (30.89s) [sample=0.00s gpu=0.31s]
+[24/1000; 200/1000] Loss: 0.4095 (30.84s) [sample=0.00s gpu=0.28s]
+[24/1000; 300/1000] Loss: 0.5886 (33.13s) [sample=0.00s gpu=0.34s]
+[24/1000; 400/1000] Loss: 0.3736 (33.93s) [sample=0.00s gpu=0.34s]
+[24/1000; 500/1000] Loss: 0.5476 (33.84s) [sample=0.00s gpu=0.34s]
+[24/1000; 600/1000] Loss: 15.9849 (34.24s) [sample=0.00s gpu=0.48s]
+[24/1000; 700/1000] Loss: 4.1348 (34.13s) [sample=0.00s gpu=0.34s]
+[24/1000; 800/1000] Loss: 1.7269 (32.78s) [sample=0.00s gpu=0.31s]
+[24/1000; 900/1000] Loss: 0.6435 (31.08s) [sample=0.00s gpu=0.30s]
+[24/1000; 1000/1000] Loss: 0.7837 (29.29s) [sample=0.00s gpu=0.27s]
+[24/1000] Absolute error: 1.7401
+[25/1000; 100/1000] Loss: 1.1656 (29.81s) [sample=0.00s gpu=0.31s]
+[25/1000; 200/1000] Loss: 1.1604 (33.38s) [sample=0.00s gpu=0.33s]
+[25/1000; 300/1000] Loss: 0.6214 (34.26s) [sample=0.00s gpu=0.35s]
+[25/1000; 400/1000] Loss: 0.6382 (34.54s) [sample=0.00s gpu=0.34s]
+[25/1000; 500/1000] Loss: 0.6320 (34.29s) [sample=0.00s gpu=0.35s]
+[25/1000; 600/1000] Loss: 1.7588 (33.99s) [sample=0.00s gpu=0.34s]
+[25/1000; 700/1000] Loss: 0.7826 (34.34s) [sample=0.00s gpu=0.33s]
+[25/1000; 800/1000] Loss: 0.6395 (33.28s) [sample=0.00s gpu=0.31s]
+[25/1000; 900/1000] Loss: 0.6897 (31.34s) [sample=0.00s gpu=0.31s]
+[25/1000; 1000/1000] Loss: 0.4280 (31.14s) [sample=0.00s gpu=0.31s]
+[25/1000] Absolute error: 1.0426
+[26/1000; 100/1000] Loss: 0.5117 (31.91s) [sample=0.00s gpu=0.29s]
+[26/1000; 200/1000] Loss: 0.6166 (28.19s) [sample=0.00s gpu=0.27s]
+[26/1000; 300/1000] Loss: 0.8880 (28.62s) [sample=0.00s gpu=0.43s]
+[26/1000; 400/1000] Loss: 0.5932 (28.87s) [sample=0.00s gpu=0.27s]
+[26/1000; 500/1000] Loss: 0.6426 (33.06s) [sample=0.00s gpu=0.33s]
+[26/1000; 600/1000] Loss: 0.4953 (33.39s) [sample=0.00s gpu=0.34s]
+[26/1000; 700/1000] Loss: 0.8094 (31.05s) [sample=0.00s gpu=0.31s]
+[26/1000; 800/1000] Loss: 0.7766 (33.01s) [sample=0.00s gpu=0.34s]
+[26/1000; 900/1000] Loss: 0.5351 (33.56s) [sample=0.00s gpu=0.31s]
+[26/1000; 1000/1000] Loss: 0.4758 (32.81s) [sample=0.00s gpu=0.34s]
+[26/1000] Absolute error: 0.4639
+[26/1000] Saved new best model
+[27/1000; 100/1000] Loss: 0.8812 (33.21s) [sample=0.00s gpu=0.34s]
+[27/1000; 200/1000] Loss: 0.3583 (32.23s) [sample=0.00s gpu=0.31s]
+[27/1000; 300/1000] Loss: 0.7063 (30.75s) [sample=0.00s gpu=0.31s]
+[27/1000; 400/1000] Loss: 0.3230 (31.39s) [sample=0.00s gpu=0.31s]
+[27/1000; 500/1000] Loss: 0.9113 (31.26s) [sample=0.01s gpu=0.31s]
+[27/1000; 600/1000] Loss: 0.6441 (34.02s) [sample=0.00s gpu=0.30s]
+[27/1000; 700/1000] Loss: 2.0302 (31.05s) [sample=0.00s gpu=0.31s]
+[27/1000; 800/1000] Loss: 2.2790 (31.21s) [sample=0.00s gpu=0.31s]
+[27/1000; 900/1000] Loss: 32.3472 (33.45s) [sample=0.00s gpu=0.33s]
+[27/1000; 1000/1000] Loss: 31.8777 (31.06s) [sample=0.00s gpu=0.33s]
+[27/1000] Absolute error: 4.2369
+[28/1000; 100/1000] Loss: 1.1854 (31.47s) [sample=0.00s gpu=0.34s]
+[28/1000; 200/1000] Loss: 1.5442 (34.49s) [sample=0.00s gpu=0.34s]
+[28/1000; 300/1000] Loss: 0.9930 (34.06s) [sample=0.00s gpu=0.34s]
+[28/1000; 400/1000] Loss: 1.1312 (33.54s) [sample=0.00s gpu=0.33s]
+[28/1000; 500/1000] Loss: 0.7431 (33.18s) [sample=0.00s gpu=0.32s]
+[28/1000; 600/1000] Loss: 0.6832 (30.38s) [sample=0.00s gpu=0.28s]
+[28/1000; 700/1000] Loss: 0.7414 (32.19s) [sample=0.00s gpu=0.32s]
+[28/1000; 800/1000] Loss: 1.3117 (33.65s) [sample=0.00s gpu=0.33s]
+[28/1000; 900/1000] Loss: 0.7256 (33.83s) [sample=0.00s gpu=0.34s]
+[28/1000; 1000/1000] Loss: 0.8703 (33.79s) [sample=0.00s gpu=0.34s]
+[28/1000] Absolute error: 1.7485
+[29/1000; 100/1000] Loss: 0.6049 (33.63s) [sample=0.01s gpu=0.30s]
+[29/1000; 200/1000] Loss: 0.7219 (33.43s) [sample=0.01s gpu=0.31s]
+[29/1000; 300/1000] Loss: 0.6889 (33.34s) [sample=0.00s gpu=0.33s]
+[29/1000; 400/1000] Loss: 0.8570 (33.97s) [sample=0.00s gpu=0.31s]
+[29/1000; 500/1000] Loss: 0.7986 (32.94s) [sample=0.00s gpu=0.34s]
+[29/1000; 600/1000] Loss: 0.8658 (33.82s) [sample=0.00s gpu=0.34s]
+[29/1000; 700/1000] Loss: 0.6161 (33.75s) [sample=0.00s gpu=0.34s]
+[29/1000; 800/1000] Loss: 0.3952 (33.93s) [sample=0.00s gpu=0.31s]
+[29/1000; 900/1000] Loss: 1.0565 (30.50s) [sample=0.00s gpu=0.32s]
+[29/1000; 1000/1000] Loss: 0.6378 (31.31s) [sample=0.00s gpu=0.34s]
+[29/1000] Absolute error: 0.8942
+[30/1000; 100/1000] Loss: 0.8444 (33.54s) [sample=0.00s gpu=0.34s]
+[30/1000; 200/1000] Loss: 0.9189 (33.66s) [sample=0.00s gpu=0.34s]
+[30/1000; 300/1000] Loss: 0.3534 (33.25s) [sample=0.00s gpu=0.33s]
+[30/1000; 400/1000] Loss: 0.6016 (31.01s) [sample=0.00s gpu=0.28s]
+[30/1000; 500/1000] Loss: 0.8362 (28.06s) [sample=0.00s gpu=0.28s]
+[30/1000; 600/1000] Loss: 0.5105 (28.50s) [sample=0.01s gpu=0.28s]
+[30/1000; 700/1000] Loss: 0.3969 (28.37s) [sample=0.00s gpu=0.28s]
+[30/1000; 800/1000] Loss: 0.5271 (28.58s) [sample=0.00s gpu=0.28s]
+[30/1000; 900/1000] Loss: 0.5556 (28.26s) [sample=0.00s gpu=0.29s]
+[30/1000; 1000/1000] Loss: 0.5430 (29.27s) [sample=0.00s gpu=0.29s]
+[30/1000] Absolute error: 1.1378
+[31/1000; 100/1000] Loss: 0.3562 (28.32s) [sample=0.01s gpu=0.28s]
+[31/1000; 200/1000] Loss: 0.5569 (31.23s) [sample=0.00s gpu=0.32s]
+[31/1000; 300/1000] Loss: 0.3662 (31.00s) [sample=0.00s gpu=0.28s]
+[31/1000; 400/1000] Loss: 0.7631 (28.18s) [sample=0.00s gpu=0.26s]
+[31/1000; 500/1000] Loss: 0.5028 (31.75s) [sample=0.00s gpu=0.32s]
+[31/1000; 600/1000] Loss: 0.4876 (33.07s) [sample=0.01s gpu=0.33s]
+[31/1000; 700/1000] Loss: 0.4840 (32.63s) [sample=0.00s gpu=0.32s]
+[31/1000; 800/1000] Loss: 0.8607 (33.56s) [sample=0.00s gpu=0.47s]
+[31/1000; 900/1000] Loss: 0.7205 (33.41s) [sample=0.00s gpu=0.33s]
+[31/1000; 1000/1000] Loss: 0.6832 (33.11s) [sample=0.00s gpu=0.33s]
+[31/1000] Absolute error: 0.9454
+[32/1000; 100/1000] Loss: 1.0438 (33.15s) [sample=0.00s gpu=0.33s]
+[32/1000; 200/1000] Loss: 0.6553 (32.96s) [sample=0.00s gpu=0.33s]
+[32/1000; 300/1000] Loss: 0.5391 (33.58s) [sample=0.00s gpu=0.34s]
+[32/1000; 400/1000] Loss: 0.7268 (33.13s) [sample=0.00s gpu=0.32s]
+[32/1000; 500/1000] Loss: 0.3717 (29.88s) [sample=0.00s gpu=0.30s]
+[32/1000; 600/1000] Loss: 0.9205 (32.05s) [sample=0.00s gpu=0.33s]
+[32/1000; 700/1000] Loss: 0.3978 (33.00s) [sample=0.00s gpu=0.29s]
+[32/1000; 800/1000] Loss: 1.0183 (31.54s) [sample=0.00s gpu=0.32s]
+[32/1000; 900/1000] Loss: 0.4511 (31.45s) [sample=0.00s gpu=0.32s]
+[32/1000; 1000/1000] Loss: 1.0231 (34.03s) [sample=0.00s gpu=0.33s]
+[32/1000] Absolute error: 1.3098
+[33/1000; 100/1000] Loss: 0.7701 (33.35s) [sample=0.00s gpu=0.33s]
+[33/1000; 200/1000] Loss: 0.4562 (33.22s) [sample=0.00s gpu=0.32s]
+[33/1000; 300/1000] Loss: 0.3686 (33.63s) [sample=0.00s gpu=0.34s]
+[33/1000; 400/1000] Loss: 0.6671 (31.96s) [sample=0.00s gpu=0.31s]
+[33/1000; 500/1000] Loss: 0.5797 (31.34s) [sample=0.00s gpu=0.34s]
+[33/1000; 600/1000] Loss: 0.4578 (31.93s) [sample=0.00s gpu=0.34s]
+[33/1000; 700/1000] Loss: 0.7161 (33.33s) [sample=0.00s gpu=0.34s]
+[33/1000; 800/1000] Loss: 0.4740 (33.28s) [sample=0.00s gpu=0.34s]
+[33/1000; 900/1000] Loss: 0.3366 (33.29s) [sample=0.00s gpu=0.34s]
+[33/1000; 1000/1000] Loss: 0.4427 (31.08s) [sample=0.00s gpu=0.31s]
+[33/1000] Absolute error: 0.7144
+[34/1000; 100/1000] Loss: 0.3950 (33.80s) [sample=0.00s gpu=0.34s]
+[34/1000; 200/1000] Loss: 0.3759 (33.26s) [sample=0.00s gpu=0.31s]
+[34/1000; 300/1000] Loss: 0.4439 (30.67s) [sample=0.00s gpu=0.31s]
+[34/1000; 400/1000] Loss: 0.4362 (30.33s) [sample=0.00s gpu=0.31s]
+[34/1000; 500/1000] Loss: 0.5819 (30.89s) [sample=0.00s gpu=0.30s]
+[34/1000; 600/1000] Loss: 0.3940 (30.68s) [sample=0.00s gpu=0.29s]
+[34/1000; 700/1000] Loss: 0.4477 (31.19s) [sample=0.00s gpu=0.29s]
+[34/1000; 800/1000] Loss: 0.9503 (29.05s) [sample=0.00s gpu=0.29s]
+[34/1000; 900/1000] Loss: 0.4520 (29.00s) [sample=0.00s gpu=0.29s]
+[34/1000; 1000/1000] Loss: 0.7703 (32.48s) [sample=0.00s gpu=0.34s]
+[34/1000] Absolute error: 0.7054
+[35/1000; 100/1000] Loss: 0.6569 (34.11s) [sample=0.00s gpu=0.34s]
+[35/1000; 200/1000] Loss: 0.5872 (33.75s) [sample=0.00s gpu=0.34s]
+[35/1000; 300/1000] Loss: 0.5404 (33.63s) [sample=0.00s gpu=0.34s]
+[35/1000; 400/1000] Loss: 0.4573 (33.92s) [sample=0.01s gpu=0.33s]
+[35/1000; 500/1000] Loss: 0.7057 (33.23s) [sample=0.00s gpu=0.33s]
+[35/1000; 600/1000] Loss: 0.2984 (32.85s) [sample=0.01s gpu=0.31s]
+[35/1000; 700/1000] Loss: 1.1844 (32.71s) [sample=0.00s gpu=0.43s]
+[35/1000; 800/1000] Loss: 0.4579 (33.27s) [sample=0.00s gpu=0.34s]
+[35/1000; 900/1000] Loss: 0.6684 (33.56s) [sample=0.00s gpu=0.33s]
+[35/1000; 1000/1000] Loss: 0.4777 (33.17s) [sample=0.00s gpu=0.32s]
+[35/1000] Absolute error: 1.1058
+[36/1000; 100/1000] Loss: 0.6124 (33.03s) [sample=0.01s gpu=0.31s]
+[36/1000; 200/1000] Loss: 0.5643 (31.02s) [sample=0.00s gpu=0.39s]
+[36/1000; 300/1000] Loss: 0.4065 (31.12s) [sample=0.00s gpu=0.29s]
+[36/1000; 400/1000] Loss: 0.3463 (32.83s) [sample=0.00s gpu=0.34s]
+[36/1000; 500/1000] Loss: 0.5623 (33.13s) [sample=0.01s gpu=0.33s]
+[36/1000; 600/1000] Loss: 0.5185 (32.26s) [sample=0.00s gpu=0.29s]
+[36/1000; 700/1000] Loss: 0.7648 (29.35s) [sample=0.00s gpu=0.29s]
+[36/1000; 800/1000] Loss: 0.2635 (29.11s) [sample=0.00s gpu=0.32s]
+[36/1000; 900/1000] Loss: 0.2915 (33.50s) [sample=0.00s gpu=0.33s]
+[36/1000; 1000/1000] Loss: 0.8081 (33.33s) [sample=0.00s gpu=0.32s]
+[36/1000] Absolute error: 0.6976
+[37/1000; 100/1000] Loss: 0.4281 (29.79s) [sample=0.00s gpu=0.28s]
+[37/1000; 200/1000] Loss: 0.5572 (29.78s) [sample=0.00s gpu=0.32s]
+[37/1000; 300/1000] Loss: 0.3444 (32.86s) [sample=0.00s gpu=0.35s]
+[37/1000; 400/1000] Loss: 0.6083 (31.87s) [sample=0.00s gpu=0.30s]
+[37/1000; 500/1000] Loss: 0.6275 (32.91s) [sample=0.00s gpu=0.33s]
+[37/1000; 600/1000] Loss: 0.4317 (32.58s) [sample=0.00s gpu=0.31s]
+[37/1000; 700/1000] Loss: 0.7741 (34.06s) [sample=0.00s gpu=0.34s]
+[37/1000; 800/1000] Loss: 0.3767 (32.16s) [sample=0.00s gpu=0.29s]
+[37/1000; 900/1000] Loss: 0.6380 (31.37s) [sample=0.00s gpu=0.30s]
+[37/1000; 1000/1000] Loss: 0.4653 (32.93s) [sample=0.00s gpu=0.34s]
+[37/1000] Absolute error: 1.5904
+[38/1000; 100/1000] Loss: 0.4676 (34.37s) [sample=0.00s gpu=0.34s]
+[38/1000; 200/1000] Loss: 0.5517 (34.03s) [sample=0.00s gpu=0.34s]
+[38/1000; 300/1000] Loss: 0.5382 (33.75s) [sample=0.00s gpu=0.32s]
+[38/1000; 400/1000] Loss: 0.5300 (31.88s) [sample=0.00s gpu=0.29s]
+[38/1000; 500/1000] Loss: 0.5519 (30.20s) [sample=0.00s gpu=0.25s]
+[38/1000; 600/1000] Loss: 0.4395 (27.84s) [sample=0.00s gpu=0.29s]
+[38/1000; 700/1000] Loss: 0.6811 (28.45s) [sample=0.00s gpu=0.28s]
+[38/1000; 800/1000] Loss: 15.0577 (29.72s) [sample=0.00s gpu=0.34s]
+[38/1000; 900/1000] Loss: 0.5811 (33.63s) [sample=0.00s gpu=0.34s]
+[38/1000; 1000/1000] Loss: 0.5224 (33.81s) [sample=0.00s gpu=0.33s]
+[38/1000] Absolute error: 1.0106
+[39/1000; 100/1000] Loss: 0.5826 (33.62s) [sample=0.00s gpu=0.34s]
+[39/1000; 200/1000] Loss: 0.5523 (34.02s) [sample=0.00s gpu=0.34s]
+[39/1000; 300/1000] Loss: 0.7721 (34.21s) [sample=0.00s gpu=0.34s]
+[39/1000; 400/1000] Loss: 0.3634 (31.18s) [sample=0.00s gpu=0.31s]
+[39/1000; 500/1000] Loss: 0.4349 (30.28s) [sample=0.00s gpu=0.30s]
+[39/1000; 600/1000] Loss: 0.8665 (30.78s) [sample=0.00s gpu=0.31s]
+[39/1000; 700/1000] Loss: 0.4065 (31.15s) [sample=0.00s gpu=0.29s]
+[39/1000; 800/1000] Loss: 0.4111 (30.02s) [sample=0.00s gpu=0.28s]
+[39/1000; 900/1000] Loss: 0.7823 (31.20s) [sample=0.00s gpu=0.34s]
+[39/1000; 1000/1000] Loss: 0.3631 (33.96s) [sample=0.00s gpu=0.35s]
+[39/1000] Absolute error: 0.3464
+[39/1000] Saved new best model
+[40/1000; 100/1000] Loss: 0.3916 (33.90s) [sample=0.00s gpu=0.34s]
+[40/1000; 200/1000] Loss: 0.4472 (34.00s) [sample=0.00s gpu=0.33s]
+[40/1000; 300/1000] Loss: 0.3537 (32.99s) [sample=0.00s gpu=0.34s]
+[40/1000; 400/1000] Loss: 0.5887 (33.95s) [sample=0.00s gpu=0.34s]
+[40/1000; 500/1000] Loss: 0.8457 (32.97s) [sample=0.00s gpu=0.33s]
+[40/1000; 600/1000] Loss: 0.5271 (33.27s) [sample=0.00s gpu=0.34s]
+[40/1000; 700/1000] Loss: 0.4703 (33.52s) [sample=0.00s gpu=0.33s]
+[40/1000; 800/1000] Loss: 0.4338 (33.06s) [sample=0.00s gpu=0.33s]
+[40/1000; 900/1000] Loss: 0.5691 (33.28s) [sample=0.00s gpu=0.31s]
+[40/1000; 1000/1000] Loss: 1.2754 (30.52s) [sample=0.00s gpu=0.31s]
+[40/1000] Absolute error: 0.7775
+[41/1000; 100/1000] Loss: 0.4765 (31.71s) [sample=0.00s gpu=0.30s]
+[41/1000; 200/1000] Loss: 0.5091 (31.02s) [sample=0.00s gpu=0.29s]
+[41/1000; 300/1000] Loss: 0.5531 (31.74s) [sample=0.00s gpu=0.32s]
+[41/1000; 400/1000] Loss: 0.5344 (33.48s) [sample=0.00s gpu=0.34s]
+[41/1000; 500/1000] Loss: 0.6860 (33.30s) [sample=0.00s gpu=0.34s]
+[41/1000; 600/1000] Loss: 0.5844 (33.59s) [sample=0.00s gpu=0.32s]
+[41/1000; 700/1000] Loss: 0.4429 (33.57s) [sample=0.00s gpu=0.34s]
+[41/1000; 800/1000] Loss: 0.5056 (33.84s) [sample=0.00s gpu=0.33s]
+[41/1000; 900/1000] Loss: 0.3148 (31.06s) [sample=0.00s gpu=0.31s]
+[41/1000; 1000/1000] Loss: 0.2887 (30.64s) [sample=0.00s gpu=0.30s]
+[41/1000] Absolute error: 0.5151
+[42/1000; 100/1000] Loss: 0.4379 (31.09s) [sample=0.00s gpu=0.31s]
+[42/1000; 200/1000] Loss: 0.5686 (34.08s) [sample=0.00s gpu=0.34s]
+[42/1000; 300/1000] Loss: 0.5575 (33.95s) [sample=0.00s gpu=0.33s]
+[42/1000; 400/1000] Loss: 0.2516 (33.96s) [sample=0.00s gpu=0.32s]
+[42/1000; 500/1000] Loss: 0.5225 (34.08s) [sample=0.00s gpu=0.33s]
+[42/1000; 600/1000] Loss: 0.7055 (33.75s) [sample=0.00s gpu=0.34s]
+[42/1000; 700/1000] Loss: 0.5356 (33.60s) [sample=0.00s gpu=0.34s]
+[42/1000; 800/1000] Loss: 0.3994 (34.05s) [sample=0.00s gpu=0.33s]
+[42/1000; 900/1000] Loss: 0.4908 (33.32s) [sample=0.00s gpu=0.34s]
+[42/1000; 1000/1000] Loss: 0.4454 (33.71s) [sample=0.00s gpu=0.30s]
+[42/1000] Absolute error: 0.8882
+[43/1000; 100/1000] Loss: 0.2993 (28.31s) [sample=0.00s gpu=0.28s]
+[43/1000; 200/1000] Loss: 0.5080 (28.28s) [sample=0.00s gpu=0.29s]
+[43/1000; 300/1000] Loss: 0.3285 (27.77s) [sample=0.00s gpu=0.28s]
+[43/1000; 400/1000] Loss: 0.3500 (28.12s) [sample=0.00s gpu=0.40s]
+[43/1000; 500/1000] Loss: 0.4676 (28.62s) [sample=0.00s gpu=0.27s]
+[43/1000; 600/1000] Loss: 0.4950 (28.30s) [sample=0.00s gpu=0.26s]
+[43/1000; 700/1000] Loss: 0.4386 (28.29s) [sample=0.00s gpu=0.28s]
+slurmstepd: error: *** JOB 2596447 ON cn-426 CANCELLED AT 2026-05-27T17:12:22 DUE TO TIME LIMIT ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2596447
+Time: Wed May 27 17:12:22 CEST 2026
+Elapsed Time: 04:00:00
+Billing per second for TRES: billing=591,cpu=4,gres/shard=48,mem=64G,node=1
+Show resource usage with e.g.:
+sacct -j 2596447 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

@@ -68,6 +68,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--learning_rate', default=0.0002, type=float, help='Learning rate for the training process')
     parser.add_argument('--num_epochs', default=1_000, type=int, help='Number of epochs for the training process')
     parser.add_argument('--seed', default=42, type=int, help='Random seed for reproducibility')
+    parser.add_argument('--output_prefix', default='', type=str, help='Prefix for output model files (e.g., "rovers_")')
     args = parser.parse_args()
     return args
 
@@ -116,7 +117,7 @@ def _generate_state_spaces(problems: list[mm.Problem], seed: int) -> list[mm.Sta
     state_space_samplers: list[mm.StateSpaceSampler] = []
     for problem in problems:
         print(f'> Expanding: {problem.get_name()}')
-        state_space_sampler = mm.StateSpaceSampler.new(problem, 10_000_000)
+        state_space_sampler = mm.StateSpaceSampler.new(problem, 100_000)
         if state_space_sampler is not None:
             state_space_sampler.set_seed(seed)
             state_space_samplers.append(state_space_sampler)
@@ -183,7 +184,8 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
            validation_states: StateDataset,
            num_epochs: int,
            batch_size: int,
-           device: torch.device) -> None:
+           device: torch.device,
+           output_prefix: str = '') -> None:
     TRAIN_SIZE = 1000
     VALIDATION_SIZE = 100
     best_error = None  # Track the best validation loss to detect overfitting.
@@ -219,10 +221,10 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
                 total_samples = VALIDATION_SIZE * batch_size
                 error = error / total_samples
                 print(f'[{epoch + 1}/{num_epochs}] Absolute error: {error.item():.4f}')
-                model.save('latest.pth', { 'optimizer': optimizer.state_dict() })
+                model.save(output_prefix + 'latest.pth', { 'optimizer': optimizer.state_dict() })
                 if (best_error is None) or (error < best_error):
                     best_error = error
-                    model.save('best.pth', { 'optimizer': optimizer.state_dict() })
+                    model.save(output_prefix + 'best.pth', { 'optimizer': optimizer.state_dict() })
                     print(f'[{epoch + 1}/{num_epochs}] Saved new best model')
     finally:
         train_prefetcher.stop()
@@ -249,7 +251,7 @@ def _main(args: argparse.Namespace) -> None:
         model, extras = rgnn.RelationalGraphNeuralNetwork.load(domain, args.model, device)
         optimizer = optim.Adam(model.parameters(), lr=args.learning_rate)
         _load_optimizer_state(optimizer, extras, args.model)
-    _train(model, optimizer, train_dataset, validation_dataset, args.num_epochs, args.batch_size, device)
+    _train(model, optimizer, train_dataset, validation_dataset, args.num_epochs, args.batch_size, device, args.output_prefix)
 
 
 if __name__ == "__main__":

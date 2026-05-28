@@ -1,0 +1,531 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2595538
+Job name: wrap
+Host: cn-421
+Date: Wed May 27 06:02:33 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2590557 rleap_gpu rgnet-ac daniel.s  R 1-05:29:48      1 cn-421
+2590579 rleap_gpu rgnet-ac daniel.s  R 1-04:53:57      1 cn-421
+2590593 rleap_gpu rgnet-ac daniel.s  R   20:40:49      1 cn-421
+2595538 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-421
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+Using domain folder: example/barman_dataset
+Finding paths...
+Parsing instances...
+- Domain: barman
+- # Train problems: 156
+- # Val problems: 78
+Generating state spaces...
+> Expanding: prob
+- Added with 406 states
+> Expanding: prob
+- Added with 406 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 6058 states
+> Expanding: prob
+- Added with 6058 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 188937 states
+> Expanding: prob
+- Added with 188937 states
+> Expanding: prob
+- Added with 188937 states
+> Expanding: prob
+- Added with 188937 states
+> Expanding: prob
+- Added with 188937 states
+> Expanding: prob
+- Added with 188937 states
+> Expanding: prob
+- Added with 188937 states
+> Expanding: prob
+- Added with 188937 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 212646 states
+> Expanding: prob
+- Added with 741334 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 53833 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+> Expanding: prob
+- Added with 402864 states
+Generating state spaces...
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 459711 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 528549 states
+> Expanding: prob
+- Added with 2586547 states
+> Expanding: prob
+- Added with 2842514 states
+> Expanding: prob
+- Added with 7218754 states
+> Expanding: prob
+- Added with 92144 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+> Expanding: prob
+- Added with 860244 states
+Creating state samplers...
+Creating a new model and optimizer...
+Training model...
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+[1/1000; 100/1000] Loss: 53.5124 (30.34s) [sample=0.00s gpu=0.31s]
+[1/1000; 200/1000] Loss: 33.3922 (30.34s) [sample=0.00s gpu=0.29s]
+[1/1000; 300/1000] Loss: 18.4298 (30.44s) [sample=0.00s gpu=0.29s]
+[1/1000; 400/1000] Loss: 63.3567 (30.47s) [sample=0.00s gpu=0.30s]
+[1/1000; 500/1000] Loss: 48.1904 (30.75s) [sample=0.00s gpu=0.29s]
+[1/1000; 600/1000] Loss: 63.3931 (30.81s) [sample=0.00s gpu=0.31s]
+[1/1000; 700/1000] Loss: 47.8986 (27.99s) [sample=0.00s gpu=0.26s]
+[1/1000; 800/1000] Loss: 17.1178 (27.89s) [sample=0.00s gpu=0.27s]
+[1/1000; 900/1000] Loss: 47.2054 (27.84s) [sample=0.00s gpu=0.29s]
+[1/1000; 1000/1000] Loss: 123.7498 (27.85s) [sample=0.01s gpu=0.26s]
+[1/1000] Absolute error: 32.2064
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/train_supervised.py", line 257, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/train_supervised.py", line 253, in _main
+    _train(model, optimizer, train_dataset, validation_dataset, args.num_epochs, args.batch_size, device)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/train_supervised.py", line 223, in _train
+    model.save(args.output_prefix + 'latest.pth', { 'optimizer': optimizer.state_dict() })
+NameError: name 'args' is not defined
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2595538
+Time: Wed May 27 07:02:33 CEST 2026
+Elapsed Time: 01:00:00
+Billing per second for TRES: billing=591,cpu=4,gres/shard=48,mem=64G,node=1
+Show resource usage with e.g.:
+sacct -j 2595538 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

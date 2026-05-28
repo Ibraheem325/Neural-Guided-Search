@@ -1,0 +1,1049 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2595537
+Job name: wrap
+Host: cn-426
+Date: Wed May 27 06:02:33 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2595493 rleap_gpu rgnet-ac daniel.s  R    3:09:00      1 cn-426
+2595494 rleap_gpu rgnet-ac daniel.s  R    3:09:00      1 cn-426
+2595057 rleap_gpu rgnet-ac daniel.s  R    9:14:57      1 cn-426
+2595537 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-426
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+Using domain folder: example/satellite_dataset
+Finding paths...
+Parsing instances...
+- Domain: satellite
+- # Train problems: 373
+- # Val problems: 120
+Generating state spaces...
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 32 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 128 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 384 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 1024 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3456 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 3072 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 27648 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 10368 states
+> Expanding: strips-sat-x-1
+- Added with 10368 states
+> Expanding: strips-sat-x-1
+- Added with 10368 states
+> Expanding: strips-sat-x-1
+- Added with 10368 states
+> Expanding: strips-sat-x-1
+- Added with 10368 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 9216 states
+> Expanding: strips-sat-x-1
+- Added with 82944 states
+Generating state spaces...
+> Expanding: strips-sat-x-1
+- Added with 82944 states
+> Expanding: strips-sat-x-1
+- Added with 82944 states
+> Expanding: strips-sat-x-1
+- Added with 82944 states
+> Expanding: strips-sat-x-1
+- Added with 82944 states
+> Expanding: strips-sat-x-1
+- Added with 82944 states
+> Expanding: strips-sat-x-1
+- Added with 82944 states
+> Expanding: strips-sat-x-1
+- Added with 82944 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 96 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 256 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 4096 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 288 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 768 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 2304 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 12288 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+> Expanding: strips-sat-x-1
+- Added with 1152 states
+Creating state samplers...
+Creating a new model and optimizer...
+Training model...
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+[1/1000; 100/1000] Loss: 1.0848 (21.54s) [sample=0.00s gpu=0.23s]
+[1/1000; 200/1000] Loss: 0.5593 (22.35s) [sample=0.00s gpu=0.22s]
+[1/1000; 300/1000] Loss: 0.7026 (22.30s) [sample=0.00s gpu=0.23s]
+[1/1000; 400/1000] Loss: 0.9692 (21.61s) [sample=0.00s gpu=0.21s]
+[1/1000; 500/1000] Loss: 0.9236 (22.16s) [sample=0.00s gpu=0.22s]
+[1/1000; 600/1000] Loss: 0.5671 (20.80s) [sample=0.00s gpu=0.18s]
+[1/1000; 700/1000] Loss: 0.6105 (18.18s) [sample=0.00s gpu=0.32s]
+[1/1000; 800/1000] Loss: 0.9952 (19.08s) [sample=0.00s gpu=0.19s]
+[1/1000; 900/1000] Loss: 0.8698 (19.82s) [sample=0.00s gpu=0.20s]
+[1/1000; 1000/1000] Loss: 0.4651 (20.44s) [sample=0.00s gpu=0.20s]
+[1/1000] Absolute error: 0.7938
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/train_supervised.py", line 257, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/train_supervised.py", line 253, in _main
+    _train(model, optimizer, train_dataset, validation_dataset, args.num_epochs, args.batch_size, device)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/train_supervised.py", line 223, in _train
+    model.save(args.output_prefix + 'latest.pth', { 'optimizer': optimizer.state_dict() })
+NameError: name 'args' is not defined
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2595537
+Time: Wed May 27 06:07:07 CEST 2026
+Elapsed Time: 00:04:34
+Billing per second for TRES: billing=591,cpu=4,gres/shard=48,mem=64G,node=1
+Show resource usage with e.g.:
+sacct -j 2595537 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------
