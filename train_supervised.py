@@ -1,7 +1,9 @@
 import argparse
 import pymimir as mm
 import pymimir_rgnn as rgnn
+import queue
 import random
+import threading
 import torch
 import torch.optim as optim
 
@@ -27,9 +29,37 @@ class StateDataset:
         return (sampled_state, sampled_label)
 
 
+class BatchPrefetcher:
+    def __init__(self, state_sampler: StateDataset, batch_size: int, device: torch.device, queue_size: int = 4):
+        self._queue: queue.Queue = queue.Queue(maxsize=queue_size)
+        self._stop_event = threading.Event()
+        self._thread = threading.Thread(
+            target=self._worker, args=(state_sampler, batch_size, device), daemon=True
+        )
+        self._thread.start()
+
+    def _worker(self, state_sampler: StateDataset, batch_size: int, device: torch.device) -> None:
+        while not self._stop_event.is_set():
+            batch = _sample_batch(state_sampler, batch_size, device)
+            while not self._stop_event.is_set():
+                try:
+                    self._queue.put(batch, timeout=0.1)
+                    break
+                except queue.Full:
+                    continue
+
+    def next(self) -> tuple:
+        return self._queue.get()
+
+    def stop(self) -> None:
+        self._stop_event.set()
+        self._thread.join(timeout=5.0)
+
+
 def _parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Settings for training')
-    parser.add_argument('--input', required=True, type=Path, help='Path to the training dataset')
+    parser.add_argument('--input', default=Path('examples'), type=Path, help='Path to the folder containing all domain folders')
+    parser.add_argument('--domain', required=True, type=str, help='Name of the domain folder under --input (e.g., "grid", "blocks")')
     parser.add_argument('--model', default=None, type=Path, help='Path to a pre-trained model to continue training from')
     parser.add_argument('--embedding_size', default=32, type=int, help='Dimension of the embedding vector for each object')
     parser.add_argument('--aggregation', default='hmax', type=str, help='Aggregation function ("smax", "hmax", "sum"/"add", or "mean")')
@@ -42,25 +72,43 @@ def _parse_arguments() -> argparse.Namespace:
     return args
 
 
-def _get_instance_paths(input: Path) -> tuple[str, list[str]]:
+def _get_instance_paths(input: Path) -> tuple[str, list[str], list[str]]:
     print('Finding paths...')
     if input.is_file():
         domain_file = str(input.parent / 'domain.pddl')
-        problem_files = [str(input)]
+        train_problem_files = [str(input)]
+        val_problem_files = []
     else:
         domain_file = str(input / 'domain.pddl')
-        problem_files = [str(file) for file in input.glob('*.pddl') if file.name != 'domain.pddl']
-        problem_files.sort()
-    return domain_file, problem_files
+        train_dir = input / 'train'
+        val_dir = input / 'val'
+        if train_dir.is_dir():
+            # New layout: domain.pddl at root, instances under train/ and val/
+            train_problem_files = [str(f) for f in train_dir.glob('*.pddl') if f.name != 'domain.pddl']
+            train_problem_files.sort()
+            if val_dir.is_dir():
+                val_problem_files = [str(f) for f in val_dir.glob('*.pddl') if f.name != 'domain.pddl']
+                val_problem_files.sort()
+            else:
+                val_problem_files = []
+        else:
+            # Old layout: domain.pddl and instances in the same folder
+            train_problem_files = [str(f) for f in input.glob('*.pddl') if f.name != 'domain.pddl']
+            train_problem_files.sort()
+            val_problem_files = []
+    return domain_file, train_problem_files, val_problem_files
 
 
-def _parse_instances(domain_path: str, problem_paths: list[str]) -> tuple[mm.Domain, list[mm.Problem]]:
+
+def _parse_instances(domain_path: str, train_paths: list[str], val_paths: list[str]) -> tuple[mm.Domain, list[mm.Problem], list[mm.Problem]]:
     print('Parsing instances...')
     domain = mm.Domain(domain_path)
-    problems = [mm.Problem(domain, problem_path) for problem_path in problem_paths]
+    train_problems = [mm.Problem(domain, p) for p in train_paths]
+    val_problems = [mm.Problem(domain, p) for p in val_paths]
     print(f'- Domain: {domain.get_name()}')
-    print(f'- # Problems: {len(problems)}')
-    return domain, problems
+    print(f'- # Train problems: {len(train_problems)}')
+    print(f'- # Val problems: {len(val_problems)}')
+    return domain, train_problems, val_problems
 
 
 def _generate_state_spaces(problems: list[mm.Problem], seed: int) -> list[mm.StateSpaceSampler]:
@@ -78,45 +126,36 @@ def _generate_state_spaces(problems: list[mm.Problem], seed: int) -> list[mm.Sta
     return state_space_samplers
 
 
-def _create_datasets(state_space_samplers: list[mm.StateSpaceSampler]) -> tuple[StateDataset, StateDataset]:
+def _create_datasets(train_samplers: list[mm.StateSpaceSampler],
+                    val_samplers: list[mm.StateSpaceSampler]) -> tuple[StateDataset, StateDataset]:
     print('Creating state samplers...')
-    if len(state_space_samplers) == 0:
-        raise ValueError('No state space samplers were generated from the provided problems.')
-    if len(state_space_samplers) == 1:
-        train_state_space_samplers = state_space_samplers.copy()
-        validation_state_space_samplers = state_space_samplers.copy()
-        return StateDataset(train_state_space_samplers), StateDataset(validation_state_space_samplers)
-    train_size = max(1, min(len(state_space_samplers) - 1, int(len(state_space_samplers) * 0.8)))
-    train_state_space_samplers = state_space_samplers[:train_size]
-    validation_state_space_samplers = state_space_samplers[train_size:]
-    train_dataset = StateDataset(train_state_space_samplers)
-    validation_dataset = StateDataset(validation_state_space_samplers)
-    return train_dataset, validation_dataset
+    if len(train_samplers) == 0:
+        raise ValueError('No training state space samplers were generated.')
+    if len(val_samplers) == 0:
+        # Fall back: use train set for validation (or do the old 80/20 split)
+        if len(train_samplers) == 1:
+            return StateDataset(train_samplers.copy()), StateDataset(train_samplers.copy())
+        split = max(1, min(len(train_samplers) - 1, int(len(train_samplers) * 0.8)))
+        return StateDataset(train_samplers[:split]), StateDataset(train_samplers[split:])
+    return StateDataset(train_samplers), StateDataset(val_samplers)
 
 
 def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, device: torch.device) -> rgnn.RelationalGraphNeuralNetwork:
-    if aggregation == 'smax': aggregation_function = rgnn.SmoothMaximumAggregation()
-    elif aggregation == 'hmax': aggregation_function = rgnn.HardMaximumAggregation()
-    elif aggregation == 'mean': aggregation_function = rgnn.MeanAggregation()
-    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.SumAggregation()
+    if aggregation == 'smax': aggregation_function = rgnn.AggregationFunction.SmoothMaximum
+    elif aggregation == 'hmax': aggregation_function = rgnn.AggregationFunction.HardMaximum
+    elif aggregation == 'mean': aggregation_function = rgnn.AggregationFunction.Mean
+    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.AggregationFunction.Add
     else: raise RuntimeError(f'Unknown aggregation function: {aggregation}.')
 
-    hparam_config = rgnn.HyperparameterConfig(
+    config = rgnn.RelationalGraphNeuralNetworkConfig(
         domain=domain,
         embedding_size=embedding_size,
-        num_layers=num_layers
+        num_layers=num_layers,
+        message_aggregation=aggregation_function,
+        input_specification=(rgnn.InputType.State, rgnn.InputType.Goal),
+        output_specification=[('value', rgnn.OutputNodeType.Objects, rgnn.OutputValueType.Scalar)],
     )
-
-    input_spec=(rgnn.StateEncoder(), rgnn.GoalEncoder())
-    output_spec=[('value', rgnn.ObjectsScalarDecoder(hparam_config))]
-
-    module_config = rgnn.ModuleConfig(
-        aggregation_function=aggregation_function,
-        message_function=rgnn.AttentionMessages(hparam_config, input_spec, num_heads=8, num_layers=4),
-        update_function=rgnn.MLPUpdates(hparam_config)
-    )
-
-    return rgnn.RelationalGraphNeuralNetwork(hparam_config, module_config, input_spec, output_spec).to(device)  # type: ignore
+    return rgnn.RelationalGraphNeuralNetwork(config).to(device)
 
 
 def _sample_batch(state_sampler: StateDataset, batch_size: int, device: torch.device) -> tuple[list[tuple[mm.State, mm.GroundConjunctiveCondition]], torch.Tensor]:
@@ -147,49 +186,60 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
            device: torch.device) -> None:
     TRAIN_SIZE = 1000
     VALIDATION_SIZE = 100
-    # Training loop
     best_error = None  # Track the best validation loss to detect overfitting.
     print('Training model...')
-    for epoch in range(0, num_epochs):
-        last_print_time = time.time()
-        # Train step
-        for index in range(TRAIN_SIZE):
-            inputs, targets = _sample_batch(train_states, batch_size, device)
-            outputs: torch.Tensor = model.forward(inputs).readout('value')
-            loss = (outputs - targets).abs().mean()
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-            # Print loss every 100 steps (printing every step forces synchronization with CPU)
-            if (index + 1) % 100 == 0:
-                current_time = time.time()
-                elapsed = current_time - last_print_time
-                print(f'[{epoch + 1}/{num_epochs}; {index + 1}/{TRAIN_SIZE}] Loss: {loss.item():.4f} ({elapsed:.2f} seconds)')
-                last_print_time = current_time
-        # Validation step
-        with torch.no_grad():
-            error = torch.zeros([1], dtype=torch.float, device=device)
-            for index in range(VALIDATION_SIZE):
-                inputs, targets = _sample_batch(validation_states, batch_size, device)
-                outputs = model.forward(inputs).readout('value')
-                error += (outputs - targets).abs().sum()
-            total_samples = VALIDATION_SIZE * batch_size
-            error = error / total_samples
-            print(f'[{epoch + 1}/{num_epochs}] Absolute error: {error.item():.4f}')
-            model.save('latest.pth', { 'optimizer': optimizer.state_dict() })
-            if (best_error is None) or (error < best_error):
-                best_error = error
-                model.save('best.pth', { 'optimizer': optimizer.state_dict() })
-                print(f'[{epoch + 1}/{num_epochs}] Saved new best model')
+    train_prefetcher = BatchPrefetcher(train_states, batch_size, device)
+    try:
+        for epoch in range(0, num_epochs):
+            last_print_time = time.time()
+            # Train step
+            for index in range(TRAIN_SIZE):
+                t0 = time.time()
+                inputs, targets = train_prefetcher.next()
+                t1 = time.time()
+                outputs: torch.Tensor = model.forward(inputs).readout('value')
+                loss = (outputs - targets).abs().mean()
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+                t2 = time.time()
+                # Print loss every 100 steps (printing every step forces synchronization with CPU)
+                if (index + 1) % 100 == 0:
+                    current_time = time.time()
+                    elapsed = current_time - last_print_time
+                    print(f'[{epoch + 1}/{num_epochs}; {index + 1}/{TRAIN_SIZE}] Loss: {loss.item():.4f} ({elapsed:.2f}s) [sample={t1-t0:.2f}s gpu={t2-t1:.2f}s]')
+                    last_print_time = current_time
+            # Validation step
+            with torch.no_grad():
+                error = torch.zeros([1], dtype=torch.float, device=device)
+                for index in range(VALIDATION_SIZE):
+                    inputs, targets = _sample_batch(validation_states, batch_size, device)
+                    outputs = model.forward(inputs).readout('value')
+                    error += (outputs - targets).abs().sum()
+                total_samples = VALIDATION_SIZE * batch_size
+                error = error / total_samples
+                print(f'[{epoch + 1}/{num_epochs}] Absolute error: {error.item():.4f}')
+                model.save('latest.pth', { 'optimizer': optimizer.state_dict() })
+                if (best_error is None) or (error < best_error):
+                    best_error = error
+                    model.save('best.pth', { 'optimizer': optimizer.state_dict() })
+                    print(f'[{epoch + 1}/{num_epochs}] Saved new best model')
+    finally:
+        train_prefetcher.stop()
 
 
 def _main(args: argparse.Namespace) -> None:
     print(f'Torch: {torch.__version__}')
     device = create_device(False)
-    domain_path, problem_paths = _get_instance_paths(args.input)
-    domain, problems = _parse_instances(domain_path, problem_paths)
-    state_spaces = _generate_state_spaces(problems, args.seed)
-    train_dataset, validation_dataset = _create_datasets(state_spaces)
+    domain_dir = args.input / args.domain
+    if not domain_dir.is_dir():
+        raise FileNotFoundError(f'Domain folder not found: {domain_dir}')
+    print(f'Using domain folder: {domain_dir}')
+    domain_path, train_paths, val_paths = _get_instance_paths(domain_dir)
+    domain, train_problems, val_problems = _parse_instances(domain_path, train_paths, val_paths)
+    train_state_spaces = _generate_state_spaces(train_problems, args.seed)
+    val_state_spaces = _generate_state_spaces(val_problems, args.seed)
+    train_dataset, validation_dataset = _create_datasets(train_state_spaces, val_state_spaces)
     if args.model is None:
         print('Creating a new model and optimizer...')
         model = _create_model(domain, args.embedding_size, args.layers, args.aggregation, device)

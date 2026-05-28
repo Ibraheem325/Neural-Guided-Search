@@ -28,11 +28,14 @@ def _plan(
         goal = problem.get_goal_condition()
         current_state = problem.get_initial_state()
         visited_states = {get_state_key(current_state)}
+        num_expanded= 0
+        num_generated = 0
         while not goal.holds(current_state) and (len(solution) < 1_000):
             applicable_actions = current_state.generate_applicable_actions()
             if len(applicable_actions) == 0:
                 return None
             inputs = [(action.apply(current_state), goal) for action in applicable_actions]
+            num_generated += len(inputs)
             successor_states = [state for state, _ in inputs]
             values = model.forward(inputs).readout('value')
             assert isinstance(values, torch.Tensor), 'Model should return a tensor of values.'
@@ -45,7 +48,9 @@ def _plan(
             current_state = successor_states[min_index]
             visited_states.add(get_state_key(current_state))
             solution.append(selected_action)
+            num_expanded+=1
             print(f'{min_value:.3f}: {str(selected_action)}')
+        print(f'[Final] Expanded: {num_expanded}, Generated: {num_generated}')
         return solution if goal.holds(current_state) else None
 
 
