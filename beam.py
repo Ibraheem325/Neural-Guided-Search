@@ -62,27 +62,26 @@ def _plan(
             min_indices = torch.argsort(values)[:min(beam, len(successor_states))].tolist()
 
             top_k = [successor_with_parent[i] for i in min_indices]
-            current_beam = [state for state, action, parent in top_k]
-            for state, action, parent in top_k:
-                parent_map[state] = (parent, action)
-            for j in range(len(current_beam)):
+            current_beam = []
+            for j in range(len(top_k)):
                 state, action, parent = top_k[j]
                 print(f'{values[min_indices[j]].item():.3f}: {str(action)}')
-                
-                visited_states.add(get_state_key(current_beam[j]))
-
-                if goal.holds(current_beam[j]):
+                if goal.holds(state):
                     finished = True
-
-                    current = current_beam[j]
-                    solution = []
-                    while current != problem.get_initial_state():
+                    solution = [action]
+                    current = parent
+                    while parent_map[current][0] is not None:
                         solution.append(parent_map[current][1])
                         current = parent_map[current][0]
+                    solution.reverse()
+                    print(f'[Final] Expanded: {num_expanded}, Generated: {num_generated}')
+                    return solution
+                if get_state_key(state) not in visited_states:
+                    parent_map[state] = (parent, action)
+                    visited_states.add(get_state_key(state))
+                    current_beam.append(state)
             count+=1
-        solution.reverse()
-        print(f'[Final] Expanded: {num_expanded}, Generated: {num_generated}')
-        return solution
+        return None
 
 
 def _main(args: argparse.Namespace) -> None:
