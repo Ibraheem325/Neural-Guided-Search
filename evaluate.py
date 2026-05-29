@@ -18,7 +18,7 @@ def parse_output(output: str, algorithm: str) -> dict:
         m = re.search(r'Found a solution of length (\d+)', output)
         if m:
             result['solution_length'] = int(m.group(1))
-    m = re.search(r'Expanded: (\d+), Generated: (\d+)', output)
+    m = re.search(r'\[Final\] Expanded: (\d+), Generated: (\d+)', output)
     if m:
         result['expanded'] = int(m.group(1))
         result['generated'] = int(m.group(2))
@@ -26,7 +26,7 @@ def parse_output(output: str, algorithm: str) -> dict:
 
 
 def run_algorithm(script: str, domain: str, problem: str, model: str, extra_args: list = []) -> dict:
-    cmd = ['python', script,
+    cmd = ['venv/bin/python', script,
            '--domain', domain,
            '--problem', problem,
            '--model', model] + extra_args
@@ -97,6 +97,16 @@ def main():
     with open(args.output, 'w') as f:
         json.dump(all_results, f, indent=2)
     print(f'\nResults saved to {args.output}')
+
+    import csv
+    csv_path = args.output.replace('.json', '_summary.csv')
+    with open(csv_path, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Algorithm', 'Coverage (%)', 'Solved', 'Total', 'Avg Solution Length', 'Avg Expanded'])
+        for alg_name, data in all_results.items():
+            s = data['summary']
+            writer.writerow([alg_name, s['coverage'], s['solved'], s['total'], s['avg_solution_length'], s['avg_expanded']])
+    print(f'Summary CSV saved to {csv_path}')
 
     print('\n=== SUMMARY TABLE ===')
     print(f'{"Algorithm":<15} {"Coverage":>10} {"Solved":>8} {"Avg Len":>10} {"Avg Expanded":>14}')
