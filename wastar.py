@@ -41,8 +41,8 @@ def _parse_arguments() -> argparse.Namespace:
 
 def _main(args: argparse.Namespace) -> None:
     print(f'Torch: {torch.__version__}')
-    domain = mm.Domain(args.domain)
-    problem = mm.Problem(domain, args.problem)
+    domain = mm.Domain(str(args.domain))
+    problem = mm.Problem(domain, str(args.problem))
     print(f'Loading model... ({args.model})')
     device = create_device(False)
     model, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.model, device)

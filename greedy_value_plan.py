@@ -56,8 +56,8 @@ def _plan(
 
 def _main(args: argparse.Namespace) -> None:
     print(f'Torch: {torch.__version__}')
-    domain = mm.Domain(args.domain)
-    problem = mm.Problem(domain, args.problem)
+    domain = mm.Domain(str(args.domain))
+    problem = mm.Problem(domain, str(args.problem))
     model, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.model, create_device(False))
     solution = _plan(problem, model, use_closed_set=not args.disable_closed_set)
     if solution is None:
