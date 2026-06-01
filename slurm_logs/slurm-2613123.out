@@ -1,0 +1,505 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2613123
+Job name: wrap
+Host: cn-423
+Date: Mon Jun  1 09:17:30 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2613123 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-423
+2612352 rleap_gpu dst-t2-q nabin.bh  R   10:36:02      1 cn-423
+2612453 rleap_gpu dst-t2-p nabin.bh  R    8:26:33      1 cn-423
+2612363 rleap_gpu dst-t2-q nabin.bh  R   10:01:15      1 cn-423
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+Using domain folder: example/logistics_dataset
+Finding paths...
+Parsing instances...
+- Domain: logistics-strips
+- # Train problems: 97
+- # Val problems: 48
+Generating state spaces...
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 8 states
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 8 states
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 8 states
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 8 states
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 20 states
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 20 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 10 states
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 20 states
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 20 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 10 states
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 20 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 10 states
+> Expanding: logistics-c1-s2-p1-a1
+- Added with 20 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 10 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 24 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 24 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 24 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 24 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 24 states
+> Expanding: logistics-c1-s2-p1-a2
+- Added with 24 states
+> Expanding: logistics-c2-s1-p1-a1
+- Added with 10 states
+> Expanding: logistics-c2-s1-p1-a1
+- Added with 10 states
+> Expanding: logistics-c2-s1-p1-a1
+- Added with 10 states
+> Expanding: logistics-c2-s1-p1-a1
+- Added with 10 states
+> Expanding: logistics-c2-s1-p1-a2
+- Added with 24 states
+> Expanding: logistics-c2-s1-p1-a2
+- Added with 24 states
+> Expanding: logistics-c2-s1-p1-a2
+- Added with 24 states
+> Expanding: logistics-c2-s1-p1-a2
+- Added with 24 states
+> Expanding: logistics-c2-s1-p1-a2
+- Added with 24 states
+> Expanding: logistics-c2-s1-p1-a2
+- Added with 24 states
+> Expanding: logistics-c2-s1-p1-a2
+- Added with 24 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a1
+- Added with 56 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c2-s2-p1-a2
+- Added with 128 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 32 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+Generating state spaces...
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a1
+- Added with 100 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 50 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c1-s2-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a1
+- Added with 50 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+> Expanding: logistics-c2-s1-p2-a2
+- Added with 144 states
+Creating state samplers...
+Creating a new model and optimizer...
+Training model...
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+[1/1000; 100/1000] Loss: 1.6285 (11.53s) [sample=0.00s gpu=0.08s]
+[1/1000; 200/1000] Loss: 1.7211 (7.66s) [sample=0.00s gpu=0.06s]
+[1/1000; 300/1000] Loss: 1.5170 (6.01s) [sample=0.00s gpu=0.06s]
+[1/1000; 400/1000] Loss: 1.1632 (8.24s) [sample=0.00s gpu=0.08s]
+[1/1000; 500/1000] Loss: 1.7694 (8.72s) [sample=0.00s gpu=0.11s]
+[1/1000; 600/1000] Loss: 1.0984 (10.60s) [sample=0.00s gpu=0.10s]
+[1/1000; 700/1000] Loss: 0.9231 (10.60s) [sample=0.00s gpu=0.10s]
+[1/1000; 800/1000] Loss: 1.0456 (7.59s) [sample=0.00s gpu=0.06s]
+[1/1000; 900/1000] Loss: 0.8795 (5.13s) [sample=0.00s gpu=0.07s]
+[1/1000; 1000/1000] Loss: 0.8332 (8.47s) [sample=0.00s gpu=0.08s]
+[1/1000] Absolute error: 1.3087
+[1/1000] Saved new best model
+[2/1000; 100/1000] Loss: 0.5021 (8.34s) [sample=0.00s gpu=0.08s]
+[2/1000; 200/1000] Loss: 0.5930 (8.31s) [sample=0.00s gpu=0.08s]
+[2/1000; 300/1000] Loss: 0.3687 (8.42s) [sample=0.00s gpu=0.08s]
+[2/1000; 400/1000] Loss: 0.2598 (8.25s) [sample=0.00s gpu=0.08s]
+[2/1000; 500/1000] Loss: 0.2791 (9.63s) [sample=0.00s gpu=0.10s]
+[2/1000; 600/1000] Loss: 0.3148 (10.48s) [sample=0.00s gpu=0.10s]
+[2/1000; 700/1000] Loss: 0.2755 (10.29s) [sample=0.01s gpu=0.08s]
+[2/1000; 800/1000] Loss: 0.3124 (9.51s) [sample=0.00s gpu=0.08s]
+[2/1000; 900/1000] Loss: 0.2215 (8.41s) [sample=0.00s gpu=0.08s]
+[2/1000; 1000/1000] Loss: 0.1852 (8.29s) [sample=0.00s gpu=0.08s]
+[2/1000] Absolute error: 1.0522
+[2/1000] Saved new best model
+[3/1000; 100/1000] Loss: 0.2761 (8.35s) [sample=0.00s gpu=0.08s]
+[3/1000; 200/1000] Loss: 0.4574 (8.44s) [sample=0.00s gpu=0.08s]
+[3/1000; 300/1000] Loss: 0.2207 (8.26s) [sample=0.00s gpu=0.08s]
+[3/1000; 400/1000] Loss: 0.1898 (8.79s) [sample=0.00s gpu=0.08s]
+[3/1000; 500/1000] Loss: 0.1796 (8.42s) [sample=0.00s gpu=0.08s]
+[3/1000; 600/1000] Loss: 0.2826 (8.33s) [sample=0.00s gpu=0.08s]
+[3/1000; 700/1000] Loss: 0.1991 (8.46s) [sample=0.00s gpu=0.10s]
+[3/1000; 800/1000] Loss: 0.2196 (9.64s) [sample=0.00s gpu=0.09s]
+[3/1000; 900/1000] Loss: 0.2339 (8.52s) [sample=0.00s gpu=0.09s]
+[3/1000; 1000/1000] Loss: 0.1421 (9.11s) [sample=0.01s gpu=0.08s]
+[3/1000] Absolute error: 1.0819
+[4/1000; 100/1000] Loss: 0.1822 (10.42s) [sample=0.00s gpu=0.10s]
+[4/1000; 200/1000] Loss: 0.1820 (10.41s) [sample=0.00s gpu=0.10s]
+[4/1000; 300/1000] Loss: 0.1575 (10.62s) [sample=0.00s gpu=0.10s]
+[4/1000; 400/1000] Loss: 0.1873 (10.46s) [sample=0.00s gpu=0.11s]
+[4/1000; 500/1000] Loss: 0.1363 (8.47s) [sample=0.00s gpu=0.10s]
+[4/1000; 600/1000] Loss: 0.1925 (10.65s) [sample=0.00s gpu=0.10s]
+[4/1000; 700/1000] Loss: 0.1238 (10.54s) [sample=0.00s gpu=0.10s]
+[4/1000; 800/1000] Loss: 0.1010 (10.56s) [sample=0.00s gpu=0.10s]
+[4/1000; 900/1000] Loss: 0.2077 (10.67s) [sample=0.00s gpu=0.10s]
+[4/1000; 1000/1000] Loss: 0.1483 (8.06s) [sample=0.00s gpu=0.08s]
+[4/1000] Absolute error: 1.1265
+[5/1000; 100/1000] Loss: 0.2518 (8.13s) [sample=0.00s gpu=0.09s]
+[5/1000; 200/1000] Loss: 0.1426 (8.32s) [sample=0.00s gpu=0.09s]
+[5/1000; 300/1000] Loss: 0.1373 (8.06s) [sample=0.00s gpu=0.07s]
+[5/1000; 400/1000] Loss: 0.1483 (8.20s) [sample=0.00s gpu=0.09s]
+[5/1000; 500/1000] Loss: 0.2083 (9.08s) [sample=0.00s gpu=0.10s]
+[5/1000; 600/1000] Loss: 0.2006 (10.56s) [sample=0.00s gpu=0.11s]
+[5/1000; 700/1000] Loss: 0.2173 (10.53s) [sample=0.00s gpu=0.10s]
+[5/1000; 800/1000] Loss: 0.1536 (10.64s) [sample=0.00s gpu=0.11s]
+[5/1000; 900/1000] Loss: 0.2285 (10.47s) [sample=0.00s gpu=0.10s]
+[5/1000; 1000/1000] Loss: 0.1614 (10.52s) [sample=0.00s gpu=0.10s]
+[5/1000] Absolute error: 1.1337
+[6/1000; 100/1000] Loss: 0.1105 (7.09s) [sample=0.00s gpu=0.04s]
+[6/1000; 200/1000] Loss: 0.1657 (8.04s) [sample=0.00s gpu=0.07s]
+[6/1000; 300/1000] Loss: 0.1210 (7.87s) [sample=0.00s gpu=0.07s]
+[6/1000; 400/1000] Loss: 0.1891 (7.42s) [sample=0.00s gpu=0.07s]
+[6/1000; 500/1000] Loss: 0.1208 (8.12s) [sample=0.00s gpu=0.08s]
+[6/1000; 600/1000] Loss: 0.2927 (8.40s) [sample=0.00s gpu=0.08s]
+[6/1000; 700/1000] Loss: 0.1386 (9.45s) [sample=0.00s gpu=0.10s]
+[6/1000; 800/1000] Loss: 0.1277 (10.50s) [sample=0.00s gpu=0.10s]
+[6/1000; 900/1000] Loss: 0.1253 (10.52s) [sample=0.00s gpu=0.10s]
+[6/1000; 1000/1000] Loss: 0.1475 (10.65s) [sample=0.00s gpu=0.10s]
+[6/1000] Absolute error: 1.0231
+[6/1000] Saved new best model
+[7/1000; 100/1000] Loss: 0.2206 (10.54s) [sample=0.00s gpu=0.10s]
+[7/1000; 200/1000] Loss: 0.0825 (9.48s) [sample=0.00s gpu=0.07s]
+[7/1000; 300/1000] Loss: 0.0962 (8.09s) [sample=0.00s gpu=0.07s]
+[7/1000; 400/1000] Loss: 0.0838 (8.14s) [sample=0.00s gpu=0.09s]
+[7/1000; 500/1000] Loss: 0.1507 (10.48s) [sample=0.00s gpu=0.10s]
+[7/1000; 600/1000] Loss: 0.1076 (10.53s) [sample=0.00s gpu=0.10s]
+[7/1000; 700/1000] Loss: 0.1478 (10.53s) [sample=0.00s gpu=0.11s]
+[7/1000; 800/1000] Loss: 0.1014 (10.67s) [sample=0.00s gpu=0.10s]
+[7/1000; 900/1000] Loss: 0.1301 (10.53s) [sample=0.00s gpu=0.10s]
+[7/1000; 1000/1000] Loss: 0.0833 (10.29s) [sample=0.00s gpu=0.07s]
+[7/1000] Absolute error: 1.0420
+[8/1000; 100/1000] Loss: 0.0805 (7.65s) [sample=0.00s gpu=0.07s]
+[8/1000; 200/1000] Loss: 0.0717 (7.61s) [sample=0.00s gpu=0.07s]
+[8/1000; 300/1000] Loss: 0.0913 (7.67s) [sample=0.00s gpu=0.08s]
+[8/1000; 400/1000] Loss: 0.0770 (7.59s) [sample=0.00s gpu=0.07s]
+[8/1000; 500/1000] Loss: 0.0805 (8.19s) [sample=0.00s gpu=0.08s]
+[8/1000; 600/1000] Loss: 0.1501 (8.28s) [sample=0.00s gpu=0.08s]
+[8/1000; 700/1000] Loss: 0.0588 (9.79s) [sample=0.00s gpu=0.10s]
+[8/1000; 800/1000] Loss: 0.0822 (10.55s) [sample=0.00s gpu=0.10s]
+[8/1000; 900/1000] Loss: 0.1668 (10.67s) [sample=0.00s gpu=0.11s]
+[8/1000; 1000/1000] Loss: 0.0727 (10.59s) [sample=0.00s gpu=0.11s]
+[8/1000] Absolute error: 1.0235
+[9/1000; 100/1000] Loss: 0.0663 (10.54s) [sample=0.00s gpu=0.10s]
+[9/1000; 200/1000] Loss: 0.1235 (10.59s) [sample=0.00s gpu=0.10s]
+[9/1000; 300/1000] Loss: 0.1225 (10.55s) [sample=0.00s gpu=0.10s]
+[9/1000; 400/1000] Loss: 0.0721 (10.52s) [sample=0.00s gpu=0.10s]
+[9/1000; 500/1000] Loss: 0.0934 (10.66s) [sample=0.00s gpu=0.10s]
+[9/1000; 600/1000] Loss: 0.0738 (4.83s) [sample=0.00s gpu=0.04s]
+[9/1000; 700/1000] Loss: 0.1279 (3.72s) [sample=0.00s gpu=0.04s]
+[9/1000; 800/1000] Loss: 0.1186 (3.80s) [sample=0.00s gpu=0.04s]
+[9/1000; 900/1000] Loss: 0.0717 (3.73s) [sample=0.00s gpu=0.04s]
+[9/1000; 1000/1000] Loss: 0.0510 (3.73s) [sample=0.00s gpu=0.04s]
+[9/1000] Absolute error: 0.9946
+[9/1000] Saved new best model
+[10/1000; 100/1000] Loss: 0.0489 (6.75s) [sample=0.00s gpu=0.09s]
+[10/1000; 200/1000] Loss: 0.0772 (8.36s) [sample=0.00s gpu=0.09s]
+[10/1000; 300/1000] Loss: 0.1966 (8.29s) [sample=0.00s gpu=0.08s]
+[10/1000; 400/1000] Loss: 0.1415 (8.32s) [sample=0.00s gpu=0.08s]
+[10/1000; 500/1000] Loss: 0.0564 (7.68s) [sample=0.00s gpu=0.07s]
+[10/1000; 600/1000] Loss: 0.0561 (7.66s) [sample=0.00s gpu=0.08s]
+[10/1000; 700/1000] Loss: 0.0711 (7.59s) [sample=0.00s gpu=0.08s]
+[10/1000; 800/1000] Loss: 0.0649 (7.61s) [sample=0.00s gpu=0.08s]
+[10/1000; 900/1000] Loss: 0.1435 (7.83s) [sample=0.00s gpu=0.19s]
+[10/1000; 1000/1000] Loss: 0.0916 (8.32s) [sample=0.00s gpu=0.08s]
+[10/1000] Absolute error: 1.0611
+[11/1000; 100/1000] Loss: 0.0714 (8.30s) [sample=0.01s gpu=0.08s]
+[11/1000; 200/1000] Loss: 0.0857 (8.41s) [sample=0.00s gpu=0.08s]
+[11/1000; 300/1000] Loss: 0.1022 (8.26s) [sample=0.00s gpu=0.08s]
+[11/1000; 400/1000] Loss: 0.0867 (8.32s) [sample=0.00s gpu=0.08s]
+[11/1000; 500/1000] Loss: 0.1819 (8.37s) [sample=0.00s gpu=0.08s]
+[11/1000; 600/1000] Loss: 0.0551 (9.82s) [sample=0.00s gpu=0.10s]
+[11/1000; 700/1000] Loss: 0.0713 (9.77s) [sample=0.00s gpu=0.08s]
+[11/1000; 800/1000] Loss: 0.2342 (8.44s) [sample=0.00s gpu=0.08s]
+[11/1000; 900/1000] Loss: 0.0700 (8.30s) [sample=0.00s gpu=0.08s]
+[11/1000; 1000/1000] Loss: 0.0703 (8.25s) [sample=0.00s gpu=0.08s]
+[11/1000] Absolute error: 0.9836
+[11/1000] Saved new best model
+[12/1000; 100/1000] Loss: 0.0849 (9.72s) [sample=0.00s gpu=0.11s]
+[12/1000; 200/1000] Loss: 0.0549 (10.56s) [sample=0.00s gpu=0.10s]
+[12/1000; 300/1000] Loss: 0.0866 (9.34s) [sample=0.00s gpu=0.07s]
+[12/1000; 400/1000] Loss: 0.1649 (7.93s) [sample=0.00s gpu=0.07s]
+[12/1000; 500/1000] Loss: 0.0472 (7.36s) [sample=0.00s gpu=0.07s]
+[12/1000; 600/1000] Loss: 0.1495 (7.40s) [sample=0.00s gpu=0.07s]
+[12/1000; 700/1000] Loss: 0.1165 (7.60s) [sample=0.00s gpu=0.07s]
+[12/1000; 800/1000] Loss: 0.1100 (7.95s) [sample=0.01s gpu=0.07s]
+[12/1000; 900/1000] Loss: 0.1340 (8.17s) [sample=0.00s gpu=0.07s]
+[12/1000; 1000/1000] Loss: 0.0719 (8.06s) [sample=0.00s gpu=0.07s]
+[12/1000] Absolute error: 0.9824
+[12/1000] Saved new best model
+[13/1000; 100/1000] Loss: 0.0523 (10.04s) [sample=0.00s gpu=0.10s]
+[13/1000; 200/1000] Loss: 0.0614 (10.67s) [sample=0.00s gpu=0.11s]
+[13/1000; 300/1000] Loss: 0.1160 (10.54s) [sample=0.00s gpu=0.10s]
+[13/1000; 400/1000] Loss: 0.1648 (10.55s) [sample=0.00s gpu=0.10s]
+[13/1000; 500/1000] Loss: 0.0466 (10.67s) [sample=0.00s gpu=0.11s]
+[13/1000; 600/1000] Loss: 0.1270 (10.53s) [sample=0.00s gpu=0.10s]
+[13/1000; 700/1000] Loss: 0.0743 (8.67s) [sample=0.00s gpu=0.07s]
+[13/1000; 800/1000] Loss: 0.1395 (8.22s) [sample=0.00s gpu=0.07s]
+[13/1000; 900/1000] Loss: 0.0598 (8.25s) [sample=0.00s gpu=0.07s]
+[13/1000; 1000/1000] Loss: 0.0769 (8.24s) [sample=0.00s gpu=0.07s]
+[13/1000] Absolute error: 0.9625
+[13/1000] Saved new best model
+[14/1000; 100/1000] Loss: 0.0521 (8.23s) [sample=0.00s gpu=0.07s]
+[14/1000; 200/1000] Loss: 0.0402 (6.33s) [sample=0.00s gpu=0.05s]
+[14/1000; 300/1000] Loss: 0.0462 (5.96s) [sample=0.00s gpu=0.06s]
+[14/1000; 400/1000] Loss: 0.0814 (7.91s) [sample=0.00s gpu=0.10s]
+[14/1000; 500/1000] Loss: 0.0747 (10.44s) [sample=0.00s gpu=0.10s]
+[14/1000; 600/1000] Loss: 0.0386 (10.51s) [sample=0.00s gpu=0.10s]
+[14/1000; 700/1000] Loss: 0.1546 (10.31s) [sample=0.00s gpu=0.10s]
+[14/1000; 800/1000] Loss: 0.1066 (10.41s) [sample=0.00s gpu=0.10s]
+[14/1000; 900/1000] Loss: 0.0600 (10.56s) [sample=0.00s gpu=0.10s]
+[14/1000; 1000/1000] Loss: 0.1045 (10.39s) [sample=0.00s gpu=0.10s]
+[14/1000] Absolute error: 0.9789
+[15/1000; 100/1000] Loss: 0.0421 (10.32s) [sample=0.00s gpu=0.10s]
+[15/1000; 200/1000] Loss: 0.0337 (8.94s) [sample=0.00s gpu=0.06s]
+[15/1000; 300/1000] Loss: 0.0470 (6.00s) [sample=0.00s gpu=0.06s]
+[15/1000; 400/1000] Loss: 0.0648 (8.54s) [sample=0.00s gpu=0.10s]
+[15/1000; 500/1000] Loss: 0.0878 (10.54s) [sample=0.00s gpu=0.10s]
+[15/1000; 600/1000] Loss: 0.0474 (8.53s) [sample=0.00s gpu=0.06s]
+[15/1000; 700/1000] Loss: 0.0490 (8.59s) [sample=0.00s gpu=0.10s]
+[15/1000; 800/1000] Loss: 0.0686 (10.50s) [sample=0.00s gpu=0.11s]
+[15/1000; 900/1000] Loss: 0.0347 (10.42s) [sample=0.00s gpu=0.10s]
+[15/1000; 1000/1000] Loss: 0.0502 (10.40s) [sample=0.00s gpu=0.10s]
+[15/1000] Absolute error: 0.9926
+[16/1000; 100/1000] Loss: 0.0912 (8.40s) [sample=0.00s gpu=0.09s]
+[16/1000; 200/1000] Loss: 0.1850 (8.45s) [sample=0.00s gpu=0.07s]
+[16/1000; 300/1000] Loss: 0.0320 (8.51s) [sample=0.00s gpu=0.07s]
+[16/1000; 400/1000] Loss: 0.1119 (8.45s) [sample=0.00s gpu=0.07s]
+[16/1000; 500/1000] Loss: 0.0484 (8.38s) [sample=0.00s gpu=0.09s]
+[16/1000; 600/1000] Loss: 0.0545 (8.38s) [sample=0.07s gpu=0.08s]
+[16/1000; 700/1000] Loss: 0.0745 (8.27s) [sample=0.00s gpu=0.09s]

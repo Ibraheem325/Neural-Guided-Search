@@ -1,0 +1,4998 @@
+{
+  "astar": {
+    "summary": {
+      "coverage": 95.7,
+      "solved": 112,
+      "total": 117,
+      "avg_solution_length": 9.7,
+      "avg_expanded": 32.0
+    },
+    "results": [
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 44
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 47,
+        "generated": 249
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 92,
+        "generated": 629
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 34,
+        "generated": 254
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 27
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 7,
+        "generated": 30
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 8,
+        "generated": 32
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 11,
+        "generated": 58
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 13,
+        "generated": 80
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 18,
+        "generated": 98
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 27,
+        "generated": 171
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 19,
+        "generated": 111
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 202,
+        "generated": 1038
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 60,
+        "generated": 272
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 193,
+        "generated": 1560
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 161,
+        "generated": 1291
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 37
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 30
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 9,
+        "generated": 67
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 22,
+        "generated": 170
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 24,
+        "generated": 168
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 62,
+        "generated": 499
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 15,
+        "generated": 103
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 14,
+        "generated": 95
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 16,
+        "generated": 123
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 23,
+        "generated": 169
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 53,
+        "generated": 400
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 15,
+        "generated": 124
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 64,
+        "generated": 572
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 9,
+        "generated": 66
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 11,
+        "generated": 55
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 13,
+        "generated": 94
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 14,
+        "generated": 89
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 16,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 29,
+        "generated": 193
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 16,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 11,
+        "generated": 83
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 72,
+        "generated": 583
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 102,
+        "generated": 751
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 38,
+        "generated": 245
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 19,
+        "generated": 123
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 12,
+        "generated": 90
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 23,
+        "generated": 207
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 38,
+        "generated": 248
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 153,
+        "generated": 1053
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 26,
+        "generated": 213
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 56,
+        "generated": 383
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 24,
+        "generated": 227
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 40,
+        "generated": 354
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 24,
+        "generated": 227
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 12,
+        "generated": 91
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 7,
+        "generated": 48
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 12,
+        "generated": 95
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 7,
+        "generated": 51
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 8,
+        "generated": 60
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 68,
+        "generated": 507
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 41,
+        "generated": 328
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 12,
+        "generated": 102
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 9,
+        "generated": 71
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 83
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 14,
+        "generated": 102
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 13,
+        "generated": 108
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 34,
+        "generated": 228
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 15,
+        "generated": 134
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 22,
+        "generated": 220
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 218,
+        "generated": 1573
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 42,
+        "generated": 404
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 30,
+        "generated": 225
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 7,
+        "generated": 63
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 8,
+        "generated": 67
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 10,
+        "generated": 82
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 13,
+        "generated": 120
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 26,
+        "generated": 264
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 28,
+        "generated": 195
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 25,
+        "generated": 179
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 26
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 31,
+        "generated": 175
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 6,
+        "generated": 17
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 15,
+        "generated": 67
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 7,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 11,
+        "generated": 61
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 39,
+        "generated": 311
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 4,
+        "expanded": 4,
+        "generated": 17
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 12
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 7,
+        "generated": 50
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 24,
+        "generated": 164
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 28
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 35,
+        "generated": 191
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 39,
+        "generated": 196
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 77,
+        "generated": 699
+      },
+      {
+        "solved": true,
+        "solution_length": 20,
+        "expanded": 95,
+        "generated": 686
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 20,
+        "generated": 160
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 21,
+        "generated": 188
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 69,
+        "generated": 626
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 13,
+        "generated": 78
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 119,
+        "generated": 904
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 11,
+        "generated": 83
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 11,
+        "generated": 83
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 24,
+        "generated": 190
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 24,
+        "generated": 190
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 20,
+        "generated": 144
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 27,
+        "generated": 197
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 39,
+        "generated": 329
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 64,
+        "generated": 587
+      }
+    ]
+  },
+  "wastar_2": {
+    "summary": {
+      "coverage": 100.0,
+      "solved": 117,
+      "total": 117,
+      "avg_solution_length": 10.0,
+      "avg_expanded": 11.2
+    },
+    "results": [
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 44
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 58
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 69
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 114
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 27
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 26
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 27
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 29
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 54
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 50
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 44
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 53
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 14,
+        "generated": 67
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 155
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 107
+      },
+      {
+        "solved": true,
+        "solution_length": 18,
+        "expanded": 20,
+        "generated": 160
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 37
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 30
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 67
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 18,
+        "expanded": 22,
+        "generated": 167
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 47
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 61
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 69
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 12,
+        "generated": 80
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 90
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 19,
+        "generated": 159
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 11,
+        "generated": 52
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 42
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 61
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 84
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 56
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 84
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 12,
+        "generated": 90
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 16,
+        "generated": 109
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 66
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 70
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 113
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 94
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 91
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 115
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 112
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 144
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 144
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 41
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 49
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 42
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 10,
+        "generated": 65
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 85
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 85
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 83
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 31,
+        "generated": 221
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 105
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 48,
+        "generated": 390
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 111
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 97
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 134
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 50
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 87
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 106
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 11,
+        "generated": 70
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 92
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 26
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 51
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 45
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 33
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 53
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 4,
+        "expanded": 4,
+        "generated": 17
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 12
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 34
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 11,
+        "generated": 72
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 28
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 12,
+        "generated": 64
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 58
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 104
+      },
+      {
+        "solved": true,
+        "solution_length": 20,
+        "expanded": 20,
+        "generated": 135
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 71
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 72
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 123
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 17,
+        "generated": 164
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 36
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 52,
+        "generated": 389
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 18,
+        "generated": 173
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 75
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 75
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 114
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 91
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 130
+      }
+    ]
+  },
+  "wastar_5": {
+    "summary": {
+      "coverage": 100.0,
+      "solved": 117,
+      "total": 117,
+      "avg_solution_length": 10.1,
+      "avg_expanded": 12.5
+    },
+    "results": [
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 44
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 58
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 69
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 114
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 27
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 26
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 27
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 29
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 54
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 50
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 44
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 53
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 72
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 155
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 107
+      },
+      {
+        "solved": true,
+        "solution_length": 18,
+        "expanded": 20,
+        "generated": 160
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 37
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 30
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 67
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 18,
+        "expanded": 19,
+        "generated": 131
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 47
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 61
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 69
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 12,
+        "generated": 80
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 90
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 135
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 11,
+        "generated": 52
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 42
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 61
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 84
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 56
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 84
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 12,
+        "generated": 90
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 13,
+        "generated": 87
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 66
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 70
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 113
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 94
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 91
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 115
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 112
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 144
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 144
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 41
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 49
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 42
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 10,
+        "generated": 65
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 85
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 85
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 83
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 21,
+        "generated": 150
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 105
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 130,
+        "generated": 1149
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 111
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 97
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 134
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 50
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 87
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 106
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 11,
+        "generated": 70
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 92
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 26
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 51
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 45
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 33
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 53
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 4,
+        "expanded": 4,
+        "generated": 17
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 12
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 34
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 28
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 35
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 58
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 104
+      },
+      {
+        "solved": true,
+        "solution_length": 20,
+        "expanded": 20,
+        "generated": 135
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 71
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 72
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 123
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 147
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 36
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 164,
+        "generated": 1323
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 78
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 75
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 75
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 114
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 91
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 130
+      }
+    ]
+  },
+  "greedy": {
+    "summary": {
+      "coverage": 100.0,
+      "solved": 117,
+      "total": 117,
+      "avg_solution_length": 11.1,
+      "avg_expanded": 11.1
+    },
+    "results": [
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 44
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 58
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 69
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 114
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 27
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 26
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 27
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 29
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 54
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 50
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 44
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 53
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 72
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 155
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 107
+      },
+      {
+        "solved": true,
+        "solution_length": 24,
+        "expanded": 24,
+        "generated": 197
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 37
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 30
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 67
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 19,
+        "expanded": 19,
+        "generated": 133
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 47
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 61
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 69
+      },
+      {
+        "solved": true,
+        "solution_length": 24,
+        "expanded": 24,
+        "generated": 190
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 90
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 135
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 52
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 42
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 61
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 84
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 56
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 84
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 21,
+        "expanded": 21,
+        "generated": 170
+      },
+      {
+        "solved": true,
+        "solution_length": 20,
+        "expanded": 20,
+        "generated": 165
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 66
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 70
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 113
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 94
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 91
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 115
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 112
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 144
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 144
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 41
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 49
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 42
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 64
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 85
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 85
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 83
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 112
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 105
+      },
+      {
+        "solved": true,
+        "solution_length": 48,
+        "expanded": 48,
+        "generated": 431
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 111
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 97
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 134
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 50
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 87
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 106
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 65
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 92
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 26
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 51
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 45
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 33
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 53
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 4,
+        "expanded": 4,
+        "generated": 17
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 12
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 34
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 28
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 35
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 58
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 104
+      },
+      {
+        "solved": true,
+        "solution_length": 20,
+        "expanded": 20,
+        "generated": 135
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 71
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 72
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 123
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 147
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 36
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 48,
+        "expanded": 48,
+        "generated": 480
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 78
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 75
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 75
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 114
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 91
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 130
+      }
+    ]
+  },
+  "beam_1": {
+    "summary": {
+      "coverage": 100.0,
+      "solved": 117,
+      "total": 117,
+      "avg_solution_length": 11.1,
+      "avg_expanded": 11.1
+    },
+    "results": [
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 44
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 58
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 69
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 114
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 27
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 26
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 27
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 29
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 54
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 50
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 44
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 53
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 72
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 155
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 107
+      },
+      {
+        "solved": true,
+        "solution_length": 24,
+        "expanded": 24,
+        "generated": 197
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 37
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 30
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 67
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 19,
+        "expanded": 19,
+        "generated": 133
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 47
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 61
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 69
+      },
+      {
+        "solved": true,
+        "solution_length": 24,
+        "expanded": 24,
+        "generated": 190
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 90
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 135
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 52
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 42
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 43
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 61
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 84
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 56
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 84
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 21,
+        "expanded": 21,
+        "generated": 170
+      },
+      {
+        "solved": true,
+        "solution_length": 20,
+        "expanded": 20,
+        "generated": 165
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 66
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 70
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 113
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 94
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 91
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 115
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 112
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 144
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 144
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 41
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 49
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 42
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 64
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 85
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 85
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 83
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 112
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 105
+      },
+      {
+        "solved": true,
+        "solution_length": 48,
+        "expanded": 48,
+        "generated": 431
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 111
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 97
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 134
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 50
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 57
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 74
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 87
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 106
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 65
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 13,
+        "generated": 92
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 26
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 51
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 45
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 5,
+        "generated": 33
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 53
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 15
+      },
+      {
+        "solved": true,
+        "solution_length": 4,
+        "expanded": 4,
+        "generated": 17
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 3,
+        "generated": 12
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 34
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 28
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 7,
+        "generated": 35
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 58
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 12,
+        "generated": 104
+      },
+      {
+        "solved": true,
+        "solution_length": 20,
+        "expanded": 20,
+        "generated": 135
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 71
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 8,
+        "generated": 72
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 15,
+        "generated": 123
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 147
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 36
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 38
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 6,
+        "generated": 46
+      },
+      {
+        "solved": true,
+        "solution_length": 48,
+        "expanded": 48,
+        "generated": 480
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 9,
+        "generated": 78
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 75
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 75
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 17,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 10,
+        "generated": 68
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 16,
+        "generated": 114
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 11,
+        "generated": 91
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 14,
+        "generated": 130
+      }
+    ]
+  },
+  "beam_5": {
+    "summary": {
+      "coverage": 100.0,
+      "solved": 117,
+      "total": 117,
+      "avg_solution_length": 10.3,
+      "avg_expanded": 35.1
+    },
+    "results": [
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 29,
+        "generated": 139
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 40,
+        "generated": 218
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 40,
+        "generated": 251
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 53,
+        "generated": 411
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 8,
+        "generated": 37
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 18,
+        "generated": 81
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 22,
+        "generated": 96
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 22,
+        "generated": 90
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 17,
+        "generated": 100
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 29,
+        "generated": 171
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 37,
+        "generated": 212
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 27,
+        "generated": 153
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 32,
+        "generated": 191
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 56,
+        "generated": 265
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 42,
+        "generated": 204
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 56,
+        "generated": 559
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 61,
+        "generated": 391
+      },
+      {
+        "solved": true,
+        "solution_length": 18,
+        "expanded": 63,
+        "generated": 491
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 16,
+        "generated": 111
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 18,
+        "generated": 93
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 25,
+        "generated": 182
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 33,
+        "generated": 242
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 27,
+        "generated": 177
+      },
+      {
+        "solved": true,
+        "solution_length": 18,
+        "expanded": 60,
+        "generated": 439
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 50,
+        "generated": 412
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 26,
+        "generated": 169
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 20,
+        "generated": 137
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 25,
+        "generated": 184
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 34,
+        "generated": 246
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 38,
+        "generated": 265
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 35,
+        "generated": 272
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 52,
+        "generated": 450
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 21,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 24,
+        "generated": 124
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 18,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 20,
+        "generated": 140
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 17,
+        "generated": 145
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 36,
+        "generated": 208
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 40,
+        "generated": 315
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 27,
+        "generated": 173
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 40,
+        "generated": 315
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 25,
+        "generated": 183
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 35,
+        "generated": 268
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 45,
+        "generated": 334
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 35,
+        "generated": 237
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 38,
+        "generated": 251
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 37,
+        "generated": 297
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 48,
+        "generated": 425
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 46,
+        "generated": 315
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 44,
+        "generated": 304
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 45,
+        "generated": 353
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 56,
+        "generated": 380
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 58,
+        "generated": 527
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 57,
+        "generated": 504
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 58,
+        "generated": 527
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 21,
+        "generated": 155
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 19,
+        "generated": 118
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 26,
+        "generated": 202
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 20,
+        "generated": 132
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 23,
+        "generated": 172
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 29,
+        "generated": 189
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 27,
+        "generated": 220
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 30,
+        "generated": 256
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 26,
+        "generated": 193
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 28,
+        "generated": 239
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 38,
+        "generated": 307
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 31,
+        "generated": 236
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 32,
+        "generated": 280
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 32,
+        "generated": 230
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 41,
+        "generated": 388
+      },
+      {
+        "solved": true,
+        "solution_length": 35,
+        "expanded": 124,
+        "generated": 1116
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 42,
+        "generated": 385
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 50,
+        "generated": 367
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 57,
+        "generated": 545
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 60,
+        "generated": 480
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 21,
+        "generated": 184
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 22,
+        "generated": 200
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 32,
+        "generated": 262
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 32,
+        "generated": 297
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 44,
+        "generated": 431
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 33,
+        "generated": 226
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 47,
+        "generated": 348
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 19,
+        "generated": 82
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 29,
+        "generated": 150
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 13,
+        "generated": 47
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 34,
+        "generated": 155
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 8,
+        "generated": 36
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 15,
+        "generated": 100
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 36,
+        "generated": 174
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 25,
+        "generated": 185
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 8,
+        "generated": 40
+      },
+      {
+        "solved": true,
+        "solution_length": 4,
+        "expanded": 12,
+        "generated": 59
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 8,
+        "generated": 33
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 19,
+        "generated": 124
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 19,
+        "generated": 116
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 22,
+        "generated": 94
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 21,
+        "generated": 113
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 36,
+        "generated": 172
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 38,
+        "generated": 318
+      },
+      {
+        "solved": true,
+        "solution_length": 20,
+        "expanded": 71,
+        "generated": 461
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 33,
+        "generated": 241
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 25,
+        "generated": 217
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 52,
+        "generated": 413
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 53,
+        "generated": 485
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 23,
+        "generated": 134
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 23,
+        "generated": 136
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 20,
+        "generated": 159
+      },
+      {
+        "solved": true,
+        "solution_length": 22,
+        "expanded": 78,
+        "generated": 696
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 33,
+        "generated": 299
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 38,
+        "generated": 284
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 38,
+        "generated": 284
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 59,
+        "generated": 490
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 59,
+        "generated": 490
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 34,
+        "generated": 233
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 51,
+        "generated": 370
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 33,
+        "generated": 298
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 49,
+        "generated": 448
+      }
+    ]
+  },
+  "beam_10": {
+    "summary": {
+      "coverage": 100.0,
+      "solved": 117,
+      "total": 117,
+      "avg_solution_length": 10.1,
+      "avg_expanded": 57.5
+    },
+    "results": [
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 46,
+        "generated": 223
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 67,
+        "generated": 355
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 65,
+        "generated": 424
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 88,
+        "generated": 710
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 12,
+        "generated": 56
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 29,
+        "generated": 133
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 37,
+        "generated": 166
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 39,
+        "generated": 157
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 26,
+        "generated": 159
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 52,
+        "generated": 338
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 58,
+        "generated": 326
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 42,
+        "generated": 271
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 55,
+        "generated": 344
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 93,
+        "generated": 448
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 71,
+        "generated": 342
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 89,
+        "generated": 870
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 109,
+        "generated": 737
+      },
+      {
+        "solved": true,
+        "solution_length": 18,
+        "expanded": 112,
+        "generated": 810
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 24,
+        "generated": 163
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 28,
+        "generated": 150
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 40,
+        "generated": 290
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 61,
+        "generated": 453
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 43,
+        "generated": 280
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 95,
+        "generated": 753
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 100,
+        "generated": 813
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 42,
+        "generated": 271
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 32,
+        "generated": 215
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 40,
+        "generated": 295
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 52,
+        "generated": 409
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 61,
+        "generated": 429
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 59,
+        "generated": 466
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 89,
+        "generated": 855
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 34,
+        "generated": 236
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 39,
+        "generated": 196
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 31,
+        "generated": 227
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 31,
+        "generated": 220
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 27,
+        "generated": 221
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 55,
+        "generated": 314
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 66,
+        "generated": 523
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 42,
+        "generated": 273
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 66,
+        "generated": 523
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 40,
+        "generated": 294
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 59,
+        "generated": 453
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 67,
+        "generated": 472
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 59,
+        "generated": 394
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 66,
+        "generated": 445
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 64,
+        "generated": 512
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 84,
+        "generated": 718
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 75,
+        "generated": 514
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 70,
+        "generated": 475
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 74,
+        "generated": 573
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 99,
+        "generated": 692
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 102,
+        "generated": 947
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 90,
+        "generated": 808
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 102,
+        "generated": 947
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 37,
+        "generated": 276
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 31,
+        "generated": 192
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 42,
+        "generated": 332
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 33,
+        "generated": 221
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 36,
+        "generated": 270
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 46,
+        "generated": 308
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 49,
+        "generated": 384
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 54,
+        "generated": 436
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 42,
+        "generated": 308
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 42,
+        "generated": 350
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 62,
+        "generated": 502
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 50,
+        "generated": 382
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 52,
+        "generated": 460
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 52,
+        "generated": 363
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 65,
+        "generated": 594
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 90,
+        "generated": 739
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 65,
+        "generated": 594
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 93,
+        "generated": 688
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 106,
+        "generated": 990
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 100,
+        "generated": 814
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 31,
+        "generated": 268
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 39,
+        "generated": 347
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 52,
+        "generated": 420
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 55,
+        "generated": 519
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 70,
+        "generated": 689
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 58,
+        "generated": 389
+      },
+      {
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 82,
+        "generated": 610
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 31,
+        "generated": 136
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 47,
+        "generated": 244
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 21,
+        "generated": 77
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 61,
+        "generated": 279
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 12,
+        "generated": 47
+      },
+      {
+        "solved": true,
+        "solution_length": 5,
+        "expanded": 22,
+        "generated": 156
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 64,
+        "generated": 298
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 38,
+        "generated": 293
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 11,
+        "generated": 54
+      },
+      {
+        "solved": true,
+        "solution_length": 4,
+        "expanded": 20,
+        "generated": 98
+      },
+      {
+        "solved": true,
+        "solution_length": 3,
+        "expanded": 10,
+        "generated": 40
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 31,
+        "generated": 213
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 27,
+        "generated": 170
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 36,
+        "generated": 175
+      },
+      {
+        "solved": true,
+        "solution_length": 7,
+        "expanded": 30,
+        "generated": 161
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 60,
+        "generated": 321
+      },
+      {
+        "solved": true,
+        "solution_length": 12,
+        "expanded": 62,
+        "generated": 522
+      },
+      {
+        "solved": true,
+        "solution_length": 20,
+        "expanded": 117,
+        "generated": 751
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 52,
+        "generated": 381
+      },
+      {
+        "solved": true,
+        "solution_length": 8,
+        "expanded": 44,
+        "generated": 356
+      },
+      {
+        "solved": true,
+        "solution_length": 15,
+        "expanded": 96,
+        "generated": 758
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 96,
+        "generated": 882
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 35,
+        "generated": 207
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 35,
+        "generated": 210
+      },
+      {
+        "solved": true,
+        "solution_length": 6,
+        "expanded": 32,
+        "generated": 255
+      },
+      {
+        "solved": true,
+        "solution_length": 22,
+        "expanded": 141,
+        "generated": 1273
+      },
+      {
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 55,
+        "generated": 515
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 58,
+        "generated": 428
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 58,
+        "generated": 428
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 103,
+        "generated": 849
+      },
+      {
+        "solved": true,
+        "solution_length": 17,
+        "expanded": 103,
+        "generated": 849
+      },
+      {
+        "solved": true,
+        "solution_length": 10,
+        "expanded": 53,
+        "generated": 360
+      },
+      {
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 91,
+        "generated": 664
+      },
+      {
+        "solved": true,
+        "solution_length": 11,
+        "expanded": 66,
+        "generated": 589
+      },
+      {
+        "solved": true,
+        "solution_length": 14,
+        "expanded": 83,
+        "generated": 761
+      }
+    ]
+  }
+}
