@@ -1,0 +1,301 @@
+{
+  "astar": {
+    "summary": {
+      "coverage": 0.0,
+      "solved": 0,
+      "total": 5,
+      "avg_solution_length": 0,
+      "avg_expanded": 0
+    },
+    "results": [
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      }
+    ]
+  },
+  "wastar_2": {
+    "summary": {
+      "coverage": 0.0,
+      "solved": 0,
+      "total": 5,
+      "avg_solution_length": 0,
+      "avg_expanded": 0
+    },
+    "results": [
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      }
+    ]
+  },
+  "wastar_5": {
+    "summary": {
+      "coverage": 60.0,
+      "solved": 3,
+      "total": 5,
+      "avg_solution_length": 24.7,
+      "avg_expanded": 83.3
+    },
+    "results": [
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null,
+        "timeout": true
+      },
+      {
+        "solved": true,
+        "solution_length": 25,
+        "expanded": 72,
+        "generated": 396
+      },
+      {
+        "solved": true,
+        "solution_length": 24,
+        "expanded": 106,
+        "generated": 591
+      },
+      {
+        "solved": true,
+        "solution_length": 25,
+        "expanded": 72,
+        "generated": 396
+      }
+    ]
+  },
+  "greedy": {
+    "summary": {
+      "coverage": 80.0,
+      "solved": 4,
+      "total": 5,
+      "avg_solution_length": 75.8,
+      "avg_expanded": 75.8
+    },
+    "results": [
+      {
+        "solved": true,
+        "solution_length": 165,
+        "expanded": 165,
+        "generated": 838
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": 1000,
+        "generated": 4166
+      },
+      {
+        "solved": true,
+        "solution_length": 27,
+        "expanded": 27,
+        "generated": 186
+      },
+      {
+        "solved": true,
+        "solution_length": 84,
+        "expanded": 84,
+        "generated": 459
+      },
+      {
+        "solved": true,
+        "solution_length": 27,
+        "expanded": 27,
+        "generated": 186
+      }
+    ]
+  },
+  "beam_1": {
+    "summary": {
+      "coverage": 40.0,
+      "solved": 2,
+      "total": 5,
+      "avg_solution_length": 27.0,
+      "avg_expanded": 27.0
+    },
+    "results": [
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null
+      },
+      {
+        "solved": true,
+        "solution_length": 27,
+        "expanded": 27,
+        "generated": 186
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null
+      },
+      {
+        "solved": true,
+        "solution_length": 27,
+        "expanded": 27,
+        "generated": 186
+      }
+    ]
+  },
+  "beam_5": {
+    "summary": {
+      "coverage": 60.0,
+      "solved": 3,
+      "total": 5,
+      "avg_solution_length": 31.0,
+      "avg_expanded": 133.7
+    },
+    "results": [
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null
+      },
+      {
+        "solved": true,
+        "solution_length": 25,
+        "expanded": 106,
+        "generated": 626
+      },
+      {
+        "solved": true,
+        "solution_length": 43,
+        "expanded": 189,
+        "generated": 1026
+      },
+      {
+        "solved": true,
+        "solution_length": 25,
+        "expanded": 106,
+        "generated": 626
+      }
+    ]
+  },
+  "beam_10": {
+    "summary": {
+      "coverage": 40.0,
+      "solved": 2,
+      "total": 5,
+      "avg_solution_length": 25.0,
+      "avg_expanded": 200.5
+    },
+    "results": [
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null
+      },
+      {
+        "solved": true,
+        "solution_length": 25,
+        "expanded": 199,
+        "generated": 1157
+      },
+      {
+        "solved": false,
+        "solution_length": null,
+        "expanded": null,
+        "generated": null
+      },
+      {
+        "solved": true,
+        "solution_length": 25,
+        "expanded": 202,
+        "generated": 1192
+      }
+    ]
+  }
+}

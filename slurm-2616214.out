@@ -1,0 +1,873 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2616214
+Job name: wrap
+Host: cn-401
+Date: Tue Jun  2 11:10:20 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_24gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2616214 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-401
+2613668 rleap_gpu deliv010 tobias.r  R   23:41:46      1 cn-401
+2613678 rleap_gpu deliv020 tobias.r  R   23:41:46      1 cn-401
+2614312 rleap_gpu Training maximili  R   17:58:01      1 cn-401
+2615930_4 rleap_gpu ep-polic martin.f  R      26:27      1 cn-401
+2615914_0 rleap_gpu ep-polic martin.f  R      39:29      1 cn-401
+2615914_1 rleap_gpu ep-polic martin.f  R      39:29      1 cn-401
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA A10
+Using domain folder: example/barman_dataset
+Finding paths...
+Parsing instances...
+- Domain: barman
+- # Train problems: 225
+- # Val problems: 112
+Generating state spaces...
+> Expanding: prob
+- Added with 406 states
+> Expanding: prob
+- Added with 406 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 742 states
+> Expanding: prob
+- Added with 6058 states
+> Expanding: prob
+- Added with 6058 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 1253 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 12025 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 14222 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 71022 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 24245 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Added with 29107 states
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 44798 states
+> Expanding: prob
+- Added with 53833 states
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Added with 92144 states
+> Expanding: prob
+- Skipped
+Generating state spaces...
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+> Expanding: prob
+- Skipped
+Creating state samplers...
+Creating a new model and optimizer...
+Training model...
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+[1/1000; 100/1000] Loss: 65.2986 (21.71s) [sample=0.00s gpu=0.20s]
+[1/1000; 200/1000] Loss: 33.7478 (20.44s) [sample=0.01s gpu=0.20s]
+[1/1000; 300/1000] Loss: 47.8818 (20.66s) [sample=0.00s gpu=0.21s]
+[1/1000; 400/1000] Loss: 32.5539 (20.59s) [sample=0.01s gpu=0.20s]
+[1/1000; 500/1000] Loss: 16.9258 (20.12s) [sample=0.01s gpu=0.20s]
+[1/1000; 600/1000] Loss: 78.2214 (20.50s) [sample=0.00s gpu=0.20s]
+[1/1000; 700/1000] Loss: 16.3226 (20.58s) [sample=0.00s gpu=0.21s]
+[1/1000; 800/1000] Loss: 47.6609 (20.60s) [sample=0.00s gpu=0.21s]
+[1/1000; 900/1000] Loss: 32.0845 (20.46s) [sample=0.00s gpu=0.21s]
+[1/1000; 1000/1000] Loss: 62.8783 (20.78s) [sample=0.00s gpu=0.20s]
+[1/1000] Absolute error: 31.6170
+[1/1000] Saved new best model
+[2/1000; 100/1000] Loss: 31.6746 (19.82s) [sample=0.00s gpu=0.21s]
+[2/1000; 200/1000] Loss: 32.1668 (21.20s) [sample=0.00s gpu=0.21s]
+[2/1000; 300/1000] Loss: 16.2610 (21.20s) [sample=0.00s gpu=0.21s]
+[2/1000; 400/1000] Loss: 46.9101 (20.72s) [sample=0.00s gpu=0.21s]
+[2/1000; 500/1000] Loss: 31.8553 (20.55s) [sample=0.00s gpu=0.20s]
+[2/1000; 600/1000] Loss: 0.9510 (21.08s) [sample=0.00s gpu=0.21s]
+[2/1000; 700/1000] Loss: 16.1716 (21.16s) [sample=0.00s gpu=0.21s]
+[2/1000; 800/1000] Loss: 1.3819 (20.74s) [sample=0.00s gpu=0.21s]
+[2/1000; 900/1000] Loss: 93.3707 (20.76s) [sample=0.01s gpu=0.20s]
+[2/1000; 1000/1000] Loss: 62.3277 (20.72s) [sample=0.00s gpu=0.20s]
+[2/1000] Absolute error: 30.6005
+[2/1000] Saved new best model
+[3/1000; 100/1000] Loss: 0.8204 (20.24s) [sample=0.00s gpu=0.31s]
+[3/1000; 200/1000] Loss: 47.0243 (21.17s) [sample=0.00s gpu=0.21s]
+[3/1000; 300/1000] Loss: 1.1340 (21.24s) [sample=0.00s gpu=0.21s]
+[3/1000; 400/1000] Loss: 31.2451 (21.25s) [sample=0.00s gpu=0.20s]
+[3/1000; 500/1000] Loss: 31.5750 (21.17s) [sample=0.00s gpu=0.21s]
+[3/1000; 600/1000] Loss: 31.5299 (21.22s) [sample=0.00s gpu=0.21s]
+[3/1000; 700/1000] Loss: 46.4356 (21.23s) [sample=0.00s gpu=0.21s]
+[3/1000; 800/1000] Loss: 16.1198 (21.15s) [sample=0.00s gpu=0.21s]
+[3/1000; 900/1000] Loss: 46.5015 (21.28s) [sample=0.00s gpu=0.21s]
+[3/1000; 1000/1000] Loss: 0.6349 (21.15s) [sample=0.00s gpu=0.21s]
+[3/1000] Absolute error: 30.6661
+[4/1000; 100/1000] Loss: 0.7379 (16.32s) [sample=0.00s gpu=0.16s]
+[4/1000; 200/1000] Loss: 31.5603 (16.41s) [sample=0.01s gpu=0.16s]
+[4/1000; 300/1000] Loss: 31.1736 (16.41s) [sample=0.00s gpu=0.16s]
+[4/1000; 400/1000] Loss: 15.6148 (16.29s) [sample=0.00s gpu=0.16s]
+[4/1000; 500/1000] Loss: 76.7948 (16.34s) [sample=0.00s gpu=0.16s]
+[4/1000; 600/1000] Loss: 46.3521 (16.39s) [sample=0.00s gpu=0.16s]
+[4/1000; 700/1000] Loss: 61.3396 (16.35s) [sample=0.00s gpu=0.16s]
+[4/1000; 800/1000] Loss: 30.8916 (16.29s) [sample=0.00s gpu=0.16s]
+[4/1000; 900/1000] Loss: 1.2470 (16.41s) [sample=0.00s gpu=0.16s]
+[4/1000; 1000/1000] Loss: 16.5853 (16.36s) [sample=0.01s gpu=0.16s]
+[4/1000] Absolute error: 32.1841
+[5/1000; 100/1000] Loss: 46.0522 (16.31s) [sample=0.00s gpu=0.16s]
+[5/1000; 200/1000] Loss: 61.7799 (16.38s) [sample=0.00s gpu=0.16s]
+[5/1000; 300/1000] Loss: 30.9516 (16.42s) [sample=0.00s gpu=0.16s]
+[5/1000; 400/1000] Loss: 61.2713 (16.27s) [sample=0.00s gpu=0.16s]
+[5/1000; 500/1000] Loss: 61.2873 (16.42s) [sample=0.00s gpu=0.16s]
+[5/1000; 600/1000] Loss: 30.8129 (16.40s) [sample=0.00s gpu=0.16s]
+[5/1000; 700/1000] Loss: 45.7482 (16.44s) [sample=0.00s gpu=0.16s]
+[5/1000; 800/1000] Loss: 16.0215 (16.26s) [sample=0.00s gpu=0.16s]
+[5/1000; 900/1000] Loss: 30.6857 (16.36s) [sample=0.00s gpu=0.16s]
+[5/1000; 1000/1000] Loss: 74.7316 (16.33s) [sample=0.00s gpu=0.16s]
+[5/1000] Absolute error: 33.3048
+[6/1000; 100/1000] Loss: 60.9060 (16.32s) [sample=0.00s gpu=0.16s]
+[6/1000; 200/1000] Loss: 60.2456 (16.21s) [sample=0.00s gpu=0.16s]
+[6/1000; 300/1000] Loss: 30.6153 (16.34s) [sample=0.00s gpu=0.16s]
+[6/1000; 400/1000] Loss: 45.0194 (16.22s) [sample=0.00s gpu=0.16s]
+[6/1000; 500/1000] Loss: 15.1465 (19.68s) [sample=0.00s gpu=0.21s]
+[6/1000; 600/1000] Loss: 16.9670 (21.17s) [sample=0.00s gpu=0.21s]
+[6/1000; 700/1000] Loss: 28.2123 (21.10s) [sample=0.01s gpu=0.21s]
+[6/1000; 800/1000] Loss: 26.8887 (21.35s) [sample=0.00s gpu=0.21s]
+[6/1000; 900/1000] Loss: 23.8069 (21.36s) [sample=0.01s gpu=0.21s]
+[6/1000; 1000/1000] Loss: 26.0406 (21.39s) [sample=0.00s gpu=0.21s]
+[6/1000] Absolute error: 17.9062
+[6/1000] Saved new best model
+[7/1000; 100/1000] Loss: 21.6560 (19.19s) [sample=0.01s gpu=0.18s]
+[7/1000; 200/1000] Loss: 15.3339 (19.08s) [sample=0.00s gpu=0.19s]
+[7/1000; 300/1000] Loss: 12.3365 (19.17s) [sample=0.00s gpu=0.19s]
+[7/1000; 400/1000] Loss: 4.4745 (19.06s) [sample=0.00s gpu=0.19s]
+[7/1000; 500/1000] Loss: 3.8766 (19.15s) [sample=0.01s gpu=0.19s]
+[7/1000; 600/1000] Loss: 2.2033 (18.58s) [sample=0.00s gpu=0.19s]
+[7/1000; 700/1000] Loss: 3.9663 (18.47s) [sample=0.01s gpu=0.18s]
+[7/1000; 800/1000] Loss: 11.6412 (18.56s) [sample=0.01s gpu=0.18s]
+[7/1000; 900/1000] Loss: 3.6004 (18.58s) [sample=0.00s gpu=0.18s]
+[7/1000; 1000/1000] Loss: 19.4611 (18.48s) [sample=0.00s gpu=0.18s]
+[7/1000] Absolute error: 6.5335
+[7/1000] Saved new best model
+[8/1000; 100/1000] Loss: 13.2489 (18.51s) [sample=0.00s gpu=0.18s]
+[8/1000; 200/1000] Loss: 7.0169 (20.87s) [sample=0.00s gpu=0.21s]
+[8/1000; 300/1000] Loss: 1.3412 (21.33s) [sample=0.00s gpu=0.21s]
+[8/1000; 400/1000] Loss: 1.6957 (21.23s) [sample=0.00s gpu=0.21s]
+[8/1000; 500/1000] Loss: 1.3917 (21.31s) [sample=0.00s gpu=0.21s]
+[8/1000; 600/1000] Loss: 1.1942 (21.34s) [sample=0.00s gpu=0.21s]
+[8/1000; 700/1000] Loss: 1.7993 (21.36s) [sample=0.00s gpu=0.21s]
+[8/1000; 800/1000] Loss: 1.8202 (21.30s) [sample=0.00s gpu=0.21s]
+[8/1000; 900/1000] Loss: 9.2404 (21.42s) [sample=0.00s gpu=0.21s]
+[8/1000; 1000/1000] Loss: 3.1784 (21.37s) [sample=0.00s gpu=0.21s]
+[8/1000] Absolute error: 4.0395
+[8/1000] Saved new best model
+[9/1000; 100/1000] Loss: 0.7594 (16.43s) [sample=0.00s gpu=0.16s]
+[9/1000; 200/1000] Loss: 8.3323 (16.35s) [sample=0.00s gpu=0.16s]
+[9/1000; 300/1000] Loss: 1.8292 (16.42s) [sample=0.00s gpu=0.16s]
+[9/1000; 400/1000] Loss: 1.1864 (16.42s) [sample=0.00s gpu=0.16s]
+[9/1000; 500/1000] Loss: 0.8184 (16.29s) [sample=0.00s gpu=0.16s]
+[9/1000; 600/1000] Loss: 1.7103 (16.41s) [sample=0.00s gpu=0.16s]
+[9/1000; 700/1000] Loss: 1.4762 (16.45s) [sample=0.00s gpu=0.16s]
+[9/1000; 800/1000] Loss: 2.7753 (16.34s) [sample=0.00s gpu=0.16s]
+[9/1000; 900/1000] Loss: 2.1120 (16.42s) [sample=0.00s gpu=0.16s]
+[9/1000; 1000/1000] Loss: 1.1225 (16.40s) [sample=0.00s gpu=0.17s]
+[9/1000] Absolute error: 4.7578
+[10/1000; 100/1000] Loss: 2.5980 (16.37s) [sample=0.00s gpu=0.16s]
+[10/1000; 200/1000] Loss: 1.1796 (16.44s) [sample=0.00s gpu=0.16s]
+[10/1000; 300/1000] Loss: 21.8200 (16.47s) [sample=0.00s gpu=0.16s]
+[10/1000; 400/1000] Loss: 32.9827 (16.35s) [sample=0.00s gpu=0.16s]
+[10/1000; 500/1000] Loss: 2.9343 (16.44s) [sample=0.00s gpu=0.16s]
+[10/1000; 600/1000] Loss: 2.1608 (16.44s) [sample=0.00s gpu=0.16s]
+[10/1000; 700/1000] Loss: 1.1150 (16.36s) [sample=0.00s gpu=0.16s]
+[10/1000; 800/1000] Loss: 0.6240 (16.46s) [sample=0.00s gpu=0.16s]
+[10/1000; 900/1000] Loss: 2.0376 (16.46s) [sample=0.00s gpu=0.16s]
+[10/1000; 1000/1000] Loss: 1.2608 (16.37s) [sample=0.00s gpu=0.16s]
+[10/1000] Absolute error: 4.0198
+[10/1000] Saved new best model
+[11/1000; 100/1000] Loss: 1.0397 (16.35s) [sample=0.00s gpu=0.16s]
+[11/1000; 200/1000] Loss: 2.1770 (16.45s) [sample=0.00s gpu=0.16s]
+[11/1000; 300/1000] Loss: 1.4172 (16.47s) [sample=0.00s gpu=0.16s]
+[11/1000; 400/1000] Loss: 7.1518 (16.30s) [sample=0.00s gpu=0.16s]
+[11/1000; 500/1000] Loss: 2.3547 (20.65s) [sample=0.00s gpu=0.21s]
+[11/1000; 600/1000] Loss: 1.6665 (21.43s) [sample=0.00s gpu=0.21s]
+[11/1000; 700/1000] Loss: 0.7178 (21.29s) [sample=0.00s gpu=0.21s]
+[11/1000; 800/1000] Loss: 0.5625 (21.40s) [sample=0.00s gpu=0.21s]
+[11/1000; 900/1000] Loss: 0.8052 (21.41s) [sample=0.00s gpu=0.21s]
+[11/1000; 1000/1000] Loss: 0.9073 (21.30s) [sample=0.00s gpu=0.21s]
+[11/1000] Absolute error: 2.5006
+[11/1000] Saved new best model
+[12/1000; 100/1000] Loss: 0.9529 (16.42s) [sample=0.00s gpu=0.16s]
+[12/1000; 200/1000] Loss: 1.3759 (16.30s) [sample=0.00s gpu=0.16s]
+[12/1000; 300/1000] Loss: 0.7108 (16.36s) [sample=0.00s gpu=0.16s]
+[12/1000; 400/1000] Loss: 1.7719 (16.27s) [sample=0.00s gpu=0.16s]
+[12/1000; 500/1000] Loss: 0.8161 (16.40s) [sample=0.00s gpu=0.16s]
+[12/1000; 600/1000] Loss: 2.5101 (16.35s) [sample=0.00s gpu=0.16s]
+[12/1000; 700/1000] Loss: 16.2948 (16.35s) [sample=0.00s gpu=0.25s]
+[12/1000; 800/1000] Loss: 31.2114 (16.28s) [sample=0.00s gpu=0.16s]
+[12/1000; 900/1000] Loss: 15.9399 (19.57s) [sample=0.00s gpu=0.21s]
+[12/1000; 1000/1000] Loss: 62.1900 (21.24s) [sample=0.01s gpu=0.21s]
+[12/1000] Absolute error: 27.6646
+[13/1000; 100/1000] Loss: 46.4889 (19.19s) [sample=0.01s gpu=0.18s]
+[13/1000; 200/1000] Loss: 16.1500 (19.16s) [sample=0.01s gpu=0.18s]
+[13/1000; 300/1000] Loss: 61.5709 (19.07s) [sample=0.01s gpu=0.19s]
+[13/1000; 400/1000] Loss: 45.4262 (19.15s) [sample=0.00s gpu=0.19s]
+[13/1000; 500/1000] Loss: 7.5706 (20.72s) [sample=0.00s gpu=0.21s]
+[13/1000; 600/1000] Loss: 3.8116 (20.80s) [sample=0.00s gpu=0.21s]
+[13/1000; 700/1000] Loss: 1.3396 (21.12s) [sample=0.00s gpu=0.21s]
+[13/1000; 800/1000] Loss: 2.3064 (21.02s) [sample=0.01s gpu=0.20s]
+[13/1000; 900/1000] Loss: 0.9632 (20.80s) [sample=0.00s gpu=0.21s]
+[13/1000; 1000/1000] Loss: 1.2955 (20.89s) [sample=0.00s gpu=0.21s]
+[13/1000] Absolute error: 1.5900
+[13/1000] Saved new best model
+[14/1000; 100/1000] Loss: 1.4843 (18.48s) [sample=0.00s gpu=0.18s]
+[14/1000; 200/1000] Loss: 0.8324 (18.56s) [sample=0.00s gpu=0.18s]
+[14/1000; 300/1000] Loss: 1.2539 (18.70s) [sample=0.00s gpu=0.18s]
+[14/1000; 400/1000] Loss: 0.7923 (20.63s) [sample=0.00s gpu=0.21s]
+[14/1000; 500/1000] Loss: 0.9855 (20.93s) [sample=0.00s gpu=0.21s]
+[14/1000; 600/1000] Loss: 0.5728 (20.97s) [sample=0.00s gpu=0.21s]
+[14/1000; 700/1000] Loss: 0.5458 (21.02s) [sample=0.00s gpu=0.21s]
+[14/1000; 800/1000] Loss: 0.9330 (21.47s) [sample=0.00s gpu=0.21s]
+[14/1000; 900/1000] Loss: 0.8954 (21.43s) [sample=0.00s gpu=0.21s]

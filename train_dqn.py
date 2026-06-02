@@ -23,13 +23,7 @@ class ModelWrapper(rl.ActionScalarModel):
             actions = state.generate_applicable_actions()
             input_list.append((state, actions, goal))
             actions_list.append(actions)
-        if self.random_layer_count:
-            original_layer_count = self.model.get_hparam_config().num_layers
-            new_layer_count = random.randint(original_layer_count // 2, original_layer_count)
-            self.model.get_hparam_config().num_layers = new_layer_count
-            q_values_list: list[torch.Tensor] = self.model.forward(input_list).readout('q')  # type: ignore
-            self.model.get_hparam_config().num_layers = original_layer_count
-        else:
+        if True:
             q_values_list = self.model.forward(input_list).readout('q')  # type: ignore
         output = list(zip(q_values_list, actions_list))
         return output
@@ -80,28 +74,21 @@ def _parse_instances(input: Path) -> tuple[mm.Domain, list[mm.Problem]]:
 
 
 def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str) -> rgnn.RelationalGraphNeuralNetwork:
-    if aggregation == 'smax': aggregation_function = rgnn.SmoothMaximumAggregation()
-    elif aggregation == 'hmax': aggregation_function = rgnn.HardMaximumAggregation()
-    elif aggregation == 'mean': aggregation_function = rgnn.MeanAggregation()
-    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.SumAggregation()
+    if aggregation == 'smax': aggregation_function = rgnn.AggregationFunction.SmoothMaximum
+    elif aggregation == 'hmax': aggregation_function = rgnn.AggregationFunction.HardMaximum
+    elif aggregation == 'mean': aggregation_function = rgnn.AggregationFunction.Mean
+    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.AggregationFunction.Add
     else: raise RuntimeError(f'Unknown aggregation function: {aggregation}.')
 
-    hparam_config = rgnn.HyperparameterConfig(
+    config = rgnn.RelationalGraphNeuralNetworkConfig(
         domain=domain,
         embedding_size=embedding_size,
-        num_layers=num_layers
+        num_layers=num_layers,
+        message_aggregation=aggregation_function,
+        input_specification=(rgnn.InputType.State, rgnn.InputType.GroundActions, rgnn.InputType.Goal),
+        output_specification=[('q', rgnn.OutputNodeType.Action, rgnn.OutputValueType.Scalar)],
     )
-
-    input_spec = (rgnn.StateEncoder(), rgnn.GroundActionsEncoder(), rgnn.GoalEncoder())
-    output_spec = [('q', rgnn.ActionScalarDecoder(hparam_config))]
-
-    module_config = rgnn.ModuleConfig(
-        aggregation_function=aggregation_function,
-        message_function=rgnn.PredicateMLPMessages(hparam_config, input_spec),
-        update_function=rgnn.MLPUpdates(hparam_config)
-    )
-
-    return rgnn.RelationalGraphNeuralNetwork(hparam_config, module_config, input_spec, output_spec)  # type: ignore
+    return rgnn.RelationalGraphNeuralNetwork(config)
 
 
 def _create_trajectory_refiner(hindsight: str, train_problems: list[mm.Problem], max_new_trajectories: int) -> rl.TrajectoryRefiner:

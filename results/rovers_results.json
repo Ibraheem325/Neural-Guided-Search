@@ -1,11 +1,11 @@
 {
   "astar": {
     "summary": {
-      "coverage": 95.7,
-      "solved": 112,
+      "coverage": 100.0,
+      "solved": 117,
       "total": 117,
-      "avg_solution_length": 9.7,
-      "avg_expanded": 32.0
+      "avg_solution_length": 9.9,
+      "avg_expanded": 53.9
     },
     "results": [
       {
@@ -99,11 +99,10 @@
         "generated": 272
       },
       {
-        "solved": false,
-        "solution_length": null,
-        "expanded": null,
-        "generated": null,
-        "timeout": true
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 860,
+        "generated": 6540
       },
       {
         "solved": true,
@@ -148,11 +147,10 @@
         "generated": 168
       },
       {
-        "solved": false,
-        "solution_length": null,
-        "expanded": null,
-        "generated": null,
-        "timeout": true
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 427,
+        "generated": 3340
       },
       {
         "solved": true,
@@ -431,11 +429,10 @@
         "generated": 134
       },
       {
-        "solved": false,
-        "solution_length": null,
-        "expanded": null,
-        "generated": null,
-        "timeout": true
+        "solved": true,
+        "solution_length": 13,
+        "expanded": 981,
+        "generated": 7544
       },
       {
         "solved": true,
@@ -630,11 +627,10 @@
         "generated": 626
       },
       {
-        "solved": false,
-        "solution_length": null,
-        "expanded": null,
-        "generated": null,
-        "timeout": true
+        "solved": true,
+        "solution_length": 16,
+        "expanded": 204,
+        "generated": 1972
       },
       {
         "solved": true,
@@ -661,11 +657,10 @@
         "generated": 904
       },
       {
-        "solved": false,
-        "solution_length": null,
-        "expanded": null,
-        "generated": null,
-        "timeout": true
+        "solved": true,
+        "solution_length": 9,
+        "expanded": 251,
+        "generated": 2359
       },
       {
         "solved": true,

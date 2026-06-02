@@ -31,7 +31,7 @@ def run_algorithm(script: str, domain: str, problem: str, model: str, extra_args
            '--problem', problem,
            '--model', model] + extra_args
     try:
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
         output = proc.stdout + proc.stderr
         return parse_output(output, script)
     except subprocess.TimeoutExpired:

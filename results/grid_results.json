@@ -1,11 +1,11 @@
 {
   "astar": {
     "summary": {
-      "coverage": 95.8,
-      "solved": 115,
+      "coverage": 97.5,
+      "solved": 117,
       "total": 120,
-      "avg_solution_length": 9.4,
-      "avg_expanded": 23.6
+      "avg_solution_length": 9.7,
+      "avg_expanded": 115.6
     },
     "results": [
       {
@@ -657,11 +657,10 @@
         "generated": 142
       },
       {
-        "solved": false,
-        "solution_length": null,
-        "expanded": null,
-        "generated": null,
-        "timeout": true
+        "solved": true,
+        "solution_length": 28,
+        "expanded": 1154,
+        "generated": 5666
       },
       {
         "solved": true,
@@ -676,11 +675,10 @@
         "generated": 144
       },
       {
-        "solved": false,
-        "solution_length": null,
-        "expanded": null,
-        "generated": null,
-        "timeout": true
+        "solved": true,
+        "solution_length": 29,
+        "expanded": 9662,
+        "generated": 44667
       },
       {
         "solved": true,
@@ -737,11 +735,11 @@
   },
   "wastar_2": {
     "summary": {
-      "coverage": 99.2,
-      "solved": 119,
+      "coverage": 100.0,
+      "solved": 120,
       "total": 120,
-      "avg_solution_length": 10.5,
-      "avg_expanded": 19.4
+      "avg_solution_length": 10.8,
+      "avg_expanded": 25.8
     },
     "results": [
       {
@@ -1459,11 +1457,10 @@
         "generated": 506
       },
       {
-        "solved": false,
-        "solution_length": null,
-        "expanded": null,
-        "generated": null,
-        "timeout": true
+        "solved": true,
+        "solution_length": 53,
+        "expanded": 792,
+        "generated": 3982
       }
     ]
   },

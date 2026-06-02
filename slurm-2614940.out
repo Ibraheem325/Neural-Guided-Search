@@ -1,0 +1,43 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2614940
+Job name: wrap
+Host: cn-425
+Date: Mon Jun  1 20:47:42 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2614939 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-425
+2614940 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-425
+2614941 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-425
+2614942 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-425
+2614943 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-425
+2612485 rleap_gpu rgnet-ac daniel.s  R   13:56:17      1 cn-425
+2612317 rleap_gpu rgnet-ac daniel.s  R   23:56:24      1 cn-425
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Found 78 test problems
+
+Running astar...
+  [1/78] 000_p-3-3-3-28.pddl ✗
+  [2/78] 001_p-3-3-3-24.pddl ✗
+  [3/78] 002_p-2-4-3-29.pddl ✗
+  [4/78] 003_p-2-4-3-13.pddl ✗
+  [5/78] 004_p-2-4-3-7.pddl ✗
+  [6/78] 005_p-2-4-3-25.pddl ✗
+  [7/78] 006_p-2-4-3-24.pddl ✗
+  [8/78] 007_p-2-4-3-6.pddl slurmstepd: error: *** JOB 2614940 ON cn-425 CANCELLED AT 2026-06-02T00:37:09 ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2614940
+Time: Tue Jun  2 00:37:09 CEST 2026
+Elapsed Time: 03:49:27
+Billing per second for TRES: billing=175,cpu=4,gres/shard=6,mem=16G,node=1
+Show resource usage with e.g.:
+sacct -j 2614940 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------
