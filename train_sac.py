@@ -205,7 +205,7 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
     rl_evaluator = rl.PolicyEvaluation(validation_problems, evaluation_criteras, evaluation_trajectory_sampler, args.validation_horizon)
     episode = 0
     def avg_num_objects(ps: list[mm.Problem]) -> float:
-        return sum(len(p.get_objects()) for p in ps) / len(ps)
+        return sum(len(p.get_objects()) for p in ps) / len(ps) if len(ps) > 0 else 0.0
     def avg_goal_size(ts: list[rl.Trajectory]) -> float:
         return sum(len(t[0].goal_condition) for t in ts if len(t) > 0) / len(ts) if len(ts) > 0 else 0.0
     def avg_trajectory_length(ts: list[rl.Trajectory]) -> float:
