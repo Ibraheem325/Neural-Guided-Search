@@ -56,6 +56,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--train_steps', default=32, type=int, help='Number of training steps per iteration')
     parser.add_argument('--seed', default=42, type=int, help='Random seed for reproducibility')
     parser.add_argument('--cpu', action='store_true', help='Force CPU to be used')
+    parser.add_argument('--output_prefix', default='', type=str, help='Prefix for output model files (e.g., "grid_dqn_1_")')
     args = parser.parse_args()
     return args
 
@@ -168,9 +169,9 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
         # Evaluate every now and then.
         best, evaluation = rl_evaluator.evaluate()
         print(f'[{episode}] Best: {best}, Evaluation: {evaluation}', flush=True)
-        _save_checkpoint(model, optimizer, 'latest.pth')
+        _save_checkpoint(model, optimizer, args.output_prefix + 'latest.pth')
         if best:
-            _save_checkpoint(model, optimizer, 'best.pth')
+            _save_checkpoint(model, optimizer, args.output_prefix + 'best.pth')
             print(f'[{episode}] Saved new best model', flush=True)
         # Increment episode.
         episode += 1
