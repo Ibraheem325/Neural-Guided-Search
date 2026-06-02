@@ -174,7 +174,6 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
         q1_target_wrapper, q1_wrapper, q1_optimizer, q1_scheduler,
         q2_target_wrapper, q2_wrapper, q2_optimizer, q2_scheduler,
         args.discount_factor, args.polyak_factor, args.entropy_target_scale, args.entropy_lr,
-        use_bounds_loss=True,
         max_log_alpha=math.log(args.entropy_alpha_max),
     )
 
