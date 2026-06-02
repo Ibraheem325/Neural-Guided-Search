@@ -207,9 +207,9 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
     def avg_num_objects(ps: list[mm.Problem]) -> float:
         return sum(len(p.get_objects()) for p in ps) / len(ps)
     def avg_goal_size(ts: list[rl.Trajectory]) -> float:
-        return sum(len(t[0].goal_condition) for t in ts if len(t) > 0) / len(ts)
+        return sum(len(t[0].goal_condition) for t in ts if len(t) > 0) / len(ts) if len(ts) > 0 else 0.0
     def avg_trajectory_length(ts: list[rl.Trajectory]) -> float:
-        return sum(len(t) for t in ts if len(t) > 0) / len(ts)
+        return sum(len(t) for t in ts if len(t) > 0) / len(ts) if len(ts) > 0 else 0.0
     rl_algorithm.register_on_pre_collect_experience(lambda: print(f'[{episode}] Collecting Experience.', flush=True))
     rl_algorithm.register_on_sample_problems(lambda ps: print(f'[{episode}] > Sampled Problems; {avg_num_objects(ps):.1f} avg. object count.', flush=True))
     rl_algorithm.register_on_sample_initial_states(lambda x: print(f'[{episode}] > Sampled Initial States.', flush=True))
