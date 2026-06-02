@@ -1,0 +1,849 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2616947
+Job name: wrap
+Host: cn-425
+Date: Tue Jun  2 19:42:08 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2616945 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-425
+2616946 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-425
+2616947 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-425
+2616922 rleap_gpu     wrap ibrahim.  R       2:23      1 cn-425
+2615876 rleap_gpu stretch_ jaxon.ch  R    9:09:25      1 cn-425
+2612485 rleap_gpu rgnet-ac daniel.s  R 1-12:50:43      1 cn-425
+2612317 rleap_gpu rgnet-ac daniel.s  R 1-22:50:50      1 cn-425
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+Parsed 400 training instances.
+Parsed 120 validation instances.
+Creating model...
+Training model...
+[0] Collecting Experience.
+[0] > Sampled Problems; 7.0 avg. object count.
+[0] > Sampled Initial States.
+[0] > Sampled Goals.
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+[0] > Sampled Trajectories; 1.2 avg. goal size; 79.0 avg. trajectory length
+[0] > Refined Trajectories; 1.3 avg. goal size; 8.1 avg. trajectory length.
+[0] Collected Experience.
+[0] Optimizing Model.
+[0] > SAC: actor=-1.35849 q1=0.09329 q2=0.76725 entropy=0.00000 alpha=1.00030
+[0] > Train step: -0.49794 avg. loss.
+[0] > SAC: actor=4.06232 q1=6.12925 q2=3.13363 entropy=-0.01419 alpha=0.09999
+[0] > Train step: 13.31101 avg. loss.
+[0] > SAC: actor=0.03388 q1=2.29271 q2=0.09622 entropy=0.00254 alpha=0.09998
+[0] > Train step: 2.42536 avg. loss.
+[0] > SAC: actor=0.21001 q1=0.04523 q2=0.14559 entropy=0.15423 alpha=0.10000
+[0] > Train step: 0.55506 avg. loss.
+[0] > SAC: actor=1.74217 q1=1.02592 q2=0.48761 entropy=0.20454 alpha=0.10002
+[0] > Train step: 3.46024 avg. loss.
+[0] > SAC: actor=1.80387 q1=1.05560 q2=0.08773 entropy=0.15954 alpha=0.10002
+[0] > Train step: 3.10673 avg. loss.
+[0] > SAC: actor=0.80728 q1=0.26438 q2=0.28982 entropy=0.00830 alpha=0.10002
+[0] > Train step: 1.36978 avg. loss.
+[0] > SAC: actor=0.07143 q1=0.16217 q2=0.07070 entropy=-0.00950 alpha=0.10002
+[0] > Train step: 0.29481 avg. loss.
+[0] > SAC: actor=0.72187 q1=0.51681 q2=0.19415 entropy=-0.00274 alpha=0.10002
+[0] > Train step: 1.43009 avg. loss.
+[0] > SAC: actor=0.45483 q1=0.13542 q2=0.05687 entropy=0.05055 alpha=0.10002
+[0] > Train step: 0.69768 avg. loss.
+[0] > SAC: actor=0.63954 q1=0.06022 q2=0.17742 entropy=0.10872 alpha=0.10002
+[0] > Train step: 0.98589 avg. loss.
+[0] > SAC: actor=1.04370 q1=0.27678 q2=0.09533 entropy=0.08510 alpha=0.10002
+[0] > Train step: 1.50091 avg. loss.
+[0] > SAC: actor=0.85829 q1=0.08728 q2=0.10917 entropy=0.04489 alpha=0.10002
+[0] > Train step: 1.09963 avg. loss.
+[0] > SAC: actor=0.83530 q1=0.06491 q2=0.09250 entropy=0.06675 alpha=0.10002
+[0] > Train step: 1.05946 avg. loss.
+[0] > SAC: actor=0.28198 q1=0.24052 q2=0.05370 entropy=0.09068 alpha=0.10002
+[0] > Train step: 0.66688 avg. loss.
+[0] > SAC: actor=0.26922 q1=0.12409 q2=0.14485 entropy=0.11894 alpha=0.10002
+[0] > Train step: 0.65709 avg. loss.
+[0] > SAC: actor=0.79978 q1=0.03612 q2=0.03179 entropy=0.27251 alpha=0.10003
+[0] > Train step: 1.14020 avg. loss.
+[0] > SAC: actor=1.29469 q1=0.16909 q2=0.13202 entropy=0.18652 alpha=0.10003
+[0] > Train step: 1.78231 avg. loss.
+[0] > SAC: actor=1.09980 q1=0.12612 q2=0.02367 entropy=0.26278 alpha=0.10003
+[0] > Train step: 1.51238 avg. loss.
+[0] > SAC: actor=1.09158 q1=0.08130 q2=0.09533 entropy=0.38245 alpha=0.10003
+[0] > Train step: 1.65066 avg. loss.
+[0] > SAC: actor=0.87303 q1=0.06780 q2=0.02984 entropy=0.32785 alpha=0.10003
+[0] > Train step: 1.29852 avg. loss.
+[0] > SAC: actor=1.26772 q1=0.14017 q2=0.04312 entropy=0.35511 alpha=0.10003
+[0] > Train step: 1.80613 avg. loss.
+[0] > SAC: actor=0.97450 q1=0.04597 q2=0.04121 entropy=0.28002 alpha=0.10003
+[0] > Train step: 1.34170 avg. loss.
+[0] > SAC: actor=1.17274 q1=0.05241 q2=0.02902 entropy=0.36880 alpha=0.10003
+[0] > Train step: 1.62296 avg. loss.
+[0] > SAC: actor=1.31205 q1=0.05428 q2=0.04300 entropy=0.39651 alpha=0.10003
+[0] > Train step: 1.80583 avg. loss.
+[0] > SAC: actor=1.13765 q1=0.03872 q2=0.01549 entropy=0.30833 alpha=0.10003
+[0] > Train step: 1.50018 avg. loss.
+[0] > SAC: actor=1.19996 q1=0.03144 q2=0.03575 entropy=0.25922 alpha=0.10003
+[0] > Train step: 1.52637 avg. loss.
+[0] > SAC: actor=1.11341 q1=0.02164 q2=0.02101 entropy=0.20040 alpha=0.10003
+[0] > Train step: 1.35646 avg. loss.
+[0] > SAC: actor=1.00253 q1=0.04846 q2=0.03451 entropy=0.12525 alpha=0.10003
+[0] > Train step: 1.21075 avg. loss.
+[0] > SAC: actor=0.99650 q1=0.01911 q2=0.02471 entropy=0.09410 alpha=0.10003
+[0] > Train step: 1.13443 avg. loss.
+[0] > SAC: actor=1.11179 q1=0.00621 q2=0.01908 entropy=0.05096 alpha=0.10003
+[0] > Train step: 1.18803 avg. loss.
+[0] > SAC: actor=1.21894 q1=0.04246 q2=0.05431 entropy=-0.00963 alpha=0.10003
+[0] > Train step: 1.30608 avg. loss.
+[0] Optimized Model.
+[0] Best: True, Evaluation: [8, 145]
+[0] Saved new best model
+[1] Collecting Experience.
+[1] > Sampled Problems; 7.8 avg. object count.
+[1] > Sampled Initial States.
+[1] > Sampled Goals.
+[1] > Sampled Trajectories; 1.0 avg. goal size; 64.0 avg. trajectory length
+[1] > Refined Trajectories; 1.0 avg. goal size; 6.8 avg. trajectory length.
+[1] Collected Experience.
+[1] Optimizing Model.
+[1] > SAC: actor=1.24685 q1=0.02283 q2=0.01979 entropy=-0.02594 alpha=0.10002
+[1] > Train step: 1.26353 avg. loss.
+[1] > SAC: actor=1.04684 q1=0.01276 q2=0.05325 entropy=-0.01301 alpha=0.10002
+[1] > Train step: 1.09984 avg. loss.
+[1] > SAC: actor=1.01501 q1=0.03565 q2=0.03108 entropy=-0.00861 alpha=0.10002
+[1] > Train step: 1.07314 avg. loss.
+[1] > SAC: actor=1.33195 q1=0.02668 q2=0.04774 entropy=0.00344 alpha=0.10002
+[1] > Train step: 1.40982 avg. loss.
+[1] > SAC: actor=1.26966 q1=0.03492 q2=0.05060 entropy=0.03421 alpha=0.10002
+[1] > Train step: 1.38939 avg. loss.
+[1] > SAC: actor=1.27269 q1=0.02304 q2=0.06204 entropy=0.09416 alpha=0.10002
+[1] > Train step: 1.45193 avg. loss.
+[1] > SAC: actor=1.26939 q1=0.03102 q2=0.03553 entropy=0.16592 alpha=0.10002
+[1] > Train step: 1.50186 avg. loss.
+[1] > SAC: actor=1.46195 q1=0.02294 q2=0.04460 entropy=0.18744 alpha=0.10002
+[1] > Train step: 1.71693 avg. loss.
+[1] > SAC: actor=1.30128 q1=0.02621 q2=0.04295 entropy=0.31433 alpha=0.10002
+[1] > Train step: 1.68478 avg. loss.
+[1] > SAC: actor=1.17281 q1=0.04473 q2=0.05209 entropy=0.32435 alpha=0.10002
+[1] > Train step: 1.59399 avg. loss.
+[1] > SAC: actor=1.19324 q1=0.02001 q2=0.02888 entropy=0.58622 alpha=0.10003
+[1] > Train step: 1.82836 avg. loss.
+[1] > SAC: actor=1.14448 q1=0.01891 q2=0.02514 entropy=0.39277 alpha=0.10003
+[1] > Train step: 1.58130 avg. loss.
+[1] > SAC: actor=1.35242 q1=0.03618 q2=0.04577 entropy=0.57107 alpha=0.10003
+[1] > Train step: 2.00545 avg. loss.
+[1] > SAC: actor=1.28542 q1=0.02520 q2=0.02657 entropy=0.71433 alpha=0.10004
+[1] > Train step: 2.05153 avg. loss.
+[1] > SAC: actor=1.15017 q1=0.01277 q2=0.02886 entropy=0.45169 alpha=0.10004
+[1] > Train step: 1.64348 avg. loss.
+[1] > SAC: actor=1.16780 q1=0.01851 q2=0.01842 entropy=0.67857 alpha=0.10004
+[1] > Train step: 1.88331 avg. loss.
+[1] > SAC: actor=1.34610 q1=0.04075 q2=0.02325 entropy=0.79979 alpha=0.10004
+[1] > Train step: 2.20990 avg. loss.
+[1] > SAC: actor=1.27600 q1=0.02228 q2=0.03309 entropy=0.84998 alpha=0.10004
+[1] > Train step: 2.18135 avg. loss.
+[1] > SAC: actor=1.49485 q1=0.03982 q2=0.01958 entropy=0.60271 alpha=0.10004
+[1] > Train step: 2.15697 avg. loss.
+[1] > SAC: actor=1.46312 q1=0.03962 q2=0.04077 entropy=0.68570 alpha=0.10004
+[1] > Train step: 2.22921 avg. loss.
+[1] > SAC: actor=1.09066 q1=0.03080 q2=0.02578 entropy=0.90886 alpha=0.10004
+[1] > Train step: 2.05610 avg. loss.
+[1] > SAC: actor=1.21379 q1=0.03382 q2=0.01853 entropy=0.85753 alpha=0.10005
+[1] > Train step: 2.12367 avg. loss.
+[1] > SAC: actor=1.32203 q1=0.02676 q2=0.01726 entropy=0.86023 alpha=0.10005
+[1] > Train step: 2.22628 avg. loss.
+[1] > SAC: actor=1.36813 q1=0.03184 q2=0.03850 entropy=0.65485 alpha=0.10005
+[1] > Train step: 2.09332 avg. loss.
+[1] > SAC: actor=1.27051 q1=0.03061 q2=0.00936 entropy=0.78574 alpha=0.10005
+[1] > Train step: 2.09623 avg. loss.
+[1] > SAC: actor=1.43039 q1=0.03204 q2=0.02094 entropy=0.91002 alpha=0.10005
+[1] > Train step: 2.39340 avg. loss.
+[1] > SAC: actor=1.34284 q1=0.01376 q2=0.01591 entropy=0.81531 alpha=0.10005
+[1] > Train step: 2.18782 avg. loss.
+[1] > SAC: actor=1.19723 q1=0.04596 q2=0.01770 entropy=0.77059 alpha=0.10005
+[1] > Train step: 2.03149 avg. loss.
+[1] > SAC: actor=1.35630 q1=0.03375 q2=0.01282 entropy=0.98217 alpha=0.10005
+[1] > Train step: 2.38504 avg. loss.
+[1] > SAC: actor=1.49479 q1=0.02019 q2=0.02015 entropy=0.88006 alpha=0.10005
+[1] > Train step: 2.41519 avg. loss.
+[1] > SAC: actor=1.49267 q1=0.05118 q2=0.01593 entropy=0.99484 alpha=0.10005
+[1] > Train step: 2.55461 avg. loss.
+[1] > SAC: actor=1.60548 q1=0.01840 q2=0.01820 entropy=0.50800 alpha=0.10005
+[1] > Train step: 2.15008 avg. loss.
+[1] Optimized Model.
+[1] Best: True, Evaluation: [12, 375]
+[1] Saved new best model
+[2] Collecting Experience.
+[2] > Sampled Problems; 8.5 avg. object count.
+[2] > Sampled Initial States.
+[2] > Sampled Goals.
+[2] > Sampled Trajectories; 1.2 avg. goal size; 60.0 avg. trajectory length
+[2] > Refined Trajectories; 1.4 avg. goal size; 3.4 avg. trajectory length.
+[2] Collected Experience.
+[2] Optimizing Model.
+[2] > SAC: actor=1.31632 q1=0.01367 q2=0.01377 entropy=0.70396 alpha=0.10005
+[2] > Train step: 2.04772 avg. loss.
+[2] > SAC: actor=1.30616 q1=0.04858 q2=0.02624 entropy=0.86466 alpha=0.10005
+[2] > Train step: 2.24564 avg. loss.
+[2] > SAC: actor=1.28001 q1=0.02171 q2=0.02209 entropy=0.59762 alpha=0.10004
+[2] > Train step: 1.92142 avg. loss.
+[2] > SAC: actor=1.44003 q1=0.02304 q2=0.01403 entropy=0.49492 alpha=0.10004
+[2] > Train step: 1.97202 avg. loss.
+[2] > SAC: actor=1.34039 q1=0.02865 q2=0.02963 entropy=0.78231 alpha=0.10004
+[2] > Train step: 2.18098 avg. loss.
+[2] > SAC: actor=1.33989 q1=0.01320 q2=0.01060 entropy=0.87676 alpha=0.10004
+[2] > Train step: 2.24045 avg. loss.
+[2] > SAC: actor=1.31206 q1=0.02137 q2=0.03067 entropy=1.00444 alpha=0.10004
+[2] > Train step: 2.36855 avg. loss.
+[2] > SAC: actor=1.43693 q1=0.02028 q2=0.01666 entropy=0.38198 alpha=0.10004
+[2] > Train step: 1.85585 avg. loss.
+[2] > SAC: actor=1.22835 q1=0.02342 q2=0.04587 entropy=0.87719 alpha=0.10004
+[2] > Train step: 2.17483 avg. loss.
+[2] > SAC: actor=1.46506 q1=0.02589 q2=0.03325 entropy=0.56979 alpha=0.10004
+[2] > Train step: 2.09399 avg. loss.
+[2] > SAC: actor=1.52016 q1=0.02460 q2=0.02388 entropy=0.66513 alpha=0.10004
+[2] > Train step: 2.23376 avg. loss.
+[2] > SAC: actor=1.27524 q1=0.01905 q2=0.02837 entropy=0.87028 alpha=0.10004
+[2] > Train step: 2.19295 avg. loss.
+[2] > SAC: actor=1.22976 q1=0.02543 q2=0.03078 entropy=0.84183 alpha=0.10004
+[2] > Train step: 2.12780 avg. loss.
+[2] > SAC: actor=1.40866 q1=0.03405 q2=0.01611 entropy=0.72889 alpha=0.10004
+[2] > Train step: 2.18772 avg. loss.
+[2] > SAC: actor=1.44270 q1=0.02723 q2=0.04642 entropy=0.90215 alpha=0.10004
+[2] > Train step: 2.41849 avg. loss.
+[2] > SAC: actor=1.49456 q1=0.02912 q2=0.01917 entropy=0.98366 alpha=0.10004
+[2] > Train step: 2.52652 avg. loss.
+[2] > SAC: actor=1.54383 q1=0.03275 q2=0.02762 entropy=1.04812 alpha=0.10004
+[2] > Train step: 2.65233 avg. loss.
+[2] > SAC: actor=1.31658 q1=0.01132 q2=0.01167 entropy=0.64667 alpha=0.10004
+[2] > Train step: 1.98625 avg. loss.
+[2] > SAC: actor=1.38387 q1=0.03669 q2=0.03251 entropy=1.01617 alpha=0.10004
+[2] > Train step: 2.46924 avg. loss.
+[2] > SAC: actor=1.53577 q1=0.03737 q2=0.02963 entropy=0.61044 alpha=0.10004
+[2] > Train step: 2.21321 avg. loss.
+[2] > SAC: actor=1.13270 q1=0.01295 q2=0.01244 entropy=0.48759 alpha=0.10004
+[2] > Train step: 1.64567 avg. loss.
+[2] > SAC: actor=1.51246 q1=0.03025 q2=0.02377 entropy=0.74359 alpha=0.10004
+[2] > Train step: 2.31006 avg. loss.
+[2] > SAC: actor=1.51611 q1=0.01465 q2=0.01229 entropy=0.76900 alpha=0.10004
+[2] > Train step: 2.31204 avg. loss.
+[2] > SAC: actor=1.44826 q1=0.01413 q2=0.02694 entropy=0.91972 alpha=0.10004
+[2] > Train step: 2.40906 avg. loss.
+[2] > SAC: actor=1.21786 q1=0.02108 q2=0.01601 entropy=0.53401 alpha=0.10004
+[2] > Train step: 1.78896 avg. loss.
+[2] > SAC: actor=1.38628 q1=0.01011 q2=0.01209 entropy=0.61982 alpha=0.10004
+[2] > Train step: 2.02830 avg. loss.
+[2] > SAC: actor=1.52639 q1=0.01040 q2=0.00985 entropy=0.61757 alpha=0.10004
+[2] > Train step: 2.16421 avg. loss.
+[2] > SAC: actor=1.47649 q1=0.02123 q2=0.01948 entropy=1.06826 alpha=0.10004
+[2] > Train step: 2.58546 avg. loss.
+[2] > SAC: actor=1.44139 q1=0.00907 q2=0.00626 entropy=0.75894 alpha=0.10004
+[2] > Train step: 2.21565 avg. loss.
+[2] > SAC: actor=1.33681 q1=0.01578 q2=0.01383 entropy=1.02672 alpha=0.10004
+[2] > Train step: 2.39314 avg. loss.
+[2] > SAC: actor=1.16944 q1=0.02079 q2=0.01526 entropy=0.69769 alpha=0.10004
+[2] > Train step: 1.90318 avg. loss.
+[2] > SAC: actor=1.45988 q1=0.01246 q2=0.02131 entropy=1.03119 alpha=0.10004
+[2] > Train step: 2.52483 avg. loss.
+[2] Optimized Model.
+[2] Best: False, Evaluation: [12, 733]
+[3] Collecting Experience.
+[3] > Sampled Problems; 6.8 avg. object count.
+[3] > Sampled Initial States.
+[3] > Sampled Goals.
+[3] > Sampled Trajectories; 1.5 avg. goal size; 8.0 avg. trajectory length
+[3] > Refined Trajectories; 1.4 avg. goal size; 4.4 avg. trajectory length.
+[3] Collected Experience.
+[3] Optimizing Model.
+[3] > SAC: actor=1.47156 q1=0.02122 q2=0.01801 entropy=0.99673 alpha=0.10004
+[3] > Train step: 2.50753 avg. loss.
+[3] > SAC: actor=1.44711 q1=0.02457 q2=0.01771 entropy=1.23117 alpha=0.10004
+[3] > Train step: 2.72056 avg. loss.
+[3] > SAC: actor=1.38104 q1=0.03304 q2=0.03544 entropy=1.14723 alpha=0.10004
+[3] > Train step: 2.59675 avg. loss.
+[3] > SAC: actor=1.36918 q1=0.02730 q2=0.01939 entropy=0.96662 alpha=0.10004
+[3] > Train step: 2.38250 avg. loss.
+[3] > SAC: actor=1.37525 q1=0.02055 q2=0.02163 entropy=1.44098 alpha=0.10004
+[3] > Train step: 2.85841 avg. loss.
+[3] > SAC: actor=1.34060 q1=0.00758 q2=0.00845 entropy=0.86925 alpha=0.10004
+[3] > Train step: 2.22587 avg. loss.
+[3] > SAC: actor=1.39910 q1=0.02223 q2=0.02758 entropy=1.01400 alpha=0.10004
+[3] > Train step: 2.46291 avg. loss.
+[3] > SAC: actor=1.52732 q1=0.01916 q2=0.01344 entropy=0.76984 alpha=0.10004
+[3] > Train step: 2.32976 avg. loss.
+[3] > SAC: actor=1.49498 q1=0.01277 q2=0.01522 entropy=1.10003 alpha=0.10004
+[3] > Train step: 2.62300 avg. loss.
+[3] > SAC: actor=1.38043 q1=0.01710 q2=0.01567 entropy=1.00437 alpha=0.10004
+[3] > Train step: 2.41757 avg. loss.
+[3] > SAC: actor=1.33608 q1=0.01929 q2=0.01768 entropy=1.12382 alpha=0.10004
+[3] > Train step: 2.49688 avg. loss.
+[3] > SAC: actor=1.48375 q1=0.01648 q2=0.01830 entropy=0.62690 alpha=0.10004
+[3] > Train step: 2.14543 avg. loss.
+[3] > SAC: actor=1.37712 q1=0.02502 q2=0.02653 entropy=1.25075 alpha=0.10004
+[3] > Train step: 2.67942 avg. loss.
+[3] > SAC: actor=1.42881 q1=0.02389 q2=0.02586 entropy=0.88193 alpha=0.10004
+[3] > Train step: 2.36048 avg. loss.
+[3] > SAC: actor=1.34448 q1=0.01184 q2=0.01357 entropy=0.97829 alpha=0.10004
+[3] > Train step: 2.34818 avg. loss.
+[3] > SAC: actor=1.43131 q1=0.02311 q2=0.02432 entropy=1.03006 alpha=0.10004
+[3] > Train step: 2.50880 avg. loss.
+[3] > SAC: actor=1.32746 q1=0.01540 q2=0.01389 entropy=1.25033 alpha=0.10004
+[3] > Train step: 2.60708 avg. loss.
+[3] > SAC: actor=1.50952 q1=0.02128 q2=0.01921 entropy=0.57657 alpha=0.10004
+[3] > Train step: 2.12657 avg. loss.
+[3] > SAC: actor=1.44698 q1=0.02635 q2=0.02653 entropy=1.25334 alpha=0.10004
+[3] > Train step: 2.75320 avg. loss.
+[3] > SAC: actor=1.66723 q1=0.01376 q2=0.01057 entropy=0.53880 alpha=0.10004
+[3] > Train step: 2.23035 avg. loss.
+[3] > SAC: actor=1.49811 q1=0.03573 q2=0.03131 entropy=1.02019 alpha=0.10004
+[3] > Train step: 2.58534 avg. loss.
+[3] > SAC: actor=1.35098 q1=0.02001 q2=0.02354 entropy=0.87030 alpha=0.10004
+[3] > Train step: 2.26483 avg. loss.
+[3] > SAC: actor=1.38462 q1=0.04685 q2=0.03347 entropy=1.08716 alpha=0.10004
+[3] > Train step: 2.55210 avg. loss.
+[3] > SAC: actor=1.65999 q1=0.01201 q2=0.04079 entropy=1.10625 alpha=0.10004
+[3] > Train step: 2.81904 avg. loss.
+[3] > SAC: actor=1.56438 q1=0.02885 q2=0.02824 entropy=1.00186 alpha=0.10004
+[3] > Train step: 2.62334 avg. loss.
+[3] > SAC: actor=1.60270 q1=0.04016 q2=0.02643 entropy=1.16669 alpha=0.10004
+[3] > Train step: 2.83598 avg. loss.
+[3] > SAC: actor=1.62559 q1=0.02732 q2=0.02002 entropy=1.02930 alpha=0.10004
+[3] > Train step: 2.70222 avg. loss.
+[3] > SAC: actor=1.54901 q1=0.03248 q2=0.03520 entropy=0.97434 alpha=0.10004
+[3] > Train step: 2.59103 avg. loss.
+[3] > SAC: actor=1.45464 q1=0.02403 q2=0.01463 entropy=0.86242 alpha=0.10004
+[3] > Train step: 2.35572 avg. loss.
+[3] > SAC: actor=1.47242 q1=0.02466 q2=0.02139 entropy=0.89599 alpha=0.10004
+[3] > Train step: 2.41446 avg. loss.
+[3] > SAC: actor=1.41206 q1=0.02327 q2=0.02654 entropy=1.05656 alpha=0.10004
+[3] > Train step: 2.51843 avg. loss.
+[3] > SAC: actor=1.35533 q1=0.02882 q2=0.02594 entropy=1.00397 alpha=0.10004
+[3] > Train step: 2.41406 avg. loss.
+[3] Optimized Model.
+[3] Best: True, Evaluation: [19, 1113]
+[3] Saved new best model
+[4] Collecting Experience.
+[4] > Sampled Problems; 8.2 avg. object count.
+[4] > Sampled Initial States.
+[4] > Sampled Goals.
+[4] > Sampled Trajectories; 1.0 avg. goal size; 42.0 avg. trajectory length
+[4] > Refined Trajectories; 1.0 avg. goal size; 3.6 avg. trajectory length.
+[4] Collected Experience.
+[4] Optimizing Model.
+[4] > SAC: actor=1.63821 q1=0.02634 q2=0.01898 entropy=0.85281 alpha=0.10004
+[4] > Train step: 2.53634 avg. loss.
+[4] > SAC: actor=1.57176 q1=0.00965 q2=0.01482 entropy=0.82848 alpha=0.10004
+[4] > Train step: 2.42470 avg. loss.
+[4] > SAC: actor=1.46081 q1=0.01980 q2=0.01460 entropy=0.85159 alpha=0.10004
+[4] > Train step: 2.34680 avg. loss.
+[4] > SAC: actor=1.64536 q1=0.01491 q2=0.02364 entropy=0.84098 alpha=0.10004
+[4] > Train step: 2.52490 avg. loss.
+[4] > SAC: actor=1.54027 q1=0.01159 q2=0.01236 entropy=1.07589 alpha=0.10004
+[4] > Train step: 2.64011 avg. loss.
+[4] > SAC: actor=1.57861 q1=0.02773 q2=0.03245 entropy=0.85628 alpha=0.10004
+[4] > Train step: 2.49507 avg. loss.
+[4] > SAC: actor=1.60504 q1=0.04125 q2=0.03426 entropy=1.04619 alpha=0.10004
+[4] > Train step: 2.72674 avg. loss.
+[4] > SAC: actor=1.37747 q1=0.02261 q2=0.01982 entropy=0.77966 alpha=0.10004
+[4] > Train step: 2.19956 avg. loss.
+[4] > SAC: actor=1.40242 q1=0.02905 q2=0.03020 entropy=0.98918 alpha=0.10004
+[4] > Train step: 2.45086 avg. loss.
+[4] > SAC: actor=1.33461 q1=0.02792 q2=0.02356 entropy=0.79478 alpha=0.10004
+[4] > Train step: 2.18088 avg. loss.
+[4] > SAC: actor=1.46157 q1=0.02953 q2=0.01886 entropy=0.76428 alpha=0.10004
+[4] > Train step: 2.27424 avg. loss.
+[4] > SAC: actor=1.70162 q1=0.02001 q2=0.02877 entropy=0.65022 alpha=0.10004
+[4] > Train step: 2.40062 avg. loss.
+[4] > SAC: actor=1.46134 q1=0.03259 q2=0.03416 entropy=0.91905 alpha=0.10004
+[4] > Train step: 2.44715 avg. loss.
+[4] > SAC: actor=1.63730 q1=0.02655 q2=0.02591 entropy=0.71229 alpha=0.10003
+[4] > Train step: 2.40205 avg. loss.
+[4] > SAC: actor=1.57076 q1=0.03201 q2=0.03057 entropy=0.90851 alpha=0.10003
+[4] > Train step: 2.54185 avg. loss.
+[4] > SAC: actor=1.56381 q1=0.02048 q2=0.02206 entropy=1.25651 alpha=0.10004
+[4] > Train step: 2.86286 avg. loss.
+[4] > SAC: actor=1.59290 q1=0.01480 q2=0.02242 entropy=1.13824 alpha=0.10004
+[4] > Train step: 2.76836 avg. loss.
+[4] > SAC: actor=1.60515 q1=0.01643 q2=0.01809 entropy=0.64176 alpha=0.10004
+[4] > Train step: 2.28143 avg. loss.
+[4] > SAC: actor=1.48596 q1=0.02893 q2=0.04568 entropy=0.98916 alpha=0.10004
+[4] > Train step: 2.54973 avg. loss.
+[4] > SAC: actor=1.53029 q1=0.03821 q2=0.03656 entropy=1.00830 alpha=0.10004
+[4] > Train step: 2.61336 avg. loss.
+[4] > SAC: actor=1.67034 q1=0.03287 q2=0.04831 entropy=1.22320 alpha=0.10004
+[4] > Train step: 2.97472 avg. loss.
+[4] > SAC: actor=1.53975 q1=0.02283 q2=0.02069 entropy=1.11629 alpha=0.10004
+[4] > Train step: 2.69956 avg. loss.
+[4] > SAC: actor=1.54585 q1=0.01474 q2=0.02979 entropy=0.88820 alpha=0.10004
+[4] > Train step: 2.47858 avg. loss.
+[4] > SAC: actor=1.60508 q1=0.03829 q2=0.04005 entropy=1.05519 alpha=0.10004
+[4] > Train step: 2.73861 avg. loss.
+[4] > SAC: actor=1.65109 q1=0.04158 q2=0.04815 entropy=1.06496 alpha=0.10004
+[4] > Train step: 2.80579 avg. loss.
+[4] > SAC: actor=1.68639 q1=0.04782 q2=0.05738 entropy=1.06492 alpha=0.10004
+[4] > Train step: 2.85651 avg. loss.
+[4] > SAC: actor=1.60226 q1=0.03987 q2=0.03673 entropy=1.19519 alpha=0.10004
+[4] > Train step: 2.87405 avg. loss.
+[4] > SAC: actor=1.52804 q1=0.03249 q2=0.03216 entropy=1.21136 alpha=0.10004
+[4] > Train step: 2.80405 avg. loss.
+[4] > SAC: actor=1.37203 q1=0.03578 q2=0.04479 entropy=1.42251 alpha=0.10004
+[4] > Train step: 2.87511 avg. loss.
+[4] > SAC: actor=1.64102 q1=0.04723 q2=0.03053 entropy=1.33861 alpha=0.10004
+[4] > Train step: 3.05739 avg. loss.
+[4] > SAC: actor=1.76088 q1=0.04030 q2=0.06669 entropy=1.05497 alpha=0.10004
+[4] > Train step: 2.92284 avg. loss.
+[4] > SAC: actor=1.61034 q1=0.04371 q2=0.05272 entropy=1.17542 alpha=0.10004
+[4] > Train step: 2.88220 avg. loss.
+[4] Optimized Model.
+[4] Best: True, Evaluation: [33, 2008]
+[4] Saved new best model
+[5] Collecting Experience.
+[5] > Sampled Problems; 7.2 avg. object count.
+[5] > Sampled Initial States.
+[5] > Sampled Goals.
+[5] > Sampled Trajectories; 1.2 avg. goal size; 28.8 avg. trajectory length
+[5] > Refined Trajectories; 1.5 avg. goal size; 5.7 avg. trajectory length.
+[5] Collected Experience.
+[5] Optimizing Model.
+[5] > SAC: actor=1.54410 q1=0.05345 q2=0.04496 entropy=1.42641 alpha=0.10004
+[5] > Train step: 3.06892 avg. loss.
+[5] > SAC: actor=1.53890 q1=0.03839 q2=0.08324 entropy=1.16542 alpha=0.10004
+[5] > Train step: 2.82595 avg. loss.
+[5] > SAC: actor=1.51638 q1=0.04461 q2=0.04250 entropy=1.23437 alpha=0.10004
+[5] > Train step: 2.83786 avg. loss.
+[5] > SAC: actor=1.86133 q1=0.01743 q2=0.07763 entropy=0.76065 alpha=0.10004
+[5] > Train step: 2.71704 avg. loss.
+[5] > SAC: actor=1.69857 q1=0.02693 q2=0.05310 entropy=1.02108 alpha=0.10004
+[5] > Train step: 2.79968 avg. loss.
+[5] > SAC: actor=1.60424 q1=0.04530 q2=0.05708 entropy=0.88296 alpha=0.10004
+[5] > Train step: 2.58958 avg. loss.
+[5] > SAC: actor=1.52105 q1=0.03447 q2=0.06553 entropy=1.12875 alpha=0.10004
+[5] > Train step: 2.74980 avg. loss.
+[5] > SAC: actor=1.61258 q1=0.05409 q2=0.05014 entropy=1.19949 alpha=0.10004
+[5] > Train step: 2.91630 avg. loss.
+[5] > SAC: actor=1.78365 q1=0.05526 q2=0.07198 entropy=1.13923 alpha=0.10004
+[5] > Train step: 3.05012 avg. loss.
+[5] > SAC: actor=1.81411 q1=0.05831 q2=0.07553 entropy=1.19825 alpha=0.10004
+[5] > Train step: 3.14620 avg. loss.
+[5] > SAC: actor=1.63421 q1=0.03390 q2=0.03202 entropy=0.92181 alpha=0.10004
+[5] > Train step: 2.62194 avg. loss.
+[5] > SAC: actor=1.40937 q1=0.05554 q2=0.09687 entropy=1.36887 alpha=0.10004
+[5] > Train step: 2.93065 avg. loss.
+[5] > SAC: actor=1.35215 q1=0.05945 q2=0.06535 entropy=1.16512 alpha=0.10004
+[5] > Train step: 2.64206 avg. loss.
+[5] > SAC: actor=1.68142 q1=0.03133 q2=0.03379 entropy=1.32040 alpha=0.10004
+[5] > Train step: 3.06695 avg. loss.
+[5] > SAC: actor=1.83096 q1=0.02094 q2=0.04507 entropy=0.86192 alpha=0.10004
+[5] > Train step: 2.75889 avg. loss.
+[5] > SAC: actor=1.73545 q1=0.03895 q2=0.04065 entropy=1.11250 alpha=0.10004
+[5] > Train step: 2.92755 avg. loss.
+[5] > SAC: actor=1.72837 q1=0.03236 q2=0.04867 entropy=1.14736 alpha=0.10004
+[5] > Train step: 2.95675 avg. loss.
+[5] > SAC: actor=1.72640 q1=0.04303 q2=0.03709 entropy=1.15680 alpha=0.10004
+[5] > Train step: 2.96333 avg. loss.
+[5] > SAC: actor=1.51292 q1=0.03503 q2=0.02941 entropy=1.48694 alpha=0.10004
+[5] > Train step: 3.06429 avg. loss.
+[5] > SAC: actor=1.59259 q1=0.02252 q2=0.02389 entropy=1.18144 alpha=0.10004
+[5] > Train step: 2.82044 avg. loss.
+[5] > SAC: actor=1.58987 q1=0.05764 q2=0.04163 entropy=1.08322 alpha=0.10004
+[5] > Train step: 2.77236 avg. loss.
+[5] > SAC: actor=1.61502 q1=0.06038 q2=0.04245 entropy=1.16318 alpha=0.10004
+[5] > Train step: 2.88103 avg. loss.
+[5] > SAC: actor=1.67858 q1=0.03869 q2=0.03327 entropy=1.10434 alpha=0.10004
+[5] > Train step: 2.85488 avg. loss.
+[5] > SAC: actor=1.65561 q1=0.02729 q2=0.01923 entropy=1.34300 alpha=0.10004
+[5] > Train step: 3.04514 avg. loss.
+[5] > SAC: actor=1.72149 q1=0.04733 q2=0.05249 entropy=1.27899 alpha=0.10004
+[5] > Train step: 3.10029 avg. loss.
+[5] > SAC: actor=1.79420 q1=0.04351 q2=0.03684 entropy=1.29676 alpha=0.10004
+[5] > Train step: 3.17130 avg. loss.
+[5] > SAC: actor=1.77432 q1=0.05124 q2=0.04957 entropy=1.12260 alpha=0.10004
+[5] > Train step: 2.99773 avg. loss.
+[5] > SAC: actor=1.73136 q1=0.04783 q2=0.04440 entropy=1.22903 alpha=0.10004
+[5] > Train step: 3.05262 avg. loss.
+[5] > SAC: actor=1.70392 q1=0.03610 q2=0.03427 entropy=1.03102 alpha=0.10004
+[5] > Train step: 2.80530 avg. loss.
+[5] > SAC: actor=1.70385 q1=0.02441 q2=0.02070 entropy=1.16913 alpha=0.10004
+[5] > Train step: 2.91810 avg. loss.
+[5] > SAC: actor=1.62757 q1=0.05195 q2=0.04942 entropy=1.13262 alpha=0.10004
+[5] > Train step: 2.86156 avg. loss.
+[5] > SAC: actor=1.61672 q1=0.02519 q2=0.02585 entropy=1.19332 alpha=0.10004
+[5] > Train step: 2.86108 avg. loss.
+[5] Optimized Model.
+[5] Best: False, Evaluation: [26, 1789]
+[6] Collecting Experience.
+[6] > Sampled Problems; 7.5 avg. object count.
+[6] > Sampled Initial States.
+[6] > Sampled Goals.
+[6] > Sampled Trajectories; 1.0 avg. goal size; 32.5 avg. trajectory length
+[6] > Refined Trajectories; 1.0 avg. goal size; 5.6 avg. trajectory length.
+[6] Collected Experience.
+[6] Optimizing Model.
+[6] > SAC: actor=1.61267 q1=0.02992 q2=0.02990 entropy=1.26946 alpha=0.10004
+[6] > Train step: 2.94194 avg. loss.
+[6] > SAC: actor=1.70292 q1=0.04519 q2=0.04269 entropy=1.47402 alpha=0.10004
+[6] > Train step: 3.26482 avg. loss.
+[6] > SAC: actor=1.60578 q1=0.04360 q2=0.04052 entropy=1.28071 alpha=0.10004
+[6] > Train step: 2.97061 avg. loss.
+[6] > SAC: actor=1.65274 q1=0.02835 q2=0.02524 entropy=1.05317 alpha=0.10004
+[6] > Train step: 2.75951 avg. loss.
+[6] > SAC: actor=1.69825 q1=0.04417 q2=0.04125 entropy=0.94452 alpha=0.10004
+[6] > Train step: 2.72818 avg. loss.
+[6] > SAC: actor=1.75566 q1=0.05732 q2=0.05249 entropy=1.07243 alpha=0.10004
+[6] > Train step: 2.93791 avg. loss.
+[6] > SAC: actor=1.70244 q1=0.04031 q2=0.03841 entropy=1.28169 alpha=0.10004
+[6] > Train step: 3.06285 avg. loss.
+[6] > SAC: actor=1.73361 q1=0.05073 q2=0.04794 entropy=0.83530 alpha=0.10004
+[6] > Train step: 2.66757 avg. loss.
+[6] > SAC: actor=1.70366 q1=0.03370 q2=0.02812 entropy=1.12688 alpha=0.10004
+[6] > Train step: 2.89235 avg. loss.
+[6] > SAC: actor=1.55372 q1=0.04152 q2=0.03822 entropy=1.23889 alpha=0.10004
+[6] > Train step: 2.87235 avg. loss.
+[6] > SAC: actor=1.58609 q1=0.02761 q2=0.02953 entropy=1.04639 alpha=0.10004
+[6] > Train step: 2.68961 avg. loss.
+[6] > SAC: actor=1.67191 q1=0.03255 q2=0.02919 entropy=1.25666 alpha=0.10004
+[6] > Train step: 2.99030 avg. loss.
+[6] > SAC: actor=1.67990 q1=0.03764 q2=0.03630 entropy=1.22457 alpha=0.10004
+[6] > Train step: 2.97840 avg. loss.
+[6] > SAC: actor=1.72179 q1=0.04067 q2=0.03848 entropy=1.14065 alpha=0.10004
+[6] > Train step: 2.94159 avg. loss.
+[6] > SAC: actor=1.74716 q1=0.03826 q2=0.03439 entropy=0.97305 alpha=0.10004
+[6] > Train step: 2.79286 avg. loss.
+[6] > SAC: actor=1.80778 q1=0.02527 q2=0.02384 entropy=0.94816 alpha=0.10004
+[6] > Train step: 2.80505 avg. loss.
+[6] > SAC: actor=1.83685 q1=0.05202 q2=0.04909 entropy=0.99235 alpha=0.10004
+[6] > Train step: 2.93031 avg. loss.
+[6] > SAC: actor=1.68220 q1=0.03453 q2=0.03039 entropy=1.32238 alpha=0.10004
+[6] > Train step: 3.06950 avg. loss.
+[6] > SAC: actor=1.74506 q1=0.04432 q2=0.03718 entropy=0.88521 alpha=0.10004
+[6] > Train step: 2.71177 avg. loss.
+[6] > SAC: actor=1.70800 q1=0.03757 q2=0.03294 entropy=1.16511 alpha=0.10004
+[6] > Train step: 2.94361 avg. loss.
+[6] > SAC: actor=1.70736 q1=0.05416 q2=0.04941 entropy=1.35940 alpha=0.10004
+[6] > Train step: 3.17033 avg. loss.
+[6] > SAC: actor=1.78329 q1=0.04687 q2=0.04163 entropy=0.88553 alpha=0.10004
+[6] > Train step: 2.75731 avg. loss.
+[6] > SAC: actor=1.75353 q1=0.04419 q2=0.04063 entropy=1.07671 alpha=0.10004
+[6] > Train step: 2.91506 avg. loss.
+[6] > SAC: actor=1.69775 q1=0.04603 q2=0.03846 entropy=1.10877 alpha=0.10004
+[6] > Train step: 2.89100 avg. loss.
+[6] > SAC: actor=1.69629 q1=0.03322 q2=0.02827 entropy=1.34998 alpha=0.10004
+[6] > Train step: 3.10777 avg. loss.
+[6] > SAC: actor=1.75412 q1=0.04170 q2=0.03384 entropy=1.12456 alpha=0.10004
+[6] > Train step: 2.95423 avg. loss.
+[6] > SAC: actor=1.87204 q1=0.03810 q2=0.03168 entropy=0.91820 alpha=0.10004
+[6] > Train step: 2.86002 avg. loss.
+[6] > SAC: actor=1.71948 q1=0.04244 q2=0.03985 entropy=1.18894 alpha=0.10004
+[6] > Train step: 2.99072 avg. loss.
+[6] > SAC: actor=1.83121 q1=0.05929 q2=0.05033 entropy=1.00346 alpha=0.10004
+[6] > Train step: 2.94429 avg. loss.
+[6] > SAC: actor=1.71420 q1=0.04099 q2=0.03938 entropy=1.26414 alpha=0.10004
+[6] > Train step: 3.05872 avg. loss.
+[6] > SAC: actor=1.81021 q1=0.02502 q2=0.02055 entropy=1.21932 alpha=0.10004
+[6] > Train step: 3.07509 avg. loss.
+[6] > SAC: actor=1.82594 q1=0.05165 q2=0.04445 entropy=1.00255 alpha=0.10004
+[6] > Train step: 2.92459 avg. loss.
+[6] Optimized Model.
+[6] Best: False, Evaluation: [32, 3182]
+[7] Collecting Experience.
+[7] > Sampled Problems; 8.2 avg. object count.
+[7] > Sampled Initial States.
+[7] > Sampled Goals.
+[7] > Sampled Trajectories; 1.8 avg. goal size; 41.5 avg. trajectory length
+[7] > Refined Trajectories; 1.9 avg. goal size; 9.4 avg. trajectory length.
+[7] Collected Experience.
+[7] Optimizing Model.
+[7] > SAC: actor=1.68911 q1=0.06405 q2=0.05684 entropy=1.06279 alpha=0.10004
+[7] > Train step: 2.87279 avg. loss.
+[7] > SAC: actor=1.78035 q1=0.03965 q2=0.03688 entropy=1.05703 alpha=0.10004
+[7] > Train step: 2.91390 avg. loss.
+[7] > SAC: actor=1.69113 q1=0.04022 q2=0.03398 entropy=1.24414 alpha=0.10004
+[7] > Train step: 3.00947 avg. loss.
+[7] > SAC: actor=1.77167 q1=0.07039 q2=0.05453 entropy=1.08388 alpha=0.10004
+[7] > Train step: 2.98047 avg. loss.
+[7] > SAC: actor=1.80625 q1=0.06307 q2=0.05496 entropy=1.14422 alpha=0.10004
+[7] > Train step: 3.06850 avg. loss.
+[7] > SAC: actor=1.76472 q1=0.04592 q2=0.04000 entropy=1.08127 alpha=0.10004
+[7] > Train step: 2.93191 avg. loss.
+[7] > SAC: actor=1.81629 q1=0.03210 q2=0.03057 entropy=1.10524 alpha=0.10004
+[7] > Train step: 2.98420 avg. loss.
+[7] > SAC: actor=1.74503 q1=0.04287 q2=0.03609 entropy=1.21540 alpha=0.10004
+[7] > Train step: 3.03938 avg. loss.
+[7] > SAC: actor=1.79037 q1=0.05775 q2=0.04843 entropy=1.15642 alpha=0.10004
+[7] > Train step: 3.05297 avg. loss.
+[7] > SAC: actor=1.54045 q1=0.04311 q2=0.03780 entropy=1.20789 alpha=0.10004
+[7] > Train step: 2.82924 avg. loss.
+[7] > SAC: actor=1.80726 q1=0.04437 q2=0.05374 entropy=0.85734 alpha=0.10004
+[7] > Train step: 2.76271 avg. loss.
+[7] > SAC: actor=1.61817 q1=0.05449 q2=0.05235 entropy=1.10946 alpha=0.10004
+[7] > Train step: 2.83448 avg. loss.
+[7] > SAC: actor=1.80585 q1=0.03860 q2=0.03484 entropy=1.08077 alpha=0.10004
+[7] > Train step: 2.96006 avg. loss.
+[7] > SAC: actor=1.74019 q1=0.06406 q2=0.05634 entropy=1.50346 alpha=0.10004
+[7] > Train step: 3.36405 avg. loss.
+[7] > SAC: actor=1.41714 q1=0.07381 q2=0.06540 entropy=1.24670 alpha=0.10004
+[7] > Train step: 2.80306 avg. loss.
+[7] > SAC: actor=1.88903 q1=0.05643 q2=0.05123 entropy=1.30724 alpha=0.10004
+[7] > Train step: 3.30392 avg. loss.
+[7] > SAC: actor=1.85899 q1=0.04427 q2=0.04352 entropy=1.44037 alpha=0.10004
+[7] > Train step: 3.38714 avg. loss.
+[7] > SAC: actor=1.80016 q1=0.04662 q2=0.04123 entropy=1.33777 alpha=0.10004
+[7] > Train step: 3.22578 avg. loss.
+[7] > SAC: actor=1.78741 q1=0.06166 q2=0.05315 entropy=1.37332 alpha=0.10004
+[7] > Train step: 3.27555 avg. loss.
+[7] > SAC: actor=1.79861 q1=0.04415 q2=0.03742 entropy=1.29670 alpha=0.10004
+[7] > Train step: 3.17688 avg. loss.
+[7] > SAC: actor=1.83856 q1=0.04532 q2=0.04177 entropy=1.03311 alpha=0.10004
+[7] > Train step: 2.95876 avg. loss.
+[7] > SAC: actor=1.84101 q1=0.03644 q2=0.03079 entropy=1.21822 alpha=0.10004
+[7] > Train step: 3.12646 avg. loss.
+[7] > SAC: actor=1.81117 q1=0.05507 q2=0.05200 entropy=1.25738 alpha=0.10004
+[7] > Train step: 3.17562 avg. loss.
+[7] > SAC: actor=1.95341 q1=0.05423 q2=0.04946 entropy=1.06247 alpha=0.10004
+[7] > Train step: 3.11957 avg. loss.
+[7] > SAC: actor=1.83950 q1=0.04057 q2=0.03382 entropy=1.10979 alpha=0.10004
+[7] > Train step: 3.02368 avg. loss.
+[7] > SAC: actor=1.83234 q1=0.05412 q2=0.04624 entropy=1.36143 alpha=0.10004
+[7] > Train step: 3.29413 avg. loss.
+[7] > SAC: actor=1.86325 q1=0.04818 q2=0.04176 entropy=1.24350 alpha=0.10004
+[7] > Train step: 3.19670 avg. loss.
+[7] > SAC: actor=1.92854 q1=0.04211 q2=0.03867 entropy=0.92184 alpha=0.10004
+[7] > Train step: 2.93115 avg. loss.
+[7] > SAC: actor=1.96801 q1=0.02783 q2=0.02454 entropy=1.07939 alpha=0.10004
+[7] > Train step: 3.09977 avg. loss.
+[7] > SAC: actor=1.89258 q1=0.03894 q2=0.03845 entropy=1.19719 alpha=0.10004
+[7] > Train step: 3.16716 avg. loss.
+[7] > SAC: actor=1.89923 q1=0.06466 q2=0.05427 entropy=1.34532 alpha=0.10004
+[7] > Train step: 3.36349 avg. loss.
+[7] > SAC: actor=1.93788 q1=0.03970 q2=0.03633 entropy=1.15993 alpha=0.10004
+[7] > Train step: 3.17385 avg. loss.
+[7] Optimized Model.
+[7] Best: False, Evaluation: [26, 2120]
+[8] Collecting Experience.
+[8] > Sampled Problems; 9.2 avg. object count.
+[8] > Sampled Initial States.
+[8] > Sampled Goals.
+[8] > Sampled Trajectories; 2.2 avg. goal size; 51.2 avg. trajectory length
+[8] > Refined Trajectories; 2.5 avg. goal size; 17.4 avg. trajectory length.
+[8] Collected Experience.
+[8] Optimizing Model.
+[8] > SAC: actor=1.88100 q1=0.03858 q2=0.03398 entropy=1.15374 alpha=0.10004
+[8] > Train step: 3.10730 avg. loss.
+[8] > SAC: actor=1.88578 q1=0.04453 q2=0.03982 entropy=1.31620 alpha=0.10004
+[8] > Train step: 3.28633 avg. loss.
+[8] > SAC: actor=1.96017 q1=0.03068 q2=0.02560 entropy=0.83937 alpha=0.10004
+[8] > Train step: 2.85582 avg. loss.
+[8] > SAC: actor=1.85268 q1=0.07096 q2=0.06090 entropy=1.22356 alpha=0.10004
+[8] > Train step: 3.20810 avg. loss.
+[8] > SAC: actor=1.82964 q1=0.05931 q2=0.05201 entropy=1.29743 alpha=0.10004
+[8] > Train step: 3.23839 avg. loss.
+[8] > SAC: actor=1.79456 q1=0.06314 q2=0.05992 entropy=1.16237 alpha=0.10004
+[8] > Train step: 3.08000 avg. loss.
+[8] > SAC: actor=1.76162 q1=0.06169 q2=0.05266 entropy=1.50368 alpha=0.10004
+[8] > Train step: 3.37965 avg. loss.
+[8] > SAC: actor=1.73270 q1=0.06370 q2=0.05711 entropy=1.54611 alpha=0.10004
+[8] > Train step: 3.39963 avg. loss.
+[8] > SAC: actor=1.81634 q1=0.04028 q2=0.03671 entropy=1.07215 alpha=0.10004
+[8] > Train step: 2.96549 avg. loss.
+[8] > SAC: actor=1.84106 q1=0.06676 q2=0.05543 entropy=1.14830 alpha=0.10004
+[8] > Train step: 3.11154 avg. loss.
+[8] > SAC: actor=1.80288 q1=0.05158 q2=0.04435 entropy=1.41565 alpha=0.10004
+[8] > Train step: 3.31446 avg. loss.
+[8] > SAC: actor=1.90130 q1=0.07310 q2=0.06482 entropy=1.11987 alpha=0.10004
+[8] > Train step: 3.15909 avg. loss.
+[8] > SAC: actor=1.93491 q1=0.03362 q2=0.03042 entropy=1.11234 alpha=0.10004
+[8] > Train step: 3.11128 avg. loss.
+[8] > SAC: actor=1.90168 q1=0.04281 q2=0.03802 entropy=1.34632 alpha=0.10004
+[8] > Train step: 3.32884 avg. loss.
+[8] > SAC: actor=1.93909 q1=0.05259 q2=0.03695 entropy=1.11034 alpha=0.10004
+[8] > Train step: 3.13898 avg. loss.
+[8] > SAC: actor=1.88156 q1=0.03840 q2=0.03184 entropy=1.38052 alpha=0.10004
+[8] > Train step: 3.33232 avg. loss.
+[8] > SAC: actor=1.89220 q1=0.06617 q2=0.06091 entropy=1.33493 alpha=0.10004
+[8] > Train step: 3.35421 avg. loss.
+[8] > SAC: actor=1.96306 q1=0.03253 q2=0.02441 entropy=1.21496 alpha=0.10004
+[8] > Train step: 3.23497 avg. loss.
+[8] > SAC: actor=2.00586 q1=0.04647 q2=0.04314 entropy=1.18695 alpha=0.10004
+[8] > Train step: 3.28242 avg. loss.
+[8] > SAC: actor=2.00247 q1=0.04130 q2=0.03732 entropy=1.01227 alpha=0.10004
+[8] > Train step: 3.09336 avg. loss.
+[8] > SAC: actor=1.94189 q1=0.05980 q2=0.05262 entropy=1.20280 alpha=0.10004
+[8] > Train step: 3.25712 avg. loss.
+[8] > SAC: actor=1.76874 q1=0.04853 q2=0.04197 entropy=1.17378 alpha=0.10004
+[8] > Train step: 3.03300 avg. loss.
+[8] > SAC: actor=1.80595 q1=0.08002 q2=0.07007 entropy=1.18046 alpha=0.10004
+[8] > Train step: 3.13651 avg. loss.
+[8] > SAC: actor=1.91522 q1=0.03835 q2=0.03646 entropy=1.05857 alpha=0.10004
+[8] > Train step: 3.04859 avg. loss.
+[8] > SAC: actor=2.05475 q1=0.03089 q2=0.02512 entropy=1.15441 alpha=0.10004
+[8] > Train step: 3.26517 avg. loss.
+[8] > SAC: actor=1.95005 q1=0.03592 q2=0.03281 entropy=0.90122 alpha=0.10003
+[8] > Train step: 2.92000 avg. loss.
+[8] > SAC: actor=1.83973 q1=0.03787 q2=0.03295 entropy=1.17690 alpha=0.10003
+[8] > Train step: 3.08745 avg. loss.
+[8] > SAC: actor=1.87469 q1=0.08958 q2=0.08065 entropy=1.32896 alpha=0.10004
+[8] > Train step: 3.37387 avg. loss.
+[8] > SAC: actor=1.84508 q1=0.06192 q2=0.05444 entropy=1.43399 alpha=0.10004
+[8] > Train step: 3.39543 avg. loss.
+[8] > SAC: actor=1.92518 q1=0.05352 q2=0.04910 entropy=1.15879 alpha=0.10004
+[8] > Train step: 3.18659 avg. loss.
+[8] > SAC: actor=1.94260 q1=0.06475 q2=0.06058 entropy=1.15760 alpha=0.10004
+[8] > Train step: 3.22553 avg. loss.
+[8] > SAC: actor=1.95793 q1=0.05643 q2=0.05430 entropy=1.11054 alpha=0.10004
+[8] > Train step: 3.17919 avg. loss.
+[8] Optimized Model.
+[8] Best: False, Evaluation: [26, 2114]
+[9] Collecting Experience.
+[9] > Sampled Problems; 8.0 avg. object count.
+[9] > Sampled Initial States.
+[9] > Sampled Goals.
+[9] > Sampled Trajectories; 1.2 avg. goal size; 31.5 avg. trajectory length
+[9] > Refined Trajectories; 1.1 avg. goal size; 4.8 avg. trajectory length.
+[9] Collected Experience.
+[9] Optimizing Model.
+[9] > SAC: actor=1.89268 q1=0.04661 q2=0.04132 entropy=1.20398 alpha=0.10004
+[9] > Train step: 3.18458 avg. loss.
+[9] > SAC: actor=1.98352 q1=0.05476 q2=0.04844 entropy=0.82675 alpha=0.10003
+[9] > Train step: 2.91347 avg. loss.
+[9] > SAC: actor=2.03503 q1=0.07463 q2=0.06519 entropy=1.11078 alpha=0.10003
+[9] > Train step: 3.28563 avg. loss.
+[9] > SAC: actor=1.87007 q1=0.04571 q2=0.03995 entropy=1.28839 alpha=0.10003
+[9] > Train step: 3.24412 avg. loss.
+[9] > SAC: actor=1.91529 q1=0.04349 q2=0.04042 entropy=0.97194 alpha=0.10003
+[9] > Train step: 2.97113 avg. loss.
+[9] > SAC: actor=1.84832 q1=0.05179 q2=0.04574 entropy=1.03097 alpha=0.10003
+[9] > Train step: 2.97683 avg. loss.
+[9] > SAC: actor=1.92110 q1=0.03564 q2=0.03449 entropy=1.18245 alpha=0.10003
+[9] > Train step: 3.17369 avg. loss.
+[9] > SAC: actor=1.87097 q1=0.05799 q2=0.04851 entropy=1.23051 alpha=0.10003
+[9] > Train step: 3.20798 avg. loss.
+[9] > SAC: actor=1.89443 q1=0.04323 q2=0.03537 entropy=1.41157 alpha=0.10003
+[9] > Train step: 3.38460 avg. loss.
+[9] > SAC: actor=1.91891 q1=0.08226 q2=0.07554 entropy=1.52654 alpha=0.10004
+[9] > Train step: 3.60324 avg. loss.
+[9] > SAC: actor=1.90758 q1=0.06313 q2=0.05864 entropy=1.26147 alpha=0.10004
+[9] > Train step: 3.29082 avg. loss.
+[9] > SAC: actor=1.94010 q1=0.04124 q2=0.03498 entropy=1.05170 alpha=0.10004
+[9] > Train step: 3.06802 avg. loss.
+[9] > SAC: actor=1.95713 q1=0.05003 q2=0.04519 entropy=1.12411 alpha=0.10004
+[9] > Train step: 3.17647 avg. loss.
+[9] > SAC: actor=1.87765 q1=0.06801 q2=0.06061 entropy=1.32347 alpha=0.10004
+[9] > Train step: 3.32974 avg. loss.
+[9] > SAC: actor=1.94285 q1=0.05936 q2=0.05114 entropy=1.32243 alpha=0.10004
+[9] > Train step: 3.37577 avg. loss.
+[9] > SAC: actor=1.89300 q1=0.06591 q2=0.06140 entropy=1.51072 alpha=0.10004
+[9] > Train step: 3.53102 avg. loss.
+[9] > SAC: actor=1.92223 q1=0.07060 q2=0.06329 entropy=1.19838 alpha=0.10004
+[9] > Train step: 3.25449 avg. loss.
+[9] > SAC: actor=1.87222 q1=0.05890 q2=0.05428 entropy=1.26396 alpha=0.10004
+[9] > Train step: 3.24936 avg. loss.
+[9] > SAC: actor=1.90038 q1=0.08425 q2=0.07583 entropy=1.49500 alpha=0.10004
+[9] > Train step: 3.55546 avg. loss.
+[9] > SAC: actor=1.86990 q1=0.04535 q2=0.03845 entropy=1.38750 alpha=0.10004
+[9] > Train step: 3.34120 avg. loss.
+[9] > SAC: actor=1.98361 q1=0.04650 q2=0.04139 entropy=1.10421 alpha=0.10004
+[9] > Train step: 3.17572 avg. loss.
+[9] > SAC: actor=1.98349 q1=0.04310 q2=0.03605 entropy=1.19343 alpha=0.10004
+[9] > Train step: 3.25607 avg. loss.
+[9] > SAC: actor=1.90543 q1=0.02582 q2=0.02023 entropy=1.27768 alpha=0.10004
+[9] > Train step: 3.22916 avg. loss.
+[9] > SAC: actor=2.01490 q1=0.05384 q2=0.04841 entropy=1.08790 alpha=0.10004
+[9] > Train step: 3.20506 avg. loss.
+[9] > SAC: actor=2.02989 q1=0.05439 q2=0.05182 entropy=1.04288 alpha=0.10004
+[9] > Train step: 3.17898 avg. loss.
+[9] > SAC: actor=1.81098 q1=0.06691 q2=0.05860 entropy=1.41552 alpha=0.10004
+[9] > Train step: 3.35202 avg. loss.
+[9] > SAC: actor=1.96323 q1=0.08246 q2=0.07524 entropy=1.38402 alpha=0.10004
+[9] > Train step: 3.50494 avg. loss.
+[9] > SAC: actor=1.80352 q1=0.06363 q2=0.05809 entropy=1.01436 alpha=0.10004
+[9] > Train step: 2.93961 avg. loss.
+[9] > SAC: actor=1.99316 q1=0.06300 q2=0.05259 entropy=1.29710 alpha=0.10004
+[9] > Train step: 3.40585 avg. loss.
+[9] > SAC: actor=1.94735 q1=0.06441 q2=0.05236 entropy=1.16773 alpha=0.10004
+[9] > Train step: 3.23185 avg. loss.
+[9] > SAC: actor=1.92663 q1=0.06325 q2=0.05694 entropy=1.35780 alpha=0.10004
+[9] > Train step: 3.40461 avg. loss.
+[9] > SAC: actor=1.87569 q1=0.08358 q2=0.07565 entropy=1.13443 alpha=0.10004
+[9] > Train step: 3.16935 avg. loss.
+[9] Optimized Model.
+[9] Best: False, Evaluation: [26, 2114]
+[10] Collecting Experience.
+[10] > Sampled Problems; 6.5 avg. object count.
+[10] > Sampled Initial States.
+[10] > Sampled Goals.
+[10] > Sampled Trajectories; 1.5 avg. goal size; 45.8 avg. trajectory length
+[10] > Refined Trajectories; 1.4 avg. goal size; 7.5 avg. trajectory length.
+[10] Collected Experience.
+[10] Optimizing Model.
+[10] > SAC: actor=2.03871 q1=0.02922 q2=0.02310 entropy=1.14293 alpha=0.10004
+[10] > Train step: 3.23396 avg. loss.
+[10] > SAC: actor=2.08313 q1=0.04835 q2=0.04163 entropy=1.19702 alpha=0.10004
+[10] > Train step: 3.37014 avg. loss.
+[10] > SAC: actor=2.02954 q1=0.07163 q2=0.06921 entropy=1.11079 alpha=0.10004
+[10] > Train step: 3.28118 avg. loss.
+[10] > SAC: actor=2.02639 q1=0.08057 q2=0.06805 entropy=1.15830 alpha=0.10003
+[10] > Train step: 3.33331 avg. loss.
+[10] > SAC: actor=2.13498 q1=0.03609 q2=0.02991 entropy=1.07984 alpha=0.10003
+[10] > Train step: 3.28082 avg. loss.
+[10] > SAC: actor=2.07647 q1=0.05822 q2=0.05029 entropy=1.22302 alpha=0.10003
+[10] > Train step: 3.40800 avg. loss.
+[10] > SAC: actor=2.05473 q1=0.05339 q2=0.04731 entropy=1.09995 alpha=0.10003
+[10] > Train step: 3.25538 avg. loss.
+[10] > SAC: actor=2.02764 q1=0.08247 q2=0.07221 entropy=1.27837 alpha=0.10003
+[10] > Train step: 3.46070 avg. loss.
+[10] > SAC: actor=1.97229 q1=0.08405 q2=0.07372 entropy=1.33049 alpha=0.10003
+[10] > Train step: 3.46054 avg. loss.
+[10] > SAC: actor=1.98289 q1=0.08785 q2=0.07822 entropy=1.13892 alpha=0.10003
+[10] > Train step: 3.28788 avg. loss.
+[10] > SAC: actor=2.11711 q1=0.06353 q2=0.05127 entropy=1.32567 alpha=0.10004
+[10] > Train step: 3.55758 avg. loss.
+[10] > SAC: actor=2.12595 q1=0.04483 q2=0.03810 entropy=1.18233 alpha=0.10003
+[10] > Train step: 3.39120 avg. loss.
+[10] > SAC: actor=2.17702 q1=0.05252 q2=0.04399 entropy=1.03504 alpha=0.10003
+[10] > Train step: 3.30857 avg. loss.
+[10] > SAC: actor=2.10557 q1=0.05444 q2=0.04823 entropy=1.12757 alpha=0.10003
+[10] > Train step: 3.33581 avg. loss.
+[10] > SAC: actor=2.17453 q1=0.06546 q2=0.06030 entropy=1.07978 alpha=0.10003
+[10] > Train step: 3.38007 avg. loss.
+[10] > SAC: actor=2.11360 q1=0.06419 q2=0.06222 entropy=1.16358 alpha=0.10003
+[10] > Train step: 3.40359 avg. loss.
+[10] > SAC: actor=2.08612 q1=0.08583 q2=0.07873 entropy=1.36786 alpha=0.10003
+[10] > Train step: 3.61853 avg. loss.
+[10] > SAC: actor=2.11351 q1=0.06267 q2=0.05725 entropy=1.17997 alpha=0.10003
+[10] > Train step: 3.41339 avg. loss.
+[10] > SAC: actor=2.11329 q1=0.08623 q2=0.07905 entropy=1.25788 alpha=0.10003
+[10] > Train step: 3.53645 avg. loss.
+[10] > SAC: actor=2.12781 q1=0.04393 q2=0.04120 entropy=1.06375 alpha=0.10003
+[10] > Train step: 3.27668 avg. loss.
+[10] > SAC: actor=2.07413 q1=0.10988 q2=0.10006 entropy=1.30743 alpha=0.10003
+[10] > Train step: 3.59150 avg. loss.
+[10] > SAC: actor=2.10491 q1=0.07243 q2=0.06657 entropy=1.18617 alpha=0.10003
+[10] > Train step: 3.43009 avg. loss.
+[10] > SAC: actor=2.03432 q1=0.07723 q2=0.07069 entropy=1.05189 alpha=0.10003
+[10] > Train step: 3.23414 avg. loss.
+[10] > SAC: actor=2.03002 q1=0.10988 q2=0.09940 entropy=1.55691 alpha=0.10003
+[10] > Train step: 3.79622 avg. loss.
+[10] > SAC: actor=2.03146 q1=0.05268 q2=0.04613 entropy=1.17048 alpha=0.10003
+[10] > Train step: 3.30074 avg. loss.
+[10] > SAC: actor=1.95109 q1=0.08075 q2=0.07378 entropy=1.30110 alpha=0.10004
+[10] > Train step: 3.40673 avg. loss.
+[10] > SAC: actor=2.04230 q1=0.03335 q2=0.02647 entropy=1.02194 alpha=0.10003
+[10] > Train step: 3.12405 avg. loss.
+[10] > SAC: actor=2.13419 q1=0.07552 q2=0.06408 entropy=1.00752 alpha=0.10003
+[10] > Train step: 3.28131 avg. loss.
+[10] > SAC: actor=2.09284 q1=0.07239 q2=0.06511 entropy=1.29693 alpha=0.10003
+[10] > Train step: 3.52727 avg. loss.
+[10] > SAC: actor=2.02712 q1=0.09435 q2=0.08684 entropy=1.43872 alpha=0.10003
+[10] > Train step: 3.64702 avg. loss.
+[10] > SAC: actor=2.10381 q1=0.08420 q2=0.07867 entropy=1.21781 alpha=0.10003
+[10] > Train step: 3.48449 avg. loss.
+[10] > SAC: actor=2.11700 q1=0.07347 q2=0.06183 entropy=1.40231 alpha=0.10004
+[10] > Train step: 3.65460 avg. loss.
+[10] Optimized Model.

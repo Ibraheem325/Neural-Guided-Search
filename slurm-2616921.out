@@ -1,0 +1,1197 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2616921
+Job name: wrap
+Host: cn-420
+Date: Tue Jun  2 19:39:45 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2616918 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-420
+2616919 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-420
+2616920 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-420
+2616921 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-420
+2616905 rleap_gpu stv2-fin nabin.bh  R      18:52      1 cn-420
+2616872 rleap_gpu stv2-fin nabin.bh  R    1:52:21      1 cn-420
+2616873 rleap_gpu stv2-fin nabin.bh  R    1:52:21      1 cn-420
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+Parsed 400 training instances.
+Parsed 120 validation instances.
+Creating model...
+Training model...
+[0] Boltzmann Exploration: 1.00000
+[0] Collecting Experience.
+[0] > Sampled Problems; 6.2 avg. object count.
+[0] > Sampled Initial States.
+[0] > Sampled Goals.
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+[0] > Sampled Trajectories; 1.5 avg. goal size; 46.8 avg. trajectory length
+[0] > Refined Trajectories; 1.4 avg. goal size; 5.1 avg. trajectory length.
+[0] Collected Experience.
+[0] Optimizing Model.
+[0] > Train step: 1.31056 avg. loss.
+[0] > Train step: 2.43117 avg. loss.
+[0] > Train step: 4.95655 avg. loss.
+[0] > Train step: 6.32040 avg. loss.
+[0] > Train step: 4.94869 avg. loss.
+[0] > Train step: 5.01198 avg. loss.
+[0] > Train step: 2.73704 avg. loss.
+[0] > Train step: 2.95790 avg. loss.
+[0] > Train step: 1.01115 avg. loss.
+[0] > Train step: 0.77156 avg. loss.
+[0] > Train step: 0.72357 avg. loss.
+[0] > Train step: 0.35114 avg. loss.
+[0] > Train step: 0.34556 avg. loss.
+[0] > Train step: 0.21229 avg. loss.
+[0] > Train step: 0.28250 avg. loss.
+[0] > Train step: 0.31044 avg. loss.
+[0] > Train step: 0.32156 avg. loss.
+[0] > Train step: 0.44920 avg. loss.
+[0] > Train step: 0.81906 avg. loss.
+[0] > Train step: 0.92524 avg. loss.
+[0] > Train step: 1.60135 avg. loss.
+[0] > Train step: 1.84568 avg. loss.
+[0] > Train step: 1.88270 avg. loss.
+[0] > Train step: 1.33767 avg. loss.
+[0] > Train step: 1.81146 avg. loss.
+[0] > Train step: 1.61368 avg. loss.
+[0] > Train step: 1.39441 avg. loss.
+[0] > Train step: 0.50753 avg. loss.
+[0] > Train step: 0.33128 avg. loss.
+[0] > Train step: 0.69454 avg. loss.
+[0] > Train step: 0.75847 avg. loss.
+[0] > Train step: 0.56060 avg. loss.
+[0] Optimized Model.
+[0] Best: True, Evaluation: [80, 2367]
+[0] Saved new best model
+[1] Boltzmann Exploration: 0.99850
+[1] Collecting Experience.
+[1] > Sampled Problems; 7.2 avg. object count.
+[1] > Sampled Initial States.
+[1] > Sampled Goals.
+[1] > Sampled Trajectories; 1.5 avg. goal size; 58.8 avg. trajectory length
+[1] > Refined Trajectories; 1.4 avg. goal size; 7.2 avg. trajectory length.
+[1] Collected Experience.
+[1] Optimizing Model.
+[1] > Train step: 0.40723 avg. loss.
+[1] > Train step: 0.27619 avg. loss.
+[1] > Train step: 0.20929 avg. loss.
+[1] > Train step: 0.43252 avg. loss.
+[1] > Train step: 0.59592 avg. loss.
+[1] > Train step: 0.67678 avg. loss.
+[1] > Train step: 1.06685 avg. loss.
+[1] > Train step: 2.11663 avg. loss.
+[1] > Train step: 2.46311 avg. loss.
+[1] > Train step: 3.53468 avg. loss.
+[1] > Train step: 3.86593 avg. loss.
+[1] > Train step: 2.15304 avg. loss.
+[1] > Train step: 2.78942 avg. loss.
+[1] > Train step: 3.48710 avg. loss.
+[1] > Train step: 2.64058 avg. loss.
+[1] > Train step: 1.99032 avg. loss.
+[1] > Train step: 2.28072 avg. loss.
+[1] > Train step: 0.63827 avg. loss.
+[1] > Train step: 0.65696 avg. loss.
+[1] > Train step: 1.20920 avg. loss.
+[1] > Train step: 0.59624 avg. loss.
+[1] > Train step: 0.50588 avg. loss.
+[1] > Train step: 0.29018 avg. loss.
+[1] > Train step: 0.26307 avg. loss.
+[1] > Train step: 0.23519 avg. loss.
+[1] > Train step: 0.25454 avg. loss.
+[1] > Train step: 0.27887 avg. loss.
+[1] > Train step: 0.30876 avg. loss.
+[1] > Train step: 0.46194 avg. loss.
+[1] > Train step: 0.53111 avg. loss.
+[1] > Train step: 0.65248 avg. loss.
+[1] > Train step: 0.86451 avg. loss.
+[1] Optimized Model.
+[1] Best: False, Evaluation: [22, 267]
+[2] Boltzmann Exploration: 0.99700
+[2] Collecting Experience.
+[2] > Sampled Problems; 7.0 avg. object count.
+[2] > Sampled Initial States.
+[2] > Sampled Goals.
+[2] > Sampled Trajectories; 1.0 avg. goal size; 21.2 avg. trajectory length
+[2] > Refined Trajectories; 1.0 avg. goal size; 4.2 avg. trajectory length.
+[2] Collected Experience.
+[2] Optimizing Model.
+[2] > Train step: 0.88912 avg. loss.
+[2] > Train step: 1.35681 avg. loss.
+[2] > Train step: 1.16220 avg. loss.
+[2] > Train step: 2.18987 avg. loss.
+[2] > Train step: 1.55828 avg. loss.
+[2] > Train step: 1.03307 avg. loss.
+[2] > Train step: 1.22027 avg. loss.
+[2] > Train step: 1.00295 avg. loss.
+[2] > Train step: 1.30736 avg. loss.
+[2] > Train step: 0.92327 avg. loss.
+[2] > Train step: 0.68402 avg. loss.
+[2] > Train step: 0.43530 avg. loss.
+[2] > Train step: 0.52006 avg. loss.
+[2] > Train step: 0.44384 avg. loss.
+[2] > Train step: 0.26789 avg. loss.
+[2] > Train step: 0.32979 avg. loss.
+[2] > Train step: 0.24789 avg. loss.
+[2] > Train step: 0.30410 avg. loss.
+[2] > Train step: 0.34711 avg. loss.
+[2] > Train step: 0.34429 avg. loss.
+[2] > Train step: 0.36915 avg. loss.
+[2] > Train step: 0.40514 avg. loss.
+[2] > Train step: 0.18883 avg. loss.
+[2] > Train step: 0.26638 avg. loss.
+[2] > Train step: 0.26416 avg. loss.
+[2] > Train step: 0.31257 avg. loss.
+[2] > Train step: 0.60077 avg. loss.
+[2] > Train step: 0.38869 avg. loss.
+[2] > Train step: 0.64704 avg. loss.
+[2] > Train step: 0.35824 avg. loss.
+[2] > Train step: 0.54414 avg. loss.
+[2] > Train step: 0.78416 avg. loss.
+[2] Optimized Model.
+[2] Best: False, Evaluation: [80, 2485]
+[3] Boltzmann Exploration: 0.99550
+[3] Collecting Experience.
+[3] > Sampled Problems; 7.0 avg. object count.
+[3] > Sampled Initial States.
+[3] > Sampled Goals.
+[3] > Sampled Trajectories; 1.5 avg. goal size; 50.8 avg. trajectory length
+[3] > Refined Trajectories; 1.5 avg. goal size; 5.8 avg. trajectory length.
+[3] Collected Experience.
+[3] Optimizing Model.
+[3] > Train step: 0.68559 avg. loss.
+[3] > Train step: 0.38620 avg. loss.
+[3] > Train step: 0.25269 avg. loss.
+[3] > Train step: 0.31647 avg. loss.
+[3] > Train step: 0.50671 avg. loss.
+[3] > Train step: 0.21742 avg. loss.
+[3] > Train step: 0.22941 avg. loss.
+[3] > Train step: 0.31832 avg. loss.
+[3] > Train step: 0.23844 avg. loss.
+[3] > Train step: 0.16080 avg. loss.
+[3] > Train step: 0.47800 avg. loss.
+[3] > Train step: 0.26378 avg. loss.
+[3] > Train step: 0.33436 avg. loss.
+[3] > Train step: 0.31262 avg. loss.
+[3] > Train step: 1.12573 avg. loss.
+[3] > Train step: 0.50465 avg. loss.
+[3] > Train step: 1.13438 avg. loss.
+[3] > Train step: 0.70481 avg. loss.
+[3] > Train step: 1.44882 avg. loss.
+[3] > Train step: 0.88095 avg. loss.
+[3] > Train step: 0.86441 avg. loss.
+[3] > Train step: 1.02404 avg. loss.
+[3] > Train step: 0.75350 avg. loss.
+[3] > Train step: 0.40997 avg. loss.
+[3] > Train step: 0.53638 avg. loss.
+[3] > Train step: 0.52287 avg. loss.
+[3] > Train step: 0.69840 avg. loss.
+[3] > Train step: 0.48076 avg. loss.
+[3] > Train step: 0.24951 avg. loss.
+[3] > Train step: 0.16271 avg. loss.
+[3] > Train step: 0.38243 avg. loss.
+[3] > Train step: 0.28691 avg. loss.
+[3] Optimized Model.
+[3] Best: False, Evaluation: [21, 200]
+[4] Boltzmann Exploration: 0.99400
+[4] Collecting Experience.
+[4] > Sampled Problems; 8.2 avg. object count.
+[4] > Sampled Initial States.
+[4] > Sampled Goals.
+[4] > Sampled Trajectories; 1.5 avg. goal size; 79.8 avg. trajectory length
+[4] > Refined Trajectories; 1.6 avg. goal size; 14.3 avg. trajectory length.
+[4] Collected Experience.
+[4] Optimizing Model.
+[4] > Train step: 0.20545 avg. loss.
+[4] > Train step: 0.28297 avg. loss.
+[4] > Train step: 0.39156 avg. loss.
+[4] > Train step: 0.20158 avg. loss.
+[4] > Train step: 0.47897 avg. loss.
+[4] > Train step: 0.45047 avg. loss.
+[4] > Train step: 0.24218 avg. loss.
+[4] > Train step: 0.40824 avg. loss.
+[4] > Train step: 0.45736 avg. loss.
+[4] > Train step: 0.51915 avg. loss.
+[4] > Train step: 0.70852 avg. loss.
+[4] > Train step: 0.53745 avg. loss.
+[4] > Train step: 0.93154 avg. loss.
+[4] > Train step: 0.35330 avg. loss.
+[4] > Train step: 0.36573 avg. loss.
+[4] > Train step: 0.92335 avg. loss.
+[4] > Train step: 0.45951 avg. loss.
+[4] > Train step: 0.44939 avg. loss.
+[4] > Train step: 0.51138 avg. loss.
+[4] > Train step: 0.49892 avg. loss.
+[4] > Train step: 0.40065 avg. loss.
+[4] > Train step: 0.56138 avg. loss.
+[4] > Train step: 0.59670 avg. loss.
+[4] > Train step: 0.51428 avg. loss.
+[4] > Train step: 0.39008 avg. loss.
+[4] > Train step: 0.31078 avg. loss.
+[4] > Train step: 0.31613 avg. loss.
+[4] > Train step: 0.33016 avg. loss.
+[4] > Train step: 0.21261 avg. loss.
+[4] > Train step: 0.23397 avg. loss.
+[4] > Train step: 0.26591 avg. loss.
+[4] > Train step: 0.15568 avg. loss.
+[4] Optimized Model.
+[4] Best: False, Evaluation: [47, 1224]
+[5] Boltzmann Exploration: 0.99250
+[5] Collecting Experience.
+[5] > Sampled Problems; 7.2 avg. object count.
+[5] > Sampled Initial States.
+[5] > Sampled Goals.
+[5] > Sampled Trajectories; 1.8 avg. goal size; 39.2 avg. trajectory length
+[5] > Refined Trajectories; 1.9 avg. goal size; 6.8 avg. trajectory length.
+[5] Collected Experience.
+[5] Optimizing Model.
+[5] > Train step: 0.22916 avg. loss.
+[5] > Train step: 0.21430 avg. loss.
+[5] > Train step: 0.25097 avg. loss.
+[5] > Train step: 0.37363 avg. loss.
+[5] > Train step: 0.46146 avg. loss.
+[5] > Train step: 0.17329 avg. loss.
+[5] > Train step: 0.17725 avg. loss.
+[5] > Train step: 0.26096 avg. loss.
+[5] > Train step: 0.32125 avg. loss.
+[5] > Train step: 0.34079 avg. loss.
+[5] > Train step: 0.24868 avg. loss.
+[5] > Train step: 0.31111 avg. loss.
+[5] > Train step: 0.45079 avg. loss.
+[5] > Train step: 0.28132 avg. loss.
+[5] > Train step: 0.54778 avg. loss.
+[5] > Train step: 0.29894 avg. loss.
+[5] > Train step: 0.35872 avg. loss.
+[5] > Train step: 0.59351 avg. loss.
+[5] > Train step: 0.70076 avg. loss.
+[5] > Train step: 0.60907 avg. loss.
+[5] > Train step: 0.51947 avg. loss.
+[5] > Train step: 0.37154 avg. loss.
+[5] > Train step: 0.32781 avg. loss.
+[5] > Train step: 0.87723 avg. loss.
+[5] > Train step: 0.56315 avg. loss.
+[5] > Train step: 0.39681 avg. loss.
+[5] > Train step: 0.39922 avg. loss.
+[5] > Train step: 0.28965 avg. loss.
+[5] > Train step: 0.48306 avg. loss.
+[5] > Train step: 0.35172 avg. loss.
+[5] > Train step: 0.24569 avg. loss.
+[5] > Train step: 0.47132 avg. loss.
+[5] Optimized Model.
+[5] Best: False, Evaluation: [12, 105]
+[6] Boltzmann Exploration: 0.99100
+[6] Collecting Experience.
+[6] > Sampled Problems; 7.8 avg. object count.
+[6] > Sampled Initial States.
+[6] > Sampled Goals.
+[6] > Sampled Trajectories; 1.5 avg. goal size; 33.0 avg. trajectory length
+[6] > Refined Trajectories; 1.8 avg. goal size; 7.1 avg. trajectory length.
+[6] Collected Experience.
+[6] Optimizing Model.
+[6] > Train step: 0.25959 avg. loss.
+[6] > Train step: 0.20798 avg. loss.
+[6] > Train step: 0.24873 avg. loss.
+[6] > Train step: 0.20801 avg. loss.
+[6] > Train step: 0.33265 avg. loss.
+[6] > Train step: 0.28188 avg. loss.
+[6] > Train step: 0.25955 avg. loss.
+[6] > Train step: 0.27202 avg. loss.
+[6] > Train step: 0.15556 avg. loss.
+[6] > Train step: 0.16297 avg. loss.
+[6] > Train step: 0.26730 avg. loss.
+[6] > Train step: 0.32449 avg. loss.
+[6] > Train step: 0.21527 avg. loss.
+[6] > Train step: 0.19804 avg. loss.
+[6] > Train step: 0.28711 avg. loss.
+[6] > Train step: 0.14328 avg. loss.
+[6] > Train step: 0.14568 avg. loss.
+[6] > Train step: 0.27121 avg. loss.
+[6] > Train step: 0.24768 avg. loss.
+[6] > Train step: 0.41714 avg. loss.
+[6] > Train step: 0.42296 avg. loss.
+[6] > Train step: 0.30997 avg. loss.
+[6] > Train step: 0.19737 avg. loss.
+[6] > Train step: 0.24290 avg. loss.
+[6] > Train step: 0.24491 avg. loss.
+[6] > Train step: 0.22541 avg. loss.
+[6] > Train step: 0.30998 avg. loss.
+[6] > Train step: 0.36536 avg. loss.
+[6] > Train step: 0.27275 avg. loss.
+[6] > Train step: 0.35080 avg. loss.
+[6] > Train step: 0.27487 avg. loss.
+[6] > Train step: 0.26622 avg. loss.
+[6] Optimized Model.
+[6] Best: False, Evaluation: [8, 45]
+[7] Boltzmann Exploration: 0.98950
+[7] Collecting Experience.
+[7] > Sampled Problems; 7.8 avg. object count.
+[7] > Sampled Initial States.
+[7] > Sampled Goals.
+[7] > Sampled Trajectories; 1.0 avg. goal size; 18.5 avg. trajectory length
+[7] > Refined Trajectories; 1.0 avg. goal size; 6.0 avg. trajectory length.
+[7] Collected Experience.
+[7] Optimizing Model.
+[7] > Train step: 0.45724 avg. loss.
+[7] > Train step: 0.36735 avg. loss.
+[7] > Train step: 0.19609 avg. loss.
+[7] > Train step: 0.31285 avg. loss.
+[7] > Train step: 0.38712 avg. loss.
+[7] > Train step: 0.22058 avg. loss.
+[7] > Train step: 0.48491 avg. loss.
+[7] > Train step: 0.40881 avg. loss.
+[7] > Train step: 0.42303 avg. loss.
+[7] > Train step: 0.27108 avg. loss.
+[7] > Train step: 0.38812 avg. loss.
+[7] > Train step: 0.45876 avg. loss.
+[7] > Train step: 0.50107 avg. loss.
+[7] > Train step: 0.27683 avg. loss.
+[7] > Train step: 0.34401 avg. loss.
+[7] > Train step: 0.40561 avg. loss.
+[7] > Train step: 0.27275 avg. loss.
+[7] > Train step: 0.25217 avg. loss.
+[7] > Train step: 0.48075 avg. loss.
+[7] > Train step: 0.31813 avg. loss.
+[7] > Train step: 0.55361 avg. loss.
+[7] > Train step: 0.43717 avg. loss.
+[7] > Train step: 0.46491 avg. loss.
+[7] > Train step: 0.60827 avg. loss.
+[7] > Train step: 0.49382 avg. loss.
+[7] > Train step: 0.23953 avg. loss.
+[7] > Train step: 0.34895 avg. loss.
+[7] > Train step: 0.50853 avg. loss.
+[7] > Train step: 0.64987 avg. loss.
+[7] > Train step: 0.51448 avg. loss.
+[7] > Train step: 0.45889 avg. loss.
+[7] > Train step: 0.22767 avg. loss.
+[7] Optimized Model.
+[7] Best: False, Evaluation: [78, 2499]
+[8] Boltzmann Exploration: 0.98800
+[8] Collecting Experience.
+[8] > Sampled Problems; 8.0 avg. object count.
+[8] > Sampled Initial States.
+[8] > Sampled Goals.
+[8] > Sampled Trajectories; 1.5 avg. goal size; 43.0 avg. trajectory length
+[8] > Refined Trajectories; 1.7 avg. goal size; 9.0 avg. trajectory length.
+[8] Collected Experience.
+[8] Optimizing Model.
+[8] > Train step: 0.39628 avg. loss.
+[8] > Train step: 0.33195 avg. loss.
+[8] > Train step: 0.44464 avg. loss.
+[8] > Train step: 0.59594 avg. loss.
+[8] > Train step: 0.40489 avg. loss.
+[8] > Train step: 0.52749 avg. loss.
+[8] > Train step: 0.45422 avg. loss.
+[8] > Train step: 0.31594 avg. loss.
+[8] > Train step: 0.39793 avg. loss.
+[8] > Train step: 0.39231 avg. loss.
+[8] > Train step: 0.42861 avg. loss.
+[8] > Train step: 0.48874 avg. loss.
+[8] > Train step: 0.31356 avg. loss.
+[8] > Train step: 0.50111 avg. loss.
+[8] > Train step: 0.46321 avg. loss.
+[8] > Train step: 0.19163 avg. loss.
+[8] > Train step: 0.32403 avg. loss.
+[8] > Train step: 0.36009 avg. loss.
+[8] > Train step: 0.24819 avg. loss.
+[8] > Train step: 0.28946 avg. loss.
+[8] > Train step: 0.49542 avg. loss.
+[8] > Train step: 0.42132 avg. loss.
+[8] > Train step: 0.46779 avg. loss.
+[8] > Train step: 0.29075 avg. loss.
+[8] > Train step: 0.35627 avg. loss.
+[8] > Train step: 0.60902 avg. loss.
+[8] > Train step: 0.34945 avg. loss.
+[8] > Train step: 0.42830 avg. loss.
+[8] > Train step: 0.32004 avg. loss.
+[8] > Train step: 0.41154 avg. loss.
+[8] > Train step: 0.70238 avg. loss.
+[8] > Train step: 0.23198 avg. loss.
+[8] Optimized Model.
+[8] Best: False, Evaluation: [13, 95]
+[9] Boltzmann Exploration: 0.98650
+[9] Collecting Experience.
+[9] > Sampled Problems; 7.8 avg. object count.
+[9] > Sampled Initial States.
+[9] > Sampled Goals.
+[9] > Sampled Trajectories; 1.5 avg. goal size; 64.0 avg. trajectory length
+[9] > Refined Trajectories; 1.6 avg. goal size; 6.6 avg. trajectory length.
+[9] Collected Experience.
+[9] Optimizing Model.
+[9] > Train step: 0.38330 avg. loss.
+[9] > Train step: 0.18243 avg. loss.
+[9] > Train step: 0.19965 avg. loss.
+[9] > Train step: 0.33882 avg. loss.
+[9] > Train step: 0.39647 avg. loss.
+[9] > Train step: 0.40811 avg. loss.
+[9] > Train step: 0.36049 avg. loss.
+[9] > Train step: 0.43201 avg. loss.
+[9] > Train step: 0.52457 avg. loss.
+[9] > Train step: 0.37869 avg. loss.
+[9] > Train step: 0.48086 avg. loss.
+[9] > Train step: 0.36055 avg. loss.
+[9] > Train step: 0.25984 avg. loss.
+[9] > Train step: 0.39395 avg. loss.
+[9] > Train step: 0.45976 avg. loss.
+[9] > Train step: 0.36252 avg. loss.
+[9] > Train step: 0.35076 avg. loss.
+[9] > Train step: 0.19553 avg. loss.
+[9] > Train step: 0.43065 avg. loss.
+[9] > Train step: 0.37578 avg. loss.
+[9] > Train step: 0.41288 avg. loss.
+[9] > Train step: 0.43659 avg. loss.
+[9] > Train step: 0.37327 avg. loss.
+[9] > Train step: 0.17370 avg. loss.
+[9] > Train step: 0.47541 avg. loss.
+[9] > Train step: 0.38049 avg. loss.
+[9] > Train step: 0.45633 avg. loss.
+[9] > Train step: 0.40953 avg. loss.
+[9] > Train step: 0.38871 avg. loss.
+[9] > Train step: 0.33258 avg. loss.
+[9] > Train step: 0.35644 avg. loss.
+[9] > Train step: 0.62481 avg. loss.
+[9] Optimized Model.
+[9] Best: False, Evaluation: [15, 105]
+[10] Boltzmann Exploration: 0.98500
+[10] Collecting Experience.
+[10] > Sampled Problems; 6.2 avg. object count.
+[10] > Sampled Initial States.
+[10] > Sampled Goals.
+[10] > Sampled Trajectories; 1.2 avg. goal size; 29.2 avg. trajectory length
+[10] > Refined Trajectories; 1.4 avg. goal size; 6.6 avg. trajectory length.
+[10] Collected Experience.
+[10] Optimizing Model.
+[10] > Train step: 0.28103 avg. loss.
+[10] > Train step: 0.39518 avg. loss.
+[10] > Train step: 0.33288 avg. loss.
+[10] > Train step: 0.52759 avg. loss.
+[10] > Train step: 0.73643 avg. loss.
+[10] > Train step: 0.28973 avg. loss.
+[10] > Train step: 0.37331 avg. loss.
+[10] > Train step: 0.54043 avg. loss.
+[10] > Train step: 0.43176 avg. loss.
+[10] > Train step: 0.17729 avg. loss.
+[10] > Train step: 0.53968 avg. loss.
+[10] > Train step: 0.36727 avg. loss.
+[10] > Train step: 0.37548 avg. loss.
+[10] > Train step: 0.39502 avg. loss.
+[10] > Train step: 0.34726 avg. loss.
+[10] > Train step: 0.35342 avg. loss.
+[10] > Train step: 0.41395 avg. loss.
+[10] > Train step: 0.40971 avg. loss.
+[10] > Train step: 0.58047 avg. loss.
+[10] > Train step: 0.51545 avg. loss.
+[10] > Train step: 0.25924 avg. loss.
+[10] > Train step: 0.52247 avg. loss.
+[10] > Train step: 0.27959 avg. loss.
+[10] > Train step: 0.37881 avg. loss.
+[10] > Train step: 0.34664 avg. loss.
+[10] > Train step: 0.40235 avg. loss.
+[10] > Train step: 0.29830 avg. loss.
+[10] > Train step: 0.36616 avg. loss.
+[10] > Train step: 0.32563 avg. loss.
+[10] > Train step: 0.28619 avg. loss.
+[10] > Train step: 0.27192 avg. loss.
+[10] > Train step: 0.42771 avg. loss.
+[10] Optimized Model.
+[10] Best: False, Evaluation: [24, 235]
+[11] Boltzmann Exploration: 0.98350
+[11] Collecting Experience.
+[11] > Sampled Problems; 7.8 avg. object count.
+[11] > Sampled Initial States.
+[11] > Sampled Goals.
+[11] > Sampled Trajectories; 1.2 avg. goal size; 29.8 avg. trajectory length
+[11] > Refined Trajectories; 1.2 avg. goal size; 10.5 avg. trajectory length.
+[11] Collected Experience.
+[11] Optimizing Model.
+[11] > Train step: 0.32053 avg. loss.
+[11] > Train step: 0.39999 avg. loss.
+[11] > Train step: 0.42908 avg. loss.
+[11] > Train step: 0.39160 avg. loss.
+[11] > Train step: 0.42602 avg. loss.
+[11] > Train step: 0.29038 avg. loss.
+[11] > Train step: 0.34200 avg. loss.
+[11] > Train step: 0.31940 avg. loss.
+[11] > Train step: 0.33602 avg. loss.
+[11] > Train step: 0.38146 avg. loss.
+[11] > Train step: 0.33761 avg. loss.
+[11] > Train step: 0.26780 avg. loss.
+[11] > Train step: 0.28094 avg. loss.
+[11] > Train step: 0.13913 avg. loss.
+[11] > Train step: 0.31113 avg. loss.
+[11] > Train step: 0.37919 avg. loss.
+[11] > Train step: 0.37380 avg. loss.
+[11] > Train step: 0.37594 avg. loss.
+[11] > Train step: 0.39783 avg. loss.
+[11] > Train step: 0.24534 avg. loss.
+[11] > Train step: 0.28736 avg. loss.
+[11] > Train step: 0.36543 avg. loss.
+[11] > Train step: 0.34904 avg. loss.
+[11] > Train step: 0.30133 avg. loss.
+[11] > Train step: 0.35764 avg. loss.
+[11] > Train step: 0.26851 avg. loss.
+[11] > Train step: 0.32573 avg. loss.
+[11] > Train step: 0.40199 avg. loss.
+[11] > Train step: 0.43722 avg. loss.
+[11] > Train step: 0.34493 avg. loss.
+[11] > Train step: 0.29456 avg. loss.
+[11] > Train step: 0.33495 avg. loss.
+[11] Optimized Model.
+[11] Best: True, Evaluation: [100, 1208]
+[11] Saved new best model
+[12] Boltzmann Exploration: 0.98200
+[12] Collecting Experience.
+[12] > Sampled Problems; 7.5 avg. object count.
+[12] > Sampled Initial States.
+[12] > Sampled Goals.
+[12] > Sampled Trajectories; 1.0 avg. goal size; 11.8 avg. trajectory length
+[12] > Refined Trajectories; 1.0 avg. goal size; 9.3 avg. trajectory length.
+[12] Collected Experience.
+[12] Optimizing Model.
+[12] > Train step: 0.27558 avg. loss.
+[12] > Train step: 0.23801 avg. loss.
+[12] > Train step: 0.19400 avg. loss.
+[12] > Train step: 0.15440 avg. loss.
+[12] > Train step: 0.21983 avg. loss.
+[12] > Train step: 0.24090 avg. loss.
+[12] > Train step: 0.29164 avg. loss.
+[12] > Train step: 0.12525 avg. loss.
+[12] > Train step: 0.13336 avg. loss.
+[12] > Train step: 0.13625 avg. loss.
+[12] > Train step: 0.15073 avg. loss.
+[12] > Train step: 0.09918 avg. loss.
+[12] > Train step: 0.17044 avg. loss.
+[12] > Train step: 0.20666 avg. loss.
+[12] > Train step: 0.19448 avg. loss.
+[12] > Train step: 0.20851 avg. loss.
+[12] > Train step: 0.20022 avg. loss.
+[12] > Train step: 0.24423 avg. loss.
+[12] > Train step: 0.27367 avg. loss.
+[12] > Train step: 0.21699 avg. loss.
+[12] > Train step: 0.19948 avg. loss.
+[12] > Train step: 0.17788 avg. loss.
+[12] > Train step: 0.26537 avg. loss.
+[12] > Train step: 0.16479 avg. loss.
+[12] > Train step: 0.21180 avg. loss.
+[12] > Train step: 0.27064 avg. loss.
+[12] > Train step: 0.19443 avg. loss.
+[12] > Train step: 0.27980 avg. loss.
+[12] > Train step: 0.25733 avg. loss.
+[12] > Train step: 0.31515 avg. loss.
+[12] > Train step: 0.19709 avg. loss.
+[12] > Train step: 0.21526 avg. loss.
+[12] Optimized Model.
+[12] Best: True, Evaluation: [102, 1048]
+[12] Saved new best model
+[13] Boltzmann Exploration: 0.98050
+[13] Collecting Experience.
+[13] > Sampled Problems; 7.5 avg. object count.
+[13] > Sampled Initial States.
+[13] > Sampled Goals.
+[13] > Sampled Trajectories; 2.2 avg. goal size; 35.0 avg. trajectory length
+[13] > Refined Trajectories; 2.1 avg. goal size; 13.1 avg. trajectory length.
+[13] Collected Experience.
+[13] Optimizing Model.
+[13] > Train step: 0.14995 avg. loss.
+[13] > Train step: 0.21622 avg. loss.
+[13] > Train step: 0.14642 avg. loss.
+[13] > Train step: 0.12096 avg. loss.
+[13] > Train step: 0.15353 avg. loss.
+[13] > Train step: 0.10444 avg. loss.
+[13] > Train step: 0.19458 avg. loss.
+[13] > Train step: 0.22237 avg. loss.
+[13] > Train step: 0.25758 avg. loss.
+[13] > Train step: 0.35708 avg. loss.
+[13] > Train step: 0.34330 avg. loss.
+[13] > Train step: 0.34610 avg. loss.
+[13] > Train step: 0.40237 avg. loss.
+[13] > Train step: 0.39551 avg. loss.
+[13] > Train step: 0.39214 avg. loss.
+[13] > Train step: 0.32473 avg. loss.
+[13] > Train step: 0.24331 avg. loss.
+[13] > Train step: 0.27202 avg. loss.
+[13] > Train step: 0.16643 avg. loss.
+[13] > Train step: 0.33898 avg. loss.
+[13] > Train step: 0.27311 avg. loss.
+[13] > Train step: 0.31431 avg. loss.
+[13] > Train step: 0.41944 avg. loss.
+[13] > Train step: 0.43238 avg. loss.
+[13] > Train step: 0.50371 avg. loss.
+[13] > Train step: 0.42016 avg. loss.
+[13] > Train step: 0.44811 avg. loss.
+[13] > Train step: 0.39891 avg. loss.
+[13] > Train step: 0.34624 avg. loss.
+[13] > Train step: 0.54862 avg. loss.
+[13] > Train step: 0.30128 avg. loss.
+[13] > Train step: 0.42803 avg. loss.
+[13] Optimized Model.
+[13] Best: False, Evaluation: [99, 932]
+[14] Boltzmann Exploration: 0.97900
+[14] Collecting Experience.
+[14] > Sampled Problems; 7.2 avg. object count.
+[14] > Sampled Initial States.
+[14] > Sampled Goals.
+[14] > Sampled Trajectories; 1.2 avg. goal size; 14.2 avg. trajectory length
+[14] > Refined Trajectories; 1.2 avg. goal size; 6.8 avg. trajectory length.
+[14] Collected Experience.
+[14] Optimizing Model.
+[14] > Train step: 0.32736 avg. loss.
+[14] > Train step: 0.11163 avg. loss.
+[14] > Train step: 0.31419 avg. loss.
+[14] > Train step: 0.27200 avg. loss.
+[14] > Train step: 0.38532 avg. loss.
+[14] > Train step: 0.26167 avg. loss.
+[14] > Train step: 0.42255 avg. loss.
+[14] > Train step: 0.22327 avg. loss.
+[14] > Train step: 0.19230 avg. loss.
+[14] > Train step: 0.18733 avg. loss.
+[14] > Train step: 0.13849 avg. loss.
+[14] > Train step: 0.15590 avg. loss.
+[14] > Train step: 0.20585 avg. loss.
+[14] > Train step: 0.18847 avg. loss.
+[14] > Train step: 0.23913 avg. loss.
+[14] > Train step: 0.20350 avg. loss.
+[14] > Train step: 0.30040 avg. loss.
+[14] > Train step: 0.16340 avg. loss.
+[14] > Train step: 0.57868 avg. loss.
+[14] > Train step: 0.70428 avg. loss.
+[14] > Train step: 0.47186 avg. loss.
+[14] > Train step: 0.44591 avg. loss.
+[14] > Train step: 0.53351 avg. loss.
+[14] > Train step: 0.87542 avg. loss.
+[14] > Train step: 0.37987 avg. loss.
+[14] > Train step: 0.50262 avg. loss.
+[14] > Train step: 0.31151 avg. loss.
+[14] > Train step: 0.29282 avg. loss.
+[14] > Train step: 0.71488 avg. loss.
+[14] > Train step: 0.24175 avg. loss.
+[14] > Train step: 0.34798 avg. loss.
+[14] > Train step: 0.16602 avg. loss.
+[14] Optimized Model.
+[14] Best: False, Evaluation: [86, 833]
+[15] Boltzmann Exploration: 0.97750
+[15] Collecting Experience.
+[15] > Sampled Problems; 8.2 avg. object count.
+[15] > Sampled Initial States.
+[15] > Sampled Goals.
+[15] > Sampled Trajectories; 1.0 avg. goal size; 29.8 avg. trajectory length
+[15] > Refined Trajectories; 1.0 avg. goal size; 6.0 avg. trajectory length.
+[15] Collected Experience.
+[15] Optimizing Model.
+[15] > Train step: 0.26725 avg. loss.
+[15] > Train step: 0.12273 avg. loss.
+[15] > Train step: 0.23928 avg. loss.
+[15] > Train step: 0.26723 avg. loss.
+[15] > Train step: 0.39066 avg. loss.
+[15] > Train step: 0.19012 avg. loss.
+[15] > Train step: 0.64572 avg. loss.
+[15] > Train step: 0.25160 avg. loss.
+[15] > Train step: 0.27592 avg. loss.
+[15] > Train step: 0.36922 avg. loss.
+[15] > Train step: 0.25813 avg. loss.
+[15] > Train step: 0.24960 avg. loss.
+[15] > Train step: 0.15633 avg. loss.
+[15] > Train step: 0.16535 avg. loss.
+[15] > Train step: 0.13146 avg. loss.
+[15] > Train step: 0.28127 avg. loss.
+[15] > Train step: 0.16198 avg. loss.
+[15] > Train step: 0.18926 avg. loss.
+[15] > Train step: 0.26822 avg. loss.
+[15] > Train step: 0.18968 avg. loss.
+[15] > Train step: 0.24008 avg. loss.
+[15] > Train step: 0.32647 avg. loss.
+[15] > Train step: 0.49687 avg. loss.
+[15] > Train step: 0.28482 avg. loss.
+[15] > Train step: 0.66077 avg. loss.
+[15] > Train step: 0.39706 avg. loss.
+[15] > Train step: 0.82911 avg. loss.
+[15] > Train step: 0.65195 avg. loss.
+[15] > Train step: 0.32167 avg. loss.
+[15] > Train step: 0.59092 avg. loss.
+[15] > Train step: 0.49672 avg. loss.
+[15] > Train step: 0.31661 avg. loss.
+[15] Optimized Model.
+[15] Best: True, Evaluation: [108, 1326]
+[15] Saved new best model
+[16] Boltzmann Exploration: 0.97600
+[16] Collecting Experience.
+[16] > Sampled Problems; 8.0 avg. object count.
+[16] > Sampled Initial States.
+[16] > Sampled Goals.
+[16] > Sampled Trajectories; 1.5 avg. goal size; 14.8 avg. trajectory length
+[16] > Refined Trajectories; 1.7 avg. goal size; 6.5 avg. trajectory length.
+[16] Collected Experience.
+[16] Optimizing Model.
+[16] > Train step: 0.16219 avg. loss.
+[16] > Train step: 0.43940 avg. loss.
+[16] > Train step: 0.17189 avg. loss.
+[16] > Train step: 0.30726 avg. loss.
+[16] > Train step: 0.32879 avg. loss.
+[16] > Train step: 0.22687 avg. loss.
+[16] > Train step: 0.20895 avg. loss.
+[16] > Train step: 0.19352 avg. loss.
+[16] > Train step: 0.23822 avg. loss.
+[16] > Train step: 0.29121 avg. loss.
+[16] > Train step: 0.32629 avg. loss.
+[16] > Train step: 0.50913 avg. loss.
+[16] > Train step: 0.87839 avg. loss.
+[16] > Train step: 0.50030 avg. loss.
+[16] > Train step: 1.48576 avg. loss.
+[16] > Train step: 0.75973 avg. loss.
+[16] > Train step: 1.17230 avg. loss.
+[16] > Train step: 0.83496 avg. loss.
+[16] > Train step: 1.14796 avg. loss.
+[16] > Train step: 0.78411 avg. loss.
+[16] > Train step: 0.56856 avg. loss.
+[16] > Train step: 0.75743 avg. loss.
+[16] > Train step: 0.36401 avg. loss.
+[16] > Train step: 0.22799 avg. loss.
+[16] > Train step: 0.37644 avg. loss.
+[16] > Train step: 0.42719 avg. loss.
+[16] > Train step: 0.20750 avg. loss.
+[16] > Train step: 0.18612 avg. loss.
+[16] > Train step: 0.19251 avg. loss.
+[16] > Train step: 0.27532 avg. loss.
+[16] > Train step: 0.08759 avg. loss.
+[16] > Train step: 0.24639 avg. loss.
+[16] Optimized Model.
+[16] Best: False, Evaluation: [67, 608]
+[17] Boltzmann Exploration: 0.97450
+[17] Collecting Experience.
+[17] > Sampled Problems; 8.0 avg. object count.
+[17] > Sampled Initial States.
+[17] > Sampled Goals.
+[17] > Sampled Trajectories; 1.2 avg. goal size; 20.0 avg. trajectory length
+[17] > Refined Trajectories; 1.2 avg. goal size; 6.8 avg. trajectory length.
+[17] Collected Experience.
+[17] Optimizing Model.
+[17] > Train step: 0.18441 avg. loss.
+[17] > Train step: 0.35694 avg. loss.
+[17] > Train step: 0.41949 avg. loss.
+[17] > Train step: 0.26383 avg. loss.
+[17] > Train step: 0.30739 avg. loss.
+[17] > Train step: 0.19155 avg. loss.
+[17] > Train step: 0.42514 avg. loss.
+[17] > Train step: 0.33163 avg. loss.
+[17] > Train step: 0.34416 avg. loss.
+[17] > Train step: 0.33482 avg. loss.
+[17] > Train step: 0.36536 avg. loss.
+[17] > Train step: 0.33772 avg. loss.
+[17] > Train step: 0.49977 avg. loss.
+[17] > Train step: 0.45368 avg. loss.
+[17] > Train step: 0.47878 avg. loss.
+[17] > Train step: 0.31376 avg. loss.
+[17] > Train step: 0.19142 avg. loss.
+[17] > Train step: 0.27595 avg. loss.
+[17] > Train step: 0.23352 avg. loss.
+[17] > Train step: 0.28671 avg. loss.
+[17] > Train step: 0.26713 avg. loss.
+[17] > Train step: 0.13972 avg. loss.
+[17] > Train step: 0.28441 avg. loss.
+[17] > Train step: 0.30045 avg. loss.
+[17] > Train step: 0.54796 avg. loss.
+[17] > Train step: 0.30198 avg. loss.
+[17] > Train step: 0.39373 avg. loss.
+[17] > Train step: 0.35114 avg. loss.
+[17] > Train step: 0.31695 avg. loss.
+[17] > Train step: 0.52851 avg. loss.
+[17] > Train step: 0.47844 avg. loss.
+[17] > Train step: 0.26352 avg. loss.
+[17] Optimized Model.
+[17] Best: False, Evaluation: [51, 476]
+[18] Boltzmann Exploration: 0.97300
+[18] Collecting Experience.
+[18] > Sampled Problems; 7.8 avg. object count.
+[18] > Sampled Initial States.
+[18] > Sampled Goals.
+[18] > Sampled Trajectories; 1.5 avg. goal size; 22.2 avg. trajectory length
+[18] > Refined Trajectories; 1.8 avg. goal size; 3.5 avg. trajectory length.
+[18] Collected Experience.
+[18] Optimizing Model.
+[18] > Train step: 0.39073 avg. loss.
+[18] > Train step: 0.32069 avg. loss.
+[18] > Train step: 0.45203 avg. loss.
+[18] > Train step: 0.22100 avg. loss.
+[18] > Train step: 0.11241 avg. loss.
+[18] > Train step: 0.11559 avg. loss.
+[18] > Train step: 0.12571 avg. loss.
+[18] > Train step: 0.12341 avg. loss.
+[18] > Train step: 0.11914 avg. loss.
+[18] > Train step: 0.14909 avg. loss.
+[18] > Train step: 0.17534 avg. loss.
+[18] > Train step: 0.11749 avg. loss.
+[18] > Train step: 0.08810 avg. loss.
+[18] > Train step: 0.12562 avg. loss.
+[18] > Train step: 0.14394 avg. loss.
+[18] > Train step: 0.09541 avg. loss.
+[18] > Train step: 0.13568 avg. loss.
+[18] > Train step: 0.07376 avg. loss.
+[18] > Train step: 0.13124 avg. loss.
+[18] > Train step: 0.14275 avg. loss.
+[18] > Train step: 0.10548 avg. loss.
+[18] > Train step: 0.12538 avg. loss.
+[18] > Train step: 0.12783 avg. loss.
+[18] > Train step: 0.08554 avg. loss.
+[18] > Train step: 0.12735 avg. loss.
+[18] > Train step: 0.07445 avg. loss.
+[18] > Train step: 0.09240 avg. loss.
+[18] > Train step: 0.16334 avg. loss.
+[18] > Train step: 0.05634 avg. loss.
+[18] > Train step: 0.10823 avg. loss.
+[18] > Train step: 0.15656 avg. loss.
+[18] > Train step: 0.28079 avg. loss.
+[18] Optimized Model.
+[18] Best: False, Evaluation: [91, 842]
+[19] Boltzmann Exploration: 0.97150
+[19] Collecting Experience.
+[19] > Sampled Problems; 7.0 avg. object count.
+[19] > Sampled Initial States.
+[19] > Sampled Goals.
+[19] > Sampled Trajectories; 1.5 avg. goal size; 24.8 avg. trajectory length
+[19] > Refined Trajectories; 1.3 avg. goal size; 4.9 avg. trajectory length.
+[19] Collected Experience.
+[19] Optimizing Model.
+[19] > Train step: 0.28650 avg. loss.
+[19] > Train step: 0.30626 avg. loss.
+[19] > Train step: 0.32873 avg. loss.
+[19] > Train step: 0.16035 avg. loss.
+[19] > Train step: 0.28649 avg. loss.
+[19] > Train step: 0.21834 avg. loss.
+[19] > Train step: 0.20837 avg. loss.
+[19] > Train step: 0.20607 avg. loss.
+[19] > Train step: 0.15945 avg. loss.
+[19] > Train step: 0.09973 avg. loss.
+[19] > Train step: 0.06559 avg. loss.
+[19] > Train step: 0.13065 avg. loss.
+[19] > Train step: 0.11236 avg. loss.
+[19] > Train step: 0.07993 avg. loss.
+[19] > Train step: 0.17574 avg. loss.
+[19] > Train step: 0.11273 avg. loss.
+[19] > Train step: 0.10545 avg. loss.
+[19] > Train step: 0.23150 avg. loss.
+[19] > Train step: 0.14847 avg. loss.
+[19] > Train step: 0.15539 avg. loss.
+[19] > Train step: 0.15980 avg. loss.
+[19] > Train step: 0.12453 avg. loss.
+[19] > Train step: 0.23258 avg. loss.
+[19] > Train step: 0.23146 avg. loss.
+[19] > Train step: 0.20502 avg. loss.
+[19] > Train step: 0.27841 avg. loss.
+[19] > Train step: 0.14056 avg. loss.
+[19] > Train step: 0.10728 avg. loss.
+[19] > Train step: 0.17263 avg. loss.
+[19] > Train step: 0.07843 avg. loss.
+[19] > Train step: 0.19358 avg. loss.
+[19] > Train step: 0.17023 avg. loss.
+[19] Optimized Model.
+[19] Best: True, Evaluation: [114, 1142]
+[19] Saved new best model
+[20] Boltzmann Exploration: 0.97000
+[20] Collecting Experience.
+[20] > Sampled Problems; 8.2 avg. object count.
+[20] > Sampled Initial States.
+[20] > Sampled Goals.
+[20] > Sampled Trajectories; 1.5 avg. goal size; 24.2 avg. trajectory length
+[20] > Refined Trajectories; 1.7 avg. goal size; 8.3 avg. trajectory length.
+[20] Collected Experience.
+[20] Optimizing Model.
+[20] > Train step: 0.14671 avg. loss.
+[20] > Train step: 0.12928 avg. loss.
+[20] > Train step: 0.07947 avg. loss.
+[20] > Train step: 0.15026 avg. loss.
+[20] > Train step: 0.06980 avg. loss.
+[20] > Train step: 0.07516 avg. loss.
+[20] > Train step: 0.10352 avg. loss.
+[20] > Train step: 0.08171 avg. loss.
+[20] > Train step: 0.14676 avg. loss.
+[20] > Train step: 0.14707 avg. loss.
+[20] > Train step: 0.20216 avg. loss.
+[20] > Train step: 0.08496 avg. loss.
+[20] > Train step: 0.20082 avg. loss.
+[20] > Train step: 0.27632 avg. loss.
+[20] > Train step: 0.16471 avg. loss.
+[20] > Train step: 0.18677 avg. loss.
+[20] > Train step: 0.10606 avg. loss.
+[20] > Train step: 0.15435 avg. loss.
+[20] > Train step: 0.12742 avg. loss.
+[20] > Train step: 0.10068 avg. loss.
+[20] > Train step: 0.14870 avg. loss.
+[20] > Train step: 0.06498 avg. loss.
+[20] > Train step: 0.07555 avg. loss.
+[20] > Train step: 0.06068 avg. loss.
+[20] > Train step: 0.07192 avg. loss.
+[20] > Train step: 0.07702 avg. loss.
+[20] > Train step: 0.11723 avg. loss.
+[20] > Train step: 0.09717 avg. loss.
+[20] > Train step: 0.12357 avg. loss.
+[20] > Train step: 0.13171 avg. loss.
+[20] > Train step: 0.30782 avg. loss.
+[20] > Train step: 0.15077 avg. loss.
+[20] Optimized Model.
+[20] Best: False, Evaluation: [98, 809]
+[21] Boltzmann Exploration: 0.96850
+[21] Collecting Experience.
+[21] > Sampled Problems; 7.2 avg. object count.
+[21] > Sampled Initial States.
+[21] > Sampled Goals.
+[21] > Sampled Trajectories; 1.5 avg. goal size; 8.8 avg. trajectory length
+[21] > Refined Trajectories; 1.5 avg. goal size; 4.2 avg. trajectory length.
+[21] Collected Experience.
+[21] Optimizing Model.
+[21] > Train step: 0.38085 avg. loss.
+[21] > Train step: 0.31630 avg. loss.
+[21] > Train step: 0.30208 avg. loss.
+[21] > Train step: 0.21651 avg. loss.
+[21] > Train step: 0.14784 avg. loss.
+[21] > Train step: 0.20943 avg. loss.
+[21] > Train step: 0.18268 avg. loss.
+[21] > Train step: 0.16342 avg. loss.
+[21] > Train step: 0.17000 avg. loss.
+[21] > Train step: 0.13420 avg. loss.
+[21] > Train step: 0.25103 avg. loss.
+[21] > Train step: 0.21103 avg. loss.
+[21] > Train step: 0.24581 avg. loss.
+[21] > Train step: 0.14838 avg. loss.
+[21] > Train step: 0.14757 avg. loss.
+[21] > Train step: 0.11536 avg. loss.
+[21] > Train step: 0.09194 avg. loss.
+[21] > Train step: 0.11154 avg. loss.
+[21] > Train step: 0.19753 avg. loss.
+[21] > Train step: 0.07634 avg. loss.
+[21] > Train step: 0.17579 avg. loss.
+[21] > Train step: 0.11103 avg. loss.
+[21] > Train step: 0.13249 avg. loss.
+[21] > Train step: 0.22237 avg. loss.
+[21] > Train step: 0.18078 avg. loss.
+[21] > Train step: 0.18769 avg. loss.
+[21] > Train step: 0.38684 avg. loss.
+[21] > Train step: 0.36003 avg. loss.
+[21] > Train step: 0.20530 avg. loss.
+[21] > Train step: 0.53143 avg. loss.
+[21] > Train step: 0.46657 avg. loss.
+[21] > Train step: 0.56028 avg. loss.
+[21] Optimized Model.
+[21] Best: False, Evaluation: [94, 743]
+[22] Boltzmann Exploration: 0.96700
+[22] Collecting Experience.
+[22] > Sampled Problems; 7.2 avg. object count.
+[22] > Sampled Initial States.
+[22] > Sampled Goals.
+[22] > Sampled Trajectories; 1.8 avg. goal size; 10.8 avg. trajectory length
+[22] > Refined Trajectories; 1.8 avg. goal size; 8.2 avg. trajectory length.
+[22] Collected Experience.
+[22] Optimizing Model.
+[22] > Train step: 0.49572 avg. loss.
+[22] > Train step: 0.32199 avg. loss.
+[22] > Train step: 0.47273 avg. loss.
+[22] > Train step: 0.28103 avg. loss.
+[22] > Train step: 0.16354 avg. loss.
+[22] > Train step: 0.14723 avg. loss.
+[22] > Train step: 0.11834 avg. loss.
+[22] > Train step: 0.11142 avg. loss.
+[22] > Train step: 0.12762 avg. loss.
+[22] > Train step: 0.07137 avg. loss.
+[22] > Train step: 0.05518 avg. loss.
+[22] > Train step: 0.10671 avg. loss.
+[22] > Train step: 0.09065 avg. loss.
+[22] > Train step: 0.12490 avg. loss.
+[22] > Train step: 0.11771 avg. loss.
+[22] > Train step: 0.17354 avg. loss.
+[22] > Train step: 0.11806 avg. loss.
+[22] > Train step: 0.11574 avg. loss.
+[22] > Train step: 0.05125 avg. loss.
+[22] > Train step: 0.11723 avg. loss.
+[22] > Train step: 0.06318 avg. loss.
+[22] > Train step: 0.11265 avg. loss.
+[22] > Train step: 0.16208 avg. loss.
+[22] > Train step: 0.11956 avg. loss.
+[22] > Train step: 0.11792 avg. loss.
+[22] > Train step: 0.14031 avg. loss.
+[22] > Train step: 0.13195 avg. loss.
+[22] > Train step: 0.25950 avg. loss.
+[22] > Train step: 0.17614 avg. loss.
+[22] > Train step: 0.14910 avg. loss.
+[22] > Train step: 0.21293 avg. loss.
+[22] > Train step: 0.15691 avg. loss.
+[22] Optimized Model.
+[22] Best: False, Evaluation: [109, 1041]
+[23] Boltzmann Exploration: 0.96550
+[23] Collecting Experience.
+[23] > Sampled Problems; 7.0 avg. object count.
+[23] > Sampled Initial States.
+[23] > Sampled Goals.
+[23] > Sampled Trajectories; 1.5 avg. goal size; 10.0 avg. trajectory length
+[23] > Refined Trajectories; 1.6 avg. goal size; 7.8 avg. trajectory length.
+[23] Collected Experience.
+[23] Optimizing Model.
+[23] > Train step: 0.08008 avg. loss.
+[23] > Train step: 0.14961 avg. loss.
+[23] > Train step: 0.09490 avg. loss.
+[23] > Train step: 0.12728 avg. loss.
+[23] > Train step: 0.15164 avg. loss.
+[23] > Train step: 0.15505 avg. loss.
+[23] > Train step: 0.09034 avg. loss.
+[23] > Train step: 0.04434 avg. loss.
+[23] > Train step: 0.08354 avg. loss.
+[23] > Train step: 0.11700 avg. loss.
+[23] > Train step: 0.06126 avg. loss.
+[23] > Train step: 0.06516 avg. loss.
+[23] > Train step: 0.09907 avg. loss.
+[23] > Train step: 0.11035 avg. loss.
+[23] > Train step: 0.10838 avg. loss.
+[23] > Train step: 0.10046 avg. loss.
+[23] > Train step: 0.04647 avg. loss.
+[23] > Train step: 0.11137 avg. loss.
+[23] > Train step: 0.03365 avg. loss.
+[23] > Train step: 0.10018 avg. loss.
+[23] > Train step: 0.11863 avg. loss.
+[23] > Train step: 0.07696 avg. loss.
+[23] > Train step: 0.12145 avg. loss.
+[23] > Train step: 0.11189 avg. loss.
+[23] > Train step: 0.09935 avg. loss.
+[23] > Train step: 0.19403 avg. loss.
+[23] > Train step: 0.13465 avg. loss.
+[23] > Train step: 0.11790 avg. loss.
+[23] > Train step: 0.18133 avg. loss.
+[23] > Train step: 0.15855 avg. loss.
+[23] > Train step: 0.18533 avg. loss.
+[23] > Train step: 0.12948 avg. loss.
+[23] Optimized Model.
+[23] Best: False, Evaluation: [108, 1011]
+[24] Boltzmann Exploration: 0.96400
+[24] Collecting Experience.
+[24] > Sampled Problems; 7.5 avg. object count.
+[24] > Sampled Initial States.
+[24] > Sampled Goals.
+[24] > Sampled Trajectories; 1.2 avg. goal size; 16.2 avg. trajectory length
+[24] > Refined Trajectories; 1.3 avg. goal size; 6.5 avg. trajectory length.
+[24] Collected Experience.
+[24] Optimizing Model.
+[24] > Train step: 0.06918 avg. loss.
+[24] > Train step: 0.03766 avg. loss.
+[24] > Train step: 0.09601 avg. loss.
+[24] > Train step: 0.05787 avg. loss.
+[24] > Train step: 0.06590 avg. loss.
+[24] > Train step: 0.01999 avg. loss.
+[24] > Train step: 0.09952 avg. loss.
+[24] > Train step: 0.10937 avg. loss.
+[24] > Train step: 0.11038 avg. loss.
+[24] > Train step: 0.08619 avg. loss.
+[24] > Train step: 0.04193 avg. loss.
+[24] > Train step: 0.11606 avg. loss.
+[24] > Train step: 0.07713 avg. loss.
+[24] > Train step: 0.08688 avg. loss.
+[24] > Train step: 0.08036 avg. loss.
+[24] > Train step: 0.08071 avg. loss.
+[24] > Train step: 0.06711 avg. loss.
+[24] > Train step: 0.06306 avg. loss.
+[24] > Train step: 0.08210 avg. loss.
+[24] > Train step: 0.04708 avg. loss.
+[24] > Train step: 0.16526 avg. loss.
+[24] > Train step: 0.06345 avg. loss.
+[24] > Train step: 0.06501 avg. loss.
+[24] > Train step: 0.05436 avg. loss.
+[24] > Train step: 0.06917 avg. loss.
+[24] > Train step: 0.08686 avg. loss.
+[24] > Train step: 0.08321 avg. loss.
+[24] > Train step: 0.07619 avg. loss.
+[24] > Train step: 0.09519 avg. loss.
+[24] > Train step: 0.05025 avg. loss.
+[24] > Train step: 0.05778 avg. loss.
+[24] > Train step: 0.05741 avg. loss.
+[24] Optimized Model.
+[24] Best: False, Evaluation: [109, 1036]
+[25] Boltzmann Exploration: 0.96250
+[25] Collecting Experience.
+[25] > Sampled Problems; 7.5 avg. object count.
+[25] > Sampled Initial States.
+[25] > Sampled Goals.
+[25] > Sampled Trajectories; 1.5 avg. goal size; 7.8 avg. trajectory length
+[25] > Refined Trajectories; 2.0 avg. goal size; 7.5 avg. trajectory length.
+[25] Collected Experience.
+[25] Optimizing Model.
+[25] > Train step: 0.11380 avg. loss.
+[25] > Train step: 0.12885 avg. loss.
+[25] > Train step: 0.05100 avg. loss.
+[25] > Train step: 0.15925 avg. loss.
+[25] > Train step: 0.10710 avg. loss.
+[25] > Train step: 0.05450 avg. loss.
+[25] > Train step: 0.08071 avg. loss.
+[25] > Train step: 0.05174 avg. loss.
+[25] > Train step: 0.15945 avg. loss.
+[25] > Train step: 0.08805 avg. loss.
+[25] > Train step: 0.13928 avg. loss.
+[25] > Train step: 0.15795 avg. loss.
+[25] > Train step: 0.15217 avg. loss.
+[25] > Train step: 0.10338 avg. loss.
+[25] > Train step: 0.04730 avg. loss.
+[25] > Train step: 0.10430 avg. loss.
+[25] > Train step: 0.07692 avg. loss.
+[25] > Train step: 0.06059 avg. loss.
+[25] > Train step: 0.22737 avg. loss.
+[25] > Train step: 0.08208 avg. loss.
+[25] > Train step: 0.07696 avg. loss.
+[25] > Train step: 0.14200 avg. loss.
+[25] > Train step: 0.11267 avg. loss.
+[25] > Train step: 0.16068 avg. loss.
+[25] > Train step: 0.18574 avg. loss.
+[25] > Train step: 0.07296 avg. loss.
+[25] > Train step: 0.06758 avg. loss.
+[25] > Train step: 0.05223 avg. loss.
+[25] > Train step: 0.08180 avg. loss.
+[25] > Train step: 0.08846 avg. loss.
+[25] > Train step: 0.05293 avg. loss.
+[25] > Train step: 0.06076 avg. loss.
+[25] Optimized Model.
+[25] Best: False, Evaluation: [102, 890]
+[26] Boltzmann Exploration: 0.96100
+[26] Collecting Experience.
+[26] > Sampled Problems; 8.5 avg. object count.
+[26] > Sampled Initial States.
+[26] > Sampled Goals.
+[26] > Sampled Trajectories; 1.5 avg. goal size; 7.5 avg. trajectory length
+[26] > Refined Trajectories; 1.6 avg. goal size; 4.0 avg. trajectory length.
+[26] Collected Experience.
+[26] Optimizing Model.
+[26] > Train step: 0.09023 avg. loss.
+[26] > Train step: 0.13279 avg. loss.
+[26] > Train step: 0.08834 avg. loss.
+[26] > Train step: 0.11978 avg. loss.
+[26] > Train step: 0.09565 avg. loss.
+[26] > Train step: 0.09153 avg. loss.
+[26] > Train step: 0.07923 avg. loss.
+[26] > Train step: 0.08305 avg. loss.
+[26] > Train step: 0.11085 avg. loss.
+[26] > Train step: 0.07305 avg. loss.
+[26] > Train step: 0.06162 avg. loss.
+[26] > Train step: 0.08391 avg. loss.
+[26] > Train step: 0.10084 avg. loss.
+[26] > Train step: 0.10015 avg. loss.
+[26] > Train step: 0.07920 avg. loss.
+[26] > Train step: 0.07577 avg. loss.
+[26] > Train step: 0.06249 avg. loss.
+[26] > Train step: 0.11144 avg. loss.
+[26] > Train step: 0.05822 avg. loss.
+[26] > Train step: 0.11767 avg. loss.
+[26] > Train step: 0.12123 avg. loss.
+[26] > Train step: 0.03003 avg. loss.
+[26] > Train step: 0.14883 avg. loss.
+[26] > Train step: 0.09812 avg. loss.
+[26] > Train step: 0.08649 avg. loss.
+[26] > Train step: 0.07169 avg. loss.
+[26] > Train step: 0.08954 avg. loss.
+[26] > Train step: 0.08220 avg. loss.
+[26] > Train step: 0.17249 avg. loss.
+[26] > Train step: 0.06109 avg. loss.
+[26] > Train step: 0.06590 avg. loss.
+[26] > Train step: 0.18846 avg. loss.
+[26] Optimized Model.
