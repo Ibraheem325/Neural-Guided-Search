@@ -101,6 +101,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--train_steps', default=32, type=int, help='Number of training steps per iteration')
     parser.add_argument('--seed', default=42, type=int, help='Random seed for reproducibility')
     parser.add_argument('--cpu', action='store_true', help='Force CPU to be used')
+    parser.add_argument('--output_prefix', default='', type=str, help='Prefix for output model files (e.g., "grid_sac_1_")')
     args = parser.parse_args()
     return args
 
@@ -162,14 +163,15 @@ def _save_checkpoints(policy_model: rgnn.RelationalGraphNeuralNetwork,
                       q1_optimizer: torch.optim.Optimizer,
                       q2_optimizer: torch.optim.Optimizer,
                       loss_function: rl.DiscreteSoftActorCriticOptimization,
-                      suffix: str) -> None:
-    policy_model.save(f'policy_{suffix}.pth', {
+                      suffix: str,
+                      prefix: str = '') -> None:
+    policy_model.save(f'{prefix}policy_{suffix}.pth', {
         'optimizer': policy_optimizer.state_dict(),
         'log_entropy_alpha': loss_function.log_entropy_alpha.detach().cpu(),
         'entropy_optimizer': loss_function.entropy_optimizer.state_dict(),
     })
-    q1_model.save(f'q1_{suffix}.pth', {'optimizer': q1_optimizer.state_dict()})
-    q2_model.save(f'q2_{suffix}.pth', {'optimizer': q2_optimizer.state_dict()})
+    q1_model.save(f'{prefix}q1_{suffix}.pth', {'optimizer': q1_optimizer.state_dict()})
+    q2_model.save(f'{prefix}q2_{suffix}.pth', {'optimizer': q2_optimizer.state_dict()})
 
 
 def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
@@ -253,11 +255,11 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
         print(f'[{episode}] Best: {best}, Evaluation: {evaluation}', flush=True)
         _save_checkpoints(policy_model, q1_model, q2_model,
                           policy_optimizer, q1_optimizer, q2_optimizer,
-                          loss_function, 'latest')
+                          loss_function, 'latest', args.output_prefix)
         if best:
             _save_checkpoints(policy_model, q1_model, q2_model,
                               policy_optimizer, q1_optimizer, q2_optimizer,
-                              loss_function, 'best')
+                              loss_function, 'best', args.output_prefix)
             print(f'[{episode}] Saved new best model', flush=True)
         episode += 1
 
