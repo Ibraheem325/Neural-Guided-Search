@@ -123,10 +123,10 @@ def _parse_instances(input: Path) -> tuple[mm.Domain, list[mm.Problem]]:
 
 
 def _create_aggregation(name: str):
-    if name == 'smax': return rgnn.SmoothMaximumAggregation()
-    elif name == 'hmax': return rgnn.HardMaximumAggregation()
-    elif name == 'mean': return rgnn.MeanAggregation()
-    elif name in ('add', 'sum'): return rgnn.SumAggregation()
+    if name == 'smax': return rgnn.AggregationFunction.SmoothMaximum
+    elif name == 'hmax': return rgnn.AggregationFunction.HardMaximum
+    elif name == 'mean': return rgnn.AggregationFunction.Mean
+    elif name in ('add', 'sum'): return rgnn.AggregationFunction.Add
     else: raise RuntimeError(f'Unknown aggregation function: {name}.')
 
 
@@ -136,15 +136,15 @@ def _create_rgnn(domain: mm.Domain,
                  aggregation: str,
                  readout_name: str) -> rgnn.RelationalGraphNeuralNetwork:
     aggregation_function = _create_aggregation(aggregation)
-    hparam_config = rgnn.HyperparameterConfig(domain=domain, embedding_size=embedding_size, num_layers=num_layers)
-    input_spec = (rgnn.StateEncoder(), rgnn.GroundActionsEncoder(), rgnn.GoalEncoder())
-    output_spec = [(readout_name, rgnn.ActionScalarDecoder(hparam_config))]
-    module_config = rgnn.ModuleConfig(
-        aggregation_function=aggregation_function,
-        message_function=rgnn.PredicateMLPMessages(hparam_config, input_spec),
-        update_function=rgnn.MLPUpdates(hparam_config)
+    config = rgnn.RelationalGraphNeuralNetworkConfig(
+        domain=domain,
+        embedding_size=embedding_size,
+        num_layers=num_layers,
+        message_aggregation=aggregation_function,
+        input_specification=(rgnn.InputType.State, rgnn.InputType.GroundActions, rgnn.InputType.Goal),
+        output_specification=[(readout_name, rgnn.OutputNodeType.Action, rgnn.OutputValueType.Scalar)],
     )
-    return rgnn.RelationalGraphNeuralNetwork(hparam_config, module_config, input_spec, output_spec)  # type: ignore
+    return rgnn.RelationalGraphNeuralNetwork(config)
 
 
 def _create_trajectory_refiner(hindsight: str, train_problems: list[mm.Problem], max_new_trajectories: int) -> rl.TrajectoryRefiner:
