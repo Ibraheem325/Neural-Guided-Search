@@ -1,7 +1,7 @@
 import argparse
 import subprocess
 import re
-import os
+import csv
 import json
 from pathlib import Path
 
@@ -22,16 +22,19 @@ def parse_output(output: str, algorithm: str) -> dict:
     if m:
         result['expanded'] = int(m.group(1))
         result['generated'] = int(m.group(2))
+    # AlphaZero uses different output format
+    m = re.search(r'\[Final\] Steps: (\d+), Expanded: (\d+), Generated: (\d+)', output)
+    if m:
+        result['solution_length'] = int(m.group(1))
+        result['expanded'] = int(m.group(2))
+        result['generated'] = int(m.group(3))
     return result
 
 
-def run_algorithm(script: str, domain: str, problem: str, model: str, extra_args: list = []) -> dict:
-    cmd = ['venv/bin/python', script,
-           '--domain', domain,
-           '--problem', problem,
-           '--model', model] + extra_args
+def run_algorithm(script: str, domain: str, problem: str, extra_args: list = []) -> dict:
+    cmd = ['venv/bin/python', script, '--domain', domain, '--problem', problem] + extra_args
     try:
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
         output = proc.stdout + proc.stderr
         return parse_output(output, script)
     except subprocess.TimeoutExpired:
@@ -58,7 +61,10 @@ def main():
     parser = argparse.ArgumentParser(description='Evaluate search algorithms on test problems')
     parser.add_argument('--domain', required=True, type=str, help='Path to domain.pddl')
     parser.add_argument('--test_dir', required=True, type=str, help='Path to test problems directory')
-    parser.add_argument('--model', required=True, type=str, help='Path to trained model .pth')
+    parser.add_argument('--model', required=True, type=str, help='Path to supervised model .pth')
+    parser.add_argument('--dqn_model', default=None, type=str, help='Path to DQN model .pth (enables Q*)')
+    parser.add_argument('--sac_policy', default=None, type=str, help='Path to SAC policy model .pth (enables AlphaZero)')
+    parser.add_argument('--sac_q1', default=None, type=str, help='Path to SAC q1 model .pth (enables AlphaZero)')
     parser.add_argument('--output', default='results.json', type=str, help='Output JSON file')
     parser.add_argument('--limit', default=None, type=int, help='Limit number of problems (for quick testing)')
     args = parser.parse_args()
@@ -70,14 +76,20 @@ def main():
     print(f'Found {len(problems)} test problems')
 
     algorithms = {
-        'astar':      ('search.py', []),
-        'wastar_2':   ('wastar.py', ['--weight', '2.0']),
-        'wastar_5':   ('wastar.py', ['--weight', '5.0']),
-        'greedy':     ('greedy_value_plan.py', []),
-        'beam_1':     ('beam.py', ['--beam', '1']),
-        'beam_5':     ('beam.py', ['--beam', '5']),
-        'beam_10':    ('beam.py', ['--beam', '10']),
+        'astar':      ('search.py', ['--model', args.model]),
+        'wastar_2':   ('wastar.py', ['--model', args.model, '--weight', '2.0']),
+        'wastar_5':   ('wastar.py', ['--model', args.model, '--weight', '5.0']),
+        'greedy':     ('greedy_value_plan.py', ['--model', args.model]),
+        'beam_1':     ('beam.py', ['--model', args.model, '--beam', '1']),
+        'beam_5':     ('beam.py', ['--model', args.model, '--beam', '5']),
+        'beam_10':    ('beam.py', ['--model', args.model, '--beam', '10']),
     }
+
+    if args.dqn_model:
+        algorithms['qstar'] = ('qstar.py', ['--model', args.dqn_model])
+
+    if args.sac_policy and args.sac_q1:
+        algorithms['alphazero'] = ('alphaZero.py', ['--policy_model', args.sac_policy, '--q1_model', args.sac_q1])
 
     all_results = {}
     for alg_name, (script, extra) in algorithms.items():
@@ -85,7 +97,7 @@ def main():
         results = []
         for i, problem in enumerate(problems):
             print(f'  [{i+1}/{len(problems)}] {Path(problem).name}', end=' ', flush=True)
-            r = run_algorithm(script, args.domain, problem, args.model, extra)
+            r = run_algorithm(script, args.domain, problem, extra)
             results.append(r)
             print('✓' if r['solved'] else '✗')
         summary = summarize(results)
@@ -98,7 +110,6 @@ def main():
         json.dump(all_results, f, indent=2)
     print(f'\nResults saved to {args.output}')
 
-    import csv
     csv_path = args.output.replace('.json', '_summary.csv')
     with open(csv_path, 'w', newline='') as f:
         writer = csv.writer(f)
