@@ -42,14 +42,33 @@ class _AlphaClampedSAC(rl.DiscreteSoftActorCriticOptimization):
     # grow larger than the per-step reward magnitude. Without this clamp, SAC's auto-tuning
     # can raise α until the entropy bonus dominates the reward signal and the agent loses
     # incentive to reach goals (the runaway-α failure mode for sparse-reward planning).
-    def __init__(self, *args, max_log_alpha: float, **kwargs) -> None:
+    #
+    # Also linearly anneals the entropy target scale from scale_initial down to scale_final over
+    # anneal_steps train steps. As the target entropy shrinks, the auto-tuned α is driven toward 0,
+    # so the policy becomes effectively deterministic by the end of training — the right limit for
+    # fully observable, deterministic classical planning domains. The clamp (an upper bound) and the
+    # anneal (which lowers α's equilibrium) are complementary: as annealing proceeds α falls below
+    # the ceiling and the clamp simply stops binding.
+    def __init__(self, *args, max_log_alpha: float,
+                 scale_initial: float, scale_final: float, anneal_steps: int, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self._max_log_alpha = max_log_alpha
+        self._scale_initial = scale_initial
+        self._scale_final = scale_final
+        self._anneal_steps = max(1, anneal_steps)
+        self._train_step = 0
+
+    def _annealed_scale(self) -> float:
+        # Linear anneal in train-step units, held at final after the horizon.
+        ratio = min(1.0, self._train_step / self._anneal_steps)
+        return self._scale_initial + (self._scale_final - self._scale_initial) * ratio
 
     def __call__(self, transitions, weights):
+        self.set_entropy_target_scale(self._annealed_scale())  # used by _compute_entropy_loss this step
         result = super().__call__(transitions, weights)
         with torch.no_grad():
             self.log_entropy_alpha.clamp_(max=self._max_log_alpha)
+        self._train_step += 1
         return result
 
 
@@ -66,13 +85,15 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--discount_factor', default=0.999, type=float, help='Discount factor')
     parser.add_argument('--polyak_factor', default=0.005, type=float, help='Polyak averaging factor for target critic updates')
     parser.add_argument('--entropy_lr', default=0.0003, type=float, help='Learning rate for the entropy temperature optimizer')
-    parser.add_argument('--entropy_target_scale', default=0.98, type=float, help='Target entropy scale in [0, 1] for SAC auto-tuning (target entropy = scale * log|A|). Fixed; with the alpha cap below, no annealing schedule is needed.')
+    parser.add_argument('--entropy_target_scale_initial', default=0.98, type=float, help='Initial target entropy scale in [0, 1] for SAC auto-tuning (target entropy = scale * log|A|). Linearly annealed down to --entropy_target_scale_final.')
+    parser.add_argument('--entropy_target_scale_final', default=0.02, type=float, help='Final target entropy scale in [0, 1]. Small (not 0) so the auto-tuned temperature alpha is driven near 0 and the policy becomes effectively deterministic, while keeping the alpha optimizer at a stable fixed point.')
+    parser.add_argument('--entropy_anneal_steps', default=300, type=int, help='Number of episodes over which to linearly anneal the entropy target scale from initial to final, after which it is held at final. Internally multiplied by --train_steps to convert to optimization-step units; default mirrors --lr_steps so it co-terminates with the LR decay.')
     parser.add_argument('--entropy_alpha_max', default=0.1, type=float, help='Hard upper bound on the SAC entropy temperature alpha. The per-step entropy bonus alpha*H[pi] should not dominate the per-step reward magnitude or the agent loses incentive to optimise reward; pick alpha_max <= |max_per_step_reward| / max_policy_entropy. Defaults to 0.1 for r=-1/step domains.')
     parser.add_argument('--train_horizon', default=100, type=int, help='Maximum rollout length for the training set')
     parser.add_argument('--validation_horizon', default=400, type=int, help='Maximum rollout length for the validation set')
     parser.add_argument('--lr_initial', default=0.001, type=float, help='Initial learning rate')
     parser.add_argument('--lr_final', default=0.000001, type=float, help='Final learning rate')
-    parser.add_argument('--lr_steps', default=300, type=float, help='Steps to reach the final learning rate')
+    parser.add_argument('--lr_steps', default=300, type=float, help='Number of episodes to reach the final learning rate. Internally multiplied by --train_steps to convert to optimization-step units (the LR schedulers are stepped once per train step).')
     parser.add_argument('--max_new_trajectories', default=100, type=int, help='Max number of new trajectories to derive')
     parser.add_argument('--min_buffer_size', default=100, type=int, help='Minimum size of the experience buffer to update model')
     parser.add_argument('--max_buffer_size', default=10000, type=int, help='Maximum size of the experience buffer')
@@ -174,9 +195,12 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
         policy_wrapper, policy_optimizer, policy_scheduler,
         q1_target_wrapper, q1_wrapper, q1_optimizer, q1_scheduler,
         q2_target_wrapper, q2_wrapper, q2_optimizer, q2_scheduler,
-        args.discount_factor, args.polyak_factor, args.entropy_target_scale, args.entropy_lr,
+        args.discount_factor, args.polyak_factor, args.entropy_target_scale_initial, args.entropy_lr,
         use_bounds_loss=True,
         max_log_alpha=math.log(args.entropy_alpha_max),
+        scale_initial=args.entropy_target_scale_initial,
+        scale_final=args.entropy_target_scale_final,
+        anneal_steps=args.entropy_anneal_steps * args.train_steps,
     )
 
     reward_function = rl.ConstantRewardFunction(-1)
@@ -223,7 +247,7 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
     rl_algorithm.register_on_train_step(lambda ts, loss: print(f'[{episode}] > Train step: {loss.mean().item():.5f} avg. loss.'))
     rl_algorithm.register_on_post_optimize_model(lambda: print(f'[{episode}] Optimized Model.', flush=True))
     loss_function.register_on_losses(lambda actor, c1, c2, ent: print(
-        f'[{episode}] > SAC: actor={actor.mean().item():.5f} q1={c1.mean().item():.5f} q2={c2.mean().item():.5f} entropy={ent.mean().item():.5f} alpha={loss_function.get_entropy_alpha():.5f}', flush=True))
+        f'[{episode}] > SAC: actor={actor.mean().item():.5f} q1={c1.mean().item():.5f} q2={c2.mean().item():.5f} entropy={ent.mean().item():.5f} alpha={loss_function.get_entropy_alpha():.5f} target_scale={loss_function.get_entropy_target_scale():.5f}', flush=True))
     while True:
         rl_algorithm.fit()
         best, evaluation = rl_evaluator.evaluate()
@@ -253,9 +277,12 @@ def _main(args: argparse.Namespace) -> None:
     policy_optimizer = optim.Adam(policy_model.parameters(), lr=args.lr_initial)
     q1_optimizer = optim.Adam(q1_model.parameters(), lr=args.lr_initial)
     q2_optimizer = optim.Adam(q2_model.parameters(), lr=args.lr_initial)
-    policy_scheduler = optim.lr_scheduler.CosineAnnealingLR(policy_optimizer, args.lr_steps, args.lr_final)
-    q1_scheduler = optim.lr_scheduler.CosineAnnealingLR(q1_optimizer, args.lr_steps, args.lr_final)
-    q2_scheduler = optim.lr_scheduler.CosineAnnealingLR(q2_optimizer, args.lr_steps, args.lr_final)
+    # lr_steps is in episode units; convert to optimization-step units (the schedulers are stepped
+    # once per train step) by multiplying by train_steps.
+    lr_decay_steps = args.lr_steps * args.train_steps
+    policy_scheduler = optim.lr_scheduler.CosineAnnealingLR(policy_optimizer, lr_decay_steps, args.lr_final)
+    q1_scheduler = optim.lr_scheduler.CosineAnnealingLR(q1_optimizer, lr_decay_steps, args.lr_final)
+    q2_scheduler = optim.lr_scheduler.CosineAnnealingLR(q2_optimizer, lr_decay_steps, args.lr_final)
     print('Training model...', flush=True)
     _train(policy_model, q1_model, q2_model,
            policy_optimizer, q1_optimizer, q2_optimizer,
