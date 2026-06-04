@@ -111,7 +111,10 @@ def _parse_instances(input: Path) -> tuple[mm.Domain, list[mm.Problem]]:
         domain_path = str(input.parent / 'domain.pddl')
         problem_paths = [str(input)]
     else:
-        domain_path = str(input / 'domain.pddl')
+        if (input / 'domain.pddl').exists():
+            domain_path = str(input / 'domain.pddl')
+        else:
+            domain_path = str(input.parent / 'domain.pddl')
         problem_paths = [str(file) for file in input.glob('*.pddl') if file.name != 'domain.pddl']
         problem_paths.sort()
     domain = mm.Domain(domain_path)
