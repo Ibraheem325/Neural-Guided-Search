@@ -6,6 +6,28 @@ import math
 from pathlib import Path
 from typing import List, Union
 from utils import create_device, get_state_key
+import pymimir_rl as rl
+
+
+class ModelWrapper(rl.ActionScalarModel):
+    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, readout_name: str, random_layer_count: bool = False) -> None:
+        super().__init__()
+        self.model = model
+        self.readout_name = readout_name
+        self.random_layer_count = random_layer_count
+
+    def forward(self, state_goals: list[tuple[mm.State, mm.GroundConjunctiveCondition]]) -> list[tuple[torch.Tensor, list[mm.GroundAction]]]:
+        input_list: list[tuple[mm.State, list[mm.GroundAction], mm.GroundConjunctiveCondition]] = []
+        actions_list: list[list[mm.GroundAction]] = []
+        for state, goal in state_goals:
+            actions = state.generate_applicable_actions()
+            input_list.append((state, actions, goal))
+            actions_list.append(actions)
+
+        values_list = self.model.forward(input_list).readout(self.readout_name)  # type: ignore
+        output = list(zip(values_list, actions_list))
+        return output
+
 
 
 class Node:
@@ -52,7 +74,7 @@ def _backprobagation(search_path: List[Node], value):
 
 
 
-def _run_mcts(root_state, model, goal, n_simulations):
+def _run_mcts(root_state, policy_model, q1_model, goal, n_simulations):
     root_node = Node(root_state, prior=1.0)
     num_expanded= 0
     num_generated =0
@@ -61,21 +83,25 @@ def _run_mcts(root_state, model, goal, n_simulations):
         node = root_node
         while len(node.children)!=0:
             _, child = _select_child(node)
+            if child is None:
+                break
             search_path.append(child)
             node = child
 
-        priors = {action: 1.0 for action in node.state.generate_applicable_actions()}
+        output = policy_model.forward([(node.state, goal)])
+        values_tensor, actions = output[0]
+        probs = torch.softmax(values_tensor, dim=0)
         if goal.holds(node.state):
             values = 0
         else:
             if len(node.children) == 0:
+                priors = {action: probs[i].item() for i, action in enumerate(actions)}
                 _expansion(node, priors)
                 num_expanded += 1
                 num_generated += len(priors)
-            values = model.forward([(node.state, goal)]).readout('value')
-            assert isinstance(values, torch.Tensor)
-            values = values.cpu()
-            values = -values[0].item()
+            output = q1_model.forward([(node.state, goal)])
+            values_tensor, actions = output[0]
+            values = values_tensor.max().item()
         _backprobagation(search_path, values)
 
     best = 0
@@ -93,13 +119,15 @@ def _parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Settings for greedy planning with a value model')
     parser.add_argument('--domain', required=True, type=Path, help='Path to the domain file')
     parser.add_argument('--problem', required=True, type=Path, help='Path to the problem file')
-    parser.add_argument('--model', required=True, type=Path, help='Path to a pre-trained value model')
+    parser.add_argument('--policy_model', required=True, type=Path, help='Path to a pre-trained policy model')
+    parser.add_argument('--q1_model', required=True, type=Path, help='Path to a pre-trained q1 model')
     parser.add_argument('--n_simulations', default=60, type=int, help='Number of MCTS simulations per step')
     args = parser.parse_args()
     return args
 
 def _plan(problem: mm.Problem,
-    model: rgnn.RelationalGraphNeuralNetwork,
+    policy_model: rgnn.RelationalGraphNeuralNetwork,
+    q1_model : rgnn.RelationalGraphNeuralNetwork,
     n_simulations
 ) -> Union[None, List[mm.GroundAction]]:
     with torch.no_grad():
@@ -111,7 +139,7 @@ def _plan(problem: mm.Problem,
         total_gen = 0
         total_exp = 0
         while not goal.holds(current_state) and (len(solution) < 1_000):
-            best_action, num_generated, num_expanded = _run_mcts(current_state, model, goal, n_simulations)
+            best_action, num_generated, num_expanded = _run_mcts(current_state, policy_model, q1_model, goal, n_simulations)
             total_gen += num_generated
             total_exp += num_expanded
             current_state = best_action.apply(current_state)
@@ -127,10 +155,14 @@ def _plan(problem: mm.Problem,
 
 def _main(args: argparse.Namespace) -> None:
     print(f'Torch: {torch.__version__}')
-    domain = mm.Domain(args.domain)
-    problem = mm.Problem(domain, args.problem)
-    model, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.model, create_device(False))
-    solution = _plan(problem, model, args.n_simulations)
+    domain = mm.Domain(str(args.domain))
+    problem = mm.Problem(domain, str(args.problem))
+    device = create_device(False)
+    policy_model, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.policy_model, device)
+    q1_model, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.q1_model, device)
+    policy_model = ModelWrapper(policy_model, 'policy')
+    q1_model = ModelWrapper(q1_model, 'q')
+    solution = _plan(problem, policy_model, q1_model, args.n_simulations)
     if solution is None:
         print('Failed to find a solution!')
     else:
