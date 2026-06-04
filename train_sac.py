@@ -25,7 +25,13 @@ class ModelWrapper(rl.ActionScalarModel):
             actions = state.generate_applicable_actions()
             input_list.append((state, actions, goal))
             actions_list.append(actions)
-        if True:
+        if self.random_layer_count:
+            original_layer_count = self.model.get_hparam_config().num_layers
+            new_layer_count = random.randint(original_layer_count // 2, original_layer_count)
+            self.model.get_hparam_config().num_layers = new_layer_count
+            values_list: list[torch.Tensor] = self.model.forward(input_list).readout(self.readout_name)  # type: ignore
+            self.model.get_hparam_config().num_layers = original_layer_count
+        else:
             values_list = self.model.forward(input_list).readout(self.readout_name)  # type: ignore
         output = list(zip(values_list, actions_list))
         return output
@@ -36,14 +42,33 @@ class _AlphaClampedSAC(rl.DiscreteSoftActorCriticOptimization):
     # grow larger than the per-step reward magnitude. Without this clamp, SAC's auto-tuning
     # can raise α until the entropy bonus dominates the reward signal and the agent loses
     # incentive to reach goals (the runaway-α failure mode for sparse-reward planning).
-    def __init__(self, *args, max_log_alpha: float, **kwargs) -> None:
+    #
+    # Also linearly anneals the entropy target scale from scale_initial down to scale_final over
+    # anneal_steps train steps. As the target entropy shrinks, the auto-tuned α is driven toward 0,
+    # so the policy becomes effectively deterministic by the end of training — the right limit for
+    # fully observable, deterministic classical planning domains. The clamp (an upper bound) and the
+    # anneal (which lowers α's equilibrium) are complementary: as annealing proceeds α falls below
+    # the ceiling and the clamp simply stops binding.
+    def __init__(self, *args, max_log_alpha: float,
+                 scale_initial: float, scale_final: float, anneal_steps: int, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self._max_log_alpha = max_log_alpha
+        self._scale_initial = scale_initial
+        self._scale_final = scale_final
+        self._anneal_steps = max(1, anneal_steps)
+        self._train_step = 0
+
+    def _annealed_scale(self) -> float:
+        # Linear anneal in train-step units, held at final after the horizon.
+        ratio = min(1.0, self._train_step / self._anneal_steps)
+        return self._scale_initial + (self._scale_final - self._scale_initial) * ratio
 
     def __call__(self, transitions, weights):
+        self.set_entropy_target_scale(self._annealed_scale())  # used by _compute_entropy_loss this step
         result = super().__call__(transitions, weights)
         with torch.no_grad():
             self.log_entropy_alpha.clamp_(max=self._max_log_alpha)
+        self._train_step += 1
         return result
 
 
@@ -60,13 +85,15 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--discount_factor', default=0.999, type=float, help='Discount factor')
     parser.add_argument('--polyak_factor', default=0.005, type=float, help='Polyak averaging factor for target critic updates')
     parser.add_argument('--entropy_lr', default=0.0003, type=float, help='Learning rate for the entropy temperature optimizer')
-    parser.add_argument('--entropy_target_scale', default=0.98, type=float, help='Target entropy scale in [0, 1] for SAC auto-tuning (target entropy = scale * log|A|). Fixed; with the alpha cap below, no annealing schedule is needed.')
+    parser.add_argument('--entropy_target_scale_initial', default=0.98, type=float, help='Initial target entropy scale in [0, 1] for SAC auto-tuning (target entropy = scale * log|A|). Linearly annealed down to --entropy_target_scale_final.')
+    parser.add_argument('--entropy_target_scale_final', default=0.02, type=float, help='Final target entropy scale in [0, 1]. Small (not 0) so the auto-tuned temperature alpha is driven near 0 and the policy becomes effectively deterministic, while keeping the alpha optimizer at a stable fixed point.')
+    parser.add_argument('--entropy_anneal_steps', default=300, type=int, help='Number of episodes over which to linearly anneal the entropy target scale from initial to final, after which it is held at final. Internally multiplied by --train_steps to convert to optimization-step units; default mirrors --lr_steps so it co-terminates with the LR decay.')
     parser.add_argument('--entropy_alpha_max', default=0.1, type=float, help='Hard upper bound on the SAC entropy temperature alpha. The per-step entropy bonus alpha*H[pi] should not dominate the per-step reward magnitude or the agent loses incentive to optimise reward; pick alpha_max <= |max_per_step_reward| / max_policy_entropy. Defaults to 0.1 for r=-1/step domains.')
     parser.add_argument('--train_horizon', default=100, type=int, help='Maximum rollout length for the training set')
     parser.add_argument('--validation_horizon', default=400, type=int, help='Maximum rollout length for the validation set')
     parser.add_argument('--lr_initial', default=0.001, type=float, help='Initial learning rate')
     parser.add_argument('--lr_final', default=0.000001, type=float, help='Final learning rate')
-    parser.add_argument('--lr_steps', default=300, type=float, help='Steps to reach the final learning rate')
+    parser.add_argument('--lr_steps', default=300, type=float, help='Number of episodes to reach the final learning rate. Internally multiplied by --train_steps to convert to optimization-step units (the LR schedulers are stepped once per train step).')
     parser.add_argument('--max_new_trajectories', default=100, type=int, help='Max number of new trajectories to derive')
     parser.add_argument('--min_buffer_size', default=100, type=int, help='Minimum size of the experience buffer to update model')
     parser.add_argument('--max_buffer_size', default=10000, type=int, help='Maximum size of the experience buffer')
@@ -74,7 +101,6 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--train_steps', default=32, type=int, help='Number of training steps per iteration')
     parser.add_argument('--seed', default=42, type=int, help='Random seed for reproducibility')
     parser.add_argument('--cpu', action='store_true', help='Force CPU to be used')
-    parser.add_argument('--output_prefix', default='', type=str, help='Prefix for output model files (e.g., "grid_sac_1_")')
     args = parser.parse_args()
     return args
 
@@ -84,10 +110,7 @@ def _parse_instances(input: Path) -> tuple[mm.Domain, list[mm.Problem]]:
         domain_path = str(input.parent / 'domain.pddl')
         problem_paths = [str(input)]
     else:
-        if (input / 'domain.pddl').exists():
-            domain_path = str(input / 'domain.pddl')
-        else:
-            domain_path = str(input.parent / 'domain.pddl')
+        domain_path = str(input / 'domain.pddl')
         problem_paths = [str(file) for file in input.glob('*.pddl') if file.name != 'domain.pddl']
         problem_paths.sort()
     domain = mm.Domain(domain_path)
@@ -96,10 +119,10 @@ def _parse_instances(input: Path) -> tuple[mm.Domain, list[mm.Problem]]:
 
 
 def _create_aggregation(name: str):
-    if name == 'smax': return rgnn.AggregationFunction.SmoothMaximum
-    elif name == 'hmax': return rgnn.AggregationFunction.HardMaximum
-    elif name == 'mean': return rgnn.AggregationFunction.Mean
-    elif name in ('add', 'sum'): return rgnn.AggregationFunction.Add
+    if name == 'smax': return rgnn.SmoothMaximumAggregation()
+    elif name == 'hmax': return rgnn.HardMaximumAggregation()
+    elif name == 'mean': return rgnn.MeanAggregation()
+    elif name in ('add', 'sum'): return rgnn.SumAggregation()
     else: raise RuntimeError(f'Unknown aggregation function: {name}.')
 
 
@@ -109,15 +132,15 @@ def _create_rgnn(domain: mm.Domain,
                  aggregation: str,
                  readout_name: str) -> rgnn.RelationalGraphNeuralNetwork:
     aggregation_function = _create_aggregation(aggregation)
-    config = rgnn.RelationalGraphNeuralNetworkConfig(
-        domain=domain,
-        embedding_size=embedding_size,
-        num_layers=num_layers,
-        message_aggregation=aggregation_function,
-        input_specification=(rgnn.InputType.State, rgnn.InputType.GroundActions, rgnn.InputType.Goal),
-        output_specification=[(readout_name, rgnn.OutputNodeType.Action, rgnn.OutputValueType.Scalar)],
+    hparam_config = rgnn.HyperparameterConfig(domain=domain, embedding_size=embedding_size, num_layers=num_layers)
+    input_spec = (rgnn.StateEncoder(), rgnn.GroundActionsEncoder(), rgnn.GoalEncoder())
+    output_spec = [(readout_name, rgnn.ActionScalarDecoder(hparam_config))]
+    module_config = rgnn.ModuleConfig(
+        aggregation_function=aggregation_function,
+        message_function=rgnn.PredicateMLPMessages(hparam_config, input_spec),
+        update_function=rgnn.MLPUpdates(hparam_config)
     )
-    return rgnn.RelationalGraphNeuralNetwork(config)
+    return rgnn.RelationalGraphNeuralNetwork(hparam_config, module_config, input_spec, output_spec)  # type: ignore
 
 
 def _create_trajectory_refiner(hindsight: str, train_problems: list[mm.Problem], max_new_trajectories: int) -> rl.TrajectoryRefiner:
@@ -139,15 +162,14 @@ def _save_checkpoints(policy_model: rgnn.RelationalGraphNeuralNetwork,
                       q1_optimizer: torch.optim.Optimizer,
                       q2_optimizer: torch.optim.Optimizer,
                       loss_function: rl.DiscreteSoftActorCriticOptimization,
-                      suffix: str,
-                      prefix: str = '') -> None:
-    policy_model.save(f'{prefix}policy_{suffix}.pth', {
+                      suffix: str) -> None:
+    policy_model.save(f'policy_{suffix}.pth', {
         'optimizer': policy_optimizer.state_dict(),
         'log_entropy_alpha': loss_function.log_entropy_alpha.detach().cpu(),
         'entropy_optimizer': loss_function.entropy_optimizer.state_dict(),
     })
-    q1_model.save(f'{prefix}q1_{suffix}.pth', {'optimizer': q1_optimizer.state_dict()})
-    q2_model.save(f'{prefix}q2_{suffix}.pth', {'optimizer': q2_optimizer.state_dict()})
+    q1_model.save(f'q1_{suffix}.pth', {'optimizer': q1_optimizer.state_dict()})
+    q2_model.save(f'q2_{suffix}.pth', {'optimizer': q2_optimizer.state_dict()})
 
 
 def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
@@ -173,8 +195,11 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
         policy_wrapper, policy_optimizer, policy_scheduler,
         q1_target_wrapper, q1_wrapper, q1_optimizer, q1_scheduler,
         q2_target_wrapper, q2_wrapper, q2_optimizer, q2_scheduler,
-        args.discount_factor, args.polyak_factor, args.entropy_target_scale, args.entropy_lr,
+        args.discount_factor, args.polyak_factor, args.entropy_target_scale_initial, args.entropy_lr,
         max_log_alpha=math.log(args.entropy_alpha_max),
+        scale_initial=args.entropy_target_scale_initial,
+        scale_final=args.entropy_target_scale_final,
+        anneal_steps=args.entropy_anneal_steps * args.train_steps,
     )
 
     reward_function = rl.ConstantRewardFunction(-1)
@@ -205,11 +230,11 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
     rl_evaluator = rl.PolicyEvaluation(validation_problems, evaluation_criteras, evaluation_trajectory_sampler, args.validation_horizon)
     episode = 0
     def avg_num_objects(ps: list[mm.Problem]) -> float:
-        return sum(len(p.get_objects()) for p in ps) / len(ps) if len(ps) > 0 else 0.0
+        return sum(len(p.get_objects()) for p in ps) / len(ps)
     def avg_goal_size(ts: list[rl.Trajectory]) -> float:
-        return sum(len(t[0].goal_condition) for t in ts if len(t) > 0) / len(ts) if len(ts) > 0 else 0.0
+        return sum(len(t[0].goal_condition) for t in ts if len(t) > 0) / len(ts)
     def avg_trajectory_length(ts: list[rl.Trajectory]) -> float:
-        return sum(len(t) for t in ts if len(t) > 0) / len(ts) if len(ts) > 0 else 0.0
+        return sum(len(t) for t in ts if len(t) > 0) / len(ts)
     rl_algorithm.register_on_pre_collect_experience(lambda: print(f'[{episode}] Collecting Experience.', flush=True))
     rl_algorithm.register_on_sample_problems(lambda ps: print(f'[{episode}] > Sampled Problems; {avg_num_objects(ps):.1f} avg. object count.', flush=True))
     rl_algorithm.register_on_sample_initial_states(lambda x: print(f'[{episode}] > Sampled Initial States.', flush=True))
@@ -221,18 +246,18 @@ def _train(policy_model: rgnn.RelationalGraphNeuralNetwork,
     rl_algorithm.register_on_train_step(lambda ts, loss: print(f'[{episode}] > Train step: {loss.mean().item():.5f} avg. loss.'))
     rl_algorithm.register_on_post_optimize_model(lambda: print(f'[{episode}] Optimized Model.', flush=True))
     loss_function.register_on_losses(lambda actor, c1, c2, ent: print(
-        f'[{episode}] > SAC: actor={actor.mean().item():.5f} q1={c1.mean().item():.5f} q2={c2.mean().item():.5f} entropy={ent.mean().item():.5f} alpha={loss_function.get_entropy_alpha():.5f}', flush=True))
+        f'[{episode}] > SAC: actor={actor.mean().item():.5f} q1={c1.mean().item():.5f} q2={c2.mean().item():.5f} entropy={ent.mean().item():.5f} alpha={loss_function.get_entropy_alpha():.5f} target_scale={loss_function.get_entropy_target_scale():.5f}', flush=True))
     while True:
         rl_algorithm.fit()
         best, evaluation = rl_evaluator.evaluate()
         print(f'[{episode}] Best: {best}, Evaluation: {evaluation}', flush=True)
         _save_checkpoints(policy_model, q1_model, q2_model,
                           policy_optimizer, q1_optimizer, q2_optimizer,
-                          loss_function, 'latest', args.output_prefix)
+                          loss_function, 'latest')
         if best:
             _save_checkpoints(policy_model, q1_model, q2_model,
                               policy_optimizer, q1_optimizer, q2_optimizer,
-                              loss_function, 'best', args.output_prefix)
+                              loss_function, 'best')
             print(f'[{episode}] Saved new best model', flush=True)
         episode += 1
 
@@ -251,9 +276,12 @@ def _main(args: argparse.Namespace) -> None:
     policy_optimizer = optim.Adam(policy_model.parameters(), lr=args.lr_initial)
     q1_optimizer = optim.Adam(q1_model.parameters(), lr=args.lr_initial)
     q2_optimizer = optim.Adam(q2_model.parameters(), lr=args.lr_initial)
-    policy_scheduler = optim.lr_scheduler.CosineAnnealingLR(policy_optimizer, args.lr_steps, args.lr_final)
-    q1_scheduler = optim.lr_scheduler.CosineAnnealingLR(q1_optimizer, args.lr_steps, args.lr_final)
-    q2_scheduler = optim.lr_scheduler.CosineAnnealingLR(q2_optimizer, args.lr_steps, args.lr_final)
+    # lr_steps is in episode units; convert to optimization-step units (the schedulers are stepped
+    # once per train step) by multiplying by train_steps.
+    lr_decay_steps = args.lr_steps * args.train_steps
+    policy_scheduler = optim.lr_scheduler.CosineAnnealingLR(policy_optimizer, lr_decay_steps, args.lr_final)
+    q1_scheduler = optim.lr_scheduler.CosineAnnealingLR(q1_optimizer, lr_decay_steps, args.lr_final)
+    q2_scheduler = optim.lr_scheduler.CosineAnnealingLR(q2_optimizer, lr_decay_steps, args.lr_final)
     print('Training model...', flush=True)
     _train(policy_model, q1_model, q2_model,
            policy_optimizer, q1_optimizer, q2_optimizer,

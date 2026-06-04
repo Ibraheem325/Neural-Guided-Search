@@ -124,7 +124,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--validation_horizon', default=400, type=int, help='Maximum rollout length for the validation set')
     parser.add_argument('--lr_initial', default=0.001, type=float, help='Initial learning rate')
     parser.add_argument('--lr_final', default=0.000001, type=float, help='Final learning rate')
-    parser.add_argument('--lr_steps', default=300, type=float, help='Steps to reach the final learning rate')
+    parser.add_argument('--lr_steps', default=300, type=float, help='Number of episodes to reach the final learning rate. Internally multiplied by --train_steps to convert to optimization-step units (the LR scheduler is stepped once per train step).')
     parser.add_argument('--max_new_trajectories', default=100, type=int, help='Max number of new trajectories to derive')
     parser.add_argument('--min_buffer_size', default=100, type=int, help='Minimum size of the experience buffer to update model')
     parser.add_argument('--max_buffer_size', default=10000, type=int, help='Maximum size of the experience buffer')
@@ -357,7 +357,9 @@ def _main(args: argparse.Namespace) -> None:
     model = _create_model(domain, args.embedding_size, args.layers, args.aggregation, args.num_cosines, args.random_layer_count).to(device)
     policy_model = RiskSensitivePolicyWrapper(model, args.risk_averseness, args.num_policy_quantiles).to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.lr_initial)
-    lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, args.lr_steps, args.lr_final)
+    # lr_steps is in episode units; convert to optimization-step units (the scheduler is stepped
+    # once per train step) by multiplying by train_steps.
+    lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, args.lr_steps * args.train_steps, args.lr_final)
     print('Training model...', flush=True)
     _train(model, policy_model, optimizer, lr_scheduler, train_problems, validation_problems, args)
 
