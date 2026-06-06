@@ -1,0 +1,49 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.5182s depth=1
+    [timing] select=0.0000s expand=0.1039s depth=2
+    [timing] select=0.0000s expand=0.1152s depth=2
+    [timing] select=0.0000s expand=0.1203s depth=3
+    [timing] select=0.0000s expand=0.1074s depth=4
+    [timing] select=0.0000s expand=0.1382s depth=5
+    [timing] select=0.0000s expand=0.1069s depth=6
+    [timing] select=0.0000s expand=0.1083s depth=7
+    [timing] select=0.0000s expand=0.1029s depth=4
+    [timing] select=0.0000s expand=0.1026s depth=5
+    [timing] select=0.0000s expand=0.0893s depth=6
+    [timing] select=0.0000s expand=0.0893s depth=8
+    [timing] select=0.0000s expand=0.0935s depth=7
+    [timing] select=0.0000s expand=0.1136s depth=9
+    [timing] select=0.0001s expand=0.0939s depth=10
+    [timing] select=0.0000s expand=0.0906s depth=8
+    [timing] select=0.0001s expand=0.0885s depth=11
+    [timing] select=0.0000s expand=0.0937s depth=9
+    [timing] select=0.0001s expand=0.0884s depth=12
+    [timing] select=0.0000s expand=0.0881s depth=10
+    [timing] select=0.0001s expand=0.0903s depth=13
+    [timing] select=0.0001s expand=0.0898s depth=14
+    [timing] select=0.0000s expand=0.0918s depth=10
+    [timing] select=0.0000s expand=0.0865s depth=6
+    [timing] select=0.0001s expand=0.0892s depth=11
+    [timing] select=0.0001s expand=0.0930s depth=12
+    [timing] select=0.0001s expand=0.0909s depth=13
+    [timing] select=0.0001s expand=0.0909s depth=14
+  [sim 28] found goal path of length 14
+[search done] simulations=28, states generated=86
+Found a solution of length 14!
+   1: (move f0-6f f0-7f)
+   2: (pickup f0-7f key1-0)
+   3: (move f0-7f f0-8f)
+   4: (move f0-8f f1-8f)
+   5: (move f1-8f f2-8f)
+   6: (move f2-8f f2-7f)
+   7: (move f2-7f f2-6f)
+   8: (move f2-6f f1-6f)
+   9: (move f1-6f f1-5f)
+  10: (move f1-5f f1-4f)
+  11: (move f1-4f f1-3f)
+  12: (move f1-3f f1-2f)
+  13: (move f1-2f f1-1f)
+  14: (putdown f1-1f key1-0)

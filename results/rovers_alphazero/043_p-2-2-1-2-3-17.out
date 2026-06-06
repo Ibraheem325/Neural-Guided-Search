@@ -1,0 +1,33 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.5222s depth=1
+    [timing] select=0.0000s expand=0.2048s depth=2
+    [timing] select=0.0000s expand=0.2043s depth=2
+    [timing] select=0.0000s expand=0.1911s depth=3
+    [timing] select=0.0000s expand=0.2018s depth=4
+    [timing] select=0.0000s expand=0.2035s depth=5
+    [timing] select=0.0000s expand=0.2042s depth=6
+    [timing] select=0.0000s expand=0.1918s depth=7
+    [timing] select=0.0000s expand=0.2002s depth=4
+    [timing] select=0.0000s expand=0.1996s depth=5
+    [timing] select=0.0001s expand=0.2026s depth=8
+    [timing] select=0.0001s expand=0.1872s depth=9
+    [timing] select=0.0001s expand=0.1863s depth=6
+    [timing] select=0.0001s expand=0.1792s depth=10
+    [timing] select=0.0001s expand=0.2320s depth=11
+  [sim 15] found goal path of length 11
+[search done] simulations=15, states generated=90
+Found a solution of length 11!
+   1: (calibrate rover0 camera0 objective0 waypoint0)
+   2: (take_image rover0 waypoint0 objective0 camera0 high_res)
+   3: (communicate_image_data rover0 general objective0 high_res waypoint0 waypoint1)
+   4: (navigate rover1 waypoint1 waypoint0)
+   5: (sample_rock rover1 rover1store waypoint0)
+   6: (navigate rover1 waypoint0 waypoint1)
+   7: (drop rover1 rover1store)
+   8: (navigate rover1 waypoint1 waypoint2)
+   9: (sample_rock rover1 rover1store waypoint2)
+  10: (communicate_rock_data rover1 general waypoint0 waypoint2 waypoint1)
+  11: (communicate_rock_data rover1 general waypoint2 waypoint2 waypoint1)

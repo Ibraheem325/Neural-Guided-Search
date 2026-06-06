@@ -1,0 +1,414 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.5556s depth=1
+    [timing] select=0.0000s expand=0.1685s depth=2
+    [timing] select=0.0000s expand=0.1518s depth=2
+    [timing] select=0.0000s expand=0.1751s depth=3
+    [timing] select=0.0000s expand=0.1586s depth=4
+    [timing] select=0.0000s expand=0.1535s depth=5
+    [timing] select=0.0000s expand=0.1886s depth=6
+    [timing] select=0.0000s expand=0.1501s depth=3
+    [timing] select=0.0000s expand=0.1496s depth=4
+    [timing] select=0.0001s expand=0.1552s depth=7
+    [timing] select=0.0000s expand=0.1466s depth=4
+    [timing] select=0.0000s expand=0.1434s depth=3
+    [timing] select=0.0001s expand=0.1893s depth=5
+    [timing] select=0.0000s expand=0.1539s depth=5
+    [timing] select=0.0001s expand=0.1808s depth=6
+    [timing] select=0.0001s expand=0.1572s depth=8
+    [timing] select=0.0001s expand=0.1580s depth=6
+    [timing] select=0.0001s expand=0.1851s depth=9
+    [timing] select=0.0000s expand=0.1601s depth=2
+    [timing] select=0.0001s expand=0.1745s depth=7
+    [timing] select=0.0001s expand=0.2004s depth=8
+    [timing] select=0.0000s expand=0.1957s depth=3
+    [timing] select=0.0000s expand=0.1779s depth=4
+    [timing] select=0.0001s expand=0.1761s depth=7
+    [timing] select=0.0001s expand=0.1729s depth=10
+    [timing] select=0.0001s expand=0.1802s depth=8
+    [timing] select=0.0001s expand=0.1685s depth=11
+    [timing] select=0.0000s expand=0.1650s depth=4
+    [timing] select=0.0001s expand=0.1693s depth=5
+    [timing] select=0.0000s expand=0.1555s depth=4
+    [timing] select=0.0001s expand=0.1555s depth=5
+    [timing] select=0.0001s expand=0.1536s depth=5
+    [timing] select=0.0001s expand=0.1504s depth=6
+    [timing] select=0.0001s expand=0.1411s depth=9
+    [timing] select=0.0000s expand=0.1401s depth=5
+    [timing] select=0.0001s expand=0.1753s depth=5
+    [timing] select=0.0001s expand=0.1914s depth=6
+    [timing] select=0.0001s expand=0.2011s depth=6
+    [timing] select=0.0001s expand=0.1933s depth=5
+    [timing] select=0.0001s expand=0.1856s depth=7
+    [timing] select=0.0001s expand=0.1851s depth=7
+    [timing] select=0.0001s expand=0.1629s depth=6
+    [timing] select=0.0001s expand=0.1542s depth=9
+    [timing] select=0.0001s expand=0.1450s depth=10
+    [timing] select=0.0001s expand=0.2567s depth=6
+    [timing] select=0.0001s expand=0.1377s depth=7
+    [timing] select=0.0001s expand=0.1351s depth=8
+    [timing] select=0.0001s expand=0.1385s depth=10
+    [timing] select=0.0001s expand=0.1351s depth=6
+    [timing] select=0.0001s expand=0.1284s depth=7
+    [timing] select=0.0001s expand=0.1260s depth=8
+    [timing] select=0.0001s expand=0.1398s depth=6
+    [timing] select=0.0001s expand=0.1330s depth=7
+    [timing] select=0.0001s expand=0.1031s depth=9
+    [timing] select=0.0000s expand=0.0957s depth=4
+    [timing] select=0.0000s expand=0.0935s depth=3
+    [timing] select=0.0001s expand=0.0961s depth=11
+    [timing] select=0.0000s expand=0.1011s depth=7
+    [timing] select=0.0000s expand=0.0950s depth=8
+    [timing] select=0.0001s expand=0.1119s depth=9
+    [timing] select=0.0000s expand=0.0994s depth=7
+    [timing] select=0.0000s expand=0.0995s depth=8
+    [timing] select=0.0000s expand=0.1121s depth=8
+    [timing] select=0.0001s expand=0.0997s depth=11
+    [timing] select=0.0000s expand=0.1009s depth=7
+    [timing] select=0.0001s expand=0.0995s depth=8
+    [timing] select=0.0001s expand=0.1093s depth=12
+    [timing] select=0.0000s expand=0.0964s depth=6
+    [timing] select=0.0000s expand=0.0915s depth=4
+    [timing] select=0.0001s expand=0.0956s depth=13
+    [timing] select=0.0001s expand=0.0968s depth=14
+    [timing] select=0.0000s expand=0.0802s depth=3
+    [timing] select=0.0001s expand=0.1006s depth=8
+    [timing] select=0.0001s expand=0.1085s depth=15
+    [timing] select=0.0001s expand=0.1063s depth=16
+    [timing] select=0.0000s expand=0.0956s depth=3
+    [timing] select=0.0001s expand=0.1001s depth=9
+    [timing] select=0.0000s expand=0.0941s depth=5
+    [timing] select=0.0001s expand=0.1010s depth=9
+    [timing] select=0.0001s expand=0.1117s depth=17
+    [timing] select=0.0001s expand=0.1171s depth=18
+    [timing] select=0.0001s expand=0.1149s depth=19
+    [timing] select=0.0001s expand=0.1120s depth=20
+    [timing] select=0.0001s expand=0.1007s depth=21
+    [timing] select=0.0001s expand=0.0949s depth=22
+    [timing] select=0.0001s expand=0.0939s depth=23
+    [timing] select=0.0001s expand=0.1307s depth=13
+    [timing] select=0.0001s expand=0.1413s depth=9
+    [timing] select=0.0000s expand=0.1126s depth=6
+    [timing] select=0.0001s expand=0.1289s depth=14
+    [timing] select=0.0001s expand=0.1380s depth=15
+    [timing] select=0.0001s expand=0.1125s depth=10
+    [timing] select=0.0001s expand=0.1451s depth=16
+    [timing] select=0.0001s expand=0.1438s depth=17
+    [timing] select=0.0001s expand=0.1439s depth=18
+    [timing] select=0.0000s expand=0.1114s depth=8
+    [timing] select=0.0001s expand=0.0943s depth=24
+    [timing] select=0.0001s expand=0.1011s depth=19
+    [timing] select=0.0001s expand=0.1234s depth=10
+    [timing] select=0.0001s expand=0.1779s depth=7
+    [timing] select=0.0001s expand=0.1873s depth=25
+    [timing] select=0.0001s expand=0.1835s depth=20
+    [timing] select=0.0001s expand=0.1747s depth=21
+    [timing] select=0.0001s expand=0.1226s depth=11
+    [timing] select=0.0001s expand=0.1390s depth=26
+    [timing] select=0.0001s expand=0.1268s depth=27
+    [timing] select=0.0001s expand=0.1142s depth=28
+    [timing] select=0.0001s expand=0.0900s depth=9
+    [timing] select=0.0002s expand=0.1007s depth=29
+    [timing] select=0.0001s expand=0.0939s depth=22
+    [timing] select=0.0001s expand=0.0949s depth=12
+    [timing] select=0.0001s expand=0.0848s depth=11
+    [timing] select=0.0000s expand=0.0780s depth=3
+    [timing] select=0.0002s expand=0.0953s depth=30
+    [timing] select=0.0001s expand=0.0871s depth=31
+    [timing] select=0.0001s expand=0.0933s depth=23
+    [timing] select=0.0001s expand=0.0928s depth=24
+    [timing] select=0.0001s expand=0.0931s depth=32
+    [timing] select=0.0001s expand=0.0937s depth=33
+    [timing] select=0.0001s expand=0.0895s depth=13
+    [timing] select=0.0001s expand=0.0917s depth=34
+    [timing] select=0.0001s expand=0.0887s depth=35
+    [timing] select=0.0001s expand=0.0973s depth=25
+    [timing] select=0.0001s expand=0.0892s depth=36
+    [timing] select=0.0001s expand=0.0926s depth=12
+    [timing] select=0.0001s expand=0.0929s depth=14
+    [timing] select=0.0001s expand=0.0846s depth=10
+    [timing] select=0.0001s expand=0.0888s depth=37
+    [timing] select=0.0001s expand=0.0977s depth=26
+    [timing] select=0.0001s expand=0.0929s depth=15
+    [timing] select=0.0000s expand=0.0911s depth=7
+    [timing] select=0.0000s expand=0.0768s depth=4
+    [timing] select=0.0001s expand=0.0957s depth=27
+    [timing] select=0.0001s expand=0.0903s depth=28
+    [timing] select=0.0001s expand=0.0897s depth=38
+    [timing] select=0.0001s expand=0.0909s depth=13
+    [timing] select=0.0001s expand=0.0973s depth=16
+    [timing] select=0.0001s expand=0.0930s depth=17
+    [timing] select=0.0001s expand=0.0979s depth=29
+    [timing] select=0.0001s expand=0.0983s depth=30
+    [timing] select=0.0001s expand=0.0934s depth=18
+    [timing] select=0.0001s expand=0.0930s depth=14
+    [timing] select=0.0001s expand=0.0935s depth=39
+    [timing] select=0.0001s expand=0.0930s depth=40
+    [timing] select=0.0001s expand=0.0934s depth=31
+    [timing] select=0.0001s expand=0.0936s depth=15
+    [timing] select=0.0001s expand=0.0981s depth=41
+    [timing] select=0.0001s expand=0.0981s depth=42
+    [timing] select=0.0001s expand=0.0933s depth=19
+    [timing] select=0.0001s expand=0.0928s depth=32
+    [timing] select=0.0001s expand=0.0972s depth=16
+    [timing] select=0.0001s expand=0.0925s depth=17
+    [timing] select=0.0001s expand=0.0924s depth=18
+    [timing] select=0.0001s expand=0.0924s depth=33
+    [timing] select=0.0002s expand=0.0977s depth=43
+    [timing] select=0.0001s expand=0.0888s depth=20
+    [timing] select=0.0001s expand=0.0933s depth=19
+    [timing] select=0.0001s expand=0.0888s depth=20
+    [timing] select=0.0000s expand=0.0843s depth=8
+    [timing] select=0.0001s expand=0.0894s depth=21
+    [timing] select=0.0001s expand=0.0893s depth=21
+    [timing] select=0.0001s expand=0.0950s depth=13
+    [timing] select=0.0002s expand=0.0914s depth=34
+    [timing] select=0.0002s expand=0.0930s depth=44
+    [timing] select=0.0001s expand=0.0951s depth=13
+    [timing] select=0.0002s expand=0.0890s depth=45
+    [timing] select=0.0001s expand=0.0887s depth=35
+    [timing] select=0.0001s expand=0.0884s depth=36
+    [timing] select=0.0001s expand=0.0931s depth=14
+    [timing] select=0.0001s expand=0.0851s depth=10
+    [timing] select=0.0002s expand=0.0892s depth=46
+    [timing] select=0.0001s expand=0.0851s depth=10
+    [timing] select=0.0001s expand=0.0928s depth=15
+    [timing] select=0.0001s expand=0.0931s depth=14
+    [timing] select=0.0001s expand=0.0977s depth=16
+    [timing] select=0.0001s expand=0.0934s depth=17
+    [timing] select=0.0002s expand=0.0892s depth=47
+    [timing] select=0.0001s expand=0.0933s depth=18
+    [timing] select=0.0001s expand=0.0933s depth=15
+    [timing] select=0.0002s expand=0.0892s depth=37
+    [timing] select=0.0001s expand=0.0929s depth=22
+    [timing] select=0.0001s expand=0.0932s depth=23
+    [timing] select=0.0001s expand=0.0932s depth=19
+    [timing] select=0.0001s expand=0.0930s depth=24
+    [timing] select=0.0001s expand=0.0978s depth=25
+    [timing] select=0.0001s expand=0.0844s depth=11
+    [timing] select=0.0001s expand=0.0928s depth=12
+    [timing] select=0.0000s expand=0.0825s depth=4
+    [timing] select=0.0002s expand=0.0934s depth=48
+    [timing] select=0.0000s expand=0.0873s depth=6
+    [timing] select=0.0000s expand=0.0916s depth=7
+    [timing] select=0.0001s expand=0.0915s depth=13
+    [timing] select=0.0001s expand=0.0933s depth=14
+    [timing] select=0.0000s expand=0.0892s depth=9
+    [timing] select=0.0001s expand=0.0893s depth=20
+    [timing] select=0.0001s expand=0.0892s depth=21
+    [timing] select=0.0001s expand=0.0980s depth=26
+    [timing] select=0.0001s expand=0.0981s depth=27
+    [timing] select=0.0001s expand=0.0982s depth=28
+    [timing] select=0.0001s expand=0.0985s depth=29
+    [timing] select=0.0001s expand=0.0936s depth=22
+    [timing] select=0.0001s expand=0.0982s depth=30
+    [timing] select=0.0001s expand=0.0939s depth=31
+    [timing] select=0.0001s expand=0.0932s depth=23
+    [timing] select=0.0001s expand=0.0929s depth=24
+    [timing] select=0.0001s expand=0.0929s depth=32
+    [timing] select=0.0001s expand=0.0928s depth=33
+    [timing] select=0.0001s expand=0.0907s depth=34
+    [timing] select=0.0001s expand=0.0885s depth=35
+    [timing] select=0.0001s expand=0.0980s depth=25
+    [timing] select=0.0001s expand=0.0892s depth=36
+    [timing] select=0.0001s expand=0.0883s depth=37
+    [timing] select=0.0001s expand=0.0928s depth=12
+    [timing] select=0.0001s expand=0.0979s depth=26
+    [timing] select=0.0001s expand=0.0981s depth=27
+    [timing] select=0.0001s expand=0.0983s depth=28
+    [timing] select=0.0001s expand=0.0895s depth=38
+    [timing] select=0.0001s expand=0.0975s depth=29
+    [timing] select=0.0001s expand=0.0979s depth=30
+    [timing] select=0.0001s expand=0.0938s depth=39
+    [timing] select=0.0001s expand=0.0931s depth=40
+    [timing] select=0.0001s expand=0.0925s depth=31
+    [timing] select=0.0001s expand=0.0977s depth=41
+    [timing] select=0.0001s expand=0.0975s depth=42
+    [timing] select=0.0001s expand=0.0932s depth=32
+    [timing] select=0.0001s expand=0.0927s depth=33
+    [timing] select=0.0001s expand=0.0978s depth=43
+    [timing] select=0.0001s expand=0.0912s depth=34
+    [timing] select=0.0001s expand=0.0903s depth=13
+    [timing] select=0.0001s expand=0.0926s depth=44
+    [timing] select=0.0001s expand=0.0884s depth=45
+    [timing] select=0.0000s expand=0.0824s depth=6
+    [timing] select=0.0002s expand=0.0934s depth=49
+    [timing] select=0.0001s expand=0.0953s depth=16
+    [timing] select=0.0002s expand=0.0916s depth=50
+    [timing] select=0.0001s expand=0.0933s depth=17
+    [timing] select=0.0001s expand=0.0895s depth=35
+    [timing] select=0.0001s expand=0.0886s depth=36
+    [timing] select=0.0001s expand=0.0929s depth=14
+    [timing] select=0.0002s expand=0.0888s depth=38
+    [timing] select=0.0002s expand=0.0973s depth=51
+    [timing] select=0.0002s expand=0.0893s depth=46
+    [timing] select=0.0000s expand=0.0886s depth=9
+    [timing] select=0.0001s expand=0.0931s depth=18
+    [timing] select=0.0002s expand=0.0890s depth=47
+    [timing] select=0.0002s expand=0.0936s depth=39
+    [timing] select=0.0001s expand=0.0934s depth=40
+    [timing] select=0.0002s expand=0.0980s depth=52
+    [timing] select=0.0002s expand=0.0984s depth=53
+    [timing] select=0.0001s expand=0.0982s depth=41
+    [timing] select=0.0002s expand=0.0957s depth=54
+    [timing] select=0.0001s expand=0.0926s depth=22
+    [timing] select=0.0002s expand=0.0977s depth=42
+    [timing] select=0.0001s expand=0.0979s depth=43
+    [timing] select=0.0001s expand=0.0927s depth=23
+    [timing] select=0.0001s expand=0.0922s depth=19
+    [timing] select=0.0002s expand=0.0953s depth=55
+    [timing] select=0.0001s expand=0.0925s depth=24
+    [timing] select=0.0002s expand=0.0952s depth=56
+    [timing] select=0.0002s expand=0.0934s depth=57
+    [timing] select=0.0002s expand=0.0929s depth=58
+    [timing] select=0.0002s expand=0.0926s depth=44
+    [timing] select=0.0000s expand=0.0866s depth=5
+    [timing] select=0.0001s expand=0.0978s depth=25
+    [timing] select=0.0002s expand=0.0894s depth=37
+    [timing] select=0.0002s expand=0.0906s depth=59
+    [timing] select=0.0001s expand=0.0838s depth=11
+    [timing] select=0.0002s expand=0.0885s depth=45
+    [timing] select=0.0001s expand=0.0893s depth=20
+    [timing] select=0.0002s expand=0.0916s depth=60
+    [timing] select=0.0002s expand=0.0917s depth=61
+    [timing] select=0.0001s expand=0.0890s depth=21
+    [timing] select=0.0002s expand=0.0932s depth=48
+    [timing] select=0.0002s expand=0.0938s depth=62
+    [timing] select=0.0002s expand=0.0897s depth=63
+    [timing] select=0.0002s expand=0.0885s depth=46
+    [timing] select=0.0002s expand=0.0934s depth=49
+    [timing] select=0.0002s expand=0.0929s depth=50
+    [timing] select=0.0002s expand=0.0919s depth=64
+    [timing] select=0.0000s expand=0.0823s depth=4
+    [timing] select=0.0001s expand=0.0938s depth=12
+    [timing] select=0.0001s expand=0.0914s depth=13
+    [timing] select=0.0000s expand=0.0751s depth=2
+    [timing] select=0.0000s expand=0.0812s depth=5
+    [timing] select=0.0001s expand=0.0900s depth=14
+    [timing] select=0.0001s expand=0.0887s depth=15
+    [timing] select=0.0001s expand=0.0946s depth=16
+    [timing] select=0.0001s expand=0.0921s depth=17
+    [timing] select=0.0001s expand=0.0934s depth=18
+    [timing] select=0.0001s expand=0.0933s depth=19
+    [timing] select=0.0001s expand=0.0891s depth=20
+    [timing] select=0.0000s expand=0.0949s depth=13
+    [timing] select=0.0001s expand=0.0933s depth=14
+    [timing] select=0.0000s expand=0.0826s depth=7
+    [timing] select=0.0000s expand=0.0890s depth=7
+    [timing] select=0.0000s expand=0.0830s depth=6
+    [timing] select=0.0001s expand=0.0933s depth=15
+    [timing] select=0.0000s expand=0.0876s depth=8
+    [timing] select=0.0000s expand=0.0828s depth=4
+    [timing] select=0.0000s expand=0.0826s depth=7
+    [timing] select=0.0000s expand=0.0852s depth=6
+    [timing] select=0.0001s expand=0.0980s depth=26
+    [timing] select=0.0001s expand=0.0936s depth=27
+    [timing] select=0.0001s expand=0.0980s depth=28
+    [timing] select=0.0001s expand=0.0934s depth=22
+    [timing] select=0.0001s expand=0.0981s depth=29
+    [timing] select=0.0001s expand=0.0983s depth=30
+    [timing] select=0.0001s expand=0.0935s depth=23
+    [timing] select=0.0001s expand=0.0931s depth=31
+    [timing] select=0.0001s expand=0.0932s depth=24
+    [timing] select=0.0003s expand=0.0966s depth=65
+    [timing] select=0.0000s expand=0.0827s depth=4
+    [timing] select=0.0000s expand=0.0888s depth=7
+    [timing] select=0.0000s expand=0.0828s depth=5
+    [timing] select=0.0000s expand=0.0824s depth=7
+    [timing] select=0.0000s expand=0.0874s depth=6
+    [timing] select=0.0001s expand=0.0964s depth=16
+    [timing] select=0.0001s expand=0.0901s depth=17
+    [timing] select=0.0000s expand=0.0869s depth=8
+    [timing] select=0.0000s expand=0.0823s depth=3
+    [timing] select=0.0000s expand=0.0825s depth=7
+    [timing] select=0.0000s expand=0.0825s depth=7
+    [timing] select=0.0000s expand=0.0870s depth=8
+    [timing] select=0.0001s expand=0.0848s depth=11
+    [timing] select=0.0002s expand=0.0891s depth=38
+    [timing] select=0.0002s expand=0.0969s depth=51
+    [timing] select=0.0001s expand=0.0910s depth=32
+    [timing] select=0.0001s expand=0.0937s depth=33
+    [timing] select=0.0001s expand=0.0915s depth=34
+    [timing] select=0.0002s expand=0.0935s depth=39
+    [timing] select=0.0001s expand=0.0936s depth=40
+    [timing] select=0.0002s expand=0.0980s depth=52
+    [timing] select=0.0002s expand=0.0981s depth=53
+    [timing] select=0.0001s expand=0.0985s depth=25
+    [timing] select=0.0001s expand=0.0893s depth=21
+    [timing] select=0.0000s expand=0.0867s depth=6
+    [timing] select=0.0002s expand=0.0980s depth=41
+    [timing] select=0.0002s expand=0.0957s depth=54
+    [timing] select=0.0002s expand=0.0982s depth=42
+    [timing] select=0.0001s expand=0.0980s depth=43
+    [timing] select=0.0003s expand=0.0924s depth=66
+  [sim 341] found goal path of length 66
+[search done] simulations=341, states generated=2172
+Found a solution of length 66!
+   1: (sample_soil rover0 rover0store waypoint1)
+   2: (drop rover0 rover0store)
+   3: (calibrate rover0 camera0 objective0 waypoint1)
+   4: (take_image rover0 waypoint1 objective1 camera0 high_res)
+   5: (sample_rock rover0 rover0store waypoint1)
+   6: (drop rover0 rover0store)
+   7: (communicate_image_data rover0 general objective1 high_res waypoint1 waypoint2)
+   8: (communicate_soil_data rover0 general waypoint1 waypoint1 waypoint2)
+   9: (navigate rover0 waypoint1 waypoint2)
+  10: (sample_soil rover0 rover0store waypoint2)
+  11: (navigate rover0 waypoint2 waypoint1)
+  12: (communicate_soil_data rover0 general waypoint2 waypoint1 waypoint2)
+  13: (communicate_rock_data rover0 general waypoint1 waypoint1 waypoint2)
+  14: (navigate rover1 waypoint0 waypoint1)
+  15: (calibrate rover1 camera1 objective1 waypoint1)
+  16: (take_image rover1 waypoint1 objective0 camera1 colour)
+  17: (communicate_image_data rover1 general objective0 colour waypoint1 waypoint2)
+  18: (navigate rover1 waypoint1 waypoint0)
+  19: (drop rover0 rover0store)
+  20: (navigate rover1 waypoint0 waypoint1)
+  21: (calibrate rover0 camera0 objective0 waypoint1)
+  22: (navigate rover1 waypoint1 waypoint0)
+  23: (navigate rover1 waypoint0 waypoint2)
+  24: (navigate rover0 waypoint1 waypoint0)
+  25: (navigate rover1 waypoint2 waypoint0)
+  26: (navigate rover1 waypoint0 waypoint1)
+  27: (calibrate rover1 camera1 objective1 waypoint1)
+  28: (navigate rover1 waypoint1 waypoint0)
+  29: (navigate rover1 waypoint0 waypoint2)
+  30: (navigate rover0 waypoint0 waypoint1)
+  31: (navigate rover1 waypoint2 waypoint0)
+  32: (navigate rover1 waypoint0 waypoint1)
+  33: (navigate rover0 waypoint1 waypoint2)
+  34: (navigate rover1 waypoint1 waypoint0)
+  35: (navigate rover1 waypoint0 waypoint2)
+  36: (take_image rover0 waypoint2 objective1 camera0 high_res)
+  37: (navigate rover1 waypoint2 waypoint0)
+  38: (navigate rover0 waypoint2 waypoint1)
+  39: (navigate rover1 waypoint0 waypoint1)
+  40: (navigate rover0 waypoint1 waypoint0)
+  41: (navigate rover1 waypoint1 waypoint0)
+  42: (navigate rover1 waypoint0 waypoint2)
+  43: (navigate rover0 waypoint0 waypoint1)
+  44: (take_image rover1 waypoint2 objective1 camera1 high_res)
+  45: (navigate rover1 waypoint2 waypoint0)
+  46: (navigate rover1 waypoint0 waypoint1)
+  47: (calibrate rover0 camera0 objective0 waypoint1)
+  48: (navigate rover1 waypoint1 waypoint0)
+  49: (navigate rover1 waypoint0 waypoint2)
+  50: (navigate rover0 waypoint1 waypoint0)
+  51: (navigate rover1 waypoint2 waypoint0)
+  52: (navigate rover1 waypoint0 waypoint1)
+  53: (sample_soil rover0 rover0store waypoint0)
+  54: (navigate rover1 waypoint1 waypoint0)
+  55: (communicate_soil_data rover0 general waypoint0 waypoint0 waypoint2)
+  56: (drop rover0 rover0store)
+  57: (navigate rover1 waypoint0 waypoint2)
+  58: (navigate rover0 waypoint0 waypoint1)
+  59: (navigate rover1 waypoint2 waypoint0)
+  60: (navigate rover1 waypoint0 waypoint1)
+  61: (navigate rover0 waypoint1 waypoint0)
+  62: (take_image rover0 waypoint0 objective0 camera0 high_res)
+  63: (communicate_image_data rover0 general objective0 high_res waypoint0 waypoint2)
+  64: (calibrate rover1 camera1 objective1 waypoint1)
+  65: (take_image rover1 waypoint1 objective1 camera1 colour)
+  66: (communicate_image_data rover1 general objective1 colour waypoint1 waypoint2)

@@ -1,0 +1,49 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.5341s depth=1
+    [timing] select=0.0000s expand=0.1166s depth=2
+    [timing] select=0.0000s expand=0.1169s depth=2
+    [timing] select=0.0000s expand=0.1377s depth=3
+    [timing] select=0.0000s expand=0.1222s depth=4
+    [timing] select=0.0000s expand=0.0989s depth=5
+    [timing] select=0.0000s expand=0.1066s depth=6
+    [timing] select=0.0000s expand=0.1009s depth=7
+    [timing] select=0.0000s expand=0.0899s depth=3
+    [timing] select=0.0000s expand=0.1010s depth=4
+    [timing] select=0.0000s expand=0.0954s depth=4
+    [timing] select=0.0000s expand=0.0958s depth=5
+    [timing] select=0.0000s expand=0.1112s depth=6
+    [timing] select=0.0000s expand=0.1016s depth=5
+    [timing] select=0.0001s expand=0.1009s depth=8
+    [timing] select=0.0001s expand=0.1002s depth=9
+    [timing] select=0.0001s expand=0.1000s depth=7
+    [timing] select=0.0001s expand=0.1052s depth=10
+    [timing] select=0.0001s expand=0.1020s depth=11
+    [timing] select=0.0000s expand=0.1009s depth=6
+    [timing] select=0.0000s expand=0.0954s depth=4
+    [timing] select=0.0001s expand=0.1024s depth=6
+    [timing] select=0.0001s expand=0.1069s depth=7
+    [timing] select=0.0000s expand=0.1009s depth=5
+    [timing] select=0.0000s expand=0.1002s depth=5
+    [timing] select=0.0001s expand=0.1007s depth=8
+    [timing] select=0.0001s expand=0.0997s depth=9
+    [timing] select=0.0001s expand=0.1048s depth=10
+    [timing] select=0.0001s expand=0.1017s depth=11
+    [timing] select=0.0001s expand=0.1070s depth=12
+  [sim 30] found goal path of length 12
+[search done] simulations=30, states generated=169
+Found a solution of length 12!
+   1: (sample_soil rover0 rover0store waypoint1)
+   2: (navigate rover0 waypoint1 waypoint0)
+   3: (calibrate rover0 camera1 objective0 waypoint0)
+   4: (take_image rover0 waypoint0 objective0 camera1 colour)
+   5: (calibrate rover0 camera0 objective0 waypoint0)
+   6: (take_image rover0 waypoint0 objective0 camera0 low_res)
+   7: (drop rover0 rover0store)
+   8: (sample_soil rover0 rover0store waypoint0)
+   9: (communicate_image_data rover0 general objective0 low_res waypoint0 waypoint2)
+  10: (communicate_image_data rover0 general objective0 colour waypoint0 waypoint2)
+  11: (communicate_soil_data rover0 general waypoint0 waypoint0 waypoint2)
+  12: (communicate_soil_data rover0 general waypoint1 waypoint0 waypoint2)

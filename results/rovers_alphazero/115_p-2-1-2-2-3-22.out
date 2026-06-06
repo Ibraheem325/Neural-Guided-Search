@@ -1,0 +1,120 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.4749s depth=1
+    [timing] select=0.0000s expand=0.1494s depth=2
+    [timing] select=0.0000s expand=0.1344s depth=2
+    [timing] select=0.0000s expand=0.1387s depth=3
+    [timing] select=0.0000s expand=0.1337s depth=4
+    [timing] select=0.0000s expand=0.1442s depth=2
+    [timing] select=0.0000s expand=0.1341s depth=5
+    [timing] select=0.0001s expand=0.1242s depth=6
+    [timing] select=0.0001s expand=0.1194s depth=7
+    [timing] select=0.0001s expand=0.1211s depth=8
+    [timing] select=0.0001s expand=0.1515s depth=9
+    [timing] select=0.0001s expand=0.1323s depth=10
+    [timing] select=0.0000s expand=0.1398s depth=3
+    [timing] select=0.0000s expand=0.1325s depth=2
+    [timing] select=0.0000s expand=0.1332s depth=3
+    [timing] select=0.0000s expand=0.1429s depth=4
+    [timing] select=0.0001s expand=0.1273s depth=11
+    [timing] select=0.0000s expand=0.1290s depth=4
+    [timing] select=0.0000s expand=0.1550s depth=5
+    [timing] select=0.0000s expand=0.1504s depth=5
+    [timing] select=0.0000s expand=0.1784s depth=6
+    [timing] select=0.0001s expand=0.1477s depth=7
+    [timing] select=0.0001s expand=0.1592s depth=8
+    [timing] select=0.0001s expand=0.1652s depth=9
+    [timing] select=0.0001s expand=0.1628s depth=10
+    [timing] select=0.0000s expand=0.1635s depth=3
+    [timing] select=0.0001s expand=0.1541s depth=5
+    [timing] select=0.0000s expand=0.1479s depth=4
+    [timing] select=0.0001s expand=0.1596s depth=6
+    [timing] select=0.0001s expand=0.1402s depth=7
+    [timing] select=0.0001s expand=0.1543s depth=11
+    [timing] select=0.0001s expand=0.2142s depth=12
+    [timing] select=0.0001s expand=0.2046s depth=10
+    [timing] select=0.0000s expand=0.1941s depth=4
+    [timing] select=0.0001s expand=0.1561s depth=8
+    [timing] select=0.0001s expand=0.1439s depth=5
+    [timing] select=0.0000s expand=0.1369s depth=4
+    [timing] select=0.0001s expand=0.1548s depth=11
+    [timing] select=0.0001s expand=0.1735s depth=12
+    [timing] select=0.0001s expand=0.1574s depth=9
+    [timing] select=0.0001s expand=0.1552s depth=5
+    [timing] select=0.0001s expand=0.1765s depth=6
+    [timing] select=0.0001s expand=0.1765s depth=7
+    [timing] select=0.0001s expand=0.1557s depth=8
+    [timing] select=0.0001s expand=0.1392s depth=9
+    [timing] select=0.0001s expand=0.1441s depth=10
+    [timing] select=0.0000s expand=0.1532s depth=5
+    [timing] select=0.0000s expand=0.1963s depth=3
+    [timing] select=0.0001s expand=0.1847s depth=13
+    [timing] select=0.0000s expand=0.1556s depth=3
+    [timing] select=0.0000s expand=0.2207s depth=4
+    [timing] select=0.0001s expand=0.1888s depth=6
+    [timing] select=0.0001s expand=0.1640s depth=7
+    [timing] select=0.0000s expand=0.1684s depth=5
+    [timing] select=0.0001s expand=0.1817s depth=13
+    [timing] select=0.0000s expand=0.1584s depth=6
+    [timing] select=0.0001s expand=0.1709s depth=8
+    [timing] select=0.0001s expand=0.1495s depth=10
+    [timing] select=0.0001s expand=0.1641s depth=6
+    [timing] select=0.0001s expand=0.1452s depth=14
+    [timing] select=0.0000s expand=0.1564s depth=4
+    [timing] select=0.0000s expand=0.1263s depth=4
+    [timing] select=0.0001s expand=0.1424s depth=7
+    [timing] select=0.0001s expand=0.1369s depth=6
+    [timing] select=0.0001s expand=0.1386s depth=7
+    [timing] select=0.0001s expand=0.1552s depth=5
+    [timing] select=0.0001s expand=0.1268s depth=9
+    [timing] select=0.0000s expand=0.1161s depth=4
+    [timing] select=0.0001s expand=0.1225s depth=11
+    [timing] select=0.0001s expand=0.1142s depth=11
+    [timing] select=0.0001s expand=0.1072s depth=9
+    [timing] select=0.0001s expand=0.1086s depth=10
+    [timing] select=0.0001s expand=0.1167s depth=10
+    [timing] select=0.0000s expand=0.1358s depth=5
+    [timing] select=0.0000s expand=0.1247s depth=3
+    [timing] select=0.0000s expand=0.1320s depth=7
+    [timing] select=0.0000s expand=0.1282s depth=4
+    [timing] select=0.0000s expand=0.1364s depth=4
+    [timing] select=0.0001s expand=0.1270s depth=11
+    [timing] select=0.0001s expand=0.1192s depth=10
+    [timing] select=0.0001s expand=0.1149s depth=8
+    [timing] select=0.0000s expand=0.1116s depth=5
+    [timing] select=0.0001s expand=0.1224s depth=6
+    [timing] select=0.0001s expand=0.1185s depth=11
+    [timing] select=0.0001s expand=0.1088s depth=12
+    [timing] select=0.0001s expand=0.1318s depth=7
+    [timing] select=0.0001s expand=0.1205s depth=12
+    [timing] select=0.0001s expand=0.1215s depth=9
+    [timing] select=0.0000s expand=0.1187s depth=5
+    [timing] select=0.0001s expand=0.1271s depth=6
+    [timing] select=0.0001s expand=0.1136s depth=6
+    [timing] select=0.0001s expand=0.1034s depth=8
+    [timing] select=0.0001s expand=0.1077s depth=10
+    [timing] select=0.0001s expand=0.1089s depth=11
+    [timing] select=0.0001s expand=0.0972s depth=8
+    [timing] select=0.0001s expand=0.0809s depth=7
+    [timing] select=0.0001s expand=0.0824s depth=14
+    [timing] select=0.0001s expand=0.0882s depth=15
+  [sim 98] found goal path of length 15
+[search done] simulations=98, states generated=617
+Found a solution of length 15!
+   1: (calibrate rover0 camera1 objective0 waypoint1)
+   2: (take_image rover0 waypoint1 objective0 camera1 high_res)
+   3: (navigate rover1 waypoint1 waypoint2)
+   4: (sample_rock rover1 rover1store waypoint2)
+   5: (communicate_image_data rover0 general objective0 high_res waypoint1 waypoint2)
+   6: (navigate rover0 waypoint1 waypoint0)
+   7: (sample_rock rover0 rover0store waypoint0)
+   8: (drop rover0 rover0store)
+   9: (communicate_rock_data rover0 general waypoint0 waypoint0 waypoint2)
+  10: (navigate rover1 waypoint2 waypoint1)
+  11: (navigate rover1 waypoint1 waypoint0)
+  12: (communicate_rock_data rover1 general waypoint2 waypoint0 waypoint2)
+  13: (drop rover1 rover1store)
+  14: (sample_soil rover1 rover1store waypoint0)
+  15: (communicate_soil_data rover1 general waypoint0 waypoint0 waypoint2)

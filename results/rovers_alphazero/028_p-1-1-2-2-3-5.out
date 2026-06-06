@@ -1,0 +1,43 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.5039s depth=1
+    [timing] select=0.0000s expand=0.1856s depth=2
+    [timing] select=0.0000s expand=0.2001s depth=2
+    [timing] select=0.0000s expand=0.1933s depth=3
+    [timing] select=0.0000s expand=0.2202s depth=4
+    [timing] select=0.0000s expand=0.2114s depth=5
+    [timing] select=0.0000s expand=0.1985s depth=6
+    [timing] select=0.0000s expand=0.1721s depth=7
+    [timing] select=0.0001s expand=0.1498s depth=8
+    [timing] select=0.0001s expand=0.1647s depth=9
+    [timing] select=0.0000s expand=0.1779s depth=3
+    [timing] select=0.0001s expand=0.1651s depth=6
+    [timing] select=0.0001s expand=0.1387s depth=10
+    [timing] select=0.0000s expand=0.1521s depth=3
+    [timing] select=0.0001s expand=0.1583s depth=7
+    [timing] select=0.0001s expand=0.1605s depth=11
+    [timing] select=0.0001s expand=0.1507s depth=12
+    [timing] select=0.0000s expand=0.1534s depth=4
+    [timing] select=0.0000s expand=0.1597s depth=4
+    [timing] select=0.0001s expand=0.1444s depth=9
+    [timing] select=0.0001s expand=0.1490s depth=10
+    [timing] select=0.0001s expand=0.1362s depth=8
+    [timing] select=0.0001s expand=0.1537s depth=13
+  [sim 23] found goal path of length 13
+[search done] simulations=23, states generated=146
+Found a solution of length 13!
+   1: (calibrate rover1 camera0 objective1 waypoint1)
+   2: (take_image rover1 waypoint1 objective1 camera0 colour)
+   3: (sample_rock rover0 rover0store waypoint0)
+   4: (drop rover0 rover0store)
+   5: (navigate rover0 waypoint0 waypoint1)
+   6: (sample_rock rover0 rover0store waypoint1)
+   7: (drop rover0 rover0store)
+   8: (navigate rover0 waypoint1 waypoint0)
+   9: (navigate rover1 waypoint1 waypoint0)
+  10: (sample_soil rover1 rover1store waypoint0)
+  11: (communicate_image_data rover1 general objective1 colour waypoint0 waypoint1)
+  12: (communicate_soil_data rover1 general waypoint0 waypoint0 waypoint1)
+  13: (communicate_rock_data rover0 general waypoint1 waypoint0 waypoint1)

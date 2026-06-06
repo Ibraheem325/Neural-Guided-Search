@@ -1,0 +1,56 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.9215s depth=1
+    [timing] select=0.0000s expand=0.1079s depth=2
+    [timing] select=0.0000s expand=0.1042s depth=3
+    [timing] select=0.0000s expand=0.1138s depth=4
+    [timing] select=0.0000s expand=0.1220s depth=5
+    [timing] select=0.0000s expand=0.1123s depth=6
+    [timing] select=0.0000s expand=0.1094s depth=7
+    [timing] select=0.0000s expand=0.1140s depth=8
+    [timing] select=0.0000s expand=0.1043s depth=9
+    [timing] select=0.0001s expand=0.0374s depth=10
+  [sim 500] root visits=500, generated=21
+  [sim 1000] root visits=1000, generated=21
+  [sim 1500] root visits=1500, generated=21
+  [sim 2000] root visits=2000, generated=21
+  [sim 2500] root visits=2500, generated=21
+  [sim 3000] root visits=3000, generated=21
+  [sim 3500] root visits=3500, generated=21
+  [sim 4000] root visits=4000, generated=21
+  [sim 4500] root visits=4500, generated=21
+  [sim 5000] root visits=5000, generated=21
+  [sim 5500] root visits=5500, generated=21
+  [sim 6000] root visits=6000, generated=21
+  [sim 6500] root visits=6500, generated=21
+  [sim 7000] root visits=7000, generated=21
+  [sim 7500] root visits=7500, generated=21
+  [sim 8000] root visits=8000, generated=21
+  [sim 8500] root visits=8500, generated=21
+  [sim 9000] root visits=9000, generated=21
+  [sim 9500] root visits=9500, generated=21
+  [sim 10000] root visits=10000, generated=21
+  [sim 10500] root visits=10500, generated=21
+  [sim 11000] root visits=11000, generated=21
+  [sim 11500] root visits=11500, generated=21
+  [sim 12000] root visits=12000, generated=21
+  [sim 12500] root visits=12500, generated=21
+  [sim 13000] root visits=13000, generated=21
+  [sim 13500] root visits=13500, generated=21
+  [sim 14000] root visits=14000, generated=21
+  [sim 14500] root visits=14500, generated=21
+  [sim 15000] root visits=15000, generated=21
+  [sim 15500] root visits=15500, generated=21
+  [sim 16000] root visits=16000, generated=21
+  [sim 16500] root visits=16500, generated=21
+  [sim 17000] root visits=17000, generated=21
+  [sim 17500] root visits=17500, generated=21
+  [sim 18000] root visits=18000, generated=21
+  [sim 18500] root visits=18500, generated=21
+  [sim 19000] root visits=19000, generated=21
+  [sim 19500] root visits=19500, generated=21
+  [sim 20000] root visits=20000, generated=21
+[search done] simulations=20000, states generated=21
+Failed to find a solution!

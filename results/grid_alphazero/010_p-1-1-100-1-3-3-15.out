@@ -1,0 +1,16 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.9879s depth=1
+    [timing] select=0.0000s expand=0.1013s depth=2
+    [timing] select=0.0000s expand=0.1020s depth=2
+    [timing] select=0.0000s expand=0.1044s depth=3
+    [timing] select=0.0000s expand=0.1072s depth=4
+  [sim 5] found goal path of length 4
+[search done] simulations=5, states generated=11
+Found a solution of length 4!
+   1: (move f0-1f f0-2f)
+   2: (pickup f0-2f key0-0)
+   3: (move f0-2f f0-1f)
+   4: (putdown f0-1f key0-0)

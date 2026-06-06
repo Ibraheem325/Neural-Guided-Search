@@ -1,0 +1,36 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.4997s depth=1
+    [timing] select=0.0000s expand=0.1392s depth=2
+    [timing] select=0.0000s expand=0.1708s depth=2
+    [timing] select=0.0000s expand=0.1553s depth=3
+    [timing] select=0.0000s expand=0.1749s depth=4
+    [timing] select=0.0000s expand=0.1826s depth=5
+    [timing] select=0.0000s expand=0.2082s depth=6
+    [timing] select=0.0000s expand=0.1756s depth=7
+    [timing] select=0.0001s expand=0.1807s depth=8
+    [timing] select=0.0001s expand=0.1760s depth=9
+    [timing] select=0.0000s expand=0.1746s depth=6
+    [timing] select=0.0000s expand=0.1641s depth=7
+    [timing] select=0.0001s expand=0.1644s depth=8
+    [timing] select=0.0001s expand=0.1669s depth=10
+    [timing] select=0.0000s expand=0.1420s depth=4
+    [timing] select=0.0001s expand=0.1605s depth=11
+    [timing] select=0.0001s expand=0.1523s depth=12
+  [sim 17] found goal path of length 12
+[search done] simulations=17, states generated=105
+Found a solution of length 12!
+   1: (sample_rock rover0 rover0store waypoint1)
+   2: (drop rover0 rover0store)
+   3: (navigate rover0 waypoint1 waypoint2)
+   4: (sample_rock rover0 rover0store waypoint2)
+   5: (calibrate rover0 camera1 objective1 waypoint2)
+   6: (take_image rover0 waypoint2 objective1 camera1 colour)
+   7: (calibrate rover0 camera0 objective0 waypoint2)
+   8: (take_image rover0 waypoint2 objective1 camera0 low_res)
+   9: (communicate_image_data rover0 general objective1 low_res waypoint2 waypoint1)
+  10: (communicate_image_data rover0 general objective1 colour waypoint2 waypoint1)
+  11: (communicate_rock_data rover0 general waypoint2 waypoint2 waypoint1)
+  12: (communicate_rock_data rover0 general waypoint1 waypoint2 waypoint1)

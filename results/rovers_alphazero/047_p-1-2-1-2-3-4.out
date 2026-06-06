@@ -1,0 +1,45 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.5332s depth=1
+    [timing] select=0.0000s expand=0.1929s depth=2
+    [timing] select=0.0000s expand=0.2013s depth=2
+    [timing] select=0.0000s expand=0.2284s depth=3
+    [timing] select=0.0000s expand=0.2059s depth=4
+    [timing] select=0.0000s expand=0.2001s depth=3
+    [timing] select=0.0000s expand=0.2059s depth=4
+    [timing] select=0.0000s expand=0.2175s depth=5
+    [timing] select=0.0000s expand=0.2547s depth=6
+    [timing] select=0.0000s expand=0.2565s depth=3
+    [timing] select=0.0001s expand=0.1955s depth=7
+    [timing] select=0.0000s expand=0.1873s depth=4
+    [timing] select=0.0001s expand=0.1837s depth=5
+    [timing] select=0.0001s expand=0.1758s depth=6
+    [timing] select=0.0001s expand=0.1783s depth=8
+    [timing] select=0.0000s expand=0.1488s depth=2
+    [timing] select=0.0001s expand=0.1609s depth=4
+    [timing] select=0.0001s expand=0.1774s depth=5
+    [timing] select=0.0000s expand=0.1431s depth=4
+    [timing] select=0.0001s expand=0.1394s depth=9
+    [timing] select=0.0001s expand=0.1264s depth=10
+    [timing] select=0.0001s expand=0.1205s depth=7
+    [timing] select=0.0001s expand=0.1163s depth=11
+    [timing] select=0.0001s expand=0.1237s depth=12
+    [timing] select=0.0001s expand=0.1363s depth=13
+  [sim 25] found goal path of length 13
+[search done] simulations=25, states generated=207
+Found a solution of length 13!
+   1: (sample_rock rover1 rover1store waypoint1)
+   2: (calibrate rover0 camera1 objective0 waypoint2)
+   3: (take_image rover0 waypoint2 objective0 camera1 high_res)
+   4: (communicate_image_data rover0 general objective0 high_res waypoint2 waypoint0)
+   5: (calibrate rover1 camera0 objective0 waypoint1)
+   6: (take_image rover1 waypoint1 objective0 camera0 low_res)
+   7: (communicate_image_data rover1 general objective0 low_res waypoint1 waypoint0)
+   8: (drop rover1 rover1store)
+   9: (navigate rover1 waypoint1 waypoint0)
+  10: (sample_rock rover1 rover1store waypoint0)
+  11: (navigate rover1 waypoint0 waypoint1)
+  12: (communicate_rock_data rover1 general waypoint1 waypoint1 waypoint0)
+  13: (communicate_rock_data rover1 general waypoint0 waypoint1 waypoint0)

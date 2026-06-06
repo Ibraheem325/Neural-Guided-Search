@@ -1,0 +1,32 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.3561s depth=1
+    [timing] select=0.0000s expand=0.0635s depth=2
+    [timing] select=0.0000s expand=0.0643s depth=2
+    [timing] select=0.0000s expand=0.0578s depth=2
+    [timing] select=0.0000s expand=0.0678s depth=3
+    [timing] select=0.0000s expand=0.0715s depth=4
+    [timing] select=0.0000s expand=0.0718s depth=3
+    [timing] select=0.0000s expand=0.0706s depth=5
+    [timing] select=0.0000s expand=0.0722s depth=3
+    [timing] select=0.0000s expand=0.0678s depth=3
+    [timing] select=0.0000s expand=0.0712s depth=4
+    [timing] select=0.0000s expand=0.0669s depth=5
+    [timing] select=0.0000s expand=0.0714s depth=6
+    [timing] select=0.0000s expand=0.0759s depth=7
+    [timing] select=0.0000s expand=0.0697s depth=5
+    [timing] select=0.0000s expand=0.0759s depth=6
+    [timing] select=0.0000s expand=0.0734s depth=8
+  [sim 17] found goal path of length 8
+[search done] simulations=17, states generated=120
+Found a solution of length 8!
+   1: (switch_on instrument3 satellite1)
+   2: (turn_to satellite1 groundstation0 star2)
+   3: (calibrate satellite1 instrument3 groundstation0)
+   4: (turn_to satellite1 star2 groundstation0)
+   5: (take_image satellite1 star2 instrument3 thermograph0)
+   6: (turn_to satellite1 phenomenon1 star2)
+   7: (take_image satellite1 phenomenon1 instrument3 thermograph0)
+   8: (turn_to satellite0 groundstation0 star2)

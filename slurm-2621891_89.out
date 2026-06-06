@@ -1,0 +1,42 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2622100
+Job name: run_alphazero.sh
+Host: cn-424
+Date: Sat Jun  6 13:23:04 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2621891_87 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2621891_88 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2621891_89 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2621891_90 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2621891_78 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-424
+2621891_79 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-424
+2621891_80 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-424
+2621891_13 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-424
+2621891_14 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-424
+2621891_15 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-424
+2621891_16 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-424
+2621891_17 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-424
+2621891_18 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-424
+2621891_24 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-424
+2621891_25 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-424
+2620124 rleap_gpu stv2-bw5 nabin.bh  R   22:01:17      1 cn-424
+2619446 rleap_gpu rgnet-ac daniel.s  R 1-15:17:12      1 cn-424
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2622100
+Time: Sat Jun  6 13:23:13 CEST 2026
+Elapsed Time: 00:00:09
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2622100 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

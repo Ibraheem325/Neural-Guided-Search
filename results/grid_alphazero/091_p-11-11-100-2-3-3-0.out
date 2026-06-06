@@ -1,0 +1,64 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.5068s depth=1
+    [timing] select=0.0000s expand=0.1114s depth=2
+    [timing] select=0.0000s expand=0.0953s depth=2
+    [timing] select=0.0000s expand=0.0959s depth=3
+    [timing] select=0.0000s expand=0.1293s depth=4
+    [timing] select=0.0000s expand=0.0964s depth=5
+    [timing] select=0.0000s expand=0.0953s depth=6
+    [timing] select=0.0000s expand=0.0965s depth=7
+    [timing] select=0.0000s expand=0.0960s depth=8
+    [timing] select=0.0000s expand=0.1137s depth=9
+    [timing] select=0.0001s expand=0.0881s depth=10
+    [timing] select=0.0001s expand=0.0884s depth=11
+    [timing] select=0.0001s expand=0.0875s depth=12
+    [timing] select=0.0001s expand=0.0767s depth=13
+    [timing] select=0.0001s expand=0.0668s depth=14
+    [timing] select=0.0001s expand=0.0783s depth=11
+    [timing] select=0.0001s expand=0.0757s depth=12
+    [timing] select=0.0001s expand=0.0741s depth=15
+    [timing] select=0.0001s expand=0.0754s depth=13
+    [timing] select=0.0001s expand=0.0533s depth=16
+    [timing] select=0.0001s expand=0.0520s depth=17
+    [timing] select=0.0001s expand=0.0494s depth=18
+    [timing] select=0.0001s expand=0.0511s depth=15
+    [timing] select=0.0001s expand=0.0527s depth=16
+    [timing] select=0.0001s expand=0.0579s depth=17
+    [timing] select=0.0001s expand=0.0613s depth=18
+    [timing] select=0.0001s expand=0.0727s depth=14
+    [timing] select=0.0001s expand=0.0732s depth=19
+    [timing] select=0.0001s expand=0.0718s depth=19
+    [timing] select=0.0001s expand=0.0729s depth=20
+    [timing] select=0.0001s expand=0.0775s depth=21
+    [timing] select=0.0001s expand=0.0862s depth=22
+    [timing] select=0.0001s expand=0.0737s depth=15
+    [timing] select=0.0001s expand=0.0714s depth=23
+  [sim 34] found goal path of length 23
+[search done] simulations=34, states generated=69
+Found a solution of length 23!
+   1: (pickup f2-1f key0-0)
+   2: (move f2-1f f2-0f)
+   3: (move f2-0f f1-0f)
+   4: (move f1-0f f0-0f)
+   5: (putdown f0-0f key0-0)
+   6: (move f0-0f f1-0f)
+   7: (pickup f1-0f key1-0)
+   8: (move f1-0f f0-0f)
+   9: (unlock f0-0f f0-1f key1-0 shape1)
+  10: (move f0-0f f1-0f)
+  11: (move f1-0f f2-0f)
+  12: (move f2-0f f2-1f)
+  13: (putdown f2-1f key1-0)
+  14: (move f2-1f f2-2f)
+  15: (move f2-2f f1-2f)
+  16: (move f1-2f f0-2f)
+  17: (move f0-2f f0-1f)
+  18: (move f0-1f f0-0f)
+  19: (pickup f0-0f key0-0)
+  20: (move f0-0f f0-1f)
+  21: (move f0-1f f0-2f)
+  22: (move f0-2f f1-2f)
+  23: (putdown f1-2f key0-0)

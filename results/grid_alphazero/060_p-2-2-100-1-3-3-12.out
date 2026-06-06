@@ -1,0 +1,47 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.5098s depth=1
+    [timing] select=0.0000s expand=0.1076s depth=2
+    [timing] select=0.0000s expand=0.1068s depth=2
+    [timing] select=0.0000s expand=0.1148s depth=3
+    [timing] select=0.0000s expand=0.1179s depth=4
+    [timing] select=0.0000s expand=0.1170s depth=5
+    [timing] select=0.0000s expand=0.1118s depth=6
+    [timing] select=0.0000s expand=0.1169s depth=7
+    [timing] select=0.0001s expand=0.1155s depth=8
+    [timing] select=0.0001s expand=0.1132s depth=9
+    [timing] select=0.0001s expand=0.1109s depth=10
+    [timing] select=0.0001s expand=0.1084s depth=6
+    [timing] select=0.0000s expand=0.1132s depth=7
+    [timing] select=0.0001s expand=0.1156s depth=8
+    [timing] select=0.0001s expand=0.1119s depth=11
+    [timing] select=0.0001s expand=0.1093s depth=12
+    [timing] select=0.0001s expand=0.0931s depth=13
+    [timing] select=0.0001s expand=0.0880s depth=11
+    [timing] select=0.0001s expand=0.0819s depth=12
+    [timing] select=0.0001s expand=0.0791s depth=14
+    [timing] select=0.0001s expand=0.0669s depth=13
+    [timing] select=0.0001s expand=0.0626s depth=15
+    [timing] select=0.0001s expand=0.0588s depth=14
+    [timing] select=0.0001s expand=0.0467s depth=16
+  [sim 24] found goal path of length 16
+[search done] simulations=24, states generated=65
+Found a solution of length 16!
+   1: (move f1-1f f1-0f)
+   2: (pickup f1-0f key0-0)
+   3: (move f1-0f f2-0f)
+   4: (unlock f2-0f f2-1f key0-0 shape0)
+   5: (move f2-0f f1-0f)
+   6: (move f1-0f f0-0f)
+   7: (move f0-0f f0-1f)
+   8: (putdown f0-1f key0-0)
+   9: (move f0-1f f1-1f)
+  10: (move f1-1f f1-0f)
+  11: (move f1-0f f2-0f)
+  12: (pickup f2-0f key0-1)
+  13: (move f2-0f f2-1f)
+  14: (move f2-1f f1-1f)
+  15: (move f1-1f f1-2f)
+  16: (putdown f1-2f key0-1)
