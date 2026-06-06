@@ -4,6 +4,7 @@ import re
 import csv
 import json
 from pathlib import Path
+import time
 
 
 def parse_output(output: str, algorithm: str) -> dict:
@@ -35,16 +36,22 @@ def parse_output(output: str, algorithm: str) -> dict:
     return result
 
 
-def run_algorithm(script: str, domain: str, problem: str, extra_args: list = []) -> dict:
+import time
+
+def run_algorithm(script, domain, problem, extra_args=[]):
     cmd = ['venv/bin/python', script, '--domain', domain, '--problem', problem] + extra_args
+    t0 = time.time()
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
+        elapsed = time.time() - t0
         output = proc.stdout + proc.stderr
-        return parse_output(output, script)
+        result = parse_output(output, script)
+        result['time'] = round(elapsed, 2)
+        return result
     except subprocess.TimeoutExpired:
-        return {'solved': False, 'solution_length': None, 'expanded': None, 'generated': None, 'timeout': True}
+        return {'solved': False, 'solution_length': None, 'expanded': None, 'generated': None, 'timeout': True, 'time': 1800}
     except Exception as e:
-        return {'solved': False, 'solution_length': None, 'expanded': None, 'generated': None, 'error': str(e)}
+        return {'solved': False, 'solution_length': None, 'expanded': None, 'generated': None, 'error': str(e), 'time': round(time.time()-t0, 2)}
 
 
 def summarize(results: list) -> dict:
