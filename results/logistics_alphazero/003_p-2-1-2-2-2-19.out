@@ -1,0 +1,36 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.5062s depth=1
+    [timing] select=0.0000s expand=0.1066s depth=2
+    [timing] select=0.0000s expand=0.1018s depth=2
+    [timing] select=0.0000s expand=0.1092s depth=3
+    [timing] select=0.0000s expand=0.0965s depth=4
+    [timing] select=0.0000s expand=0.0948s depth=5
+    [timing] select=0.0000s expand=0.0895s depth=6
+    [timing] select=0.0000s expand=0.0867s depth=7
+    [timing] select=0.0001s expand=0.0769s depth=8
+    [timing] select=0.0001s expand=0.0789s depth=9
+    [timing] select=0.0001s expand=0.0898s depth=10
+    [timing] select=0.0001s expand=0.0881s depth=11
+    [timing] select=0.0001s expand=0.0745s depth=12
+    [timing] select=0.0001s expand=0.0784s depth=13
+    [timing] select=0.0001s expand=0.0999s depth=14
+  [sim 15] found goal path of length 14
+[search done] simulations=15, states generated=56
+Found a solution of length 14!
+   1: (drive-truck t1 l1-0 l1-1 c1)
+   2: (load-truck p1 t1 l1-1)
+   3: (drive-truck t1 l1-1 l1-0 c1)
+   4: (unload-truck p1 t1 l1-0)
+   5: (load-airplane p1 a0 l1-0)
+   6: (fly-airplane a0 l1-0 l0-0)
+   7: (unload-airplane p1 a0 l0-0)
+   8: (load-airplane p0 a0 l0-0)
+   9: (drive-truck t0 l0-1 l0-0 c0)
+  10: (fly-airplane a0 l0-0 l1-0)
+  11: (unload-airplane p0 a0 l1-0)
+  12: (load-truck p0 t1 l1-0)
+  13: (drive-truck t1 l1-0 l1-1 c1)
+  14: (unload-truck p0 t1 l1-1)

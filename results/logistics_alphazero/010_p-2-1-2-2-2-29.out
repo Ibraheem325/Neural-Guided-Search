@@ -1,0 +1,20 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.4917s depth=1
+    [timing] select=0.0000s expand=0.1174s depth=2
+    [timing] select=0.0000s expand=0.1289s depth=2
+    [timing] select=0.0000s expand=0.1400s depth=3
+    [timing] select=0.0000s expand=0.1021s depth=4
+    [timing] select=0.0000s expand=0.1266s depth=5
+    [timing] select=0.0000s expand=0.0952s depth=6
+  [sim 7] found goal path of length 6
+[search done] simulations=7, states generated=29
+Found a solution of length 6!
+   1: (load-truck p0 t0 l0-1)
+   2: (drive-truck t0 l0-1 l0-0 c0)
+   3: (unload-truck p0 t0 l0-0)
+   4: (load-airplane p0 a0 l0-0)
+   5: (fly-airplane a0 l0-0 l1-0)
+   6: (unload-airplane p0 a0 l1-0)

@@ -1,0 +1,48 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.3708s depth=1
+    [timing] select=0.0000s expand=0.0955s depth=2
+    [timing] select=0.0000s expand=0.1149s depth=2
+    [timing] select=0.0000s expand=0.1456s depth=3
+    [timing] select=0.0000s expand=0.1130s depth=4
+    [timing] select=0.0000s expand=0.1152s depth=3
+    [timing] select=0.0000s expand=0.1085s depth=4
+    [timing] select=0.0000s expand=0.0974s depth=5
+    [timing] select=0.0000s expand=0.1038s depth=6
+    [timing] select=0.0000s expand=0.0774s depth=5
+    [timing] select=0.0000s expand=0.0876s depth=6
+    [timing] select=0.0001s expand=0.0809s depth=7
+    [timing] select=0.0000s expand=0.0565s depth=7
+    [timing] select=0.0001s expand=0.0566s depth=8
+    [timing] select=0.0001s expand=0.0588s depth=8
+    [timing] select=0.0001s expand=0.0642s depth=9
+    [timing] select=0.0001s expand=0.0591s depth=10
+    [timing] select=0.0001s expand=0.0554s depth=11
+    [timing] select=0.0001s expand=0.0602s depth=9
+    [timing] select=0.0001s expand=0.0649s depth=10
+    [timing] select=0.0001s expand=0.0581s depth=9
+    [timing] select=0.0001s expand=0.0572s depth=11
+    [timing] select=0.0001s expand=0.0625s depth=12
+    [timing] select=0.0001s expand=0.0626s depth=12
+    [timing] select=0.0001s expand=0.0562s depth=13
+    [timing] select=0.0001s expand=0.0575s depth=13
+    [timing] select=0.0001s expand=0.0632s depth=14
+  [sim 27] found goal path of length 14
+[search done] simulations=27, states generated=137
+Found a solution of length 14!
+   1: (drive-truck t0 l0-1 l0-0 c0)
+   2: (load-truck p0 t0 l0-0)
+   3: (load-truck p1 t0 l0-0)
+   4: (drive-truck t0 l0-0 l0-1 c0)
+   5: (unload-truck p0 t0 l0-1)
+   6: (drive-truck t0 l0-1 l0-0 c0)
+   7: (unload-truck p1 t0 l0-0)
+   8: (load-airplane p1 a1 l0-0)
+   9: (fly-airplane a1 l0-0 l1-0)
+  10: (drive-truck t1 l1-1 l1-0 c1)
+  11: (unload-airplane p1 a1 l1-0)
+  12: (load-truck p1 t1 l1-0)
+  13: (drive-truck t1 l1-0 l1-1 c1)
+  14: (unload-truck p1 t1 l1-1)

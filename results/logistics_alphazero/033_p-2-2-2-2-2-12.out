@@ -1,0 +1,26 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+    [timing] select=0.0000s expand=0.3579s depth=1
+    [timing] select=0.0000s expand=0.0931s depth=2
+    [timing] select=0.0000s expand=0.0948s depth=2
+    [timing] select=0.0000s expand=0.1106s depth=3
+    [timing] select=0.0000s expand=0.1109s depth=4
+    [timing] select=0.0000s expand=0.1123s depth=5
+    [timing] select=0.0000s expand=0.1152s depth=6
+    [timing] select=0.0000s expand=0.1091s depth=7
+    [timing] select=0.0000s expand=0.0988s depth=8
+    [timing] select=0.0000s expand=0.1016s depth=9
+  [sim 10] found goal path of length 9
+[search done] simulations=10, states generated=49
+Found a solution of length 9!
+   1: (load-airplane p0 a0 l0-0)
+   2: (fly-airplane a0 l0-0 l1-0)
+   3: (unload-airplane p0 a0 l1-0)
+   4: (load-truck p0 t1 l1-0)
+   5: (drive-truck t1 l1-0 l1-1 c1)
+   6: (load-truck p1 t1 l1-1)
+   7: (unload-truck p0 t1 l1-1)
+   8: (drive-truck t1 l1-1 l1-0 c1)
+   9: (unload-truck p1 t1 l1-0)
