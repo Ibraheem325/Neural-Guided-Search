@@ -1,0 +1,36 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2622695
+Job name: run_alphazero.sh
+Host: cn-426
+Date: Sat Jun  6 14:38:09 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2622666_25 rleap_gpu run_alph ibrahim.  R       0:01      1 cn-426
+2622666_26 rleap_gpu run_alph ibrahim.  R       0:01      1 cn-426
+2622666_27 rleap_gpu run_alph ibrahim.  R       0:01      1 cn-426
+2622666_28 rleap_gpu run_alph ibrahim.  R       0:01      1 cn-426
+2622666_29 rleap_gpu run_alph ibrahim.  R       0:01      1 cn-426
+2622666_30 rleap_gpu run_alph ibrahim.  R       0:01      1 cn-426
+2622666_31 rleap_gpu run_alph ibrahim.  R       0:01      1 cn-426
+2622666_32 rleap_gpu run_alph ibrahim.  R       0:01      1 cn-426
+2619879 rleap_gpu rgnet-ac daniel.s  R 1-04:55:13      1 cn-426
+2619447 rleap_gpu rgnet-ac daniel.s  R 1-16:32:18      1 cn-426
+2619448 rleap_gpu rgnet-ac daniel.s  R 1-16:32:18      1 cn-426
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2622695
+Time: Sat Jun  6 14:38:16 CEST 2026
+Elapsed Time: 00:00:06
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2622695 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

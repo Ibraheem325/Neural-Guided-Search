@@ -2,15 +2,15 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.5470s depth=1
-    [timing] select=0.0000s expand=0.1947s depth=2
-    [timing] select=0.0000s expand=0.1877s depth=2
-    [timing] select=0.0000s expand=0.1977s depth=3
-    [timing] select=0.0000s expand=0.2019s depth=4
-    [timing] select=0.0000s expand=0.2075s depth=5
-    [timing] select=0.0000s expand=0.2367s depth=6
+    [timing] select=0.0000s expand=0.5594s depth=1
+    [timing] select=0.0000s expand=0.1872s depth=2
+    [timing] select=0.0000s expand=0.1868s depth=2
+    [timing] select=0.0000s expand=0.2033s depth=3
+    [timing] select=0.0000s expand=0.2064s depth=4
+    [timing] select=0.0000s expand=0.2091s depth=5
+    [timing] select=0.0000s expand=0.2136s depth=6
   [sim 7] found goal path of length 6
-[Final] Expanded: 0, Generated: 39
+[Final] Expanded: 7, Generated: 39
 [search done] simulations=7, states generated=39
 Found a solution of length 6!
    1: (sample_soil rover0 rover0store waypoint0)

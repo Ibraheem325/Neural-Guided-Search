@@ -2,17 +2,17 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.5508s depth=1
-    [timing] select=0.0000s expand=0.2371s depth=2
-    [timing] select=0.0000s expand=0.2506s depth=2
-    [timing] select=0.0000s expand=0.2009s depth=3
-    [timing] select=0.0000s expand=0.2051s depth=4
-    [timing] select=0.0000s expand=0.2466s depth=5
-    [timing] select=0.0001s expand=0.2215s depth=6
-    [timing] select=0.0001s expand=0.2041s depth=7
-    [timing] select=0.0001s expand=0.1948s depth=8
+    [timing] select=0.0000s expand=0.5376s depth=1
+    [timing] select=0.0000s expand=0.1913s depth=2
+    [timing] select=0.0000s expand=0.2046s depth=2
+    [timing] select=0.0000s expand=0.1818s depth=3
+    [timing] select=0.0000s expand=0.2191s depth=4
+    [timing] select=0.0000s expand=0.2326s depth=5
+    [timing] select=0.0001s expand=0.1972s depth=6
+    [timing] select=0.0001s expand=0.2071s depth=7
+    [timing] select=0.0001s expand=0.2255s depth=8
   [sim 9] found goal path of length 8
-[Final] Expanded: 0, Generated: 71
+[Final] Expanded: 9, Generated: 71
 [search done] simulations=9, states generated=71
 Found a solution of length 8!
    1: (calibrate rover0 camera0 objective0 waypoint0)

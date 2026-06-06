@@ -2,22 +2,22 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.3582s depth=1
-    [timing] select=0.0000s expand=0.0464s depth=2
-    [timing] select=0.0000s expand=0.0519s depth=2
-    [timing] select=0.0000s expand=0.0553s depth=3
-    [timing] select=0.0000s expand=0.0609s depth=4
-    [timing] select=0.0000s expand=0.0601s depth=5
-    [timing] select=0.0000s expand=0.0647s depth=6
-    [timing] select=0.0001s expand=0.0601s depth=7
-    [timing] select=0.0000s expand=0.0580s depth=5
-    [timing] select=0.0000s expand=0.0464s depth=3
-    [timing] select=0.0001s expand=0.0497s depth=6
-    [timing] select=0.0000s expand=0.0403s depth=3
-    [timing] select=0.0001s expand=0.0506s depth=7
-    [timing] select=0.0001s expand=0.0477s depth=8
+    [timing] select=0.0000s expand=0.3869s depth=1
+    [timing] select=0.0000s expand=0.0674s depth=2
+    [timing] select=0.0000s expand=0.0811s depth=2
+    [timing] select=0.0000s expand=0.0911s depth=3
+    [timing] select=0.0000s expand=0.0986s depth=4
+    [timing] select=0.0000s expand=0.0915s depth=5
+    [timing] select=0.0000s expand=0.1055s depth=6
+    [timing] select=0.0001s expand=0.0876s depth=7
+    [timing] select=0.0000s expand=0.0850s depth=5
+    [timing] select=0.0000s expand=0.0812s depth=3
+    [timing] select=0.0001s expand=0.0879s depth=6
+    [timing] select=0.0000s expand=0.0818s depth=3
+    [timing] select=0.0001s expand=0.0867s depth=7
+    [timing] select=0.0001s expand=0.0840s depth=8
   [sim 14] found goal path of length 8
-[Final] Expanded: 0, Generated: 118
+[Final] Expanded: 14, Generated: 118
 [search done] simulations=14, states generated=118
 Found a solution of length 8!
    1: (turn_to satellite1 groundstation0 star1)

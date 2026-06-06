@@ -2,31 +2,31 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.4685s depth=1
-    [timing] select=0.0000s expand=0.2012s depth=2
-    [timing] select=0.0000s expand=0.2581s depth=2
-    [timing] select=0.0000s expand=0.1945s depth=3
-    [timing] select=0.0000s expand=0.2305s depth=4
-    [timing] select=0.0000s expand=0.2129s depth=5
-    [timing] select=0.0000s expand=0.2170s depth=6
-    [timing] select=0.0000s expand=0.2208s depth=7
-    [timing] select=0.0001s expand=0.1728s depth=8
-    [timing] select=0.0001s expand=0.1811s depth=9
-    [timing] select=0.0000s expand=0.1872s depth=3
-    [timing] select=0.0001s expand=0.1669s depth=6
-    [timing] select=0.0001s expand=0.1348s depth=10
-    [timing] select=0.0000s expand=0.1654s depth=3
-    [timing] select=0.0000s expand=0.1513s depth=7
-    [timing] select=0.0001s expand=0.1438s depth=11
-    [timing] select=0.0001s expand=0.1513s depth=12
-    [timing] select=0.0000s expand=0.1450s depth=4
-    [timing] select=0.0000s expand=0.1317s depth=4
-    [timing] select=0.0001s expand=0.1232s depth=9
-    [timing] select=0.0001s expand=0.1499s depth=10
-    [timing] select=0.0001s expand=0.1340s depth=8
-    [timing] select=0.0001s expand=0.1492s depth=13
+    [timing] select=0.0000s expand=0.6531s depth=1
+    [timing] select=0.0000s expand=0.1936s depth=2
+    [timing] select=0.0000s expand=0.2198s depth=2
+    [timing] select=0.0000s expand=0.1963s depth=3
+    [timing] select=0.0000s expand=0.2030s depth=4
+    [timing] select=0.0000s expand=0.2189s depth=5
+    [timing] select=0.0000s expand=0.2256s depth=6
+    [timing] select=0.0001s expand=0.2297s depth=7
+    [timing] select=0.0001s expand=0.2028s depth=8
+    [timing] select=0.0001s expand=0.2008s depth=9
+    [timing] select=0.0000s expand=0.2048s depth=3
+    [timing] select=0.0001s expand=0.2307s depth=6
+    [timing] select=0.0001s expand=0.2190s depth=10
+    [timing] select=0.0000s expand=0.2085s depth=3
+    [timing] select=0.0001s expand=0.1906s depth=7
+    [timing] select=0.0001s expand=0.1849s depth=11
+    [timing] select=0.0001s expand=0.1839s depth=12
+    [timing] select=0.0000s expand=0.1737s depth=4
+    [timing] select=0.0001s expand=0.1616s depth=4
+    [timing] select=0.0001s expand=0.1439s depth=9
+    [timing] select=0.0001s expand=0.1648s depth=10
+    [timing] select=0.0001s expand=0.1760s depth=8
+    [timing] select=0.0001s expand=0.2197s depth=13
   [sim 23] found goal path of length 13
-[Final] Expanded: 0, Generated: 146
+[Final] Expanded: 23, Generated: 146
 [search done] simulations=23, states generated=146
 Found a solution of length 13!
    1: (calibrate rover1 camera0 objective1 waypoint1)

@@ -1,0 +1,42 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2623051
+Job name: run_alphazero.sh
+Host: cn-424
+Date: Sat Jun  6 14:38:51 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2623023_23 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2623023_24 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2623023_25 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2623023_26 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2623023_27 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2623023_28 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2623023_29 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622668_100 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-424
+2622668_101 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-424
+2622668_102 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-424
+2622668_103 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-424
+2622668_104 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-424
+2622668_105 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-424
+2622667_74 rleap_gpu run_alph ibrahim.  R       0:24      1 cn-424
+2622667_75 rleap_gpu run_alph ibrahim.  R       0:24      1 cn-424
+2620124 rleap_gpu stv2-bw5 nabin.bh  R   23:17:04      1 cn-424
+2619446 rleap_gpu rgnet-ac daniel.s  R 1-16:32:59      1 cn-424
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2623051
+Time: Sat Jun  6 14:38:56 CEST 2026
+Elapsed Time: 00:00:05
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2623051 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

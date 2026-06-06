@@ -2,27 +2,27 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.4995s depth=1
-    [timing] select=0.0000s expand=0.0980s depth=2
-    [timing] select=0.0000s expand=0.1062s depth=2
-    [timing] select=0.0000s expand=0.1040s depth=3
-    [timing] select=0.0000s expand=0.1061s depth=4
-    [timing] select=0.0000s expand=0.1153s depth=5
-    [timing] select=0.0000s expand=0.1173s depth=6
-    [timing] select=0.0000s expand=0.1163s depth=7
-    [timing] select=0.0000s expand=0.1153s depth=8
-    [timing] select=0.0001s expand=0.1202s depth=9
-    [timing] select=0.0001s expand=0.1119s depth=10
-    [timing] select=0.0001s expand=0.1052s depth=11
-    [timing] select=0.0001s expand=0.0967s depth=8
-    [timing] select=0.0001s expand=0.1019s depth=9
-    [timing] select=0.0001s expand=0.1011s depth=10
-    [timing] select=0.0000s expand=0.0947s depth=7
-    [timing] select=0.0001s expand=0.0907s depth=8
-    [timing] select=0.0001s expand=0.0845s depth=9
-    [timing] select=0.0001s expand=0.0831s depth=10
+    [timing] select=0.0000s expand=0.4601s depth=1
+    [timing] select=0.0000s expand=0.0466s depth=2
+    [timing] select=0.0000s expand=0.0447s depth=2
+    [timing] select=0.0000s expand=0.0441s depth=3
+    [timing] select=0.0000s expand=0.0444s depth=4
+    [timing] select=0.0000s expand=0.0473s depth=5
+    [timing] select=0.0000s expand=0.0466s depth=6
+    [timing] select=0.0000s expand=0.0488s depth=7
+    [timing] select=0.0000s expand=0.0460s depth=8
+    [timing] select=0.0000s expand=0.0461s depth=9
+    [timing] select=0.0001s expand=0.0461s depth=10
+    [timing] select=0.0001s expand=0.0460s depth=11
+    [timing] select=0.0000s expand=0.0458s depth=8
+    [timing] select=0.0000s expand=0.0481s depth=9
+    [timing] select=0.0001s expand=0.0457s depth=10
+    [timing] select=0.0000s expand=0.0480s depth=7
+    [timing] select=0.0000s expand=0.0461s depth=8
+    [timing] select=0.0000s expand=0.0460s depth=9
+    [timing] select=0.0000s expand=0.0457s depth=10
   [sim 19] found goal path of length 10
-[Final] Expanded: 0, Generated: 61
+[Final] Expanded: 19, Generated: 61
 [search done] simulations=19, states generated=61
 Found a solution of length 10!
    1: (move f2-1f f2-2f)

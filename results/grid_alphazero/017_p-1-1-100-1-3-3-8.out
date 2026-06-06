@@ -2,20 +2,20 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.9119s depth=1
-    [timing] select=0.0000s expand=0.1073s depth=2
-    [timing] select=0.0000s expand=0.1005s depth=3
-    [timing] select=0.0000s expand=0.1051s depth=4
-    [timing] select=0.0000s expand=0.1033s depth=5
-    [timing] select=0.0000s expand=0.0878s depth=4
-    [timing] select=0.0000s expand=0.0710s depth=5
+    [timing] select=0.0000s expand=0.9666s depth=1
+    [timing] select=0.0000s expand=0.1080s depth=2
+    [timing] select=0.0000s expand=0.0992s depth=3
+    [timing] select=0.0000s expand=0.1061s depth=4
+    [timing] select=0.0000s expand=0.1066s depth=5
+    [timing] select=0.0000s expand=0.0889s depth=4
+    [timing] select=0.0000s expand=0.0711s depth=5
     [timing] select=0.0000s expand=0.0724s depth=6
-    [timing] select=0.0000s expand=0.0508s depth=6
-    [timing] select=0.0000s expand=0.0549s depth=7
-    [timing] select=0.0000s expand=0.0464s depth=7
-    [timing] select=0.0000s expand=0.0469s depth=8
+    [timing] select=0.0000s expand=0.0509s depth=6
+    [timing] select=0.0000s expand=0.0558s depth=7
+    [timing] select=0.0000s expand=0.0506s depth=7
+    [timing] select=0.0000s expand=0.0547s depth=8
   [sim 12] found goal path of length 8
-[Final] Expanded: 0, Generated: 27
+[Final] Expanded: 12, Generated: 27
 [search done] simulations=12, states generated=27
 Found a solution of length 8!
    1: (move f2-0f f2-1f)

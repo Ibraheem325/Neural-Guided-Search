@@ -2,23 +2,23 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.5622s depth=1
-    [timing] select=0.0000s expand=0.1947s depth=2
-    [timing] select=0.0000s expand=0.2175s depth=2
-    [timing] select=0.0000s expand=0.2214s depth=3
-    [timing] select=0.0000s expand=0.2192s depth=4
-    [timing] select=0.0000s expand=0.2184s depth=5
-    [timing] select=0.0000s expand=0.2465s depth=6
-    [timing] select=0.0000s expand=0.2023s depth=7
-    [timing] select=0.0000s expand=0.1992s depth=4
-    [timing] select=0.0000s expand=0.2072s depth=5
-    [timing] select=0.0001s expand=0.1959s depth=8
-    [timing] select=0.0001s expand=0.1877s depth=9
-    [timing] select=0.0001s expand=0.1818s depth=6
-    [timing] select=0.0001s expand=0.1830s depth=10
-    [timing] select=0.0001s expand=0.1885s depth=11
+    [timing] select=0.0000s expand=0.6565s depth=1
+    [timing] select=0.0000s expand=0.1782s depth=2
+    [timing] select=0.0000s expand=0.1842s depth=2
+    [timing] select=0.0000s expand=0.1849s depth=3
+    [timing] select=0.0000s expand=0.1969s depth=4
+    [timing] select=0.0000s expand=0.1803s depth=5
+    [timing] select=0.0000s expand=0.1979s depth=6
+    [timing] select=0.0000s expand=0.2054s depth=7
+    [timing] select=0.0000s expand=0.1858s depth=4
+    [timing] select=0.0000s expand=0.2020s depth=5
+    [timing] select=0.0001s expand=0.1700s depth=8
+    [timing] select=0.0001s expand=0.1627s depth=9
+    [timing] select=0.0001s expand=0.1522s depth=6
+    [timing] select=0.0001s expand=0.1509s depth=10
+    [timing] select=0.0001s expand=0.1747s depth=11
   [sim 15] found goal path of length 11
-[Final] Expanded: 0, Generated: 90
+[Final] Expanded: 15, Generated: 90
 [search done] simulations=15, states generated=90
 Found a solution of length 11!
    1: (calibrate rover0 camera0 objective0 waypoint0)

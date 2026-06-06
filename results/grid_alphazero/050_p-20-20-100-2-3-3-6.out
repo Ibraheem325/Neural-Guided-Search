@@ -2,23 +2,23 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.8587s depth=1
-    [timing] select=0.0000s expand=0.1054s depth=2
-    [timing] select=0.0000s expand=0.1422s depth=3
-    [timing] select=0.0000s expand=0.1156s depth=4
-    [timing] select=0.0000s expand=0.1172s depth=5
-    [timing] select=0.0000s expand=0.1130s depth=6
-    [timing] select=0.0000s expand=0.1241s depth=7
-    [timing] select=0.0000s expand=0.1285s depth=8
-    [timing] select=0.0000s expand=0.1300s depth=9
-    [timing] select=0.0001s expand=0.0981s depth=10
-    [timing] select=0.0001s expand=0.0794s depth=11
-    [timing] select=0.0001s expand=0.0701s depth=12
-    [timing] select=0.0000s expand=0.0650s depth=13
-    [timing] select=0.0000s expand=0.0542s depth=6
-    [timing] select=0.0001s expand=0.0533s depth=14
+    [timing] select=0.0000s expand=1.0164s depth=1
+    [timing] select=0.0000s expand=0.1029s depth=2
+    [timing] select=0.0000s expand=0.1087s depth=3
+    [timing] select=0.0000s expand=0.1485s depth=4
+    [timing] select=0.0000s expand=0.1143s depth=5
+    [timing] select=0.0000s expand=0.1125s depth=6
+    [timing] select=0.0000s expand=0.1130s depth=7
+    [timing] select=0.0000s expand=0.1114s depth=8
+    [timing] select=0.0000s expand=0.1088s depth=9
+    [timing] select=0.0000s expand=0.0972s depth=10
+    [timing] select=0.0001s expand=0.0980s depth=11
+    [timing] select=0.0000s expand=0.0758s depth=12
+    [timing] select=0.0001s expand=0.0665s depth=13
+    [timing] select=0.0000s expand=0.0510s depth=6
+    [timing] select=0.0001s expand=0.0538s depth=14
   [sim 15] found goal path of length 14
-[Final] Expanded: 0, Generated: 39
+[Final] Expanded: 15, Generated: 39
 [search done] simulations=15, states generated=39
 Found a solution of length 14!
    1: (move f0-0f f1-0f)

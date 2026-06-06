@@ -2,22 +2,22 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.4239s depth=1
-    [timing] select=0.0000s expand=0.0948s depth=2
-    [timing] select=0.0000s expand=0.0783s depth=2
-    [timing] select=0.0000s expand=0.1187s depth=3
-    [timing] select=0.0000s expand=0.0954s depth=4
-    [timing] select=0.0000s expand=0.0918s depth=5
-    [timing] select=0.0000s expand=0.0947s depth=3
-    [timing] select=0.0000s expand=0.0914s depth=4
-    [timing] select=0.0000s expand=0.0759s depth=5
-    [timing] select=0.0000s expand=0.0739s depth=6
-    [timing] select=0.0000s expand=0.0770s depth=7
-    [timing] select=0.0000s expand=0.0705s depth=5
-    [timing] select=0.0000s expand=0.0668s depth=6
-    [timing] select=0.0001s expand=0.0636s depth=8
+    [timing] select=0.0000s expand=0.3253s depth=1
+    [timing] select=0.0000s expand=0.0742s depth=2
+    [timing] select=0.0000s expand=0.0679s depth=2
+    [timing] select=0.0000s expand=0.0863s depth=3
+    [timing] select=0.0000s expand=0.0756s depth=4
+    [timing] select=0.0000s expand=0.0704s depth=5
+    [timing] select=0.0000s expand=0.0765s depth=3
+    [timing] select=0.0000s expand=0.0921s depth=4
+    [timing] select=0.0000s expand=0.0820s depth=5
+    [timing] select=0.0000s expand=0.1004s depth=6
+    [timing] select=0.0000s expand=0.0939s depth=7
+    [timing] select=0.0000s expand=0.0773s depth=5
+    [timing] select=0.0000s expand=0.0886s depth=6
+    [timing] select=0.0000s expand=0.0806s depth=8
   [sim 14] found goal path of length 8
-[Final] Expanded: 0, Generated: 84
+[Final] Expanded: 14, Generated: 84
 [search done] simulations=14, states generated=84
 Found a solution of length 8!
    1: (switch_on instrument0 satellite0)

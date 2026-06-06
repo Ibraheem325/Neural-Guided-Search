@@ -2,28 +2,28 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.6322s depth=1
-    [timing] select=0.0000s expand=0.2119s depth=2
-    [timing] select=0.0000s expand=0.2088s depth=2
-    [timing] select=0.0000s expand=0.2026s depth=3
-    [timing] select=0.0000s expand=0.2057s depth=4
-    [timing] select=0.0000s expand=0.1997s depth=5
-    [timing] select=0.0000s expand=0.1915s depth=3
-    [timing] select=0.0000s expand=0.1882s depth=4
-    [timing] select=0.0000s expand=0.1854s depth=5
-    [timing] select=0.0001s expand=0.1872s depth=6
-    [timing] select=0.0001s expand=0.1809s depth=7
-    [timing] select=0.0000s expand=0.1819s depth=4
-    [timing] select=0.0001s expand=0.1893s depth=8
-    [timing] select=0.0001s expand=0.1934s depth=9
-    [timing] select=0.0001s expand=0.1896s depth=5
-    [timing] select=0.0000s expand=0.1835s depth=4
-    [timing] select=0.0001s expand=0.1902s depth=10
-    [timing] select=0.0001s expand=0.2265s depth=11
-    [timing] select=0.0001s expand=0.2220s depth=12
-    [timing] select=0.0001s expand=0.2455s depth=13
+    [timing] select=0.0000s expand=0.5852s depth=1
+    [timing] select=0.0000s expand=0.1994s depth=2
+    [timing] select=0.0000s expand=0.2056s depth=2
+    [timing] select=0.0000s expand=0.2016s depth=3
+    [timing] select=0.0000s expand=0.2055s depth=4
+    [timing] select=0.0000s expand=0.1999s depth=5
+    [timing] select=0.0000s expand=0.2011s depth=3
+    [timing] select=0.0000s expand=0.2115s depth=4
+    [timing] select=0.0000s expand=0.2009s depth=5
+    [timing] select=0.0001s expand=0.2132s depth=6
+    [timing] select=0.0001s expand=0.2072s depth=7
+    [timing] select=0.0000s expand=0.2098s depth=4
+    [timing] select=0.0001s expand=0.2156s depth=8
+    [timing] select=0.0001s expand=0.2188s depth=9
+    [timing] select=0.0000s expand=0.2173s depth=5
+    [timing] select=0.0000s expand=0.2035s depth=4
+    [timing] select=0.0001s expand=0.2157s depth=10
+    [timing] select=0.0001s expand=0.2682s depth=11
+    [timing] select=0.0001s expand=0.2293s depth=12
+    [timing] select=0.0001s expand=0.2671s depth=13
   [sim 20] found goal path of length 13
-[Final] Expanded: 0, Generated: 125
+[Final] Expanded: 20, Generated: 125
 [search done] simulations=20, states generated=125
 Found a solution of length 13!
    1: (sample_rock rover1 rover1store waypoint1)

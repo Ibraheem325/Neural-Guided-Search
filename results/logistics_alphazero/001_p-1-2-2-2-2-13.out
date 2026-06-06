@@ -2,45 +2,47 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.4249s depth=1
-    [timing] select=0.0000s expand=0.1245s depth=2
-    [timing] select=0.0000s expand=0.1322s depth=2
-    [timing] select=0.0000s expand=0.1287s depth=3
-    [timing] select=0.0000s expand=0.1271s depth=4
-    [timing] select=0.0000s expand=0.1247s depth=3
-    [timing] select=0.0000s expand=0.1284s depth=4
-    [timing] select=0.0000s expand=0.1179s depth=5
-    [timing] select=0.0000s expand=0.1104s depth=5
-    [timing] select=0.0000s expand=0.1045s depth=6
-    [timing] select=0.0000s expand=0.1166s depth=6
-    [timing] select=0.0000s expand=0.0962s depth=7
-    [timing] select=0.0000s expand=0.1032s depth=8
-    [timing] select=0.0000s expand=0.0875s depth=9
-    [timing] select=0.0000s expand=0.0845s depth=7
-    [timing] select=0.0000s expand=0.0843s depth=8
-    [timing] select=0.0000s expand=0.0671s depth=9
-    [timing] select=0.0001s expand=0.0763s depth=10
-    [timing] select=0.0000s expand=0.0772s depth=10
-    [timing] select=0.0001s expand=0.0768s depth=11
-    [timing] select=0.0000s expand=0.0804s depth=11
-    [timing] select=0.0001s expand=0.0764s depth=12
-    [timing] select=0.0001s expand=0.0810s depth=13
-    [timing] select=0.0001s expand=0.0819s depth=14
-  [sim 24] found goal path of length 14
-[Final] Expanded: 0, Generated: 86
-[search done] simulations=24, states generated=86
+    [timing] select=0.0000s expand=0.3960s depth=1
+    [timing] select=0.0000s expand=0.1348s depth=2
+    [timing] select=0.0000s expand=0.1083s depth=2
+    [timing] select=0.0000s expand=0.1008s depth=2
+    [timing] select=0.0000s expand=0.0932s depth=3
+    [timing] select=0.0000s expand=0.0976s depth=3
+    [timing] select=0.0000s expand=0.1009s depth=4
+    [timing] select=0.0000s expand=0.0915s depth=3
+    [timing] select=0.0000s expand=0.0906s depth=4
+    [timing] select=0.0000s expand=0.0627s depth=5
+    [timing] select=0.0000s expand=0.0635s depth=5
+    [timing] select=0.0000s expand=0.0608s depth=6
+    [timing] select=0.0000s expand=0.0673s depth=6
+    [timing] select=0.0000s expand=0.0562s depth=7
+    [timing] select=0.0000s expand=0.0570s depth=8
+    [timing] select=0.0000s expand=0.0386s depth=9
+    [timing] select=0.0000s expand=0.0356s depth=7
+    [timing] select=0.0000s expand=0.0409s depth=8
+    [timing] select=0.0000s expand=0.0385s depth=9
+    [timing] select=0.0001s expand=0.0385s depth=10
+    [timing] select=0.0001s expand=0.0384s depth=10
+    [timing] select=0.0001s expand=0.0423s depth=11
+    [timing] select=0.0001s expand=0.0423s depth=11
+    [timing] select=0.0001s expand=0.0379s depth=12
+    [timing] select=0.0001s expand=0.0422s depth=13
+    [timing] select=0.0001s expand=0.0423s depth=14
+  [sim 26] found goal path of length 14
+[Final] Expanded: 26, Generated: 93
+[search done] simulations=26, states generated=93
 Found a solution of length 14!
-   1: (load-truck p0 t1 l1-0)
-   2: (load-truck p1 t0 l0-0)
-   3: (unload-truck p0 t1 l1-0)
-   4: (load-airplane p0 a1 l1-0)
-   5: (unload-truck p1 t0 l0-0)
-   6: (load-airplane p1 a0 l0-0)
-   7: (unload-airplane p0 a1 l1-0)
-   8: (load-truck p0 t1 l1-0)
-   9: (fly-airplane a0 l0-0 l1-0)
-  10: (unload-airplane p1 a0 l1-0)
-  11: (unload-truck p0 t1 l1-0)
-  12: (load-airplane p0 a1 l1-0)
-  13: (fly-airplane a1 l1-0 l0-0)
-  14: (unload-airplane p0 a1 l0-0)
+   1: (load-truck p1 t0 l0-0)
+   2: (load-truck p0 t1 l1-0)
+   3: (unload-truck p1 t0 l0-0)
+   4: (load-airplane p1 a0 l0-0)
+   5: (unload-truck p0 t1 l1-0)
+   6: (load-airplane p0 a1 l1-0)
+   7: (unload-airplane p1 a0 l0-0)
+   8: (load-truck p1 t0 l0-0)
+   9: (fly-airplane a1 l1-0 l0-0)
+  10: (unload-airplane p0 a1 l0-0)
+  11: (unload-truck p1 t0 l0-0)
+  12: (load-airplane p1 a0 l0-0)
+  13: (fly-airplane a0 l0-0 l1-0)
+  14: (unload-airplane p1 a0 l1-0)

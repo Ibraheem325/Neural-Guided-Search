@@ -2,88 +2,88 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.5138s depth=1
-    [timing] select=0.0000s expand=0.1206s depth=2
-    [timing] select=0.0000s expand=0.1142s depth=2
-    [timing] select=0.0000s expand=0.1194s depth=3
-    [timing] select=0.0000s expand=0.1103s depth=3
-    [timing] select=0.0000s expand=0.1002s depth=4
-    [timing] select=0.0000s expand=0.0998s depth=5
-    [timing] select=0.0000s expand=0.0898s depth=6
-    [timing] select=0.0001s expand=0.0759s depth=7
-    [timing] select=0.0000s expand=0.0915s depth=5
-    [timing] select=0.0001s expand=0.0852s depth=6
-    [timing] select=0.0000s expand=0.0756s depth=4
-    [timing] select=0.0000s expand=0.0952s depth=5
-    [timing] select=0.0000s expand=0.0810s depth=6
-    [timing] select=0.0000s expand=0.0773s depth=5
-    [timing] select=0.0001s expand=0.0742s depth=7
-    [timing] select=0.0001s expand=0.0747s depth=8
-    [timing] select=0.0000s expand=0.0755s depth=6
-    [timing] select=0.0000s expand=0.0725s depth=6
-    [timing] select=0.0000s expand=0.0686s depth=6
-    [timing] select=0.0001s expand=0.0662s depth=7
-    [timing] select=0.0001s expand=0.0698s depth=7
-    [timing] select=0.0001s expand=0.0657s depth=6
-    [timing] select=0.0001s expand=0.0647s depth=6
-    [timing] select=0.0001s expand=0.0660s depth=7
-    [timing] select=0.0001s expand=0.0705s depth=7
-    [timing] select=0.0001s expand=0.0569s depth=8
-    [timing] select=0.0001s expand=0.0524s depth=8
-    [timing] select=0.0001s expand=0.0573s depth=8
-    [timing] select=0.0001s expand=0.0591s depth=9
-    [timing] select=0.0001s expand=0.0609s depth=9
-    [timing] select=0.0001s expand=0.0538s depth=10
-    [timing] select=0.0001s expand=0.0575s depth=7
-    [timing] select=0.0001s expand=0.0530s depth=11
-    [timing] select=0.0001s expand=0.0597s depth=12
-    [timing] select=0.0001s expand=0.0602s depth=9
-    [timing] select=0.0001s expand=0.0537s depth=10
-    [timing] select=0.0001s expand=0.0534s depth=11
-    [timing] select=0.0001s expand=0.0602s depth=12
-    [timing] select=0.0001s expand=0.0615s depth=9
-    [timing] select=0.0001s expand=0.0596s depth=13
-    [timing] select=0.0001s expand=0.0438s depth=10
-    [timing] select=0.0001s expand=0.0439s depth=11
-    [timing] select=0.0001s expand=0.0494s depth=12
-    [timing] select=0.0001s expand=0.0437s depth=10
-    [timing] select=0.0001s expand=0.0437s depth=11
-    [timing] select=0.0001s expand=0.0493s depth=12
-    [timing] select=0.0001s expand=0.0467s depth=13
-    [timing] select=0.0001s expand=0.0467s depth=13
-    [timing] select=0.0001s expand=0.0468s depth=13
-    [timing] select=0.0001s expand=0.0491s depth=14
-    [timing] select=0.0001s expand=0.0492s depth=14
-    [timing] select=0.0001s expand=0.0490s depth=15
-    [timing] select=0.0001s expand=0.0464s depth=16
-    [timing] select=0.0001s expand=0.0470s depth=7
-    [timing] select=0.0001s expand=0.0466s depth=17
-    [timing] select=0.0001s expand=0.0465s depth=8
-    [timing] select=0.0001s expand=0.0465s depth=8
-    [timing] select=0.0001s expand=0.0458s depth=18
-    [timing] select=0.0001s expand=0.0463s depth=8
-    [timing] select=0.0001s expand=0.0482s depth=8
-    [timing] select=0.0001s expand=0.0491s depth=19
+    [timing] select=0.0000s expand=0.3836s depth=1
+    [timing] select=0.0000s expand=0.0977s depth=2
+    [timing] select=0.0000s expand=0.0831s depth=2
+    [timing] select=0.0000s expand=0.0869s depth=3
+    [timing] select=0.0000s expand=0.0767s depth=3
+    [timing] select=0.0000s expand=0.0726s depth=4
+    [timing] select=0.0000s expand=0.0754s depth=5
+    [timing] select=0.0000s expand=0.0675s depth=6
+    [timing] select=0.0000s expand=0.0547s depth=7
+    [timing] select=0.0000s expand=0.0579s depth=5
+    [timing] select=0.0000s expand=0.0579s depth=6
+    [timing] select=0.0000s expand=0.0537s depth=4
+    [timing] select=0.0000s expand=0.0594s depth=5
+    [timing] select=0.0000s expand=0.0571s depth=6
+    [timing] select=0.0000s expand=0.0601s depth=5
+    [timing] select=0.0000s expand=0.0606s depth=7
+    [timing] select=0.0000s expand=0.0654s depth=8
+    [timing] select=0.0000s expand=0.0600s depth=6
+    [timing] select=0.0000s expand=0.0611s depth=6
+    [timing] select=0.0000s expand=0.0599s depth=6
+    [timing] select=0.0000s expand=0.0500s depth=7
+    [timing] select=0.0000s expand=0.0499s depth=7
+    [timing] select=0.0000s expand=0.0459s depth=6
+    [timing] select=0.0000s expand=0.0389s depth=6
+    [timing] select=0.0000s expand=0.0389s depth=7
+    [timing] select=0.0000s expand=0.0389s depth=7
+    [timing] select=0.0001s expand=0.0388s depth=8
+    [timing] select=0.0000s expand=0.0387s depth=8
+    [timing] select=0.0000s expand=0.0390s depth=8
+    [timing] select=0.0001s expand=0.0410s depth=9
+    [timing] select=0.0001s expand=0.0411s depth=9
+    [timing] select=0.0001s expand=0.0360s depth=10
+    [timing] select=0.0000s expand=0.0385s depth=7
+    [timing] select=0.0001s expand=0.0361s depth=11
+    [timing] select=0.0001s expand=0.0404s depth=12
+    [timing] select=0.0000s expand=0.0408s depth=9
+    [timing] select=0.0000s expand=0.0358s depth=10
+    [timing] select=0.0001s expand=0.0359s depth=11
+    [timing] select=0.0001s expand=0.0403s depth=12
+    [timing] select=0.0000s expand=0.0415s depth=9
+    [timing] select=0.0001s expand=0.0382s depth=13
+    [timing] select=0.0000s expand=0.0379s depth=10
+    [timing] select=0.0000s expand=0.0364s depth=11
+    [timing] select=0.0001s expand=0.0408s depth=12
+    [timing] select=0.0000s expand=0.0360s depth=10
+    [timing] select=0.0000s expand=0.0362s depth=11
+    [timing] select=0.0001s expand=0.0407s depth=12
+    [timing] select=0.0001s expand=0.0386s depth=13
+    [timing] select=0.0001s expand=0.0385s depth=13
+    [timing] select=0.0001s expand=0.0388s depth=13
+    [timing] select=0.0001s expand=0.0406s depth=14
+    [timing] select=0.0001s expand=0.0408s depth=14
+    [timing] select=0.0001s expand=0.0408s depth=15
+    [timing] select=0.0001s expand=0.0384s depth=16
+    [timing] select=0.0000s expand=0.0387s depth=7
+    [timing] select=0.0001s expand=0.0384s depth=17
+    [timing] select=0.0000s expand=0.0388s depth=8
+    [timing] select=0.0000s expand=0.0388s depth=8
+    [timing] select=0.0001s expand=0.0385s depth=18
+    [timing] select=0.0000s expand=0.0387s depth=8
+    [timing] select=0.0000s expand=0.0389s depth=8
+    [timing] select=0.0001s expand=0.0408s depth=19
   [sim 62] found goal path of length 19
-[Final] Expanded: 0, Generated: 326
+[Final] Expanded: 62, Generated: 326
 [search done] simulations=62, states generated=326
 Found a solution of length 19!
    1: (load-truck p0 t1 l1-1)
    2: (load-truck p1 t1 l1-1)
    3: (drive-truck t1 l1-1 l1-0 c1)
-   4: (unload-truck p0 t1 l1-0)
-   5: (load-airplane p0 a1 l1-0)
+   4: (unload-truck p1 t1 l1-0)
+   5: (load-airplane p1 a1 l1-0)
    6: (fly-airplane a1 l1-0 l0-0)
    7: (drive-truck t0 l0-1 l0-0 c0)
-   8: (unload-airplane p0 a1 l0-0)
-   9: (load-truck p0 t0 l0-0)
+   8: (unload-airplane p1 a1 l0-0)
+   9: (load-truck p1 t0 l0-0)
   10: (drive-truck t0 l0-0 l0-1 c0)
-  11: (unload-truck p0 t0 l0-1)
-  12: (unload-truck p1 t1 l1-0)
-  13: (load-airplane p1 a0 l1-0)
+  11: (unload-truck p1 t0 l0-1)
+  12: (unload-truck p0 t1 l1-0)
+  13: (load-airplane p0 a0 l1-0)
   14: (fly-airplane a0 l1-0 l0-0)
   15: (drive-truck t0 l0-1 l0-0 c0)
-  16: (unload-airplane p1 a0 l0-0)
-  17: (load-truck p1 t0 l0-0)
+  16: (unload-airplane p0 a0 l0-0)
+  17: (load-truck p0 t0 l0-0)
   18: (drive-truck t0 l0-0 l0-1 c0)
-  19: (unload-truck p1 t0 l0-1)
+  19: (unload-truck p0 t0 l0-1)

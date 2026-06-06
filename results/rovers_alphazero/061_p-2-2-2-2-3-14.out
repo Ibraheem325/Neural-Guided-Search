@@ -2,22 +2,22 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.5626s depth=1
-    [timing] select=0.0000s expand=0.2426s depth=2
-    [timing] select=0.0000s expand=0.1889s depth=2
-    [timing] select=0.0000s expand=0.1998s depth=3
-    [timing] select=0.0000s expand=0.2041s depth=4
-    [timing] select=0.0001s expand=0.2073s depth=5
-    [timing] select=0.0001s expand=0.2053s depth=6
-    [timing] select=0.0000s expand=0.1596s depth=3
-    [timing] select=0.0001s expand=0.1354s depth=7
-    [timing] select=0.0001s expand=0.1545s depth=8
-    [timing] select=0.0000s expand=0.1667s depth=4
-    [timing] select=0.0000s expand=0.1431s depth=4
-    [timing] select=0.0000s expand=0.1230s depth=5
-    [timing] select=0.0001s expand=0.1294s depth=9
+    [timing] select=0.0000s expand=0.5591s depth=1
+    [timing] select=0.0000s expand=0.1876s depth=2
+    [timing] select=0.0000s expand=0.1864s depth=2
+    [timing] select=0.0000s expand=0.2033s depth=3
+    [timing] select=0.0000s expand=0.2061s depth=4
+    [timing] select=0.0000s expand=0.2087s depth=5
+    [timing] select=0.0000s expand=0.2137s depth=6
+    [timing] select=0.0000s expand=0.1317s depth=3
+    [timing] select=0.0001s expand=0.1357s depth=7
+    [timing] select=0.0001s expand=0.1269s depth=8
+    [timing] select=0.0000s expand=0.1402s depth=4
+    [timing] select=0.0000s expand=0.1486s depth=4
+    [timing] select=0.0000s expand=0.1195s depth=5
+    [timing] select=0.0001s expand=0.1272s depth=9
   [sim 14] found goal path of length 9
-[Final] Expanded: 0, Generated: 103
+[Final] Expanded: 14, Generated: 103
 [search done] simulations=14, states generated=103
 Found a solution of length 9!
    1: (sample_rock rover0 rover0store waypoint0)

@@ -2,18 +2,18 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.3962s depth=1
-    [timing] select=0.0000s expand=0.0889s depth=2
-    [timing] select=0.0000s expand=0.0861s depth=2
-    [timing] select=0.0000s expand=0.0875s depth=3
-    [timing] select=0.0000s expand=0.0823s depth=4
-    [timing] select=0.0000s expand=0.0888s depth=5
-    [timing] select=0.0000s expand=0.0776s depth=6
-    [timing] select=0.0000s expand=0.0742s depth=7
-    [timing] select=0.0000s expand=0.0755s depth=8
-    [timing] select=0.0000s expand=0.0741s depth=9
+    [timing] select=0.0000s expand=0.3775s depth=1
+    [timing] select=0.0000s expand=0.0690s depth=2
+    [timing] select=0.0000s expand=0.0733s depth=2
+    [timing] select=0.0000s expand=0.0764s depth=3
+    [timing] select=0.0000s expand=0.0729s depth=4
+    [timing] select=0.0000s expand=0.0675s depth=5
+    [timing] select=0.0000s expand=0.0715s depth=6
+    [timing] select=0.0000s expand=0.0636s depth=7
+    [timing] select=0.0000s expand=0.0648s depth=8
+    [timing] select=0.0000s expand=0.0753s depth=9
   [sim 10] found goal path of length 9
-[Final] Expanded: 0, Generated: 36
+[Final] Expanded: 10, Generated: 36
 [search done] simulations=10, states generated=36
 Found a solution of length 9!
    1: (load-airplane p0 a0 l0-0)

@@ -2,20 +2,20 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.4755s depth=1
-    [timing] select=0.0000s expand=0.2427s depth=2
-    [timing] select=0.0000s expand=0.2521s depth=2
-    [timing] select=0.0000s expand=0.1956s depth=3
-    [timing] select=0.0000s expand=0.2056s depth=4
-    [timing] select=0.0000s expand=0.1935s depth=5
-    [timing] select=0.0001s expand=0.1627s depth=6
-    [timing] select=0.0001s expand=0.1876s depth=7
-    [timing] select=0.0001s expand=0.2152s depth=8
-    [timing] select=0.0000s expand=0.1539s depth=2
-    [timing] select=0.0000s expand=0.1264s depth=3
-    [timing] select=0.0001s expand=0.1702s depth=9
+    [timing] select=0.0000s expand=0.4954s depth=1
+    [timing] select=0.0000s expand=0.2189s depth=2
+    [timing] select=0.0000s expand=0.2835s depth=2
+    [timing] select=0.0000s expand=0.1883s depth=3
+    [timing] select=0.0000s expand=0.2429s depth=4
+    [timing] select=0.0000s expand=0.1976s depth=5
+    [timing] select=0.0001s expand=0.1804s depth=6
+    [timing] select=0.0001s expand=0.2005s depth=7
+    [timing] select=0.0001s expand=0.2193s depth=8
+    [timing] select=0.0000s expand=0.1676s depth=2
+    [timing] select=0.0000s expand=0.1571s depth=3
+    [timing] select=0.0001s expand=0.1644s depth=9
   [sim 12] found goal path of length 9
-[Final] Expanded: 0, Generated: 85
+[Final] Expanded: 12, Generated: 85
 [search done] simulations=12, states generated=85
 Found a solution of length 9!
    1: (sample_soil rover1 rover1store waypoint1)

@@ -2,36 +2,36 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.3955s depth=1
-    [timing] select=0.0000s expand=0.0701s depth=2
-    [timing] select=0.0000s expand=0.0684s depth=2
-    [timing] select=0.0000s expand=0.0687s depth=3
-    [timing] select=0.0000s expand=0.0837s depth=4
-    [timing] select=0.0000s expand=0.0875s depth=5
-    [timing] select=0.0000s expand=0.0691s depth=2
-    [timing] select=0.0000s expand=0.0601s depth=2
-    [timing] select=0.0000s expand=0.0651s depth=2
-    [timing] select=0.0000s expand=0.0581s depth=2
-    [timing] select=0.0000s expand=0.0550s depth=3
-    [timing] select=0.0000s expand=0.0593s depth=4
-    [timing] select=0.0001s expand=0.0605s depth=6
-    [timing] select=0.0001s expand=0.0660s depth=7
-    [timing] select=0.0001s expand=0.0613s depth=8
-    [timing] select=0.0000s expand=0.0569s depth=6
-    [timing] select=0.0000s expand=0.0611s depth=5
-    [timing] select=0.0001s expand=0.0619s depth=7
-    [timing] select=0.0001s expand=0.0616s depth=8
-    [timing] select=0.0001s expand=0.0588s depth=9
+    [timing] select=0.0000s expand=0.4025s depth=1
+    [timing] select=0.0000s expand=0.0755s depth=2
+    [timing] select=0.0000s expand=0.0718s depth=2
+    [timing] select=0.0000s expand=0.0736s depth=3
+    [timing] select=0.0000s expand=0.0997s depth=4
+    [timing] select=0.0000s expand=0.1080s depth=5
+    [timing] select=0.0000s expand=0.0948s depth=2
+    [timing] select=0.0000s expand=0.0730s depth=2
+    [timing] select=0.0000s expand=0.0741s depth=2
+    [timing] select=0.0000s expand=0.0790s depth=2
+    [timing] select=0.0000s expand=0.0685s depth=3
+    [timing] select=0.0000s expand=0.0864s depth=4
+    [timing] select=0.0001s expand=0.0880s depth=6
+    [timing] select=0.0001s expand=0.0934s depth=7
+    [timing] select=0.0001s expand=0.0812s depth=8
+    [timing] select=0.0000s expand=0.0627s depth=6
+    [timing] select=0.0000s expand=0.0755s depth=5
+    [timing] select=0.0001s expand=0.0779s depth=7
+    [timing] select=0.0001s expand=0.0769s depth=8
+    [timing] select=0.0001s expand=0.0857s depth=9
   [sim 20] found goal path of length 9
-[Final] Expanded: 0, Generated: 163
+[Final] Expanded: 20, Generated: 163
 [search done] simulations=20, states generated=163
 Found a solution of length 9!
    1: (turn_to satellite0 star1 star2)
    2: (turn_to satellite1 star1 planet3)
    3: (switch_on instrument1 satellite1)
    4: (calibrate satellite1 instrument1 star1)
-   5: (turn_to satellite1 planet3 star1)
-   6: (take_image satellite1 planet3 instrument1 spectrograph1)
-   7: (turn_to satellite1 star2 planet3)
-   8: (take_image satellite1 star2 instrument1 thermograph0)
-   9: (turn_to satellite1 star0 star2)
+   5: (turn_to satellite1 star2 star1)
+   6: (take_image satellite1 star2 instrument1 thermograph0)
+   7: (turn_to satellite1 planet3 star2)
+   8: (take_image satellite1 planet3 instrument1 spectrograph1)
+   9: (turn_to satellite1 star0 planet3)

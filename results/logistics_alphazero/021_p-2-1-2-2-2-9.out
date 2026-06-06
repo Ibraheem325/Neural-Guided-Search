@@ -2,20 +2,20 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.3471s depth=1
-    [timing] select=0.0000s expand=0.0440s depth=2
-    [timing] select=0.0000s expand=0.0442s depth=2
-    [timing] select=0.0000s expand=0.0493s depth=3
-    [timing] select=0.0000s expand=0.0495s depth=4
-    [timing] select=0.0000s expand=0.0488s depth=5
-    [timing] select=0.0000s expand=0.0453s depth=6
-    [timing] select=0.0000s expand=0.0548s depth=7
-    [timing] select=0.0000s expand=0.0493s depth=8
-    [timing] select=0.0000s expand=0.0490s depth=9
-    [timing] select=0.0000s expand=0.0518s depth=10
-    [timing] select=0.0001s expand=0.0546s depth=11
+    [timing] select=0.0000s expand=0.3597s depth=1
+    [timing] select=0.0000s expand=0.0549s depth=2
+    [timing] select=0.0000s expand=0.0534s depth=2
+    [timing] select=0.0000s expand=0.0597s depth=3
+    [timing] select=0.0000s expand=0.0589s depth=4
+    [timing] select=0.0000s expand=0.0591s depth=5
+    [timing] select=0.0000s expand=0.0511s depth=6
+    [timing] select=0.0000s expand=0.0560s depth=7
+    [timing] select=0.0000s expand=0.0532s depth=8
+    [timing] select=0.0000s expand=0.0509s depth=9
+    [timing] select=0.0001s expand=0.0534s depth=10
+    [timing] select=0.0001s expand=0.0559s depth=11
   [sim 12] found goal path of length 11
-[Final] Expanded: 0, Generated: 51
+[Final] Expanded: 12, Generated: 51
 [search done] simulations=12, states generated=51
 Found a solution of length 11!
    1: (load-truck p1 t0 l0-1)
