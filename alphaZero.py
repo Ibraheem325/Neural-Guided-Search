@@ -200,20 +200,13 @@ def _backup(path_nodes: List[Node],
         value_norm.update(node.q(action))
 
 
-def _simulate(root: Node,
-              policy_model: ModelWrapper,
-              q1_model: ModelWrapper,
-              q2_model: Optional[ModelWrapper],
-              goal: mm.GroundConjunctiveCondition,
-              c_puct: float,
-              value_norm: _ValueNormalizer,
-              dead_end_value: float) -> Tuple[Optional[List[mm.GroundAction]], int]:
-    """One select->expand->evaluate->backup pass. Returns (goal_plan_or_None, children_created)."""
-    path_nodes: List[Node] = [root]
-    path_edges: List[Tuple[Node, mm.GroundAction]] = []
+def _simulate(root, policy_model, q1_model, q2_model, goal, c_puct, value_norm, dead_end_value):
+    path_nodes = [root]
+    path_edges = []
     node = root
 
-    # SELECT: descend by pUCT to a leaf / goal / dead end.
+    t0 = time.time()
+    # SELECT
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm)
         if action is None or child is None:
@@ -221,26 +214,26 @@ def _simulate(root: Node,
         path_edges.append((node, action))
         node = child
         path_nodes.append(node)
+    t_select = time.time() - t0
 
-    goal_plan: Optional[List[mm.GroundAction]] = None
+    goal_plan = None
     generated = 0
 
     if node.is_goal:
-        # Reached a goal node: the path to it IS a plan.
         value = 0.0
         goal_plan = [a for _, a in path_edges]
     elif node.is_dead_end:
         value = dead_end_value
     else:
-        # EXPAND + EVALUATE the leaf.
+        t1 = time.time()
         value, generated = _expand(node, policy_model, q1_model, q2_model, goal, dead_end_value)
-        # Detect a goal among the freshly created children immediately.
+        t_expand = time.time() - t1
+        print(f'    [timing] select={t_select:.4f}s expand={t_expand:.4f}s depth={len(path_nodes)}', flush=True)
         for child_action, child in node.children.items():
             if child.is_goal:
                 goal_plan = [a for _, a in path_edges] + [child_action]
                 break
 
-    # BACKUP along the traversed path.
     _backup(path_nodes, path_edges, value, value_norm)
     return goal_plan, generated
 
