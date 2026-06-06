@@ -22,12 +22,16 @@ def parse_output(output: str, algorithm: str) -> dict:
     if m:
         result['expanded'] = int(m.group(1))
         result['generated'] = int(m.group(2))
-    # AlphaZero uses different output format
-    m = re.search(r'\[Final\] Steps: (\d+), Expanded: (\d+), Generated: (\d+)', output)
-    if m:
+
+    # AlphaZero new format
+    m = re.search(r'Found a solution of length (\d+)', output)
+    if m and 'search done' in output:
+        result['solved'] = True
         result['solution_length'] = int(m.group(1))
-        result['expanded'] = int(m.group(2))
-        result['generated'] = int(m.group(3))
+    m = re.search(r'simulations=(\d+), states generated=(\d+)', output)
+    if m:
+        result['expanded'] = int(m.group(1))
+        result['generated'] = int(m.group(2))
     return result
 
 
@@ -65,8 +69,11 @@ def main():
     parser.add_argument('--dqn_model', default=None, type=str, help='Path to DQN model .pth (enables Q*)')
     parser.add_argument('--sac_policy', default=None, type=str, help='Path to SAC policy model .pth (enables AlphaZero)')
     parser.add_argument('--sac_q1', default=None, type=str, help='Path to SAC q1 model .pth (enables AlphaZero)')
+    parser.add_argument('--sac_q2', default=None, type=str, help='Path to SAC q2 model .pth (optional, improves AlphaZero)')
     parser.add_argument('--output', default='results.json', type=str, help='Output JSON file')
     parser.add_argument('--limit', default=None, type=int, help='Limit number of problems (for quick testing)')
+    parser.add_argument('--algorithms', default=None, type=str, 
+    help='Comma-separated list of algorithms to run (e.g. "alphazero,qstar"). If not set, runs all.')
     args = parser.parse_args()
 
     problems = sorted([str(f) for f in Path(args.test_dir).glob('*.pddl')])
@@ -89,7 +96,14 @@ def main():
         algorithms['qstar'] = ('qstar.py', ['--model', args.dqn_model])
 
     if args.sac_policy and args.sac_q1:
-        algorithms['alphazero'] = ('alphaZero.py', ['--policy_model', args.sac_policy, '--q1_model', args.sac_q1])
+        az_args = ['--policy_model', args.sac_policy, '--q1_model', args.sac_q1, '--max_time', '1800']
+        if args.sac_q2:
+            az_args += ['--q2_model', args.sac_q2]
+        algorithms['alphazero'] = ('alphaZero.py', az_args)
+
+    if args.algorithms:
+        selected = [a.strip() for a in args.algorithms.split(',')]
+        algorithms = {k: v for k, v in algorithms.items() if k in selected}
 
     all_results = {}
     for alg_name, (script, extra) in algorithms.items():
@@ -126,6 +140,7 @@ def main():
         s = data['summary']
         print(f'{alg_name:<15} {s["coverage"]:>9}% {s["solved"]:>5}/{s["total"]:<3} '
               f'{s["avg_solution_length"]:>10} {s["avg_expanded"]:>14}')
+        
 
 
 if __name__ == '__main__':
