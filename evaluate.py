@@ -39,7 +39,7 @@ def parse_output(output: str, algorithm: str) -> dict:
 import time
 
 def run_algorithm(script, domain, problem, extra_args=[]):
-    cmd = ['venv/bin/python', script, '--doma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in', domain, '--problem', problem] + extra_args
+    cmd = ['venv/bin/python', script, '--domain', domain, '--problem', problem] + extra_args
     t0 = time.time()
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
