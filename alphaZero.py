@@ -218,7 +218,7 @@ def _simulate(root, policy_model, q1_model, q2_model, goal, c_puct, value_norm, 
 
     goal_plan = None
     generated = 0
-
+    expanded = 0
     if node.is_goal:
         value = 0.0
         goal_plan = [a for _, a in path_edges]
@@ -248,11 +248,12 @@ def _search(root_state: mm.State,
             max_time: Optional[float],
             c_puct: float,
             dead_end_value: float,
-            stop_on_first_solution: bool) -> Tuple[Optional[List[mm.GroundAction]], int, int]:
+            stop_on_first_solution: bool) -> Tuple[Optional[List[mm.GroundAction]], int, int, int]:
     root = Node(root_state, root_key, goal.holds(root_state), parent=None)
     value_norm = _ValueNormalizer()
     best_plan: Optional[List[mm.GroundAction]] = None
     total_generated = 0
+    total_expanded = 0
     start = time.time()
     sims = 0
 
@@ -274,7 +275,7 @@ def _search(root_state: mm.State,
         if sims % 500 == 0:
             print(f"  [sim {sims}] root visits={root.visit_count}, generated={total_generated}", flush=True)
 
-    return best_plan, sims, total_generated
+    return best_plan, sims, total_generated, total_expanded
 
 
 def _parse_arguments() -> argparse.Namespace:
@@ -311,12 +312,13 @@ def _plan(problem: mm.Problem,
         if goal.holds(initial):
             return []
 
-        plan, sims, generated = _search(
+        plan, sims, generated, expanded = _search(
             initial, get_state_key(initial),
             policy_model, q1_model, q2_model, goal,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
         )
+        print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, states generated={generated}", flush=True)
 
         if plan is None:
