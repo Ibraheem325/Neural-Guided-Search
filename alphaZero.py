@@ -227,6 +227,7 @@ def _simulate(root, policy_model, q1_model, q2_model, goal, c_puct, value_norm, 
     else:
         t1 = time.time()
         value, generated = _expand(node, policy_model, q1_model, q2_model, goal, dead_end_value)
+        expanded = 1
         t_expand = time.time() - t1
         print(f'    [timing] select={t_select:.4f}s expand={t_expand:.4f}s depth={len(path_nodes)}', flush=True)
         for child_action, child in node.children.items():
@@ -235,7 +236,7 @@ def _simulate(root, policy_model, q1_model, q2_model, goal, c_puct, value_norm, 
                 break
 
     _backup(path_nodes, path_edges, value, value_norm)
-    return goal_plan, generated
+    return goal_plan, generated, expanded
 
 
 def _search(root_state: mm.State,
@@ -260,10 +261,11 @@ def _search(root_state: mm.State,
     while sims < max_simulations:
         if max_time is not None and (time.time() - start) > max_time:
             break
-        goal_plan, generated = _simulate(
+        goal_plan, generated, expanded = _simulate(
             root, policy_model, q1_model, q2_model, goal, c_puct, value_norm, dead_end_value
         )
         total_generated += generated
+        total_expanded += expanded
         sims += 1
 
         if goal_plan is not None and (best_plan is None or len(goal_plan) < len(best_plan)):
