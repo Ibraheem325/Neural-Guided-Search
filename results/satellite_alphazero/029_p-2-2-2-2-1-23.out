@@ -2,22 +2,23 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.3714s depth=1
-    [timing] select=0.0000s expand=0.0764s depth=2
-    [timing] select=0.0000s expand=0.0882s depth=2
-    [timing] select=0.0000s expand=0.0972s depth=3
-    [timing] select=0.0000s expand=0.0853s depth=4
-    [timing] select=0.0000s expand=0.0963s depth=5
-    [timing] select=0.0000s expand=0.0888s depth=4
-    [timing] select=0.0000s expand=0.1090s depth=5
-    [timing] select=0.0000s expand=0.0858s depth=6
-    [timing] select=0.0000s expand=0.0731s depth=6
-    [timing] select=0.0000s expand=0.0672s depth=7
-    [timing] select=0.0000s expand=0.0692s depth=8
-    [timing] select=0.0000s expand=0.0706s depth=7
-    [timing] select=0.0000s expand=0.0717s depth=8
-    [timing] select=0.0000s expand=0.0673s depth=9
+    [timing] select=0.0000s expand=0.3585s depth=1
+    [timing] select=0.0000s expand=0.0446s depth=2
+    [timing] select=0.0000s expand=0.0378s depth=2
+    [timing] select=0.0000s expand=0.0440s depth=3
+    [timing] select=0.0000s expand=0.0418s depth=4
+    [timing] select=0.0000s expand=0.0450s depth=5
+    [timing] select=0.0000s expand=0.0413s depth=4
+    [timing] select=0.0000s expand=0.0432s depth=5
+    [timing] select=0.0000s expand=0.0451s depth=6
+    [timing] select=0.0000s expand=0.0407s depth=6
+    [timing] select=0.0000s expand=0.0427s depth=7
+    [timing] select=0.0001s expand=0.0478s depth=8
+    [timing] select=0.0000s expand=0.0436s depth=7
+    [timing] select=0.0001s expand=0.0434s depth=8
+    [timing] select=0.0001s expand=0.0411s depth=9
   [sim 15] found goal path of length 9
+[Final] Expanded: 0, Generated: 91
 [search done] simulations=15, states generated=91
 Found a solution of length 9!
    1: (switch_on instrument0 satellite0)

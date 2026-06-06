@@ -2,19 +2,20 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.4032s depth=1
-    [timing] select=0.0000s expand=0.1239s depth=2
-    [timing] select=0.0000s expand=0.0910s depth=2
-    [timing] select=0.0000s expand=0.1088s depth=3
-    [timing] select=0.0000s expand=0.1073s depth=4
-    [timing] select=0.0000s expand=0.1254s depth=5
-    [timing] select=0.0000s expand=0.1177s depth=6
+    [timing] select=0.0000s expand=0.4083s depth=1
+    [timing] select=0.0000s expand=0.1105s depth=2
+    [timing] select=0.0000s expand=0.1114s depth=2
+    [timing] select=0.0000s expand=0.1359s depth=3
+    [timing] select=0.0000s expand=0.1047s depth=4
+    [timing] select=0.0000s expand=0.1442s depth=5
+    [timing] select=0.0000s expand=0.1374s depth=6
   [sim 7] found goal path of length 6
+[Final] Expanded: 0, Generated: 44
 [search done] simulations=7, states generated=44
 Found a solution of length 6!
-   1: (switch_on instrument1 satellite1)
-   2: (calibrate satellite1 instrument1 star0)
+   1: (switch_on instrument2 satellite1)
+   2: (calibrate satellite1 instrument2 star0)
    3: (turn_to satellite1 planet1 star0)
-   4: (take_image satellite1 planet1 instrument1 thermograph0)
+   4: (take_image satellite1 planet1 instrument2 thermograph0)
    5: (turn_to satellite1 star2 planet1)
-   6: (take_image satellite1 star2 instrument1 thermograph0)
+   6: (take_image satellite1 star2 instrument2 thermograph0)

@@ -2,14 +2,15 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.4090s depth=1
-    [timing] select=0.0000s expand=0.0827s depth=2
-    [timing] select=0.0000s expand=0.1295s depth=2
-    [timing] select=0.0000s expand=0.1418s depth=3
-    [timing] select=0.0000s expand=0.1076s depth=4
-    [timing] select=0.0000s expand=0.1259s depth=5
-    [timing] select=0.0000s expand=0.0976s depth=6
+    [timing] select=0.0000s expand=0.3878s depth=1
+    [timing] select=0.0000s expand=0.0970s depth=2
+    [timing] select=0.0000s expand=0.1073s depth=2
+    [timing] select=0.0000s expand=0.1316s depth=3
+    [timing] select=0.0000s expand=0.0996s depth=4
+    [timing] select=0.0000s expand=0.1142s depth=5
+    [timing] select=0.0000s expand=0.0791s depth=6
   [sim 7] found goal path of length 6
+[Final] Expanded: 0, Generated: 31
 [search done] simulations=7, states generated=31
 Found a solution of length 6!
    1: (load-truck p1 t1 l1-1)

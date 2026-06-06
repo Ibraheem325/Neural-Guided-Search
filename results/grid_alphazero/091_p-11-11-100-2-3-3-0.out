@@ -2,41 +2,42 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.5068s depth=1
-    [timing] select=0.0000s expand=0.1114s depth=2
-    [timing] select=0.0000s expand=0.0953s depth=2
-    [timing] select=0.0000s expand=0.0959s depth=3
-    [timing] select=0.0000s expand=0.1293s depth=4
-    [timing] select=0.0000s expand=0.0964s depth=5
-    [timing] select=0.0000s expand=0.0953s depth=6
-    [timing] select=0.0000s expand=0.0965s depth=7
-    [timing] select=0.0000s expand=0.0960s depth=8
-    [timing] select=0.0000s expand=0.1137s depth=9
-    [timing] select=0.0001s expand=0.0881s depth=10
-    [timing] select=0.0001s expand=0.0884s depth=11
-    [timing] select=0.0001s expand=0.0875s depth=12
-    [timing] select=0.0001s expand=0.0767s depth=13
-    [timing] select=0.0001s expand=0.0668s depth=14
-    [timing] select=0.0001s expand=0.0783s depth=11
-    [timing] select=0.0001s expand=0.0757s depth=12
-    [timing] select=0.0001s expand=0.0741s depth=15
-    [timing] select=0.0001s expand=0.0754s depth=13
-    [timing] select=0.0001s expand=0.0533s depth=16
-    [timing] select=0.0001s expand=0.0520s depth=17
-    [timing] select=0.0001s expand=0.0494s depth=18
-    [timing] select=0.0001s expand=0.0511s depth=15
-    [timing] select=0.0001s expand=0.0527s depth=16
+    [timing] select=0.0000s expand=0.4071s depth=1
+    [timing] select=0.0000s expand=0.1318s depth=2
+    [timing] select=0.0000s expand=0.1074s depth=2
+    [timing] select=0.0000s expand=0.1180s depth=3
+    [timing] select=0.0000s expand=0.1334s depth=4
+    [timing] select=0.0000s expand=0.1199s depth=5
+    [timing] select=0.0000s expand=0.1297s depth=6
+    [timing] select=0.0000s expand=0.1109s depth=7
+    [timing] select=0.0000s expand=0.1098s depth=8
+    [timing] select=0.0000s expand=0.1243s depth=9
+    [timing] select=0.0000s expand=0.1225s depth=10
+    [timing] select=0.0000s expand=0.1005s depth=11
+    [timing] select=0.0001s expand=0.1012s depth=12
+    [timing] select=0.0001s expand=0.0918s depth=13
+    [timing] select=0.0001s expand=0.0639s depth=14
+    [timing] select=0.0000s expand=0.0527s depth=11
+    [timing] select=0.0000s expand=0.0563s depth=12
+    [timing] select=0.0001s expand=0.0547s depth=15
+    [timing] select=0.0000s expand=0.0595s depth=13
+    [timing] select=0.0001s expand=0.0617s depth=16
     [timing] select=0.0001s expand=0.0579s depth=17
-    [timing] select=0.0001s expand=0.0613s depth=18
-    [timing] select=0.0001s expand=0.0727s depth=14
-    [timing] select=0.0001s expand=0.0732s depth=19
-    [timing] select=0.0001s expand=0.0718s depth=19
-    [timing] select=0.0001s expand=0.0729s depth=20
-    [timing] select=0.0001s expand=0.0775s depth=21
-    [timing] select=0.0001s expand=0.0862s depth=22
-    [timing] select=0.0001s expand=0.0737s depth=15
-    [timing] select=0.0001s expand=0.0714s depth=23
+    [timing] select=0.0001s expand=0.0478s depth=18
+    [timing] select=0.0001s expand=0.0482s depth=15
+    [timing] select=0.0001s expand=0.0485s depth=16
+    [timing] select=0.0001s expand=0.0492s depth=17
+    [timing] select=0.0001s expand=0.0530s depth=18
+    [timing] select=0.0001s expand=0.0514s depth=14
+    [timing] select=0.0001s expand=0.0561s depth=19
+    [timing] select=0.0001s expand=0.0509s depth=19
+    [timing] select=0.0001s expand=0.0525s depth=20
+    [timing] select=0.0001s expand=0.0555s depth=21
+    [timing] select=0.0001s expand=0.0525s depth=22
+    [timing] select=0.0001s expand=0.0514s depth=15
+    [timing] select=0.0001s expand=0.0548s depth=23
   [sim 34] found goal path of length 23
+[Final] Expanded: 0, Generated: 69
 [search done] simulations=34, states generated=69
 Found a solution of length 23!
    1: (pickup f2-1f key0-0)

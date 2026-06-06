@@ -1,0 +1,49 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2622452
+Job name: run_alphazero.sh
+Host: cn-423
+Date: Sat Jun  6 14:29:55 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2622260_71 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-423
+2622260_72 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-423
+2622260_73 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-423
+2622260_74 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-423
+2622260_75 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-423
+2622260_76 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-423
+2622260_77 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-423
+2622260_65 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-423
+2622260_66 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-423
+2622260_67 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-423
+2622260_68 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-423
+2622260_69 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-423
+2622260_70 rleap_gpu run_alph ibrahim.  R       0:03      1 cn-423
+2622259_118 rleap_gpu run_alph ibrahim.  R       0:09      1 cn-423
+2622259_119 rleap_gpu run_alph ibrahim.  R       0:09      1 cn-423
+2622259_120 rleap_gpu run_alph ibrahim.  R       0:09      1 cn-423
+2622259_102 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-423
+2622259_105 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-423
+2622259_108 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-423
+2622259_109 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-423
+2622259_112 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-423
+2622259_115 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-423
+2622259_116 rleap_gpu run_alph ibrahim.  R       0:12      1 cn-423
+2620631 rleap_gpu stv2-bwo nabin.bh  R   13:40:10      1 cn-423
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2622452
+Time: Sat Jun  6 14:30:10 CEST 2026
+Elapsed Time: 00:00:15
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2622452 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

@@ -2,21 +2,22 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.5397s depth=1
-    [timing] select=0.0000s expand=0.1565s depth=2
-    [timing] select=0.0000s expand=0.1525s depth=2
-    [timing] select=0.0000s expand=0.1539s depth=3
-    [timing] select=0.0000s expand=0.1606s depth=4
-    [timing] select=0.0000s expand=0.1605s depth=5
-    [timing] select=0.0000s expand=0.1512s depth=6
-    [timing] select=0.0000s expand=0.1433s depth=7
-    [timing] select=0.0000s expand=0.1390s depth=5
-    [timing] select=0.0000s expand=0.1309s depth=6
-    [timing] select=0.0000s expand=0.1267s depth=7
-    [timing] select=0.0000s expand=0.1324s depth=8
-    [timing] select=0.0001s expand=0.1338s depth=8
-    [timing] select=0.0000s expand=0.1278s depth=9
+    [timing] select=0.0000s expand=0.3691s depth=1
+    [timing] select=0.0000s expand=0.0665s depth=2
+    [timing] select=0.0000s expand=0.0641s depth=2
+    [timing] select=0.0000s expand=0.0697s depth=3
+    [timing] select=0.0000s expand=0.0772s depth=4
+    [timing] select=0.0000s expand=0.0756s depth=5
+    [timing] select=0.0000s expand=0.0783s depth=6
+    [timing] select=0.0000s expand=0.0745s depth=7
+    [timing] select=0.0000s expand=0.0747s depth=5
+    [timing] select=0.0000s expand=0.0791s depth=6
+    [timing] select=0.0000s expand=0.0748s depth=7
+    [timing] select=0.0000s expand=0.0789s depth=8
+    [timing] select=0.0000s expand=0.0786s depth=8
+    [timing] select=0.0001s expand=0.0766s depth=9
   [sim 14] found goal path of length 9
+[Final] Expanded: 0, Generated: 64
 [search done] simulations=14, states generated=64
 Found a solution of length 9!
    1: (navigate rover0 waypoint0 waypoint1)

@@ -2,22 +2,23 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.5062s depth=1
-    [timing] select=0.0000s expand=0.1066s depth=2
-    [timing] select=0.0000s expand=0.1018s depth=2
-    [timing] select=0.0000s expand=0.1092s depth=3
-    [timing] select=0.0000s expand=0.0965s depth=4
-    [timing] select=0.0000s expand=0.0948s depth=5
-    [timing] select=0.0000s expand=0.0895s depth=6
-    [timing] select=0.0000s expand=0.0867s depth=7
-    [timing] select=0.0001s expand=0.0769s depth=8
-    [timing] select=0.0001s expand=0.0789s depth=9
-    [timing] select=0.0001s expand=0.0898s depth=10
-    [timing] select=0.0001s expand=0.0881s depth=11
-    [timing] select=0.0001s expand=0.0745s depth=12
-    [timing] select=0.0001s expand=0.0784s depth=13
-    [timing] select=0.0001s expand=0.0999s depth=14
+    [timing] select=0.0000s expand=0.4257s depth=1
+    [timing] select=0.0000s expand=0.1139s depth=2
+    [timing] select=0.0000s expand=0.1115s depth=2
+    [timing] select=0.0000s expand=0.1054s depth=3
+    [timing] select=0.0000s expand=0.1376s depth=4
+    [timing] select=0.0000s expand=0.1107s depth=5
+    [timing] select=0.0000s expand=0.1223s depth=6
+    [timing] select=0.0000s expand=0.1244s depth=7
+    [timing] select=0.0000s expand=0.1112s depth=8
+    [timing] select=0.0000s expand=0.1115s depth=9
+    [timing] select=0.0000s expand=0.1073s depth=10
+    [timing] select=0.0000s expand=0.1076s depth=11
+    [timing] select=0.0001s expand=0.1004s depth=12
+    [timing] select=0.0001s expand=0.1077s depth=13
+    [timing] select=0.0001s expand=0.1146s depth=14
   [sim 15] found goal path of length 14
+[Final] Expanded: 0, Generated: 56
 [search done] simulations=15, states generated=56
 Found a solution of length 14!
    1: (drive-truck t1 l1-0 l1-1 c1)

@@ -2,28 +2,29 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.4858s depth=1
-    [timing] select=0.0000s expand=0.0911s depth=2
-    [timing] select=0.0000s expand=0.0844s depth=2
-    [timing] select=0.0000s expand=0.0969s depth=3
-    [timing] select=0.0000s expand=0.1283s depth=4
-    [timing] select=0.0000s expand=0.0941s depth=5
-    [timing] select=0.0000s expand=0.0986s depth=6
-    [timing] select=0.0000s expand=0.0966s depth=7
-    [timing] select=0.0000s expand=0.0943s depth=8
-    [timing] select=0.0000s expand=0.0970s depth=9
-    [timing] select=0.0001s expand=0.0902s depth=10
-    [timing] select=0.0001s expand=0.0870s depth=11
-    [timing] select=0.0001s expand=0.0881s depth=12
-    [timing] select=0.0001s expand=0.0883s depth=13
-    [timing] select=0.0001s expand=0.0875s depth=14
-    [timing] select=0.0001s expand=0.0767s depth=15
-    [timing] select=0.0001s expand=0.0662s depth=16
-    [timing] select=0.0001s expand=0.0675s depth=17
-    [timing] select=0.0001s expand=0.0680s depth=18
-    [timing] select=0.0001s expand=0.0842s depth=19
-    [timing] select=0.0001s expand=0.0728s depth=20
+    [timing] select=0.0000s expand=0.4223s depth=1
+    [timing] select=0.0000s expand=0.1156s depth=2
+    [timing] select=0.0000s expand=0.1077s depth=2
+    [timing] select=0.0000s expand=0.1178s depth=3
+    [timing] select=0.0000s expand=0.1334s depth=4
+    [timing] select=0.0000s expand=0.1362s depth=5
+    [timing] select=0.0000s expand=0.1134s depth=6
+    [timing] select=0.0000s expand=0.1111s depth=7
+    [timing] select=0.0000s expand=0.1089s depth=8
+    [timing] select=0.0000s expand=0.1078s depth=9
+    [timing] select=0.0000s expand=0.1060s depth=10
+    [timing] select=0.0000s expand=0.0998s depth=11
+    [timing] select=0.0001s expand=0.1015s depth=12
+    [timing] select=0.0001s expand=0.0961s depth=13
+    [timing] select=0.0001s expand=0.0752s depth=14
+    [timing] select=0.0001s expand=0.0542s depth=15
+    [timing] select=0.0001s expand=0.0605s depth=16
+    [timing] select=0.0001s expand=0.0625s depth=17
+    [timing] select=0.0001s expand=0.0579s depth=18
+    [timing] select=0.0001s expand=0.0621s depth=19
+    [timing] select=0.0001s expand=0.0626s depth=20
   [sim 21] found goal path of length 20
+[Final] Expanded: 0, Generated: 53
 [search done] simulations=21, states generated=53
 Found a solution of length 20!
    1: (move f2-1f f1-1f)

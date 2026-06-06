@@ -1,0 +1,43 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2622584
+Job name: run_alphazero.sh
+Host: cn-424
+Date: Sat Jun  6 14:30:11 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2622496_81 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_82 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_83 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_84 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_85 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_86 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_87 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_88 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_89 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_90 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_91 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_92 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_93 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_94 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_95 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-424
+2622496_39 rleap_gpu run_alph ibrahim.  R       0:04      1 cn-424
+2620124 rleap_gpu stv2-bw5 nabin.bh  R   23:08:24      1 cn-424
+2619446 rleap_gpu rgnet-ac daniel.s  R 1-16:24:19      1 cn-424
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2622584
+Time: Sat Jun  6 14:30:18 CEST 2026
+Elapsed Time: 00:00:07
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2622584 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

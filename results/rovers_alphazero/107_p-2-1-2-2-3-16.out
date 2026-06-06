@@ -2,21 +2,22 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.5779s depth=1
-    [timing] select=0.0000s expand=0.2126s depth=2
-    [timing] select=0.0000s expand=0.2186s depth=2
-    [timing] select=0.0000s expand=0.1922s depth=3
-    [timing] select=0.0000s expand=0.1761s depth=3
-    [timing] select=0.0000s expand=0.1790s depth=4
-    [timing] select=0.0000s expand=0.2358s depth=5
-    [timing] select=0.0001s expand=0.1598s depth=6
-    [timing] select=0.0001s expand=0.1614s depth=7
-    [timing] select=0.0001s expand=0.1501s depth=8
-    [timing] select=0.0001s expand=0.1304s depth=9
-    [timing] select=0.0000s expand=0.1180s depth=4
-    [timing] select=0.0000s expand=0.1590s depth=4
-    [timing] select=0.0001s expand=0.1659s depth=10
+    [timing] select=0.0000s expand=0.5119s depth=1
+    [timing] select=0.0000s expand=0.1889s depth=2
+    [timing] select=0.0000s expand=0.2236s depth=2
+    [timing] select=0.0000s expand=0.2453s depth=3
+    [timing] select=0.0000s expand=0.1985s depth=3
+    [timing] select=0.0000s expand=0.2404s depth=4
+    [timing] select=0.0000s expand=0.2323s depth=5
+    [timing] select=0.0001s expand=0.2233s depth=6
+    [timing] select=0.0001s expand=0.1987s depth=7
+    [timing] select=0.0001s expand=0.1971s depth=8
+    [timing] select=0.0001s expand=0.1415s depth=9
+    [timing] select=0.0000s expand=0.1561s depth=4
+    [timing] select=0.0001s expand=0.1365s depth=4
+    [timing] select=0.0001s expand=0.1656s depth=10
   [sim 14] found goal path of length 10
+[Final] Expanded: 0, Generated: 86
 [search done] simulations=14, states generated=86
 Found a solution of length 10!
    1: (sample_rock rover1 rover1store waypoint1)

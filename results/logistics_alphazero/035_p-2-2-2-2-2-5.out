@@ -2,34 +2,35 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-    [timing] select=0.0000s expand=0.3708s depth=1
-    [timing] select=0.0000s expand=0.0955s depth=2
-    [timing] select=0.0000s expand=0.1149s depth=2
-    [timing] select=0.0000s expand=0.1456s depth=3
-    [timing] select=0.0000s expand=0.1130s depth=4
-    [timing] select=0.0000s expand=0.1152s depth=3
-    [timing] select=0.0000s expand=0.1085s depth=4
-    [timing] select=0.0000s expand=0.0974s depth=5
-    [timing] select=0.0000s expand=0.1038s depth=6
-    [timing] select=0.0000s expand=0.0774s depth=5
-    [timing] select=0.0000s expand=0.0876s depth=6
-    [timing] select=0.0001s expand=0.0809s depth=7
-    [timing] select=0.0000s expand=0.0565s depth=7
-    [timing] select=0.0001s expand=0.0566s depth=8
-    [timing] select=0.0001s expand=0.0588s depth=8
-    [timing] select=0.0001s expand=0.0642s depth=9
-    [timing] select=0.0001s expand=0.0591s depth=10
-    [timing] select=0.0001s expand=0.0554s depth=11
-    [timing] select=0.0001s expand=0.0602s depth=9
-    [timing] select=0.0001s expand=0.0649s depth=10
-    [timing] select=0.0001s expand=0.0581s depth=9
-    [timing] select=0.0001s expand=0.0572s depth=11
-    [timing] select=0.0001s expand=0.0625s depth=12
-    [timing] select=0.0001s expand=0.0626s depth=12
-    [timing] select=0.0001s expand=0.0562s depth=13
-    [timing] select=0.0001s expand=0.0575s depth=13
-    [timing] select=0.0001s expand=0.0632s depth=14
+    [timing] select=0.0000s expand=0.5004s depth=1
+    [timing] select=0.0000s expand=0.1000s depth=2
+    [timing] select=0.0000s expand=0.1102s depth=2
+    [timing] select=0.0000s expand=0.1204s depth=3
+    [timing] select=0.0000s expand=0.1144s depth=4
+    [timing] select=0.0000s expand=0.1023s depth=3
+    [timing] select=0.0000s expand=0.1006s depth=4
+    [timing] select=0.0000s expand=0.0951s depth=5
+    [timing] select=0.0001s expand=0.0777s depth=6
+    [timing] select=0.0001s expand=0.0735s depth=5
+    [timing] select=0.0001s expand=0.0778s depth=6
+    [timing] select=0.0001s expand=0.0748s depth=7
+    [timing] select=0.0001s expand=0.0748s depth=7
+    [timing] select=0.0001s expand=0.0854s depth=8
+    [timing] select=0.0001s expand=0.0917s depth=8
+    [timing] select=0.0001s expand=0.0770s depth=9
+    [timing] select=0.0001s expand=0.0740s depth=10
+    [timing] select=0.0001s expand=0.0748s depth=11
+    [timing] select=0.0001s expand=0.0759s depth=9
+    [timing] select=0.0001s expand=0.0693s depth=10
+    [timing] select=0.0001s expand=0.0664s depth=9
+    [timing] select=0.0001s expand=0.0609s depth=11
+    [timing] select=0.0001s expand=0.0656s depth=12
+    [timing] select=0.0001s expand=0.0694s depth=12
+    [timing] select=0.0001s expand=0.0660s depth=13
+    [timing] select=0.0001s expand=0.0648s depth=13
+    [timing] select=0.0001s expand=0.0659s depth=14
   [sim 27] found goal path of length 14
+[Final] Expanded: 0, Generated: 137
 [search done] simulations=27, states generated=137
 Found a solution of length 14!
    1: (drive-truck t0 l0-1 l0-0 c0)
