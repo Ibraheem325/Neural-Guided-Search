@@ -54,7 +54,8 @@ class Node:
     __slots__ = (
         "state", "state_key", "is_goal",
         "expanded", "is_dead_end",
-        "children", "prior", "edge_N", "edge_W", "visit_count",
+        "children", "prior", "edge_N", "edge_W", "visit_count", 
+        "value",
     )
 
     def __init__(self, state: mm.State, state_key, is_goal: bool) -> None:
@@ -67,11 +68,13 @@ class Node:
         self.prior: Dict[mm.GroundAction, float] = {}
         self.edge_N: Dict[mm.GroundAction, int] = {}
         self.edge_W: Dict[mm.GroundAction, float] = {}
+        self.value = -float("inf")   # NEW: no value seen yet
         self.visit_count = 0
 
-    def q(self, action: mm.GroundAction) -> float:
-        n = self.edge_N[action]
-        return self.edge_W[action] / n if n > 0 else 0.0
+    def q(self, action):
+        # Q of an edge = the value the child node currently believes it can achieve.
+        child = self.children[action]
+        return child.value if child.value > -float("inf") else 0.0
 
 
 def _leaf_value(state: mm.State,
@@ -122,7 +125,7 @@ def _expand(node: Node,
         node.children[action] = child
         node.prior[action] = probs[i].item()
         node.edge_N[action] = 0       # per-edge stats, fresh for THIS parent edge
-        node.edge_W[action] = 0.0
+
 
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
@@ -147,17 +150,19 @@ def _select(node: Node,
     return best_action, best_child
 
 
-def _backup(path_nodes: List[Node],
-            path_edges: List[Tuple[Node, mm.GroundAction]],
-            value: float,
-            value_norm: _ValueNormalizer) -> None:
-    for node in path_nodes:
+def _backup(path_nodes, path_edges, leaf_value, value_norm):
+    # Seed the leaf (last node on the path) with the value we just computed.
+    path_nodes[-1].value = max(path_nodes[-1].value, leaf_value)
+    # Walk the path bottom-up; each node's value = best over its children's values.
+    for node in reversed(path_nodes):
+        if node.children:
+            best_child = max(c.value for c in node.children.values())
+            node.value = max(node.value, best_child)
         node.visit_count += 1
+    # Update the normalizer with the edge Q-values we now expose for selection.
     for node, action in path_edges:
         node.edge_N[action] += 1
-        node.edge_W[action] += value
         value_norm.update(node.q(action))
-
 
 def _simulate(root: Node,
               tt: Dict[object, Node],
