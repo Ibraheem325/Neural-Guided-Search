@@ -1,44 +1,3 @@
-"""
-AlphaZero-style planner for deterministic, fully-observable classical planning.
-
-Key differences from the previous per-step-MCTS version, and why:
-
-1.  ONE PERSISTENT TREE rooted at the initial state.
-    In a deterministic single-agent domain, applying an action "in simulation"
-    and "for real" is the identical operation (action.apply(state)) with no
-    opponent and no stochasticity. There is therefore no reason to re-root and
-    discard the tree after every committed move (the old design). We grow a
-    single tree and read the plan straight off the root->goal path.
-
-    Consequence: the simulation count is no longer "simulations per move". It is
-    now a GLOBAL search budget (--max_simulations / --max_time). The parameter
-    does not disappear; it changes meaning.
-
-2.  VALUE NORMALIZATION (MuZero-style running min/max).
-    The SAC critics estimate -(discounted cost-to-go): negative, ~0 at the goal,
-    higher == better. These values have magnitude in the tens/hundreds, so the
-    raw pUCT exploration term (~c) is negligible against Q-differences and the
-    prior is ignored. We normalize Q into [0,1] using the tree's running min/max
-    before combining with the exploration term, exactly as MuZero does for
-    unbounded value scales.
-
-3.  CYCLE PREVENTION (the old `visited_states` was computed but never used).
-    During expansion we skip any successor whose state already appears on the
-    root->node path. This makes every tree path acyclic by construction, so the
-    selection descent can never loop.
-
-4.  Goal value 0.0 is kept (it is the maximum under the sign convention).
-    Dead ends (no applicable non-cyclic successors) get a strongly negative,
-    configurable value so search is pushed away from them.
-
-5.  Clipped double-Q leaf evaluation: V(leaf) = max_a min(q1(leaf,a), q2(leaf,a)),
-    matching the SAC target. q2 is optional.
-
-6.  No redundant work: actions are generated once per expansion (taken from the
-    policy forward's returned action list); the policy network is only evaluated
-    when a leaf is actually expanded, never on goal/dead-end leaves.
-"""
-
 import argparse
 import math
 import time
@@ -87,22 +46,21 @@ class _ValueNormalizer:
     def normalize(self, value: float) -> float:
         if self._max > self._min:
             return (value - self._min) / (self._max - self._min)
-        # Range not yet established: leave value as-is (it will be small early on).
-        return value
+        return value  # range not established yet
 
 
 class Node:
+    # No parent pointer: in a DAG a node has many parents, and nothing needs it.
     __slots__ = (
-        "state", "state_key", "is_goal", "parent",
+        "state", "state_key", "is_goal",
         "expanded", "is_dead_end",
         "children", "prior", "edge_N", "edge_W", "visit_count",
     )
 
-    def __init__(self, state: mm.State, state_key, is_goal: bool, parent: Optional["Node"]) -> None:
+    def __init__(self, state: mm.State, state_key, is_goal: bool) -> None:
         self.state = state
         self.state_key = state_key
         self.is_goal = is_goal
-        self.parent = parent
         self.expanded = False
         self.is_dead_end = False
         self.children: Dict[mm.GroundAction, "Node"] = {}
@@ -116,20 +74,11 @@ class Node:
         return self.edge_W[action] / n if n > 0 else 0.0
 
 
-def _ancestor_keys(node: Node) -> set:
-    keys = set()
-    n: Optional[Node] = node
-    while n is not None:
-        keys.add(n.state_key)
-        n = n.parent
-    return keys
-
-
 def _leaf_value(state: mm.State,
                 goal: mm.GroundConjunctiveCondition,
                 q1_model: ModelWrapper,
                 q2_model: Optional[ModelWrapper]) -> float:
-    """V(state) = max_a min(q1, q2). Bootstraps the leaf from the learned critic(s)."""
+    """V(state) = max_a min(q1, q2). Bootstraps a leaf from the learned critic(s)."""
     q1_vals, _ = q1_model.forward([(state, goal)])[0]
     if q2_model is not None:
         q2_vals, _ = q2_model.forward([(state, goal)])[0]
@@ -140,45 +89,55 @@ def _leaf_value(state: mm.State,
 
 
 def _expand(node: Node,
+            tt: Dict[object, Node],
             policy_model: ModelWrapper,
             q1_model: ModelWrapper,
             q2_model: Optional[ModelWrapper],
             goal: mm.GroundConjunctiveCondition,
             dead_end_value: float) -> Tuple[float, int]:
-    """Expand a non-goal leaf. Returns (value_to_backup, num_children_created)."""
+    """
+    Expand a non-goal leaf against the transposition table.
+    Returns (value_to_backup, num_NEW_nodes_created).
+    Every applicable action produces an edge; cyclic/transposed successors are
+    linked (and skipped later during descent), never pruned here.
+    """
     logits, actions = policy_model.forward([(node.state, goal)])[0]
     node.expanded = True
 
     if len(actions) == 0:
-        node.is_dead_end = True
+        node.is_dead_end = True  # the only way a node is a dead end: no applicable actions
         return dead_end_value, 0
 
     probs = torch.softmax(logits, dim=0)
-    ancestors = _ancestor_keys(node)
+    generated = 0
     for i, action in enumerate(actions):
         successor = action.apply(node.state)
-        successor_key = get_state_key(successor)
-        if successor_key in ancestors:
-            continue  # cycle prevention: never link to a state on the path to here
-        child = Node(successor, successor_key, goal.holds(successor), node)
+        key = get_state_key(successor)
+        child = tt.get(key)
+        if child is None:
+            child = Node(successor, key, goal.holds(successor))
+            tt[key] = child
+            generated += 1
+        # else: reuse existing node -- the transposition share.
         node.children[action] = child
         node.prior[action] = probs[i].item()
-        node.edge_N[action] = 0
+        node.edge_N[action] = 0       # per-edge stats, fresh for THIS parent edge
         node.edge_W[action] = 0.0
 
-    if len(node.children) == 0:
-        node.is_dead_end = True  # all successors were cyclic
-        return dead_end_value, 0
-
-    return _leaf_value(node.state, goal, q1_model, q2_model), len(node.children)
+    return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
 
-def _select(node: Node, c_puct: float, value_norm: _ValueNormalizer) -> Tuple[Optional[mm.GroundAction], Optional[Node]]:
-    best_score = -float("inf")  # was -1 in the old code: a real bug for negative Q
+def _select(node: Node,
+            c_puct: float,
+            value_norm: _ValueNormalizer,
+            blocked: Optional[set] = None) -> Tuple[Optional[mm.GroundAction], Optional[Node]]:
+    best_score = -float("inf")
     best_action: Optional[mm.GroundAction] = None
     best_child: Optional[Node] = None
     sqrt_parent = math.sqrt(max(1, node.visit_count))
     for action, child in node.children.items():
+        if blocked is not None and child.state_key in blocked:
+            continue  # cycle prevention: never re-enter a state on this descent
         n = node.edge_N[action]
         q_norm = value_norm.normalize(node.q(action)) if n > 0 else 0.0  # pessimistic FPU
         u = c_puct * node.prior[action] * sqrt_parent / (1 + n)
@@ -200,43 +159,53 @@ def _backup(path_nodes: List[Node],
         value_norm.update(node.q(action))
 
 
-def _simulate(root, policy_model, q1_model, q2_model, goal, c_puct, value_norm, dead_end_value):
-    path_nodes = [root]
-    path_edges = []
+def _simulate(root: Node,
+              tt: Dict[object, Node],
+              policy_model: ModelWrapper,
+              q1_model: ModelWrapper,
+              q2_model: Optional[ModelWrapper],
+              goal: mm.GroundConjunctiveCondition,
+              c_puct: float,
+              value_norm: _ValueNormalizer,
+              dead_end_value: float) -> Tuple[Optional[List[mm.GroundAction]], int]:
+    path_keys = {root.state_key}              # states visited on THIS descent
+    path_nodes: List[Node] = [root]
+    path_edges: List[Tuple[Node, mm.GroundAction]] = []
     node = root
 
-    t0 = time.time()
-    # SELECT
+    # SELECT: descend by pUCT, never re-entering a state already on this path.
     while node.expanded and not node.is_goal and not node.is_dead_end:
-        action, child = _select(node, c_puct, value_norm)
-        if action is None or child is None:
-            break
+        action, child = _select(node, c_puct, value_norm, blocked=path_keys)
+        if action is None:
+            # Every successor is already on this descent path: locally cyclic.
+            # Back up the node's static critic value (neutral) and stop. Cannot
+            # livelock: edge_N grows -> exploration term shrinks for this route.
+            value = _leaf_value(node.state, goal, q1_model, q2_model)
+            _backup(path_nodes, path_edges, value, value_norm)
+            return None, 0
         path_edges.append((node, action))
         node = child
         path_nodes.append(node)
-    t_select = time.time() - t0
+        path_keys.add(node.state_key)
 
-    goal_plan = None
+    goal_plan: Optional[List[mm.GroundAction]] = None
     generated = 0
-    expanded = 0
+
     if node.is_goal:
         value = 0.0
-        goal_plan = [a for _, a in path_edges]
+        goal_plan = [a for _, a in path_edges]                 # traversed path IS a plan
     elif node.is_dead_end:
         value = dead_end_value
     else:
-        t1 = time.time()
-        value, generated = _expand(node, policy_model, q1_model, q2_model, goal, dead_end_value)
-        expanded = 1
-        t_expand = time.time() - t1
-        print(f'    [timing] select={t_select:.4f}s expand={t_expand:.4f}s depth={len(path_nodes)}', flush=True)
-        for child_action, child in node.children.items():
+        value, generated = _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value)
+        for child_action, child in node.children.items():      # immediate goal among children
             if child.is_goal:
                 goal_plan = [a for _, a in path_edges] + [child_action]
                 break
 
+    # BACKUP along the single traversed path (no special multi-parent handling).
     _backup(path_nodes, path_edges, value, value_norm)
-    return goal_plan, generated, expanded
+    return goal_plan, generated
 
 
 def _search(root_state: mm.State,
@@ -249,23 +218,23 @@ def _search(root_state: mm.State,
             max_time: Optional[float],
             c_puct: float,
             dead_end_value: float,
-            stop_on_first_solution: bool) -> Tuple[Optional[List[mm.GroundAction]], int, int, int]:
-    root = Node(root_state, root_key, goal.holds(root_state), parent=None)
+            stop_on_first_solution: bool) -> Tuple[Optional[List[mm.GroundAction]], int, int]:
+    root = Node(root_state, root_key, goal.holds(root_state))
+    tt: Dict[object, Node] = {root_key: root}   # state_key -> Node (transposition table)
     value_norm = _ValueNormalizer()
     best_plan: Optional[List[mm.GroundAction]] = None
     total_generated = 0
-    total_expanded = 0
     start = time.time()
     sims = 0
 
     while sims < max_simulations:
         if max_time is not None and (time.time() - start) > max_time:
             break
-        goal_plan, generated, expanded = _simulate(
-            root, policy_model, q1_model, q2_model, goal, c_puct, value_norm, dead_end_value
+        goal_plan, generated = _simulate(
+            root, tt, policy_model, q1_model, q2_model, goal,
+            c_puct, value_norm, dead_end_value,
         )
         total_generated += generated
-        total_expanded += expanded
         sims += 1
 
         if goal_plan is not None and (best_plan is None or len(goal_plan) < len(best_plan)):
@@ -275,20 +244,20 @@ def _search(root_state: mm.State,
                 break
 
         if sims % 500 == 0:
-            print(f"  [sim {sims}] root visits={root.visit_count}, generated={total_generated}", flush=True)
+            print(f"  [sim {sims}] root visits={root.visit_count}, "
+                  f"unique states={len(tt)}, generated={total_generated}", flush=True)
 
-    return best_plan, sims, total_generated, total_expanded
+    return best_plan, sims, total_generated
 
 
 def _parse_arguments() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="AlphaZero planner (single persistent tree)")
+    parser = argparse.ArgumentParser(description="AlphaZero planner (transposition-table DAG)")
     parser.add_argument("--domain", required=True, type=Path)
     parser.add_argument("--problem", required=True, type=Path)
     parser.add_argument("--policy_model", required=True, type=Path)
     parser.add_argument("--q1_model", required=True, type=Path)
     parser.add_argument("--q2_model", default=None, type=Path,
-                        help="Optional second critic; if given, leaf value uses min(q1,q2) per SAC.")
-    # NOTE: this replaces the old per-step --n_simulations. It is now a GLOBAL budget.
+                        help="Optional second critic; if given, leaf value uses min(q1,q2).")
     parser.add_argument("--max_simulations", default=20000, type=int,
                         help="Total simulation budget for the whole search (NOT per move).")
     parser.add_argument("--max_time", default=None, type=float,
@@ -296,10 +265,9 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument("--c_puct", default=1.5, type=float,
                         help="Exploration constant. Q is min/max-normalized to [0,1] first.")
     parser.add_argument("--dead_end_value", default=-1000.0, type=float,
-                        help="Value backed up for states with no non-cyclic successors.")
+                        help="Value backed up for states with no applicable actions.")
     parser.add_argument("--keep_searching", action="store_true",
-                        help="Do not stop at the first goal; keep searching for a shorter plan "
-                             "until the budget is exhausted.")
+                        help="Do not stop at the first goal; keep searching for a shorter plan.")
     return parser.parse_args()
 
 
@@ -314,14 +282,13 @@ def _plan(problem: mm.Problem,
         if goal.holds(initial):
             return []
 
-        plan, sims, generated, expanded = _search(
+        plan, sims, generated = _search(
             initial, get_state_key(initial),
             policy_model, q1_model, q2_model, goal,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
         )
-        print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-        print(f"[search done] simulations={sims}, states generated={generated}", flush=True)
+        print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
 
         if plan is None:
             return None
