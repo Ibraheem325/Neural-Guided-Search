@@ -2,12 +2,47 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 228] found goal path of length 40
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 293] found goal path of length 40
+[Final] Expanded: 2793, Generated: 2793
+[search done] simulations=293, unique states generated=2793
+Found a solution of length 40!
+   1: (sample_soil rover1 rover1store waypoint11)
+   2: (calibrate rover0 camera1 objective0 waypoint6)
+   3: (take_image rover0 waypoint6 objective2 camera1 low_res)
+   4: (calibrate rover0 camera2 objective1 waypoint6)
+   5: (take_image rover0 waypoint6 objective0 camera2 colour)
+   6: (calibrate rover0 camera2 objective1 waypoint6)
+   7: (communicate_image_data rover0 general objective0 colour waypoint6 waypoint5)
+   8: (take_image rover0 waypoint6 objective1 camera2 high_res)
+   9: (communicate_image_data rover0 general objective1 high_res waypoint6 waypoint5)
+  10: (communicate_image_data rover0 general objective2 low_res waypoint6 waypoint5)
+  11: (calibrate rover0 camera1 objective0 waypoint6)
+  12: (take_image rover0 waypoint6 objective0 camera1 low_res)
+  13: (communicate_image_data rover0 general objective0 low_res waypoint6 waypoint5)
+  14: (calibrate rover0 camera0 objective1 waypoint6)
+  15: (take_image rover0 waypoint6 objective1 camera0 low_res)
+  16: (communicate_image_data rover0 general objective1 low_res waypoint6 waypoint5)
+  17: (drop rover1 rover1store)
+  18: (sample_rock rover1 rover1store waypoint11)
+  19: (drop rover1 rover1store)
+  20: (navigate rover1 waypoint11 waypoint9)
+  21: (sample_rock rover1 rover1store waypoint9)
+  22: (navigate rover1 waypoint9 waypoint13)
+  23: (navigate rover0 waypoint6 waypoint1)
+  24: (navigate rover1 waypoint13 waypoint9)
+  25: (navigate rover1 waypoint9 waypoint6)
+  26: (communicate_soil_data rover1 general waypoint11 waypoint6 waypoint5)
+  27: (communicate_rock_data rover1 general waypoint11 waypoint6 waypoint5)
+  28: (communicate_rock_data rover1 general waypoint9 waypoint6 waypoint5)
+  29: (navigate rover1 waypoint6 waypoint9)
+  30: (navigate rover1 waypoint9 waypoint11)
+  31: (navigate rover1 waypoint11 waypoint2)
+  32: (drop rover1 rover1store)
+  33: (navigate rover1 waypoint2 waypoint10)
+  34: (sample_soil rover1 rover1store waypoint10)
+  35: (navigate rover1 waypoint10 waypoint2)
+  36: (drop rover1 rover1store)
+  37: (navigate rover1 waypoint2 waypoint1)
+  38: (sample_rock rover1 rover1store waypoint1)
+  39: (communicate_soil_data rover1 general waypoint10 waypoint1 waypoint5)
+  40: (communicate_rock_data rover1 general waypoint1 waypoint1 waypoint5)

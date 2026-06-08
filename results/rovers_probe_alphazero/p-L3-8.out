@@ -2,30 +2,94 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 500] root visits=500, unique states=6315, generated=6314
-  [sim 1000] root visits=1000, unique states=12983, generated=12982
-  [sim 1500] root visits=1500, unique states=21614, generated=21613
-  [sim 2000] root visits=2000, unique states=29571, generated=29570
-  [sim 2500] root visits=2500, unique states=36958, generated=36957
-  [sim 3000] root visits=3000, unique states=44380, generated=44379
-  [sim 3500] root visits=3500, unique states=51854, generated=51853
-  [sim 4000] root visits=4000, unique states=58679, generated=58678
-  [sim 4500] root visits=4500, unique states=65789, generated=65788
-  [sim 5000] root visits=5000, unique states=72975, generated=72974
-  [sim 5500] root visits=5500, unique states=79833, generated=79832
-  [sim 6000] root visits=6000, unique states=86570, generated=86569
-  [sim 6500] root visits=6500, unique states=93087, generated=93086
-  [sim 7000] root visits=7000, unique states=99616, generated=99615
-  [sim 7500] root visits=7500, unique states=106012, generated=106011
-  [sim 8000] root visits=8000, unique states=112432, generated=112431
-  [sim 8500] root visits=8500, unique states=118997, generated=118996
-  [sim 9000] root visits=9000, unique states=125282, generated=125281
-  [sim 9200] found goal path of length 141
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 500] root visits=500, unique states=6614, generated=6613
+  [sim 1000] root visits=1000, unique states=13189, generated=13188
+  [sim 1500] root visits=1500, unique states=19358, generated=19357
+  [sim 2000] root visits=2000, unique states=25057, generated=25056
+  [sim 2500] root visits=2500, unique states=30013, generated=30012
+  [sim 3000] root visits=3000, unique states=34986, generated=34985
+  [sim 3500] root visits=3500, unique states=40433, generated=40432
+  [sim 4000] root visits=4000, unique states=46171, generated=46170
+  [sim 4500] root visits=4500, unique states=51569, generated=51568
+  [sim 5000] root visits=5000, unique states=57432, generated=57431
+  [sim 5500] root visits=5500, unique states=62925, generated=62924
+  [sim 5793] found goal path of length 76
+[Final] Expanded: 66330, Generated: 66330
+[search done] simulations=5793, unique states generated=66330
+Found a solution of length 76!
+   1: (calibrate rover0 camera0 objective1 waypoint20)
+   2: (take_image rover0 waypoint20 objective3 camera0 high_res)
+   3: (navigate rover1 waypoint4 waypoint10)
+   4: (calibrate rover0 camera1 objective3 waypoint20)
+   5: (take_image rover0 waypoint20 objective1 camera1 colour)
+   6: (calibrate rover0 camera1 objective3 waypoint20)
+   7: (take_image rover0 waypoint20 objective1 camera1 low_res)
+   8: (navigate rover1 waypoint10 waypoint9)
+   9: (sample_soil rover1 rover1store waypoint9)
+  10: (navigate rover1 waypoint9 waypoint10)
+  11: (drop rover1 rover1store)
+  12: (navigate rover1 waypoint10 waypoint0)
+  13: (sample_soil rover1 rover1store waypoint0)
+  14: (drop rover1 rover1store)
+  15: (navigate rover1 waypoint0 waypoint10)
+  16: (navigate rover1 waypoint10 waypoint9)
+  17: (communicate_soil_data rover1 general waypoint0 waypoint9 waypoint16)
+  18: (navigate rover1 waypoint9 waypoint10)
+  19: (navigate rover1 waypoint10 waypoint0)
+  20: (calibrate rover1 camera3 objective2 waypoint0)
+  21: (take_image rover1 waypoint0 objective0 camera3 high_res)
+  22: (navigate rover1 waypoint0 waypoint10)
+  23: (communicate_image_data rover1 general objective0 high_res waypoint10 waypoint16)
+  24: (navigate rover1 waypoint10 waypoint0)
+  25: (calibrate rover1 camera3 objective2 waypoint0)
+  26: (navigate rover1 waypoint0 waypoint10)
+  27: (take_image rover1 waypoint10 objective2 camera3 high_res)
+  28: (communicate_image_data rover1 general objective2 high_res waypoint10 waypoint16)
+  29: (navigate rover1 waypoint10 waypoint4)
+  30: (navigate rover1 waypoint4 waypoint19)
+  31: (sample_soil rover1 rover1store waypoint19)
+  32: (drop rover1 rover1store)
+  33: (navigate rover1 waypoint19 waypoint4)
+  34: (navigate rover1 waypoint4 waypoint1)
+  35: (navigate rover1 waypoint1 waypoint12)
+  36: (sample_soil rover1 rover1store waypoint12)
+  37: (navigate rover1 waypoint12 waypoint13)
+  38: (drop rover1 rover1store)
+  39: (sample_soil rover1 rover1store waypoint13)
+  40: (navigate rover1 waypoint13 waypoint12)
+  41: (navigate rover1 waypoint12 waypoint1)
+  42: (drop rover1 rover1store)
+  43: (navigate rover1 waypoint1 waypoint8)
+  44: (sample_soil rover1 rover1store waypoint8)
+  45: (navigate rover1 waypoint8 waypoint1)
+  46: (navigate rover1 waypoint1 waypoint3)
+  47: (communicate_soil_data rover1 general waypoint19 waypoint3 waypoint16)
+  48: (communicate_soil_data rover1 general waypoint8 waypoint3 waypoint16)
+  49: (communicate_soil_data rover1 general waypoint13 waypoint3 waypoint16)
+  50: (communicate_soil_data rover1 general waypoint12 waypoint3 waypoint16)
+  51: (navigate rover1 waypoint3 waypoint1)
+  52: (navigate rover1 waypoint1 waypoint22)
+  53: (communicate_soil_data rover1 general waypoint9 waypoint22 waypoint16)
+  54: (navigate rover1 waypoint22 waypoint1)
+  55: (navigate rover1 waypoint1 waypoint4)
+  56: (navigate rover1 waypoint4 waypoint7)
+  57: (navigate rover1 waypoint7 waypoint20)
+  58: (drop rover1 rover1store)
+  59: (sample_soil rover1 rover1store waypoint20)
+  60: (navigate rover1 waypoint20 waypoint7)
+  61: (navigate rover1 waypoint7 waypoint21)
+  62: (drop rover1 rover1store)
+  63: (sample_soil rover1 rover1store waypoint21)
+  64: (communicate_soil_data rover1 general waypoint20 waypoint21 waypoint16)
+  65: (communicate_soil_data rover1 general waypoint21 waypoint21 waypoint16)
+  66: (navigate rover0 waypoint20 waypoint7)
+  67: (communicate_image_data rover0 general objective3 high_res waypoint7 waypoint16)
+  68: (communicate_image_data rover0 general objective1 colour waypoint7 waypoint16)
+  69: (communicate_image_data rover0 general objective1 low_res waypoint7 waypoint16)
+  70: (calibrate rover1 camera3 objective2 waypoint21)
+  71: (take_image rover1 waypoint21 objective0 camera3 colour)
+  72: (communicate_image_data rover1 general objective0 colour waypoint21 waypoint16)
+  73: (navigate rover0 waypoint7 waypoint21)
+  74: (calibrate rover0 camera1 objective3 waypoint21)
+  75: (take_image rover0 waypoint21 objective2 camera1 low_res)
+  76: (communicate_image_data rover0 general objective2 low_res waypoint21 waypoint16)

@@ -2,12 +2,32 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 64] found goal path of length 25
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 66] found goal path of length 25
+[Final] Expanded: 318, Generated: 318
+[search done] simulations=66, unique states generated=318
+Found a solution of length 25!
+   1: (calibrate rover0 camera1 objective1 waypoint5)
+   2: (sample_soil rover0 rover0store waypoint5)
+   3: (drop rover0 rover0store)
+   4: (take_image rover0 waypoint5 objective1 camera1 colour)
+   5: (communicate_image_data rover0 general objective1 colour waypoint5 waypoint1)
+   6: (communicate_soil_data rover0 general waypoint5 waypoint5 waypoint1)
+   7: (navigate rover0 waypoint5 waypoint1)
+   8: (sample_soil rover0 rover0store waypoint1)
+   9: (drop rover0 rover0store)
+  10: (sample_rock rover0 rover0store waypoint1)
+  11: (navigate rover0 waypoint1 waypoint9)
+  12: (communicate_rock_data rover0 general waypoint1 waypoint9 waypoint1)
+  13: (communicate_soil_data rover0 general waypoint1 waypoint9 waypoint1)
+  14: (navigate rover0 waypoint9 waypoint1)
+  15: (navigate rover0 waypoint1 waypoint5)
+  16: (navigate rover0 waypoint5 waypoint7)
+  17: (drop rover0 rover0store)
+  18: (sample_soil rover0 rover0store waypoint7)
+  19: (navigate rover0 waypoint7 waypoint5)
+  20: (communicate_soil_data rover0 general waypoint7 waypoint5 waypoint1)
+  21: (navigate rover0 waypoint5 waypoint3)
+  22: (drop rover0 rover0store)
+  23: (sample_rock rover0 rover0store waypoint3)
+  24: (navigate rover0 waypoint3 waypoint0)
+  25: (communicate_rock_data rover0 general waypoint3 waypoint0 waypoint1)

@@ -2,18 +2,32 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 500] root visits=500, unique states=19502, generated=19501
-  [sim 1000] root visits=1000, unique states=38735, generated=38734
-  [sim 1500] root visits=1500, unique states=58318, generated=58317
-  [sim 2000] root visits=2000, unique states=78195, generated=78194
-  [sim 2500] root visits=2500, unique states=97096, generated=97095
-  [sim 3000] root visits=3000, unique states=116574, generated=116573
-  [sim 3145] found goal path of length 19
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 500] root visits=500, unique states=16480, generated=16479
+  [sim 1000] root visits=1000, unique states=33067, generated=33066
+  [sim 1500] root visits=1500, unique states=50895, generated=50894
+  [sim 2000] root visits=2000, unique states=65226, generated=65225
+  [sim 2500] root visits=2500, unique states=78687, generated=78686
+  [sim 2501] found goal path of length 20
+[Final] Expanded: 78714, Generated: 78714
+[search done] simulations=2501, unique states generated=78714
+Found a solution of length 20!
+   1: (turn_to satellite0 star14 phenomenon17)
+   2: (turn_to satellite0 groundstation1 star14)
+   3: (switch_on instrument1 satellite0)
+   4: (calibrate satellite0 instrument1 groundstation1)
+   5: (turn_to satellite0 star21 groundstation1)
+   6: (take_image satellite0 star21 instrument1 image2)
+   7: (turn_to satellite0 star18 star21)
+   8: (take_image satellite0 star18 instrument1 spectrograph0)
+   9: (turn_to satellite0 planet15 star18)
+  10: (take_image satellite0 planet15 instrument1 infrared1)
+  11: (turn_to satellite0 phenomenon17 planet15)
+  12: (take_image satellite0 phenomenon17 instrument1 infrared1)
+  13: (turn_to satellite0 planet16 phenomenon17)
+  14: (take_image satellite0 planet16 instrument1 spectrograph0)
+  15: (turn_to satellite0 star22 planet16)
+  16: (take_image satellite0 star22 instrument1 image2)
+  17: (turn_to satellite0 phenomenon19 star22)
+  18: (take_image satellite0 phenomenon19 instrument1 infrared1)
+  19: (turn_to satellite0 planet20 phenomenon19)
+  20: (take_image satellite0 planet20 instrument1 spectrograph0)

@@ -2,12 +2,33 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 74] found goal path of length 25
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 69] found goal path of length 26
+[Final] Expanded: 288, Generated: 288
+[search done] simulations=69, unique states generated=288
+Found a solution of length 26!
+   1: (sample_rock rover0 rover0store waypoint9)
+   2: (navigate rover0 waypoint9 waypoint1)
+   3: (calibrate rover0 camera1 objective1 waypoint1)
+   4: (take_image rover0 waypoint1 objective1 camera1 colour)
+   5: (navigate rover0 waypoint1 waypoint8)
+   6: (communicate_image_data rover0 general objective1 colour waypoint8 waypoint2)
+   7: (navigate rover0 waypoint8 waypoint4)
+   8: (drop rover0 rover0store)
+   9: (sample_rock rover0 rover0store waypoint4)
+  10: (navigate rover0 waypoint4 waypoint8)
+  11: (navigate rover0 waypoint8 waypoint1)
+  12: (calibrate rover0 camera1 objective1 waypoint1)
+  13: (navigate rover0 waypoint1 waypoint9)
+  14: (navigate rover0 waypoint9 waypoint7)
+  15: (take_image rover0 waypoint7 objective0 camera1 colour)
+  16: (drop rover0 rover0store)
+  17: (sample_rock rover0 rover0store waypoint7)
+  18: (communicate_image_data rover0 general objective0 colour waypoint7 waypoint2)
+  19: (communicate_rock_data rover0 general waypoint7 waypoint7 waypoint2)
+  20: (navigate rover0 waypoint7 waypoint9)
+  21: (drop rover0 rover0store)
+  22: (navigate rover0 waypoint9 waypoint6)
+  23: (sample_rock rover0 rover0store waypoint6)
+  24: (communicate_rock_data rover0 general waypoint6 waypoint6 waypoint2)
+  25: (communicate_rock_data rover0 general waypoint9 waypoint6 waypoint2)
+  26: (communicate_rock_data rover0 general waypoint4 waypoint6 waypoint2)

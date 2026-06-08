@@ -2,12 +2,19 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 174] found goal path of length 12
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 122] found goal path of length 12
+[Final] Expanded: 1198, Generated: 1198
+[search done] simulations=122, unique states generated=1198
+Found a solution of length 12!
+   1: (switch_on instrument1 satellite0)
+   2: (calibrate satellite0 instrument1 groundstation4)
+   3: (turn_to satellite0 star10 groundstation4)
+   4: (take_image satellite0 star10 instrument1 thermograph1)
+   5: (turn_to satellite0 phenomenon13 star10)
+   6: (take_image satellite0 phenomenon13 instrument1 image0)
+   7: (turn_to satellite0 planet11 phenomenon13)
+   8: (take_image satellite0 planet11 instrument1 thermograph2)
+   9: (turn_to satellite0 phenomenon14 planet11)
+  10: (take_image satellite0 phenomenon14 instrument1 image0)
+  11: (turn_to satellite0 phenomenon12 phenomenon14)
+  12: (take_image satellite0 phenomenon12 instrument1 thermograph2)

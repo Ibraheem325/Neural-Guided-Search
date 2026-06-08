@@ -2,38 +2,16 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 500] root visits=500, unique states=19407, generated=19406
-  [sim 1000] root visits=1000, unique states=37859, generated=37858
-  [sim 1500] root visits=1500, unique states=55663, generated=55662
-  [sim 2000] root visits=2000, unique states=73102, generated=73101
-  [sim 2500] root visits=2500, unique states=87015, generated=87014
-  [sim 3000] root visits=3000, unique states=100964, generated=100963
-  [sim 3500] root visits=3500, unique states=113251, generated=113250
-  [sim 4000] root visits=4000, unique states=127292, generated=127291
-  [sim 4500] root visits=4500, unique states=143334, generated=143333
-  [sim 5000] root visits=5000, unique states=159223, generated=159222
-  [sim 5500] root visits=5500, unique states=176041, generated=176040
-  [sim 6000] root visits=6000, unique states=192682, generated=192681
-  [sim 6500] root visits=6500, unique states=207485, generated=207484
-  [sim 7000] root visits=7000, unique states=219986, generated=219985
-  [sim 7500] root visits=7500, unique states=231526, generated=231525
-  [sim 8000] root visits=8000, unique states=244360, generated=244359
-  [sim 8500] root visits=8500, unique states=256380, generated=256379
-  [sim 9000] root visits=9000, unique states=268789, generated=268788
-  [sim 9500] root visits=9500, unique states=281903, generated=281902
-  [sim 10000] root visits=10000, unique states=294999, generated=294998
-  [sim 10500] root visits=10500, unique states=308174, generated=308173
-  [sim 11000] root visits=11000, unique states=321220, generated=321219
-  [sim 11500] root visits=11500, unique states=335336, generated=335335
-  [sim 12000] root visits=12000, unique states=349546, generated=349545
-  [sim 12500] root visits=12500, unique states=364325, generated=364324
-  [sim 13000] root visits=13000, unique states=378269, generated=378268
-  [sim 13500] root visits=13500, unique states=393116, generated=393115
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 500] root visits=500, unique states=19523, generated=19522
+  [sim 1000] root visits=1000, unique states=38611, generated=38610
+  [sim 1500] root visits=1500, unique states=57400, generated=57399
+  [sim 2000] root visits=2000, unique states=76612, generated=76611
+  [sim 2500] root visits=2500, unique states=95391, generated=95390
+  [sim 3000] root visits=3000, unique states=114186, generated=114185
+  [sim 3500] root visits=3500, unique states=132917, generated=132916
+  [sim 4000] root visits=4000, unique states=151565, generated=151564
+  [sim 4500] root visits=4500, unique states=170205, generated=170204
+  [sim 5000] root visits=5000, unique states=188737, generated=188736
+  [sim 5500] root visits=5500, unique states=206650, generated=206649
+  [sim 6000] root visits=6000, unique states=223603, generated=223602
+  [sim 6500] root visits=6500, unique states=243596, generated=243595

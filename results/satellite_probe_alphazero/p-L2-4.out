@@ -2,14 +2,67 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 500] root visits=500, unique states=18335, generated=18334
-  [sim 1000] root visits=1000, unique states=35625, generated=35624
-  [sim 1075] found goal path of length 33
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 500] root visits=500, unique states=16559, generated=16558
+  [sim 1000] root visits=1000, unique states=34124, generated=34123
+  [sim 1500] root visits=1500, unique states=50766, generated=50765
+  [sim 2000] root visits=2000, unique states=65454, generated=65453
+  [sim 2500] root visits=2500, unique states=81039, generated=81038
+  [sim 2702] found goal path of length 55
+[Final] Expanded: 86910, Generated: 86910
+[search done] simulations=2702, unique states generated=86910
+Found a solution of length 55!
+   1: (turn_to satellite1 star1 star12)
+   2: (switch_on instrument3 satellite1)
+   3: (calibrate satellite1 instrument3 star1)
+   4: (turn_to satellite1 star19 star1)
+   5: (take_image satellite1 star19 instrument3 infrared2)
+   6: (turn_to satellite1 groundstation5 star19)
+   7: (turn_to satellite1 planet18 groundstation5)
+   8: (take_image satellite1 planet18 instrument3 infrared2)
+   9: (turn_to satellite1 groundstation6 planet18)
+  10: (turn_to satellite1 star19 groundstation6)
+  11: (turn_to satellite1 groundstation5 star19)
+  12: (turn_to satellite1 star20 groundstation5)
+  13: (take_image satellite1 star20 instrument3 infrared2)
+  14: (turn_to satellite1 groundstation6 star20)
+  15: (turn_to satellite1 phenomenon21 groundstation6)
+  16: (take_image satellite1 phenomenon21 instrument3 infrared2)
+  17: (turn_to satellite1 star20 phenomenon21)
+  18: (turn_to satellite1 groundstation6 star20)
+  19: (turn_to satellite1 planet16 groundstation6)
+  20: (take_image satellite1 planet16 instrument3 infrared2)
+  21: (turn_to satellite1 star19 planet16)
+  22: (turn_to satellite1 star12 star19)
+  23: (turn_to satellite1 planet15 star12)
+  24: (take_image satellite1 planet15 instrument3 infrared2)
+  25: (turn_to satellite1 groundstation5 planet15)
+  26: (turn_to satellite1 planet18 groundstation5)
+  27: (turn_to satellite1 star12 planet18)
+  28: (turn_to satellite1 planet17 star12)
+  29: (take_image satellite1 planet17 instrument3 infrared2)
+  30: (turn_to satellite1 planet18 planet17)
+  31: (turn_to satellite1 star12 planet18)
+  32: (turn_to satellite1 planet15 star12)
+  33: (turn_to satellite1 groundstation5 planet15)
+  34: (turn_to satellite1 star20 groundstation5)
+  35: (turn_to satellite1 groundstation6 star20)
+  36: (turn_to satellite1 star19 groundstation6)
+  37: (turn_to satellite1 groundstation11 star19)
+  38: (turn_to satellite1 phenomenon22 groundstation11)
+  39: (take_image satellite1 phenomenon22 instrument3 infrared2)
+  40: (switch_on instrument0 satellite0)
+  41: (turn_to satellite0 groundstation13 planet15)
+  42: (calibrate satellite0 instrument0 groundstation13)
+  43: (turn_to satellite0 planet18 groundstation13)
+  44: (take_image satellite0 planet18 instrument0 infrared1)
+  45: (turn_to satellite0 star19 planet18)
+  46: (take_image satellite0 star19 instrument0 infrared1)
+  47: (turn_to satellite0 groundstation3 star19)
+  48: (turn_to satellite1 star14 phenomenon22)
+  49: (switch_off instrument3 satellite1)
+  50: (switch_on instrument2 satellite1)
+  51: (calibrate satellite1 instrument2 star14)
+  52: (turn_to satellite1 planet15 star14)
+  53: (take_image satellite1 planet15 instrument2 thermograph0)
+  54: (turn_to satellite1 star20 planet15)
+  55: (take_image satellite1 star20 instrument2 thermograph0)

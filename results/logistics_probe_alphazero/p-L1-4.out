@@ -2,12 +2,25 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 29] found goal path of length 18
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 32] found goal path of length 18
+[Final] Expanded: 137, Generated: 137
+[search done] simulations=32, unique states generated=137
+Found a solution of length 18!
+   1: (load-truck p1 t1 l1-1)
+   2: (load-truck p2 t1 l1-1)
+   3: (drive-truck t1 l1-1 l1-0 c1)
+   4: (unload-truck p1 t1 l1-0)
+   5: (load-airplane p1 a0 l1-0)
+   6: (fly-airplane a0 l1-0 l0-0)
+   7: (unload-airplane p1 a0 l0-0)
+   8: (load-airplane p0 a0 l0-0)
+   9: (fly-airplane a0 l0-0 l1-0)
+  10: (unload-truck p2 t1 l1-0)
+  11: (load-airplane p2 a0 l1-0)
+  12: (fly-airplane a0 l1-0 l0-0)
+  13: (unload-airplane p2 a0 l0-0)
+  14: (drive-truck t0 l0-1 l0-0 c0)
+  15: (unload-airplane p0 a0 l0-0)
+  16: (load-truck p0 t0 l0-0)
+  17: (drive-truck t0 l0-0 l0-1 c0)
+  18: (unload-truck p0 t0 l0-1)

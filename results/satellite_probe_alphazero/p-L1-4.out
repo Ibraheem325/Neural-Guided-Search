@@ -2,12 +2,31 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 381] found goal path of length 20
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 500] root visits=500, unique states=3516, generated=3515
+  [sim 654] found goal path of length 23
+[Final] Expanded: 4548, Generated: 4548
+[search done] simulations=654, unique states generated=4548
+Found a solution of length 23!
+   1: (switch_on instrument0 satellite0)
+   2: (turn_to satellite0 star2 phenomenon10)
+   3: (calibrate satellite0 instrument0 star2)
+   4: (turn_to satellite0 star11 star2)
+   5: (take_image satellite0 star11 instrument0 infrared2)
+   6: (turn_to satellite0 phenomenon10 star11)
+   7: (take_image satellite0 phenomenon10 instrument0 infrared2)
+   8: (turn_to satellite0 groundstation4 phenomenon10)
+   9: (turn_to satellite0 planet13 groundstation4)
+  10: (take_image satellite0 planet13 instrument0 infrared2)
+  11: (turn_to satellite0 groundstation5 planet13)
+  12: (turn_to satellite0 groundstation4 groundstation5)
+  13: (switch_off instrument0 satellite0)
+  14: (switch_on instrument1 satellite0)
+  15: (turn_to satellite0 star1 groundstation4)
+  16: (calibrate satellite0 instrument1 star1)
+  17: (turn_to satellite0 phenomenon10 star1)
+  18: (take_image satellite0 phenomenon10 instrument1 thermograph0)
+  19: (turn_to satellite0 phenomenon12 phenomenon10)
+  20: (take_image satellite0 phenomenon12 instrument1 infrared1)
+  21: (turn_to satellite0 planet14 phenomenon12)
+  22: (take_image satellite0 planet14 instrument1 thermograph0)
+  23: (turn_to satellite0 groundstation4 planet14)

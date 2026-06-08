@@ -2,22 +2,16 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 500] root visits=500, unique states=13734, generated=13733
-  [sim 1000] root visits=1000, unique states=29164, generated=29163
-  [sim 1500] root visits=1500, unique states=46302, generated=46301
-  [sim 2000] root visits=2000, unique states=61403, generated=61402
-  [sim 2500] root visits=2500, unique states=76147, generated=76146
-  [sim 3000] root visits=3000, unique states=104824, generated=104823
-  [sim 3500] root visits=3500, unique states=133142, generated=133141
-  [sim 4000] root visits=4000, unique states=164473, generated=164472
-  [sim 4500] root visits=4500, unique states=192796, generated=192795
-  [sim 5000] root visits=5000, unique states=223772, generated=223771
-  [sim 5500] root visits=5500, unique states=248838, generated=248837
-Traceback (most recent call last):
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
-    _main(_parse_arguments())
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
-    solution = _plan(problem, policy_model, q1_model, q2_model, args)
-  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
-    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
-NameError: name 'expanded' is not defined. Did you mean: '_expand'?
+  [sim 500] root visits=500, unique states=13531, generated=13530
+  [sim 1000] root visits=1000, unique states=27433, generated=27432
+  [sim 1500] root visits=1500, unique states=40644, generated=40643
+  [sim 2000] root visits=2000, unique states=54546, generated=54545
+  [sim 2500] root visits=2500, unique states=68147, generated=68146
+  [sim 3000] root visits=3000, unique states=80896, generated=80895
+  [sim 3500] root visits=3500, unique states=93850, generated=93849
+  [sim 4000] root visits=4000, unique states=106303, generated=106302
+  [sim 4500] root visits=4500, unique states=119464, generated=119463
+  [sim 5000] root visits=5000, unique states=132628, generated=132627
+  [sim 5500] root visits=5500, unique states=145986, generated=145985
+  [sim 6000] root visits=6000, unique states=159238, generated=159237
+  [sim 6500] root visits=6500, unique states=173920, generated=173919
