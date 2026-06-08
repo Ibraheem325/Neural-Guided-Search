@@ -85,6 +85,7 @@ def qstar_search(problem, initial_state, q_function,
             on_expand_state(successor)
         actions, costs = q_function.compute_costs(successor, goal)
         for a, c in zip(actions, costs):
+            g_successor = 0.0
             f_new = g_successor + c
             heapq.heappush(openlist, (f_new, next(counter), g_successor, successor, a))
 
