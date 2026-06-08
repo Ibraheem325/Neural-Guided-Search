@@ -1,0 +1,29 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2623257
+Job name: run_alphazero.sh
+Host: cn-419
+Date: Sat Jun  6 18:31:23 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2623257_61 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-419
+2623257_52 rleap_gpu run_alph ibrahim.  R       0:30      1 cn-419
+2623257_48 rleap_gpu run_alph ibrahim.  R       0:42      1 cn-419
+2623257_45 rleap_gpu run_alph ibrahim.  R       0:52      1 cn-419
+2623257_46 rleap_gpu run_alph ibrahim.  R       0:52      1 cn-419
+2623196_4 rleap_gpu run_alph ibrahim.  R       1:17      1 cn-419
+2623196_5 rleap_gpu run_alph ibrahim.  R       1:17      1 cn-419
+2623196_9 rleap_gpu run_alph ibrahim.  R       1:17      1 cn-419
+2620133 rleap_gpu stv2-bw5 nabin.bh  R 1-02:43:43      1 cn-419
+2620134 rleap_gpu stv2-bw5 nabin.bh  R 1-02:43:43      1 cn-419
+2620132 rleap_gpu stv2-bw5 nabin.bh  R 1-02:43:45      1 cn-419
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2623257 ON cn-419 CANCELLED AT 2026-06-06T19:01:43 DUE TO TIME LIMIT ***

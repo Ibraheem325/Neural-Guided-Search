@@ -1,0 +1,44 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2623984
+Job name: run_search.sh
+Host: cn-417
+Date: Sun Jun  7 11:43:57 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2623944_17 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_18 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_19 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_20 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_21 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_22 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_23 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_24 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_25 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_26 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_27 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_28 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_29 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_30 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_31 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2623944_32 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-417
+2620580 rleap_gpu stv2-bw9 nabin.bh  R 1-13:55:43      1 cn-417
+2620127 rleap_gpu stv2-bw5 nabin.bh  R 1-20:22:04      1 cn-417
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2623984 ON cn-417 CANCELLED AT 2026-06-07T12:14:04 DUE TO TIME LIMIT ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2623984
+Time: Sun Jun  7 12:14:04 CEST 2026
+Elapsed Time: 00:30:07
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2623984 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

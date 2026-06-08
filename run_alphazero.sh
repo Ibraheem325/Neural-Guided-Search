@@ -15,7 +15,7 @@ Q1_MODEL=$4
 Q2_MODEL=$5
 OUTPUT_DIR=$6
 
-PROBLEM=$(ls ${PROBLEM_DIR}/*.pddl | sort | sed -n "${SLURM_ARRAY_TASK_ID}p")
+PROBLEM=$(ls ${PROBLEM_DIR}/*.pddl | grep -v domain.pddl | sort | sed -n "${SLURM_ARRAY_TASK_ID}p")
 PROBLEM_NAME=$(basename $PROBLEM .pddl)
 
 venv/bin/python alphaZero.py \

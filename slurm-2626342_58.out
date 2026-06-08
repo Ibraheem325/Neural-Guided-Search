@@ -1,0 +1,33 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2626400
+Job name: run_alphazero.sh
+Host: cn-425
+Date: Sun Jun  7 19:36:22 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2626342_57 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2626342_58 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2626342_59 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2626342_60 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2626342_61 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2620576 rleap_gpu stv2-bw9 nabin.bh  R 1-21:48:29      1 cn-425
+2620575 rleap_gpu stv2-bw9 nabin.bh  R 1-21:48:32      1 cn-425
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2626400 ON cn-425 CANCELLED AT 2026-06-07T20:06:37 DUE TO TIME LIMIT ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2626400
+Time: Sun Jun  7 20:06:37 CEST 2026
+Elapsed Time: 00:30:15
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2626400 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

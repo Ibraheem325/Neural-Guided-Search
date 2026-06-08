@@ -1,0 +1,31 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2629451
+Job name: run_alphazero.sh
+Host: cn-420
+Date: Mon Jun  8 09:59:58 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2629439_12 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-420
+2629175 rleap_gpu layered- martin.f  R    1:15:34      1 cn-420
+2629176 rleap_gpu layered- martin.f  R    1:15:34      1 cn-420
+2629177 rleap_gpu layered- martin.f  R    1:15:34      1 cn-420
+2629100 rleap_gpu layered- martin.f  R    1:24:07      1 cn-420
+2629101 rleap_gpu layered- martin.f  R    1:24:07      1 cn-420
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2629451
+Time: Mon Jun  8 10:00:17 CEST 2026
+Elapsed Time: 00:00:18
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2629451 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

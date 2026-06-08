@@ -1,0 +1,40 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2623098
+Job name: wrap
+Host: cn-416
+Date: Sat Jun  6 17:05:04 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2623098 rleap_gpu     wrap ibrahim.  R       0:00      1 cn-416
+2620579 rleap_gpu stv2-bw9 nabin.bh  R   19:16:53      1 cn-416
+2620126 rleap_gpu stv2-bw5 nabin.bh  R 1-01:43:11      1 cn-416
+2620125 rleap_gpu stv2-bw5 nabin.bh  R 1-01:43:15      1 cn-416
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Found 0 test problems
+
+Running beam_1...
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/evaluate.py", line 154, in <module>
+    main()
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/evaluate.py", line 124, in main
+    summary = summarize(results)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/evaluate.py", line 59, in summarize
+    coverage = len(solved) / len(results) * 100
+ZeroDivisionError: division by zero
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2623098
+Time: Sat Jun  6 17:05:04 CEST 2026
+Elapsed Time: 00:00:00
+Billing per second for TRES: billing=175,cpu=4,gres/shard=6,mem=16G,node=1
+Show resource usage with e.g.:
+sacct -j 2623098 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

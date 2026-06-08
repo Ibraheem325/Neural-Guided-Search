@@ -1,0 +1,63 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=11724, generated=11723
+  [sim 1000] root visits=1000, unique states=22869, generated=22868
+  [sim 1500] root visits=1500, unique states=33654, generated=33653
+  [sim 2000] root visits=2000, unique states=44225, generated=44224
+  [sim 2500] root visits=2500, unique states=54732, generated=54731
+  [sim 3000] root visits=3000, unique states=65550, generated=65549
+  [sim 3500] root visits=3500, unique states=76227, generated=76226
+  [sim 4000] root visits=4000, unique states=86463, generated=86462
+  [sim 4500] root visits=4500, unique states=96740, generated=96739
+  [sim 5000] root visits=5000, unique states=106989, generated=106988
+  [sim 5500] root visits=5500, unique states=117487, generated=117486
+  [sim 6000] root visits=6000, unique states=127726, generated=127725
+  [sim 6500] root visits=6500, unique states=137710, generated=137709
+  [sim 7000] root visits=7000, unique states=147627, generated=147626
+  [sim 7500] root visits=7500, unique states=157615, generated=157614
+  [sim 8000] root visits=8000, unique states=167535, generated=167534
+  [sim 8500] root visits=8500, unique states=177375, generated=177374
+  [sim 9000] root visits=9000, unique states=187550, generated=187549
+  [sim 9500] root visits=9500, unique states=197719, generated=197718
+  [sim 10000] root visits=10000, unique states=207800, generated=207799
+  [sim 10500] root visits=10500, unique states=217723, generated=217722
+  [sim 11000] root visits=11000, unique states=227574, generated=227573
+  [sim 11500] root visits=11500, unique states=237336, generated=237335
+  [sim 12000] root visits=12000, unique states=247100, generated=247099
+  [sim 12500] root visits=12500, unique states=256725, generated=256724
+  [sim 13000] root visits=13000, unique states=266740, generated=266739
+  [sim 13500] root visits=13500, unique states=276698, generated=276697
+  [sim 14000] root visits=14000, unique states=286568, generated=286567
+  [sim 14500] root visits=14500, unique states=296240, generated=296239
+  [sim 15000] root visits=15000, unique states=305933, generated=305932
+  [sim 15500] root visits=15500, unique states=315597, generated=315596
+  [sim 16000] root visits=16000, unique states=325125, generated=325124
+  [sim 16500] root visits=16500, unique states=334642, generated=334641
+  [sim 17000] root visits=17000, unique states=344130, generated=344129
+  [sim 17500] root visits=17500, unique states=353587, generated=353586
+  [sim 18000] root visits=18000, unique states=363214, generated=363213
+  [sim 18500] root visits=18500, unique states=372928, generated=372927
+  [sim 19000] root visits=19000, unique states=382492, generated=382491
+  [sim 19500] root visits=19500, unique states=391676, generated=391675
+  [sim 20000] root visits=20000, unique states=400952, generated=400951
+  [sim 20500] root visits=20500, unique states=410648, generated=410647
+  [sim 21000] root visits=21000, unique states=420481, generated=420480
+  [sim 21500] root visits=21500, unique states=430095, generated=430094
+  [sim 22000] root visits=22000, unique states=439582, generated=439581
+  [sim 22500] root visits=22500, unique states=449200, generated=449199
+  [sim 23000] root visits=23000, unique states=458876, generated=458875
+  [sim 23500] root visits=23500, unique states=468524, generated=468523
+  [sim 24000] root visits=24000, unique states=478300, generated=478299
+  [sim 24500] root visits=24500, unique states=487775, generated=487774
+  [sim 25000] root visits=25000, unique states=497463, generated=497462
+  [sim 25500] root visits=25500, unique states=507069, generated=507068
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
+    solution = _plan(problem, policy_model, q1_model, q2_model, args)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
+    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
+NameError: name 'expanded' is not defined. Did you mean: '_expand'?

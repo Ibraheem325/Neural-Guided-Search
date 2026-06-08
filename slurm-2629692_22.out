@@ -1,0 +1,44 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2629714
+Job name: run_alphazero.sh
+Host: cn-425
+Date: Mon Jun  8 10:45:52 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2629692_15 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629692_16 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629692_17 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629692_18 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629692_19 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629692_20 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629692_21 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629692_22 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629692_23 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629692_24 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2629632_55 rleap_gpu run_alph ibrahim.  R       0:06      1 cn-425
+2629632_56 rleap_gpu run_alph ibrahim.  R       0:06      1 cn-425
+2629632_57 rleap_gpu run_alph ibrahim.  R       0:06      1 cn-425
+2629632_58 rleap_gpu run_alph ibrahim.  R       0:06      1 cn-425
+2629632_59 rleap_gpu run_alph ibrahim.  R       0:06      1 cn-425
+2629632_60 rleap_gpu run_alph ibrahim.  R       0:06      1 cn-425
+2620576 rleap_gpu stv2-bw9 nabin.bh  R 2-12:57:59      1 cn-425
+2620575 rleap_gpu stv2-bw9 nabin.bh  R 2-12:58:02      1 cn-425
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2629714 ON cn-425 CANCELLED AT 2026-06-08T10:56:18 ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2629714
+Time: Mon Jun  8 10:56:18 CEST 2026
+Elapsed Time: 00:10:26
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2629714 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

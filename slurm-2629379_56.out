@@ -1,0 +1,50 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2629435
+Job name: run_alphazero.sh
+Host: cn-422
+Date: Mon Jun  8 09:59:43 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2629379_45 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_46 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_47 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_48 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_49 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_50 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_51 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_52 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_53 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_54 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_55 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_56 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_57 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_58 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_59 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629379_60 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-422
+2629365 rleap_gpu layered- martin.f  R      13:29      1 cn-422
+2629368 rleap_gpu layered- martin.f  R      13:29      1 cn-422
+2629364 rleap_gpu layered- martin.f  R      13:32      1 cn-422
+2629188 rleap_gpu layered- martin.f  R    1:15:12      1 cn-422
+2629184 rleap_gpu layered- martin.f  R    1:15:14      1 cn-422
+2629186 rleap_gpu layered- martin.f  R    1:15:14      1 cn-422
+2629187 rleap_gpu layered- martin.f  R    1:15:14      1 cn-422
+2629183 rleap_gpu layered- martin.f  R    1:15:16      1 cn-422
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2629435 ON cn-422 CANCELLED AT 2026-06-08T10:29:44 DUE TO TIME LIMIT ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2629435
+Time: Mon Jun  8 10:29:44 CEST 2026
+Elapsed Time: 00:30:01
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2629435 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

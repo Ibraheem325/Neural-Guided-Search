@@ -1,0 +1,52 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2629603
+Job name: run_alphazero.sh
+Host: cn-417
+Date: Mon Jun  8 10:45:34 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2629572_17 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_18 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_19 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_20 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_21 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_22 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_23 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_24 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_25 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_26 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_27 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_28 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_29 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_30 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_31 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_32 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_33 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_34 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_35 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_36 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_37 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_38 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_39 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2629572_40 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-417
+2620580 rleap_gpu stv2-bw9 nabin.bh  R 2-12:57:20      1 cn-417
+2629357 rleap_gpu layered- martin.f  R      59:26      1 cn-417
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2629603 ON cn-417 CANCELLED AT 2026-06-08T10:55:53 ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2629603
+Time: Mon Jun  8 10:55:53 CEST 2026
+Elapsed Time: 00:10:19
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2629603 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

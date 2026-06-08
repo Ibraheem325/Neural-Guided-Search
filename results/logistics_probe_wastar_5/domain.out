@@ -1,0 +1,14 @@
+Torch: 2.12.0+cu130
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/wastar.py", line 93, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/wastar.py", line 45, in _main
+    problem = mm.Problem(domain, str(args.problem))
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir/wrapper_formalism.py", line 1914, in __init__
+    self._advanced_problem = domain._advanced_parser.parse_problem(problem_path_or_content, AdvancedParserOptions())
+RuntimeError: 
+In file logistics_probe/domain.pddl, line 1:
+Error! Expecting: problem here:
+(define (domain logistics-strips)
+_________^_
+

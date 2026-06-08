@@ -1,0 +1,37 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2626709
+Job name: run_search.sh
+Host: cn-416
+Date: Sun Jun  7 19:47:59 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2626467_57 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-416
+2626467_49 rleap_gpu run_sear ibrahim.  R       1:40      1 cn-416
+2626467_48 rleap_gpu run_sear ibrahim.  R       2:13      1 cn-416
+2626467_34 rleap_gpu run_sear ibrahim.  R       4:09      1 cn-416
+2626467_35 rleap_gpu run_sear ibrahim.  R       4:09      1 cn-416
+2626466_59 rleap_gpu run_sear ibrahim.  R       6:49      1 cn-416
+2626466_55 rleap_gpu run_sear ibrahim.  R       7:20      1 cn-416
+2626464_12 rleap_gpu run_sear ibrahim.  R      10:05      1 cn-416
+2620579 rleap_gpu stv2-bw9 nabin.bh  R 1-21:59:48      1 cn-416
+2620126 rleap_gpu stv2-bw5 nabin.bh  R 2-04:26:06      1 cn-416
+2620125 rleap_gpu stv2-bw5 nabin.bh  R 2-04:26:10      1 cn-416
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2626709 ON cn-416 CANCELLED AT 2026-06-07T20:18:06 DUE TO TIME LIMIT ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2626709
+Time: Sun Jun  7 20:18:06 CEST 2026
+Elapsed Time: 00:30:07
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2626709 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

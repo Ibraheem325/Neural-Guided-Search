@@ -258,7 +258,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument("--q1_model", required=True, type=Path)
     parser.add_argument("--q2_model", default=None, type=Path,
                         help="Optional second critic; if given, leaf value uses min(q1,q2).")
-    parser.add_argument("--max_simulations", default=20000, type=int,
+    parser.add_argument("--max_simulations", default=100000000, type=int,
                         help="Total simulation budget for the whole search (NOT per move).")
     parser.add_argument("--max_time", default=None, type=float,
                         help="Optional wall-clock budget in seconds.")
@@ -288,6 +288,7 @@ def _plan(problem: mm.Problem,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
         )
+        print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
 
         if plan is None:

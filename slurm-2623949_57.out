@@ -1,0 +1,57 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2624309
+Job name: run_search.sh
+Host: cn-423
+Date: Sun Jun  7 11:45:14 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2623949_57 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-423
+2623949_58 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-423
+2623949_48 rleap_gpu run_sear ibrahim.  R       0:04      1 cn-423
+2623949_49 rleap_gpu run_sear ibrahim.  R       0:04      1 cn-423
+2623949_44 rleap_gpu run_sear ibrahim.  R       0:07      1 cn-423
+2623949_45 rleap_gpu run_sear ibrahim.  R       0:07      1 cn-423
+2623949_46 rleap_gpu run_sear ibrahim.  R       0:07      1 cn-423
+2623949_30 rleap_gpu run_sear ibrahim.  R       0:10      1 cn-423
+2623949_31 rleap_gpu run_sear ibrahim.  R       0:10      1 cn-423
+2623949_32 rleap_gpu run_sear ibrahim.  R       0:10      1 cn-423
+2623949_33 rleap_gpu run_sear ibrahim.  R       0:10      1 cn-423
+2623949_34 rleap_gpu run_sear ibrahim.  R       0:10      1 cn-423
+2623949_35 rleap_gpu run_sear ibrahim.  R       0:10      1 cn-423
+2623949_36 rleap_gpu run_sear ibrahim.  R       0:10      1 cn-423
+2623949_37 rleap_gpu run_sear ibrahim.  R       0:10      1 cn-423
+2623949_20 rleap_gpu run_sear ibrahim.  R       0:14      1 cn-423
+2623949_22 rleap_gpu run_sear ibrahim.  R       0:14      1 cn-423
+2623949_23 rleap_gpu run_sear ibrahim.  R       0:14      1 cn-423
+2623949_24 rleap_gpu run_sear ibrahim.  R       0:14      1 cn-423
+2623949_25 rleap_gpu run_sear ibrahim.  R       0:14      1 cn-423
+2623949_26 rleap_gpu run_sear ibrahim.  R       0:14      1 cn-423
+2623948_60 rleap_gpu run_sear ibrahim.  R       0:19      1 cn-423
+2623948_61 rleap_gpu run_sear ibrahim.  R       0:19      1 cn-423
+2623948_59 rleap_gpu run_sear ibrahim.  R       0:23      1 cn-423
+2623948_55 rleap_gpu run_sear ibrahim.  R       0:29      1 cn-423
+2623948_52 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-423
+2623948_53 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-423
+2623948_44 rleap_gpu run_sear ibrahim.  R       0:38      1 cn-423
+2623948_45 rleap_gpu run_sear ibrahim.  R       0:38      1 cn-423
+2623948_46 rleap_gpu run_sear ibrahim.  R       0:38      1 cn-423
+2623947_42 rleap_gpu run_sear ibrahim.  R       1:03      1 cn-423
+2623947_44 rleap_gpu run_sear ibrahim.  R       1:03      1 cn-423
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2624309
+Time: Sun Jun  7 11:51:24 CEST 2026
+Elapsed Time: 00:06:10
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2624309 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

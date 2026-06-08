@@ -1,0 +1,34 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2626401
+Job name: run_alphazero.sh
+Host: cn-425
+Date: Sun Jun  7 19:36:22 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2626342_57 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2626342_58 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2626342_59 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2626342_60 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2626342_61 rleap_gpu run_alph ibrahim.  R       0:00      1 cn-425
+2620576 rleap_gpu stv2-bw9 nabin.bh  R 1-21:48:29      1 cn-425
+2620575 rleap_gpu stv2-bw9 nabin.bh  R 1-21:48:32      1 cn-425
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+/var/spool/slurm/slurmd/job2626401/slurm_script: line 28: 3252599 Killed                  venv/bin/python alphaZero.py --domain ${DOMAIN} --problem ${PROBLEM} --policy_model ${POLICY_MODEL} --q1_model ${Q1_MODEL} --q2_model ${Q2_MODEL} --max_time 1800 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2626401
+Time: Sun Jun  7 20:05:46 CEST 2026
+Elapsed Time: 00:29:24
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2626401 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------
+slurmstepd: error: Detected 1 oom_kill event in StepId=2626401.batch. Some of the step tasks have been OOM Killed.

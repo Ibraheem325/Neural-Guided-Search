@@ -1,0 +1,33 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=17379, generated=17378
+  [sim 1000] root visits=1000, unique states=33728, generated=33727
+  [sim 1500] root visits=1500, unique states=49196, generated=49195
+  [sim 2000] root visits=2000, unique states=63556, generated=63555
+  [sim 2500] root visits=2500, unique states=76711, generated=76710
+  [sim 3000] root visits=3000, unique states=90430, generated=90429
+  [sim 3500] root visits=3500, unique states=103573, generated=103572
+  [sim 4000] root visits=4000, unique states=115424, generated=115423
+  [sim 4500] root visits=4500, unique states=127974, generated=127973
+  [sim 5000] root visits=5000, unique states=141868, generated=141867
+  [sim 5500] root visits=5500, unique states=154796, generated=154795
+  [sim 6000] root visits=6000, unique states=167678, generated=167677
+  [sim 6500] root visits=6500, unique states=180528, generated=180527
+  [sim 7000] root visits=7000, unique states=193228, generated=193227
+  [sim 7500] root visits=7500, unique states=205158, generated=205157
+  [sim 8000] root visits=8000, unique states=216783, generated=216782
+  [sim 8500] root visits=8500, unique states=228266, generated=228265
+  [sim 9000] root visits=9000, unique states=239786, generated=239785
+  [sim 9500] root visits=9500, unique states=251493, generated=251492
+  [sim 10000] root visits=10000, unique states=263213, generated=263212
+  [sim 10500] root visits=10500, unique states=275024, generated=275023
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 331, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 321, in _main
+    solution = _plan(problem, policy_model, q1_model, q2_model, args)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero.py", line 291, in _plan
+    print(f"[Final] Expanded: {expanded}, Generated: {generated}", flush=True)
+NameError: name 'expanded' is not defined. Did you mean: '_expand'?

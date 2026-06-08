@@ -1,0 +1,50 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2626884
+Job name: run_search.sh
+Host: cn-421
+Date: Sun Jun  7 20:06:47 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2626470_49 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-421
+2626470_50 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-421
+2626470_51 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-421
+2626470_52 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-421
+2626470_53 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-421
+2626470_45 rleap_gpu run_sear ibrahim.  R       0:02      1 cn-421
+2626470_44 rleap_gpu run_sear ibrahim.  R       0:03      1 cn-421
+2626469_52 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626469_53 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626469_54 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626469_55 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626469_56 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626469_57 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626469_58 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626469_59 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626469_60 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626469_61 rleap_gpu run_sear ibrahim.  R       0:08      1 cn-421
+2626464_18 rleap_gpu run_sear ibrahim.  R      28:53      1 cn-421
+2626464_19 rleap_gpu run_sear ibrahim.  R      28:53      1 cn-421
+2626464_20 rleap_gpu run_sear ibrahim.  R      28:53      1 cn-421
+2626464_21 rleap_gpu run_sear ibrahim.  R      28:53      1 cn-421
+2626464_22 rleap_gpu run_sear ibrahim.  R      28:53      1 cn-421
+2626464_23 rleap_gpu run_sear ibrahim.  R      28:53      1 cn-421
+2620139 rleap_gpu stv2-bw5 nabin.bh  R 2-04:18:41      1 cn-421
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2626884 ON cn-421 CANCELLED AT 2026-06-07T20:37:07 DUE TO TIME LIMIT ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2626884
+Time: Sun Jun  7 20:37:07 CEST 2026
+Elapsed Time: 00:30:20
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2626884 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

@@ -1,0 +1,50 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2627329
+Job name: run_search.sh
+Host: cn-416
+Date: Sun Jun  7 20:24:03 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2627018_8 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-416
+2627018_9 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-416
+2627018_7 rleap_gpu run_sear ibrahim.  R       0:05      1 cn-416
+2627018_5 rleap_gpu run_sear ibrahim.  R       0:13      1 cn-416
+2627017_52 rleap_gpu run_sear ibrahim.  R       1:18      1 cn-416
+2627017_45 rleap_gpu run_sear ibrahim.  R       2:22      1 cn-416
+2627017_42 rleap_gpu run_sear ibrahim.  R       2:57      1 cn-416
+2627017_36 rleap_gpu run_sear ibrahim.  R       3:18      1 cn-416
+2627017_32 rleap_gpu run_sear ibrahim.  R       3:25      1 cn-416
+2627016_61 rleap_gpu run_sear ibrahim.  R       4:37      1 cn-416
+2627016_55 rleap_gpu run_sear ibrahim.  R       5:25      1 cn-416
+2627015_36 rleap_gpu run_sear ibrahim.  R       7:58      1 cn-416
+2627015_37 rleap_gpu run_sear ibrahim.  R       7:58      1 cn-416
+2627015_38 rleap_gpu run_sear ibrahim.  R       7:58      1 cn-416
+2627015_39 rleap_gpu run_sear ibrahim.  R       7:58      1 cn-416
+2627015_40 rleap_gpu run_sear ibrahim.  R       7:58      1 cn-416
+2627015_41 rleap_gpu run_sear ibrahim.  R       7:58      1 cn-416
+2627015_42 rleap_gpu run_sear ibrahim.  R       7:58      1 cn-416
+2627015_43 rleap_gpu run_sear ibrahim.  R       7:58      1 cn-416
+2627014_42 rleap_gpu run_sear ibrahim.  R      10:13      1 cn-416
+2627014_39 rleap_gpu run_sear ibrahim.  R      10:55      1 cn-416
+2627014_31 rleap_gpu run_sear ibrahim.  R      12:25      1 cn-416
+2627014_28 rleap_gpu run_sear ibrahim.  R      12:56      1 cn-416
+2626472_22 rleap_gpu run_sear ibrahim.  R      15:55      1 cn-416
+2620579 rleap_gpu stv2-bw9 nabin.bh  R 1-22:35:52      1 cn-416
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2627329
+Time: Sun Jun  7 20:24:07 CEST 2026
+Elapsed Time: 00:00:04
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2627329 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

@@ -1,0 +1,51 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2627174
+Job name: run_search.sh
+Host: cn-420
+Date: Sun Jun  7 20:16:03 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2627015_31 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-420
+2627015_32 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-420
+2627015_33 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-420
+2627015_30 rleap_gpu run_sear ibrahim.  R       0:03      1 cn-420
+2627015_13 rleap_gpu run_sear ibrahim.  R       0:12      1 cn-420
+2627015_5 rleap_gpu run_sear ibrahim.  R       0:17      1 cn-420
+2627015_9 rleap_gpu run_sear ibrahim.  R       0:17      1 cn-420
+2627015_10 rleap_gpu run_sear ibrahim.  R       0:17      1 cn-420
+2627015_11 rleap_gpu run_sear ibrahim.  R       0:17      1 cn-420
+2627015_12 rleap_gpu run_sear ibrahim.  R       0:17      1 cn-420
+2627014_58 rleap_gpu run_sear ibrahim.  R       0:19      1 cn-420
+2627014_59 rleap_gpu run_sear ibrahim.  R       0:19      1 cn-420
+2627014_60 rleap_gpu run_sear ibrahim.  R       0:19      1 cn-420
+2627014_61 rleap_gpu run_sear ibrahim.  R       0:19      1 cn-420
+2627015_3 rleap_gpu run_sear ibrahim.  R       0:19      1 cn-420
+2627015_4 rleap_gpu run_sear ibrahim.  R       0:19      1 cn-420
+2627014_50 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-420
+2627014_51 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-420
+2627014_52 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-420
+2627014_53 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-420
+2627014_54 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-420
+2627014_55 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-420
+2627014_56 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-420
+2627014_57 rleap_gpu run_sear ibrahim.  R       0:31      1 cn-420
+2620137 rleap_gpu stv2-bw5 nabin.bh  R 2-04:28:00      1 cn-420
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2627174 ON cn-420 CANCELLED AT 2026-06-07T20:46:07 DUE TO TIME LIMIT ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2627174
+Time: Sun Jun  7 20:46:07 CEST 2026
+Elapsed Time: 00:30:04
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2627174 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------

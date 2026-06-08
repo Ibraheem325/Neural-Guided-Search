@@ -1,0 +1,34 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+129.508: (switch_on instrument25 satellite7)
+130.557: (switch_on instrument0 satellite0)
+130.619: (switch_on instrument24 satellite7)
+130.792: (switch_on instrument19 satellite6)
+131.007: (switch_on instrument10 satellite3)
+131.402: (switch_on instrument8 satellite3)
+132.046: (switch_on instrument1 satellite0)
+132.079: (switch_on instrument17 satellite5)
+132.304: (switch_on instrument12 satellite4)
+132.494: (switch_on instrument6 satellite2)
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/beam.py", line 104, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/beam.py", line 94, in _main
+    solution = _plan(problem, model, args.beam, use_closed_set=not args.disable_closed_set)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/beam.py", line 57, in _plan
+    values = model.forward(inputs).readout('value')
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 316, in forward
+    node_embeddings = self._mpnn_module.forward(input)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 209, in forward
+    relation_messages = self._relation_network(node_embeddings, input.flattened_relations)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 149, in forward
+    output_messages, output_indices = self._compute_messages_and_indices(node_embeddings, relations)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 110, in _compute_messages_and_indices
+    input_embeddings = torch.index_select(node_embeddings, 0, relation_values).view(-1, relation_module.input_size)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.75 GiB. GPU 0 has a total capacity of 44.39 GiB of which 758.06 MiB is free. Process 74301 has 9.40 GiB memory in use. Process 74337 has 11.16 GiB memory in use. Including non-PyTorch memory, this process has 1.07 GiB memory in use. Process 74338 has 8.72 GiB memory in use. Process 74300 has 11.70 GiB memory in use. Process 76016 has 530.00 MiB memory in use. Process 76017 has 530.00 MiB memory in use. Process 76018 has 530.00 MiB memory in use. Of the allocated memory 471.41 MiB is allocated by PyTorch, and 124.59 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)

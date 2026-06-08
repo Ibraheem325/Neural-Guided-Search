@@ -15,7 +15,7 @@ OUTPUT_DIR=$4
 ALGORITHM=$5
 EXTRA_ARGS=$6
 
-PROBLEM=$(ls ${PROBLEM_DIR}/*.pddl | sort | sed -n "${SLURM_ARRAY_TASK_ID}p")
+PROBLEM=$(ls ${PROBLEM_DIR}/*.pddl | grep -v domain.pddl | sort | sed -n "${SLURM_ARRAY_TASK_ID}p")
 PROBLEM_NAME=$(basename $PROBLEM .pddl)
 
 case $ALGORITHM in

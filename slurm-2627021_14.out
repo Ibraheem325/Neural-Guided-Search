@@ -1,0 +1,58 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 2627515
+Job name: run_search.sh
+Host: cn-426
+Date: Sun Jun  7 20:35:55 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_48gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+2627021_14 rleap_gpu run_sear ibrahim.  R       0:00      1 cn-426
+2627021_9 rleap_gpu run_sear ibrahim.  R       1:22      1 cn-426
+2627021_2 rleap_gpu run_sear ibrahim.  R       1:26      1 cn-426
+2627019_45 rleap_gpu run_sear ibrahim.  R       5:16      1 cn-426
+2627019_44 rleap_gpu run_sear ibrahim.  R       5:18      1 cn-426
+2627019_39 rleap_gpu run_sear ibrahim.  R       5:38      1 cn-426
+2627015_35 rleap_gpu run_sear ibrahim.  R      19:50      1 cn-426
+2627014_47 rleap_gpu run_sear ibrahim.  R      20:45      1 cn-426
+2627014_32 rleap_gpu run_sear ibrahim.  R      23:48      1 cn-426
+2627014_26 rleap_gpu run_sear ibrahim.  R      24:48      1 cn-426
+2627013_50 rleap_gpu run_sear ibrahim.  R      26:17      1 cn-426
+2627013_51 rleap_gpu run_sear ibrahim.  R      26:17      1 cn-426
+2627013_46 rleap_gpu run_sear ibrahim.  R      26:48      1 cn-426
+2627013_45 rleap_gpu run_sear ibrahim.  R      27:24      1 cn-426
+2626472_35 rleap_gpu run_sear ibrahim.  R      27:46      1 cn-426
+2626472_36 rleap_gpu run_sear ibrahim.  R      27:46      1 cn-426
+2626472_37 rleap_gpu run_sear ibrahim.  R      27:46      1 cn-426
+2626472_38 rleap_gpu run_sear ibrahim.  R      27:46      1 cn-426
+2626472_39 rleap_gpu run_sear ibrahim.  R      27:46      1 cn-426
+2626472_40 rleap_gpu run_sear ibrahim.  R      27:46      1 cn-426
+2626472_21 rleap_gpu run_sear ibrahim.  R      27:54      1 cn-426
+2626472_8 rleap_gpu run_sear ibrahim.  R      28:25      1 cn-426
+2626472_9 rleap_gpu run_sear ibrahim.  R      28:25      1 cn-426
+2626470_55 rleap_gpu run_sear ibrahim.  R      29:04      1 cn-426
+2626470_56 rleap_gpu run_sear ibrahim.  R      29:04      1 cn-426
+2626470_57 rleap_gpu run_sear ibrahim.  R      29:04      1 cn-426
+2626470_58 rleap_gpu run_sear ibrahim.  R      29:04      1 cn-426
+2626470_59 rleap_gpu run_sear ibrahim.  R      29:04      1 cn-426
+2626470_60 rleap_gpu run_sear ibrahim.  R      29:04      1 cn-426
+2626470_47 rleap_gpu run_sear ibrahim.  R      29:08      1 cn-426
+2626470_48 rleap_gpu run_sear ibrahim.  R      29:08      1 cn-426
+2626470_46 rleap_gpu run_sear ibrahim.  R      29:10      1 cn-426
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+slurmstepd: error: *** JOB 2627515 ON cn-426 CANCELLED AT 2026-06-07T21:06:08 DUE TO TIME LIMIT ***
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 2627515
+Time: Sun Jun  7 21:06:08 CEST 2026
+Elapsed Time: 00:30:13
+Billing per second for TRES: billing=103,cpu=2,gres/shard=6,mem=8G,node=1
+Show resource usage with e.g.:
+sacct -j 2627515 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------
