@@ -3,13 +3,13 @@ Torch: 2.12.0+cu130
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
   [sim 500] root visits=500, unique states=16480, generated=16479
-  [sim 1000] root visits=1000, unique states=33067, generated=33066
-  [sim 1500] root visits=1500, unique states=50895, generated=50894
-  [sim 2000] root visits=2000, unique states=65226, generated=65225
-  [sim 2500] root visits=2500, unique states=78687, generated=78686
+  [sim 1000] root visits=1000, unique states=33094, generated=33093
+  [sim 1500] root visits=1500, unique states=50898, generated=50897
+  [sim 2000] root visits=2000, unique states=65173, generated=65172
+  [sim 2500] root visits=2500, unique states=79377, generated=79376
   [sim 2501] found goal path of length 20
-[Final] Expanded: 78714, Generated: 78714
-[search done] simulations=2501, unique states generated=78714
+[Final] Expanded: 79404, Generated: 79404
+[search done] simulations=2501, unique states generated=79404
 Found a solution of length 20!
    1: (turn_to satellite0 star14 phenomenon17)
    2: (turn_to satellite0 groundstation1 star14)

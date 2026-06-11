@@ -1,0 +1,28 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=101684, generated=101683
+  [sim 1000] root visits=1000, unique states=300813, generated=300812
+  [sim 1500] root visits=1500, unique states=507213, generated=507212
+  [sim 2000] root visits=2000, unique states=709261, generated=709260
+  [sim 2500] root visits=2500, unique states=909387, generated=909386
+  [sim 3000] root visits=3000, unique states=1101033, generated=1101032
+  [sim 3500] root visits=3500, unique states=1276033, generated=1276032
+  [sim 4000] root visits=4000, unique states=1442137, generated=1442136
+  [sim 4500] root visits=4500, unique states=1624182, generated=1624181
+  [sim 5000] root visits=5000, unique states=1817865, generated=1817864
+  [sim 5500] root visits=5500, unique states=2008862, generated=2008861
+  [sim 6000] root visits=6000, unique states=2207741, generated=2207740
+  [sim 6500] root visits=6500, unique states=2390339, generated=2390338
+  [sim 7000] root visits=7000, unique states=2568665, generated=2568664
+  [sim 7500] root visits=7500, unique states=2744867, generated=2744866
+  [sim 8000] root visits=8000, unique states=2918901, generated=2918900
+  [sim 8500] root visits=8500, unique states=3077318, generated=3077317
+  [sim 9000] root visits=9000, unique states=3231037, generated=3231036
+  [sim 9500] root visits=9500, unique states=3394251, generated=3394250
+  [sim 10000] root visits=10000, unique states=3559253, generated=3559252
+  [sim 10500] root visits=10500, unique states=3731814, generated=3731813
+[Final] Expanded: 3762499, Generated: 3762499
+[search done] simulations=10585, unique states generated=3762499
+Failed to find a solution!

@@ -35,4 +35,6 @@ case $ALGORITHM in
         venv/bin/python beam.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --beam 10 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
     qstar)
         venv/bin/python qstar.py --domain $DOMAIN --problem $PROBLEM --model $MODEL > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
+    greedy_q)
+        venv/bin/python qstar.py --domain $DOMAIN --problem $PROBLEM --model $MODEL > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
 esac

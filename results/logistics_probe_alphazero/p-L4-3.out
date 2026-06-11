@@ -2,32 +2,160 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 500] root visits=500, unique states=10235, generated=10234
-  [sim 1000] root visits=1000, unique states=20314, generated=20313
-  [sim 1500] root visits=1500, unique states=30578, generated=30577
-  [sim 2000] root visits=2000, unique states=40973, generated=40972
-  [sim 2500] root visits=2500, unique states=51317, generated=51316
-  [sim 3000] root visits=3000, unique states=61583, generated=61582
-  [sim 3500] root visits=3500, unique states=72040, generated=72039
-  [sim 4000] root visits=4000, unique states=82308, generated=82307
-  [sim 4500] root visits=4500, unique states=92461, generated=92460
-  [sim 5000] root visits=5000, unique states=102488, generated=102487
-  [sim 5500] root visits=5500, unique states=112433, generated=112432
-  [sim 6000] root visits=6000, unique states=122186, generated=122185
-  [sim 6500] root visits=6500, unique states=132026, generated=132025
-  [sim 7000] root visits=7000, unique states=141913, generated=141912
-  [sim 7500] root visits=7500, unique states=151667, generated=151666
-  [sim 8000] root visits=8000, unique states=161482, generated=161481
-  [sim 8500] root visits=8500, unique states=171387, generated=171386
-  [sim 9000] root visits=9000, unique states=181309, generated=181308
-  [sim 9500] root visits=9500, unique states=191449, generated=191448
-  [sim 10000] root visits=10000, unique states=201540, generated=201539
-  [sim 10500] root visits=10500, unique states=211374, generated=211373
-  [sim 11000] root visits=11000, unique states=221196, generated=221195
-  [sim 11500] root visits=11500, unique states=230569, generated=230568
-  [sim 12000] root visits=12000, unique states=238469, generated=238468
-  [sim 12500] root visits=12500, unique states=246952, generated=246951
-  [sim 13000] root visits=13000, unique states=256282, generated=256281
-[Final] Expanded: 265598, Generated: 265598
-[search done] simulations=13493, unique states generated=265598
-Failed to find a solution!
+  [sim 500] root visits=500, unique states=6745, generated=6744
+  [sim 1000] root visits=1000, unique states=12848, generated=12847
+  [sim 1500] root visits=1500, unique states=19142, generated=19141
+  [sim 2000] root visits=2000, unique states=25109, generated=25108
+  [sim 2500] root visits=2500, unique states=30789, generated=30788
+  [sim 3000] root visits=3000, unique states=36156, generated=36155
+  [sim 3087] found goal path of length 147
+[Final] Expanded: 37140, Generated: 37140
+[search done] simulations=3087, unique states generated=37140
+Found a solution of length 147!
+   1: (load-truck p3 t2 l2-0)
+   2: (load-truck p1 t0 l0-0)
+   3: (drive-truck t1 l1-1 l1-0 c1)
+   4: (load-truck p2 t1 l1-0)
+   5: (load-truck p0 t1 l1-0)
+   6: (drive-truck t2 l2-0 l2-1 c2)
+   7: (load-truck p5 t2 l2-1)
+   8: (drive-truck t0 l0-0 l0-1 c0)
+   9: (load-truck p6 t0 l0-1)
+  10: (drive-truck t0 l0-1 l0-0 c0)
+  11: (drive-truck t2 l2-1 l2-0 c2)
+  12: (drive-truck t1 l1-0 l1-1 c1)
+  13: (unload-truck p2 t1 l1-1)
+  14: (unload-truck p6 t0 l0-0)
+  15: (load-truck p2 t1 l1-1)
+  16: (load-airplane p6 a0 l0-0)
+  17: (unload-truck p2 t1 l1-1)
+  18: (unload-truck p5 t2 l2-0)
+  19: (load-truck p2 t1 l1-1)
+  20: (unload-airplane p6 a0 l0-0)
+  21: (load-airplane p5 a1 l2-0)
+  22: (load-airplane p6 a0 l0-0)
+  23: (drive-truck t1 l1-1 l1-0 c1)
+  24: (unload-airplane p5 a1 l2-0)
+  25: (unload-airplane p6 a0 l0-0)
+  26: (load-airplane p5 a1 l2-0)
+  27: (fly-airplane a1 l2-0 l0-0)
+  28: (load-airplane p6 a0 l0-0)
+  29: (unload-airplane p5 a1 l0-0)
+  30: (drive-truck t1 l1-0 l1-1 c1)
+  31: (unload-truck p2 t1 l1-1)
+  32: (unload-truck p3 t2 l2-0)
+  33: (load-truck p2 t1 l1-1)
+  34: (unload-truck p0 t1 l1-1)
+  35: (load-truck p3 t2 l2-0)
+  36: (unload-truck p2 t1 l1-1)
+  37: (unload-truck p3 t2 l2-0)
+  38: (unload-truck p1 t0 l0-0)
+  39: (load-truck p2 t1 l1-1)
+  40: (load-truck p3 t2 l2-0)
+  41: (load-airplane p1 a0 l0-0)
+  42: (unload-truck p2 t1 l1-1)
+  43: (unload-truck p3 t2 l2-0)
+  44: (load-truck p2 t1 l1-1)
+  45: (drive-truck t1 l1-1 l1-0 c1)
+  46: (load-truck p3 t2 l2-0)
+  47: (unload-truck p2 t1 l1-0)
+  48: (unload-truck p3 t2 l2-0)
+  49: (drive-truck t0 l0-0 l0-1 c0)
+  50: (load-truck p3 t2 l2-0)
+  51: (load-truck p2 t1 l1-0)
+  52: (drive-truck t1 l1-0 l1-1 c1)
+  53: (unload-truck p2 t1 l1-1)
+  54: (unload-truck p3 t2 l2-0)
+  55: (load-truck p2 t1 l1-1)
+  56: (drive-truck t1 l1-1 l1-0 c1)
+  57: (drive-truck t2 l2-0 l2-1 c2)
+  58: (drive-truck t1 l1-0 l1-1 c1)
+  59: (unload-truck p2 t1 l1-1)
+  60: (load-truck p4 t1 l1-1)
+  61: (load-truck p2 t1 l1-1)
+  62: (drive-truck t1 l1-1 l1-0 c1)
+  63: (unload-truck p4 t1 l1-0)
+  64: (drive-truck t1 l1-0 l1-1 c1)
+  65: (fly-airplane a1 l0-0 l1-0)
+  66: (drive-truck t1 l1-1 l1-0 c1)
+  67: (load-truck p4 t1 l1-0)
+  68: (drive-truck t1 l1-0 l1-1 c1)
+  69: (unload-truck p4 t1 l1-1)
+  70: (unload-truck p2 t1 l1-1)
+  71: (load-truck p4 t1 l1-1)
+  72: (drive-truck t1 l1-1 l1-0 c1)
+  73: (fly-airplane a1 l1-0 l0-0)
+  74: (unload-truck p4 t1 l1-0)
+  75: (drive-truck t0 l0-1 l0-0 c0)
+  76: (load-truck p4 t1 l1-0)
+  77: (drive-truck t1 l1-0 l1-1 c1)
+  78: (load-truck p2 t1 l1-1)
+  79: (unload-truck p4 t1 l1-1)
+  80: (unload-truck p2 t1 l1-1)
+  81: (drive-truck t1 l1-1 l1-0 c1)
+  82: (drive-truck t3 l3-0 l3-1 c3)
+  83: (drive-truck t0 l0-0 l0-1 c0)
+  84: (fly-airplane a0 l0-0 l2-0)
+  85: (unload-airplane p6 a0 l2-0)
+  86: (unload-airplane p1 a0 l2-0)
+  87: (load-airplane p3 a0 l2-0)
+  88: (fly-airplane a0 l2-0 l0-0)
+  89: (drive-truck t0 l0-1 l0-0 c0)
+  90: (fly-airplane a0 l0-0 l1-0)
+  91: (unload-airplane p3 a0 l1-0)
+  92: (load-truck p3 t1 l1-0)
+  93: (drive-truck t1 l1-0 l1-1 c1)
+  94: (load-truck p2 t1 l1-1)
+  95: (drive-truck t1 l1-1 l1-0 c1)
+  96: (unload-truck p3 t1 l1-0)
+  97: (load-airplane p3 a0 l1-0)
+  98: (fly-airplane a0 l1-0 l2-0)
+  99: (unload-airplane p3 a0 l2-0)
+ 100: (load-airplane p1 a0 l2-0)
+ 101: (drive-truck t1 l1-0 l1-1 c1)
+ 102: (unload-airplane p1 a0 l2-0)
+ 103: (load-airplane p3 a0 l2-0)
+ 104: (unload-truck p2 t1 l1-1)
+ 105: (unload-airplane p3 a0 l2-0)
+ 106: (load-airplane p1 a0 l2-0)
+ 107: (load-airplane p3 a0 l2-0)
+ 108: (load-truck p2 t1 l1-1)
+ 109: (fly-airplane a0 l2-0 l0-0)
+ 110: (unload-truck p2 t1 l1-1)
+ 111: (load-truck p4 t1 l1-1)
+ 112: (load-truck p2 t1 l1-1)
+ 113: (drive-truck t1 l1-1 l1-0 c1)
+ 114: (unload-truck p2 t1 l1-0)
+ 115: (drive-truck t1 l1-0 l1-1 c1)
+ 116: (fly-airplane a1 l0-0 l1-0)
+ 117: (drive-truck t1 l1-1 l1-0 c1)
+ 118: (load-truck p2 t1 l1-0)
+ 119: (drive-truck t1 l1-0 l1-1 c1)
+ 120: (unload-truck p4 t1 l1-1)
+ 121: (unload-truck p2 t1 l1-1)
+ 122: (load-truck p4 t1 l1-1)
+ 123: (drive-truck t1 l1-1 l1-0 c1)
+ 124: (fly-airplane a1 l1-0 l0-0)
+ 125: (unload-truck p4 t1 l1-0)
+ 126: (fly-airplane a0 l0-0 l1-0)
+ 127: (load-truck p4 t1 l1-0)
+ 128: (unload-airplane p1 a0 l1-0)
+ 129: (load-truck p1 t1 l1-0)
+ 130: (unload-airplane p3 a0 l1-0)
+ 131: (load-truck p3 t1 l1-0)
+ 132: (drive-truck t1 l1-0 l1-1 c1)
+ 133: (load-truck p2 t1 l1-1)
+ 134: (drive-truck t1 l1-1 l1-0 c1)
+ 135: (unload-truck p2 t1 l1-0)
+ 136: (load-airplane p2 a0 l1-0)
+ 137: (fly-airplane a0 l1-0 l2-0)
+ 138: (unload-airplane p2 a0 l2-0)
+ 139: (drive-truck t1 l1-0 l1-1 c1)
+ 140: (unload-truck p3 t1 l1-1)
+ 141: (unload-truck p4 t1 l1-1)
+ 142: (drive-truck t1 l1-1 l1-0 c1)
+ 143: (unload-truck p1 t1 l1-0)
+ 144: (fly-airplane a0 l2-0 l1-0)
+ 145: (load-airplane p1 a0 l1-0)
+ 146: (fly-airplane a0 l1-0 l3-0)
+ 147: (unload-airplane p1 a0 l3-0)

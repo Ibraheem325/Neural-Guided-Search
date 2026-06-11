@@ -2,37 +2,39 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 500] root visits=500, unique states=19494, generated=19493
-  [sim 1000] root visits=1000, unique states=37834, generated=37833
-  [sim 1500] root visits=1500, unique states=53965, generated=53964
-  [sim 2000] root visits=2000, unique states=73105, generated=73104
-  [sim 2500] root visits=2500, unique states=93117, generated=93116
-  [sim 3000] root visits=3000, unique states=113001, generated=113000
-  [sim 3500] root visits=3500, unique states=131224, generated=131223
-  [sim 4000] root visits=4000, unique states=146293, generated=146292
-  [sim 4500] root visits=4500, unique states=164163, generated=164162
-  [sim 5000] root visits=5000, unique states=182435, generated=182434
-  [sim 5401] found goal path of length 20
-[Final] Expanded: 196156, Generated: 196156
-[search done] simulations=5401, unique states generated=196156
-Found a solution of length 20!
-   1: (turn_to satellite0 star2 star18)
-   2: (switch_on instrument1 satellite0)
-   3: (calibrate satellite0 instrument1 star2)
-   4: (turn_to satellite0 star18 star2)
-   5: (take_image satellite0 star18 instrument1 spectrograph2)
-   6: (turn_to satellite0 planet22 star18)
-   7: (take_image satellite0 planet22 instrument1 spectrograph2)
-   8: (turn_to satellite0 planet15 planet22)
-   9: (take_image satellite0 planet15 instrument1 spectrograph1)
-  10: (turn_to satellite0 planet17 planet15)
-  11: (take_image satellite0 planet17 instrument1 spectrograph0)
-  12: (turn_to satellite0 phenomenon19 planet17)
-  13: (take_image satellite0 phenomenon19 instrument1 spectrograph0)
-  14: (turn_to satellite0 planet20 phenomenon19)
-  15: (take_image satellite0 planet20 instrument1 spectrograph2)
-  16: (turn_to satellite0 planet21 planet20)
-  17: (take_image satellite0 planet21 instrument1 spectrograph0)
-  18: (turn_to satellite0 phenomenon16 planet21)
-  19: (take_image satellite0 phenomenon16 instrument1 spectrograph2)
-  20: (turn_to satellite0 groundstation4 phenomenon16)
+  [sim 500] root visits=500, unique states=19495, generated=19494
+  [sim 1000] root visits=1000, unique states=37383, generated=37382
+  [sim 1500] root visits=1500, unique states=54078, generated=54077
+  [sim 2000] root visits=2000, unique states=71803, generated=71802
+  [sim 2500] root visits=2500, unique states=91459, generated=91458
+  [sim 3000] root visits=3000, unique states=111303, generated=111302
+  [sim 3500] root visits=3500, unique states=127154, generated=127153
+  [sim 4000] root visits=4000, unique states=146924, generated=146923
+  [sim 4500] root visits=4500, unique states=162751, generated=162750
+  [sim 5000] root visits=5000, unique states=181124, generated=181123
+  [sim 5500] root visits=5500, unique states=198446, generated=198445
+  [sim 5576] found goal path of length 21
+[Final] Expanded: 201092, Generated: 201092
+[search done] simulations=5576, unique states generated=201092
+Found a solution of length 21!
+   1: (turn_to satellite0 star5 star18)
+   2: (turn_to satellite0 groundstation14 star5)
+   3: (switch_on instrument1 satellite0)
+   4: (calibrate satellite0 instrument1 groundstation14)
+   5: (turn_to satellite0 planet22 groundstation14)
+   6: (take_image satellite0 planet22 instrument1 spectrograph2)
+   7: (turn_to satellite0 star18 planet22)
+   8: (take_image satellite0 star18 instrument1 spectrograph2)
+   9: (turn_to satellite0 phenomenon19 star18)
+  10: (take_image satellite0 phenomenon19 instrument1 spectrograph0)
+  11: (turn_to satellite0 planet15 phenomenon19)
+  12: (take_image satellite0 planet15 instrument1 spectrograph1)
+  13: (turn_to satellite0 planet17 planet15)
+  14: (take_image satellite0 planet17 instrument1 spectrograph0)
+  15: (turn_to satellite0 planet20 planet17)
+  16: (take_image satellite0 planet20 instrument1 spectrograph2)
+  17: (turn_to satellite0 planet21 planet20)
+  18: (take_image satellite0 planet21 instrument1 spectrograph0)
+  19: (turn_to satellite0 phenomenon16 planet21)
+  20: (take_image satellite0 phenomenon16 instrument1 spectrograph2)
+  21: (turn_to satellite0 groundstation4 phenomenon16)

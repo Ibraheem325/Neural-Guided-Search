@@ -1,0 +1,54 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=28521, generated=28520
+  [sim 1000] root visits=1000, unique states=56903, generated=56902
+  [sim 1500] root visits=1500, unique states=84943, generated=84942
+  [sim 2000] root visits=2000, unique states=112462, generated=112461
+  [sim 2500] root visits=2500, unique states=139669, generated=139668
+  [sim 3000] root visits=3000, unique states=167104, generated=167103
+  [sim 3500] root visits=3500, unique states=194462, generated=194461
+  [sim 4000] root visits=4000, unique states=221697, generated=221696
+  [sim 4500] root visits=4500, unique states=248910, generated=248909
+  [sim 5000] root visits=5000, unique states=275845, generated=275844
+  [sim 5500] root visits=5500, unique states=302841, generated=302840
+  [sim 6000] root visits=6000, unique states=329983, generated=329982
+  [sim 6500] root visits=6500, unique states=356805, generated=356804
+  [sim 7000] root visits=7000, unique states=383308, generated=383307
+  [sim 7500] root visits=7500, unique states=410195, generated=410194
+  [sim 8000] root visits=8000, unique states=436722, generated=436721
+  [sim 8500] root visits=8500, unique states=463427, generated=463426
+  [sim 9000] root visits=9000, unique states=490161, generated=490160
+  [sim 9500] root visits=9500, unique states=517340, generated=517339
+  [sim 10000] root visits=10000, unique states=544565, generated=544564
+  [sim 10500] root visits=10500, unique states=571861, generated=571860
+  [sim 11000] root visits=11000, unique states=599020, generated=599019
+  [sim 11500] root visits=11500, unique states=626361, generated=626360
+  [sim 12000] root visits=12000, unique states=653432, generated=653431
+  [sim 12500] root visits=12500, unique states=680335, generated=680334
+  [sim 13000] root visits=13000, unique states=707316, generated=707315
+  [sim 13500] root visits=13500, unique states=734164, generated=734163
+  [sim 14000] root visits=14000, unique states=761240, generated=761239
+  [sim 14500] root visits=14500, unique states=788366, generated=788365
+  [sim 15000] root visits=15000, unique states=815600, generated=815599
+  [sim 15500] root visits=15500, unique states=842691, generated=842690
+  [sim 16000] root visits=16000, unique states=869630, generated=869629
+  [sim 16500] root visits=16500, unique states=896200, generated=896199
+  [sim 17000] root visits=17000, unique states=922828, generated=922827
+  [sim 17500] root visits=17500, unique states=949418, generated=949417
+  [sim 18000] root visits=18000, unique states=976105, generated=976104
+  [sim 18500] root visits=18500, unique states=1002741, generated=1002740
+  [sim 19000] root visits=19000, unique states=1029853, generated=1029852
+  [sim 19500] root visits=19500, unique states=1057352, generated=1057351
+  [sim 20000] root visits=20000, unique states=1084408, generated=1084407
+  [sim 20500] root visits=20500, unique states=1111385, generated=1111384
+  [sim 21000] root visits=21000, unique states=1138246, generated=1138245
+  [sim 21500] root visits=21500, unique states=1165090, generated=1165089
+  [sim 22000] root visits=22000, unique states=1191328, generated=1191327
+  [sim 22500] root visits=22500, unique states=1217277, generated=1217276
+  [sim 23000] root visits=23000, unique states=1243413, generated=1243412
+  [sim 23500] root visits=23500, unique states=1269762, generated=1269761
+  [sim 24000] root visits=24000, unique states=1295540, generated=1295539
+  [sim 24500] root visits=24500, unique states=1321926, generated=1321925
+  [sim 25000] root visits=25000, unique states=1348270, generated=1348269

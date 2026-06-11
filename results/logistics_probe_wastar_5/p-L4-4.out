@@ -1,2 +1,30 @@
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Loading model... (models/logistics_supervised.pth)
+Using GPU:  NVIDIA L40S
+[f=84.202] Expanded: 0, Generated: 0
+[Final] Expanded: 46, Generated: 1061
+Found a solution of length 22!
+   1: (load-truck p1 t1 l1-1)
+   2: (load-airplane p3 a0 l0-0)
+   3: (fly-airplane a0 l0-0 l3-0)
+   4: (load-airplane p5 a0 l3-0)
+   5: (drive-truck t1 l1-1 l1-0 c1)
+   6: (unload-truck p1 t1 l1-0)
+   7: (drive-truck t3 l3-0 l3-1 c3)
+   8: (load-truck p0 t3 l3-1)
+   9: (drive-truck t3 l3-1 l3-0 c3)
+  10: (unload-truck p0 t3 l3-0)
+  11: (fly-airplane a1 l0-0 l3-0)
+  12: (fly-airplane a0 l3-0 l1-0)
+  13: (unload-airplane p3 a0 l1-0)
+  14: (drive-truck t0 l0-1 l0-0 c0)
+  15: (fly-airplane a0 l1-0 l0-0)
+  16: (unload-airplane p5 a0 l0-0)
+  17: (load-airplane p0 a1 l3-0)
+  18: (fly-airplane a1 l3-0 l1-0)
+  19: (unload-airplane p0 a1 l1-0)
+  20: (load-truck p0 t1 l1-0)
+  21: (drive-truck t1 l1-0 l1-1 c1)
+  22: (unload-truck p0 t1 l1-1)

@@ -2,32 +2,30 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 500] root visits=500, unique states=3279, generated=3278
-  [sim 679] found goal path of length 24
-[Final] Expanded: 4570, Generated: 4570
-[search done] simulations=679, unique states generated=4570
-Found a solution of length 24!
+  [sim 500] root visits=500, unique states=3278, generated=3277
+  [sim 626] found goal path of length 22
+[Final] Expanded: 3963, Generated: 3963
+[search done] simulations=626, unique states generated=3963
+Found a solution of length 22!
    1: (turn_to satellite0 groundstation3 groundstation5)
    2: (switch_on instrument2 satellite0)
    3: (calibrate satellite0 instrument2 groundstation3)
-   4: (turn_to satellite0 planet11 groundstation3)
-   5: (take_image satellite0 planet11 instrument2 thermograph1)
-   6: (turn_to satellite0 star12 planet11)
-   7: (take_image satellite0 star12 instrument2 thermograph1)
-   8: (turn_to satellite0 planet14 star12)
-   9: (take_image satellite0 planet14 instrument2 spectrograph2)
-  10: (take_image satellite0 planet14 instrument2 thermograph1)
-  11: (turn_to satellite0 star2 planet14)
-  12: (turn_to satellite0 phenomenon13 star2)
-  13: (take_image satellite0 phenomenon13 instrument2 spectrograph2)
-  14: (turn_to satellite0 planet14 phenomenon13)
-  15: (turn_to satellite0 star2 planet14)
-  16: (turn_to satellite0 planet10 star2)
-  17: (take_image satellite0 planet10 instrument2 thermograph1)
-  18: (turn_to satellite0 star2 planet10)
-  19: (switch_off instrument2 satellite0)
-  20: (switch_on instrument1 satellite0)
-  21: (calibrate satellite0 instrument1 star2)
-  22: (turn_to satellite0 planet14 star2)
-  23: (take_image satellite0 planet14 instrument1 image0)
-  24: (turn_to satellite0 star2 planet14)
+   4: (turn_to satellite0 phenomenon13 groundstation3)
+   5: (take_image satellite0 phenomenon13 instrument2 spectrograph2)
+   6: (turn_to satellite0 planet10 phenomenon13)
+   7: (take_image satellite0 planet10 instrument2 thermograph1)
+   8: (turn_to satellite0 planet11 planet10)
+   9: (take_image satellite0 planet11 instrument2 thermograph1)
+  10: (turn_to satellite0 planet14 planet11)
+  11: (take_image satellite0 planet14 instrument2 thermograph1)
+  12: (take_image satellite0 planet14 instrument2 spectrograph2)
+  13: (turn_to satellite0 star2 planet14)
+  14: (turn_to satellite0 star12 star2)
+  15: (take_image satellite0 star12 instrument2 thermograph1)
+  16: (turn_to satellite0 star2 star12)
+  17: (switch_off instrument2 satellite0)
+  18: (switch_on instrument1 satellite0)
+  19: (calibrate satellite0 instrument1 star2)
+  20: (turn_to satellite0 planet14 star2)
+  21: (take_image satellite0 planet14 instrument1 image0)
+  22: (turn_to satellite0 star2 planet14)

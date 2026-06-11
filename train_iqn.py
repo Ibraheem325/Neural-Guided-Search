@@ -11,12 +11,11 @@ from utils import create_device
 
 
 class IQNModelWrapper(rl.ActionQuantileModel):
-    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, num_cosines: int = 64, random_layer_count: bool = False) -> None:
+    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, num_cosines: int = 64, random_layer_count: bool = False, embedding_size: int = 32) -> None:
         super().__init__()
         self.model = model
         self.num_cosines = num_cosines
         self.random_layer_count = random_layer_count
-        embedding_size = model.get_hparam_config().embedding_size
         self.cosine_projection = torch.nn.Linear(num_cosines, embedding_size)
         self.quantile_head = torch.nn.Sequential(
             torch.nn.Linear(embedding_size, embedding_size),
@@ -138,6 +137,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--risk_averseness', default=0.0, type=float, help='Risk averseness in [0, 1]; 0 is risk-neutral and 1 is maximally pessimistic')
     parser.add_argument('--seed', default=42, type=int, help='Random seed for reproducibility')
     parser.add_argument('--cpu', action='store_true', help='Force CPU to be used')
+    parser.add_argument('--output_prefix', default='', type=str, help='Prefix for output model files')
     args = parser.parse_args()
     return args
 
@@ -147,7 +147,10 @@ def _parse_instances(input: Path) -> tuple[mm.Domain, list[mm.Problem]]:
         domain_path = str(input.parent / 'domain.pddl')
         problem_paths = [str(input)]
     else:
-        domain_path = str(input / 'domain.pddl')
+        if (input / 'domain.pddl').exists():
+            domain_path = str(input / 'domain.pddl')
+        else:
+            domain_path = str(input.parent / 'domain.pddl')
         problem_paths = [str(file) for file in input.glob('*.pddl') if file.name != 'domain.pddl']
         problem_paths.sort()
     domain = mm.Domain(domain_path)
@@ -156,33 +159,26 @@ def _parse_instances(input: Path) -> tuple[mm.Domain, list[mm.Problem]]:
 
 
 def _create_base_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str) -> rgnn.RelationalGraphNeuralNetwork:
-    if aggregation == 'smax': aggregation_function = rgnn.SmoothMaximumAggregation()
-    elif aggregation == 'hmax': aggregation_function = rgnn.HardMaximumAggregation()
-    elif aggregation == 'mean': aggregation_function = rgnn.MeanAggregation()
-    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.SumAggregation()
+    if aggregation == 'smax': aggregation_function = rgnn.AggregationFunction.SmoothMaximum
+    elif aggregation == 'hmax': aggregation_function = rgnn.AggregationFunction.HardMaximum
+    elif aggregation == 'mean': aggregation_function = rgnn.AggregationFunction.Mean
+    elif aggregation in ('add', 'sum'): aggregation_function = rgnn.AggregationFunction.Add
     else: raise RuntimeError(f'Unknown aggregation function: {aggregation}.')
 
-    hparam_config = rgnn.HyperparameterConfig(
+    config = rgnn.RelationalGraphNeuralNetworkConfig(
         domain=domain,
         embedding_size=embedding_size,
-        num_layers=num_layers
+        num_layers=num_layers,
+        message_aggregation=aggregation_function,
+        input_specification=(rgnn.InputType.State, rgnn.InputType.GroundActions, rgnn.InputType.Goal),
+        output_specification=[('action_embedding', rgnn.OutputNodeType.Action, rgnn.OutputValueType.Embeddings)],
     )
-
-    input_spec = (rgnn.StateEncoder(), rgnn.GroundActionsEncoder(), rgnn.GoalEncoder())
-    output_spec = [('action_embedding', rgnn.ActionEmbeddingDecoder())]
-
-    module_config = rgnn.ModuleConfig(
-        aggregation_function=aggregation_function,
-        message_function=rgnn.PredicateMLPMessages(hparam_config, input_spec),
-        update_function=rgnn.MLPUpdates(hparam_config)
-    )
-
-    return rgnn.RelationalGraphNeuralNetwork(hparam_config, module_config, input_spec, output_spec)  # type: ignore
+    return rgnn.RelationalGraphNeuralNetwork(config)
 
 
 def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, num_cosines: int, random_layer_count: bool = False) -> IQNModelWrapper:
     base_model = _create_base_model(domain, embedding_size, num_layers, aggregation)
-    return IQNModelWrapper(base_model, num_cosines, random_layer_count)
+    return IQNModelWrapper(base_model, num_cosines, random_layer_count, embedding_size)
 
 
 def _create_trajectory_refiner(hindsight: str, train_problems: list[mm.Problem], max_new_trajectories: int) -> rl.TrajectoryRefiner:
@@ -339,9 +335,9 @@ def _train(
         rl_algorithm.fit()
         best, evaluation = rl_evaluator.evaluate()
         print(f'[{episode}] Best: {best}, Evaluation: {evaluation}', flush=True)
-        _save_checkpoint(model, policy_model, optimizer, 'latest.pth')
+        _save_checkpoint(model, policy_model, optimizer, args.output_prefix + 'latest.pth')
         if best:
-            _save_checkpoint(model, policy_model, optimizer, 'best.pth')
+            _save_checkpoint(model, policy_model, optimizer, args.output_prefix + 'best.pth')
             print(f'[{episode}] Saved new best model', flush=True)
         episode += 1
 

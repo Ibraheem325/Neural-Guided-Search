@@ -2,12 +2,12 @@ Torch: 2.12.0+cu130
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
 Using GPU:  NVIDIA L40S
-  [sim 500] root visits=500, unique states=14706, generated=14705
-  [sim 1000] root visits=1000, unique states=28096, generated=28095
-  [sim 1500] root visits=1500, unique states=41993, generated=41992
-  [sim 1610] found goal path of length 47
-[Final] Expanded: 44809, Generated: 44809
-[search done] simulations=1610, unique states generated=44809
+  [sim 500] root visits=500, unique states=14710, generated=14709
+  [sim 1000] root visits=1000, unique states=28082, generated=28081
+  [sim 1500] root visits=1500, unique states=41913, generated=41912
+  [sim 1592] found goal path of length 47
+[Final] Expanded: 44123, Generated: 44123
+[search done] simulations=1592, unique states generated=44123
 Found a solution of length 47!
    1: (turn_to satellite0 groundstation9 star6)
    2: (switch_on instrument3 satellite1)
@@ -20,16 +20,16 @@ Found a solution of length 47!
    9: (calibrate satellite0 instrument2 groundstation9)
   10: (turn_to satellite0 star19 groundstation9)
   11: (take_image satellite0 star19 instrument2 infrared0)
-  12: (turn_to satellite0 planet20 star19)
-  13: (take_image satellite0 planet20 instrument2 thermograph1)
-  14: (take_image satellite0 planet20 instrument2 infrared0)
-  15: (turn_to satellite0 star0 planet20)
-  16: (turn_to satellite0 star22 star0)
-  17: (take_image satellite0 star22 instrument2 thermograph1)
-  18: (take_image satellite0 star22 instrument2 infrared0)
-  19: (turn_to satellite0 star0 star22)
-  20: (turn_to satellite0 planet20 star0)
-  21: (turn_to satellite0 groundstation1 planet20)
+  12: (turn_to satellite0 star22 star19)
+  13: (take_image satellite0 star22 instrument2 thermograph1)
+  14: (take_image satellite0 star22 instrument2 infrared0)
+  15: (turn_to satellite0 star0 star22)
+  16: (turn_to satellite0 planet20 star0)
+  17: (take_image satellite0 planet20 instrument2 thermograph1)
+  18: (take_image satellite0 planet20 instrument2 infrared0)
+  19: (turn_to satellite0 star0 planet20)
+  20: (turn_to satellite0 star22 star0)
+  21: (turn_to satellite0 groundstation1 star22)
   22: (turn_to satellite0 planet16 groundstation1)
   23: (take_image satellite0 planet16 instrument2 thermograph1)
   24: (turn_to satellite0 planet20 planet16)
