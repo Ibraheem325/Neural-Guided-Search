@@ -27,12 +27,24 @@ case $ALGORITHM in
         venv/bin/python wastar.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --weight 5.0 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
     greedy)
         venv/bin/python greedy_value_plan.py --domain $DOMAIN --problem $PROBLEM --model $MODEL > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
+    greedy_sac)
+        venv/bin/python greedy_sac_plan.py --domain $DOMAIN --problem $PROBLEM --model $MODEL > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
     beam_1)
         venv/bin/python beam.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --beam 1 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
     beam_5)
         venv/bin/python beam.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --beam 5 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
     beam_10)
         venv/bin/python beam.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --beam 10 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
+    beam_20)
+        venv/bin/python beam.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --beam 20 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
+    beam_40)
+        venv/bin/python beam.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --beam 40 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
+    beam_80)
+        venv/bin/python beam.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --beam 80 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
+    beam_120)
+        venv/bin/python beam.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --beam 120 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
+    beam_200)
+        venv/bin/python beam.py --domain $DOMAIN --problem $PROBLEM --model $MODEL --beam 200 > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
     qstar)
         venv/bin/python qstar.py --domain $DOMAIN --problem $PROBLEM --model $MODEL > ${OUTPUT_DIR}/${PROBLEM_NAME}.out 2>&1 ;;
     greedy_q)

@@ -1,0 +1,64 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+52.333: (switch_on instrument9 satellite3)
+53.364: (switch_on instrument8 satellite3)
+53.621: (switch_on instrument4 satellite2)
+54.442: (switch_on instrument1 satellite0)
+55.251: (switch_on instrument7 satellite3)
+55.798: (switch_on instrument10 satellite3)
+56.041: (switch_on instrument6 satellite2)
+56.120: (switch_on instrument3 satellite1)
+56.710: (turn_to satellite1 star0 phenomenon52)
+56.989: (turn_to satellite2 star0 groundstation3)
+56.994: (turn_to satellite0 star0 groundstation27)
+57.003: (turn_to satellite3 star0 star24)
+57.443: (switch_on instrument5 satellite2)
+57.484: (turn_to satellite1 groundstation25 phenomenon52)
+57.504: (turn_to satellite1 star7 phenomenon52)
+57.555: (turn_to satellite1 groundstation22 phenomenon52)
+57.569: (turn_to satellite1 star34 phenomenon52)
+57.578: (turn_to satellite1 star5 phenomenon52)
+57.594: (turn_to satellite1 groundstation32 phenomenon52)
+57.603: (turn_to satellite1 groundstation6 phenomenon52)
+57.627: (turn_to satellite1 star12 phenomenon52)
+57.627: (turn_to satellite1 groundstation17 phenomenon52)
+57.629: (turn_to satellite1 star26 phenomenon52)
+57.641: (turn_to satellite1 star20 phenomenon52)
+57.654: (turn_to satellite1 star28 phenomenon52)
+57.656: (turn_to satellite1 groundstation38 phenomenon52)
+57.656: (turn_to satellite1 groundstation10 phenomenon52)
+57.660: (turn_to satellite1 star4 phenomenon52)
+57.660: (turn_to satellite1 star30 phenomenon52)
+57.666: (turn_to satellite1 groundstation14 phenomenon52)
+57.668: (turn_to satellite1 groundstation33 phenomenon52)
+57.676: (turn_to satellite1 star21 phenomenon52)
+57.717: (turn_to satellite1 star35 phenomenon52)
+57.717: (turn_to satellite1 star18 phenomenon52)
+57.717: (turn_to satellite1 star36 phenomenon52)
+57.717: (turn_to satellite1 star2 phenomenon52)
+57.717: (turn_to satellite1 star31 phenomenon52)
+57.719: (turn_to satellite1 groundstation13 phenomenon52)
+57.741: (turn_to satellite2 groundstation25 groundstation3)
+57.742: (turn_to satellite1 groundstation1 phenomenon52)
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/beam.py", line 104, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/beam.py", line 94, in _main
+    solution = _plan(problem, model, args.beam, use_closed_set=not args.disable_closed_set)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/beam.py", line 57, in _plan
+    values = model.forward(inputs).readout('value')
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 316, in forward
+    node_embeddings = self._mpnn_module.forward(input)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 209, in forward
+    relation_messages = self._relation_network(node_embeddings, input.flattened_relations)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 149, in forward
+    output_messages, output_indices = self._compute_messages_and_indices(node_embeddings, relations)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 114, in _compute_messages_and_indices
+    output_messages = torch.cat(output_messages_list, 0)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 598.00 MiB. GPU 0 has a total capacity of 44.39 GiB of which 394.06 MiB is free. Process 89441 has 7.01 GiB memory in use. Process 89509 has 13.59 GiB memory in use. Process 90380 has 1.81 GiB memory in use. Process 90520 has 10.96 GiB memory in use. Process 91898 has 1.09 GiB memory in use. Process 92053 has 6.89 GiB memory in use. Process 92232 has 538.00 MiB memory in use. Including non-PyTorch memory, this process has 2.09 GiB memory in use. Of the allocated memory 914.30 MiB is allocated by PyTorch, and 719.70 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)

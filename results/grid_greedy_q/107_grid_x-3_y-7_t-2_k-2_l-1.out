@@ -1,0 +1,73 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=13.621] Expanded: 2, Generated: 1
+[f=12.622] Expanded: 6, Generated: 5
+[f=12.633] Expanded: 7, Generated: 6
+[f=13.122] Expanded: 8, Generated: 7
+[f=13.272] Expanded: 9, Generated: 8
+[f=13.531] Expanded: 9, Generated: 9
+[f=14.212] Expanded: 10, Generated: 10
+[f=14.268] Expanded: 10, Generated: 11
+[f=14.270] Expanded: 11, Generated: 12
+[f=14.477] Expanded: 11, Generated: 13
+[f=14.477] Expanded: 12, Generated: 14
+[f=14.543] Expanded: 13, Generated: 15
+[f=14.543] Expanded: 13, Generated: 16
+[f=14.622] Expanded: 14, Generated: 17
+[f=14.623] Expanded: 14, Generated: 18
+[f=14.627] Expanded: 14, Generated: 19
+[f=14.662] Expanded: 14, Generated: 20
+[f=14.662] Expanded: 14, Generated: 21
+[f=14.955] Expanded: 15, Generated: 22
+[f=14.957] Expanded: 15, Generated: 23
+[f=14.996] Expanded: 15, Generated: 24
+[f=14.797] Expanded: 16, Generated: 26
+[f=15.032] Expanded: 17, Generated: 27
+[f=15.036] Expanded: 17, Generated: 28
+[f=15.053] Expanded: 18, Generated: 29
+[f=15.203] Expanded: 18, Generated: 30
+[f=15.217] Expanded: 20, Generated: 32
+[f=15.306] Expanded: 20, Generated: 33
+[f=15.323] Expanded: 21, Generated: 34
+[f=15.159] Expanded: 22, Generated: 36
+[f=15.352] Expanded: 22, Generated: 37
+[f=15.352] Expanded: 22, Generated: 38
+[f=15.352] Expanded: 23, Generated: 39
+[f=15.356] Expanded: 24, Generated: 40
+[f=15.370] Expanded: 25, Generated: 41
+[f=15.381] Expanded: 25, Generated: 42
+[f=15.481] Expanded: 25, Generated: 43
+[f=15.383] Expanded: 26, Generated: 45
+[f=15.395] Expanded: 26, Generated: 46
+[f=15.546] Expanded: 26, Generated: 47
+[f=15.573] Expanded: 27, Generated: 48
+[f=15.732] Expanded: 27, Generated: 49
+[f=14.377] Expanded: 30, Generated: 52
+[f=14.367] Expanded: 31, Generated: 54
+[f=14.447] Expanded: 32, Generated: 55
+[f=14.769] Expanded: 33, Generated: 56
+[f=14.823] Expanded: 34, Generated: 57
+[f=14.905] Expanded: 35, Generated: 58
+[f=15.393] Expanded: 35, Generated: 59
+[f=15.173] Expanded: 38, Generated: 63
+[Final] Expanded: 38, Generated: 63
+Found a solution of length 15!
+   1: (move f0-0f f0-1f)
+   2: (move f0-1f f0-2f)
+   3: (pickup f0-2f key0-1)
+   4: (move f0-2f f0-1f)
+   5: (move f0-1f f1-1f)
+   6: (putdown f1-1f key0-1)
+   7: (move f1-1f f1-2f)
+   8: (move f1-2f f2-2f)
+   9: (move f2-2f f2-3f)
+  10: (pickup f2-3f key0-0)
+  11: (move f2-3f f1-3f)
+  12: (move f1-3f f1-4f)
+  13: (move f1-4f f1-5f)
+  14: (move f1-5f f0-5f)
+  15: (putdown f0-5f key0-0)

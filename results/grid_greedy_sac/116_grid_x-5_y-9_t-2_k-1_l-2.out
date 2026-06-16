@@ -1,0 +1,19 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+68.117: (move f2-1f f2-2f)
+72.456: (move f2-2f f2-3f)
+69.937: (move f2-3f f1-3f)
+99.984: (pickup f1-3f key0-0)
+82.587: (move f1-3f f1-4f)
+87.228: (move f1-4f f2-4f)
+48.857: (putdown f2-4f key0-0)
+Found a solution of length 7!
+   1: (move f2-1f f2-2f)
+   2: (move f2-2f f2-3f)
+   3: (move f2-3f f1-3f)
+   4: (pickup f1-3f key0-0)
+   5: (move f1-3f f1-4f)
+   6: (move f1-4f f2-4f)
+   7: (putdown f2-4f key0-0)

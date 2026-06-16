@@ -1,0 +1,72 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+137.441: (calibrate rover0 camera6 objective1 waypoint48)
+137.701: (calibrate rover4 camera4 objective2 waypoint81)
+137.951: (calibrate rover3 camera7 objective2 waypoint81)
+138.180: (calibrate rover0 camera2 objective1 waypoint48)
+138.436: (calibrate rover1 camera3 objective7 waypoint77)
+138.467: (calibrate rover0 camera5 objective9 waypoint48)
+138.670: (navigate rover4 waypoint81 waypoint52)
+138.738: (navigate rover2 waypoint72 waypoint60)
+138.774: (navigate rover1 waypoint77 waypoint71)
+138.914: (navigate rover1 waypoint77 waypoint21)
+138.967: (navigate rover3 waypoint81 waypoint60)
+139.044: (navigate rover4 waypoint81 waypoint60)
+139.081: (navigate rover4 waypoint81 waypoint73)
+139.104: (navigate rover4 waypoint81 waypoint70)
+139.105: (sample_soil rover4 rover4store waypoint81)
+139.147: (navigate rover3 waypoint81 waypoint73)
+139.150: (navigate rover3 waypoint81 waypoint70)
+139.209: (navigate rover1 waypoint77 waypoint97)
+139.257: (navigate rover1 waypoint77 waypoint4)
+139.275: (sample_soil rover3 rover3store waypoint81)
+139.305: (navigate rover2 waypoint72 waypoint41)
+139.339: (navigate rover1 waypoint77 waypoint58)
+139.422: (navigate rover2 waypoint72 waypoint91)
+139.598: (navigate rover0 waypoint48 waypoint97)
+139.633: (navigate rover3 waypoint81 waypoint90)
+139.677: (navigate rover0 waypoint48 waypoint30)
+139.685: (navigate rover2 waypoint72 waypoint36)
+139.691: (navigate rover2 waypoint72 waypoint29)
+139.691: (navigate rover4 waypoint81 waypoint90)
+139.752: (navigate rover0 waypoint48 waypoint17)
+139.762: (navigate rover1 waypoint77 waypoint43)
+139.829: (navigate rover2 waypoint72 waypoint27)
+139.856: (navigate rover1 waypoint77 waypoint11)
+139.934: (navigate rover3 waypoint81 waypoint13)
+139.950: (navigate rover2 waypoint72 waypoint55)
+139.956: (navigate rover4 waypoint81 waypoint13)
+139.962: (navigate rover0 waypoint48 waypoint82)
+140.078: (navigate rover3 waypoint81 waypoint30)
+140.121: (navigate rover4 waypoint81 waypoint30)
+140.126: (navigate rover3 waypoint81 waypoint27)
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/beam.py", line 104, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/beam.py", line 94, in _main
+    solution = _plan(problem, model, args.beam, use_closed_set=not args.disable_closed_set)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/beam.py", line 57, in _plan
+    values = model.forward(inputs).readout('value')
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 316, in forward
+    node_embeddings = self._mpnn_module.forward(input)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 209, in forward
+    relation_messages = self._relation_network(node_embeddings, input.flattened_relations)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 149, in forward
+    output_messages, output_indices = self._compute_messages_and_indices(node_embeddings, relations)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 111, in _compute_messages_and_indices
+    output_messages = (input_embeddings + relation_module(input_embeddings)).view(-1, self._embedding_size)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/modules.py", line 14, in forward
+    return self._outer(nn.functional.mish(self._inner(input)))
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/functional.py", line 2417, in mish
+    return torch._C._nn.mish(input)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.00 MiB. GPU 0 has a total capacity of 44.39 GiB of which 4.06 MiB is free. Process 96878 has 3.91 GiB memory in use. Process 96933 has 5.85 GiB memory in use. Process 97915 has 18.25 GiB memory in use. Process 97975 has 7.24 GiB memory in use. Process 98202 has 5.84 GiB memory in use. Process 102158 has 964.00 MiB memory in use. Process 102204 has 1.69 GiB memory in use. Including non-PyTorch memory, this process has 644.00 MiB memory in use. Of the allocated memory 121.70 MiB is allocated by PyTorch, and 18.30 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)

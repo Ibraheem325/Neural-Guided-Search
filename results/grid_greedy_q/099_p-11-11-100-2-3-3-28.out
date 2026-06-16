@@ -1,0 +1,38 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=9.724] Expanded: 3, Generated: 2
+[f=9.764] Expanded: 4, Generated: 3
+[f=11.168] Expanded: 4, Generated: 4
+[f=11.188] Expanded: 5, Generated: 5
+[f=11.642] Expanded: 6, Generated: 6
+[f=11.654] Expanded: 7, Generated: 7
+[f=11.643] Expanded: 8, Generated: 9
+[f=11.645] Expanded: 8, Generated: 10
+[f=11.798] Expanded: 8, Generated: 11
+[f=11.830] Expanded: 9, Generated: 12
+[f=11.894] Expanded: 9, Generated: 13
+[f=12.013] Expanded: 11, Generated: 15
+[f=12.128] Expanded: 12, Generated: 16
+[f=12.173] Expanded: 13, Generated: 17
+[f=12.271] Expanded: 14, Generated: 18
+[f=12.273] Expanded: 15, Generated: 19
+[f=12.324] Expanded: 16, Generated: 20
+[f=12.083] Expanded: 19, Generated: 24
+[Final] Expanded: 19, Generated: 24
+Found a solution of length 12!
+   1: (move f0-1f f0-2f)
+   2: (pickup f0-2f key0-0)
+   3: (move f0-2f f1-2f)
+   4: (unlock f1-2f f2-2f key0-0 shape0)
+   5: (move f1-2f f2-2f)
+   6: (putdown f2-2f key0-0)
+   7: (move f2-2f f1-2f)
+   8: (move f1-2f f0-2f)
+   9: (pickup f0-2f key1-0)
+  10: (move f0-2f f1-2f)
+  11: (move f1-2f f2-2f)
+  12: (putdown f2-2f key1-0)

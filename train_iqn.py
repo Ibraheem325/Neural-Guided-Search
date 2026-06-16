@@ -48,9 +48,11 @@ class IQNModelWrapper(rl.ActionQuantileModel):
             action_embeddings_batch = self.model.forward(input_list).readout('action_embedding')
             self.model.get_hparam_config().num_layers = original_layer_count
         else:
-            action_embeddings_batch = self.model.forward(input_list).readout('action_embedding')
+            flat_embeddings = self.model.forward(input_list).readout('action_embedding')
 
-        assert isinstance(action_embeddings_batch, tuple), 'Model should return a tuple of action embeddings.'
+        # New API returns flat [total_actions, embedding_size] tensor; split per state
+        action_counts = [len(actions) for actions in actions_list]
+        action_embeddings_batch = torch.split(flat_embeddings, action_counts)
 
         device = next(self.parameters()).device
         if taus is None:
@@ -312,10 +314,12 @@ def _train(
         return sum(len(p.get_objects()) for p in ps) / len(ps)
 
     def avg_goal_size(ts: list[rl.Trajectory]) -> float:
-        return sum(len(t[0].goal_condition) for t in ts if len(t) > 0) / len(ts)
+        valid = [t for t in ts if len(t) > 0]
+        return sum(len(t[0].goal_condition) for t in valid) / len(valid) if valid else 0.0
 
     def avg_trajectory_length(ts: list[rl.Trajectory]) -> float:
-        return sum(len(t) for t in ts if len(t) > 0) / len(ts)
+        valid = [t for t in ts if len(t) > 0]
+        return sum(len(t) for t in valid) / len(valid) if valid else 0.0
 
     rl_algorithm.register_on_pre_collect_experience(lambda: print(f'[{episode}] Collecting Experience.', flush=True))
     rl_algorithm.register_on_sample_problems(lambda ps: print(f'[{episode}] > Sampled Problems; {avg_num_objects(ps):.1f} avg. object count.', flush=True))

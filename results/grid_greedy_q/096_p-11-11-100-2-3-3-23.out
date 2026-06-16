@@ -1,0 +1,65 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=13.636] Expanded: 3, Generated: 2
+[f=13.639] Expanded: 4, Generated: 3
+[f=12.872] Expanded: 7, Generated: 6
+[f=13.434] Expanded: 8, Generated: 7
+[f=13.690] Expanded: 9, Generated: 8
+[f=13.799] Expanded: 9, Generated: 9
+[f=13.937] Expanded: 9, Generated: 10
+[f=13.747] Expanded: 10, Generated: 12
+[f=14.835] Expanded: 10, Generated: 13
+[f=14.872] Expanded: 10, Generated: 14
+[f=14.913] Expanded: 11, Generated: 15
+[f=15.024] Expanded: 12, Generated: 16
+[f=14.749] Expanded: 14, Generated: 18
+[f=15.073] Expanded: 15, Generated: 19
+[f=15.152] Expanded: 15, Generated: 20
+[f=15.256] Expanded: 15, Generated: 21
+[f=15.264] Expanded: 15, Generated: 22
+[f=15.315] Expanded: 15, Generated: 23
+[f=15.317] Expanded: 15, Generated: 24
+[f=15.324] Expanded: 15, Generated: 25
+[f=15.430] Expanded: 15, Generated: 26
+[f=15.448] Expanded: 16, Generated: 27
+[f=15.476] Expanded: 16, Generated: 28
+[f=15.499] Expanded: 16, Generated: 29
+[f=15.594] Expanded: 17, Generated: 30
+[f=15.628] Expanded: 17, Generated: 31
+[f=15.223] Expanded: 18, Generated: 33
+[f=15.730] Expanded: 19, Generated: 34
+[f=15.741] Expanded: 19, Generated: 35
+[f=15.743] Expanded: 19, Generated: 36
+[f=15.846] Expanded: 20, Generated: 37
+[f=15.860] Expanded: 21, Generated: 38
+[f=15.785] Expanded: 22, Generated: 40
+[f=16.037] Expanded: 22, Generated: 41
+[f=16.069] Expanded: 23, Generated: 43
+[f=16.133] Expanded: 23, Generated: 44
+[f=16.188] Expanded: 23, Generated: 45
+[f=16.018] Expanded: 24, Generated: 47
+[f=16.216] Expanded: 26, Generated: 49
+[f=16.210] Expanded: 28, Generated: 51
+[f=16.060] Expanded: 30, Generated: 54
+[Final] Expanded: 30, Generated: 54
+Found a solution of length 16!
+   1: (move f1-2f f1-1f)
+   2: (move f1-1f f0-1f)
+   3: (move f0-1f f0-0f)
+   4: (pickup f0-0f key1-0)
+   5: (move f0-0f f1-0f)
+   6: (move f1-0f f1-1f)
+   7: (unlock f1-1f f2-1f key1-0 shape1)
+   8: (putdown f1-1f key1-0)
+   9: (move f1-1f f2-1f)
+  10: (pickup f2-1f key0-0)
+  11: (unlock f2-1f f2-0f key0-0 shape0)
+  12: (move f2-1f f1-1f)
+  13: (pickup-and-loose f1-1f key1-0 key0-0)
+  14: (move f1-1f f1-0f)
+  15: (move f1-0f f2-0f)
+  16: (putdown f2-0f key1-0)

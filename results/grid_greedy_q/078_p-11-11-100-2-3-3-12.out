@@ -1,0 +1,44 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=12.093] Expanded: 3, Generated: 2
+[f=12.100] Expanded: 4, Generated: 3
+[f=12.500] Expanded: 6, Generated: 5
+[f=12.653] Expanded: 6, Generated: 6
+[f=12.777] Expanded: 7, Generated: 7
+[f=12.293] Expanded: 9, Generated: 9
+[f=12.826] Expanded: 9, Generated: 10
+[f=12.852] Expanded: 10, Generated: 11
+[f=12.910] Expanded: 10, Generated: 12
+[f=13.069] Expanded: 11, Generated: 13
+[f=13.163] Expanded: 11, Generated: 14
+[f=13.193] Expanded: 12, Generated: 15
+[f=13.234] Expanded: 12, Generated: 16
+[f=13.359] Expanded: 13, Generated: 17
+[f=13.525] Expanded: 14, Generated: 18
+[f=12.769] Expanded: 16, Generated: 20
+[f=12.806] Expanded: 16, Generated: 21
+[f=13.363] Expanded: 16, Generated: 22
+[f=13.578] Expanded: 17, Generated: 23
+[f=13.601] Expanded: 17, Generated: 24
+[f=13.601] Expanded: 18, Generated: 25
+[f=13.220] Expanded: 21, Generated: 28
+[f=13.076] Expanded: 24, Generated: 32
+[Final] Expanded: 24, Generated: 32
+Found a solution of length 13!
+   1: (move f1-1f f1-0f)
+   2: (move f1-0f f2-0f)
+   3: (pickup f2-0f key1-0)
+   4: (move f2-0f f1-0f)
+   5: (move f1-0f f1-1f)
+   6: (move f1-1f f1-2f)
+   7: (putdown f1-2f key1-0)
+   8: (move f1-2f f1-1f)
+   9: (move f1-1f f1-0f)
+  10: (pickup f1-0f key0-0)
+  11: (move f1-0f f0-0f)
+  12: (move f0-0f f0-1f)
+  13: (putdown f0-1f key0-0)
