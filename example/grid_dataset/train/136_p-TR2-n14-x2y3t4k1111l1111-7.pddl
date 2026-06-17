@@ -1,0 +1,68 @@
+(define (problem grid-x2-y3-t4-k1111-l1111-p50)
+(:domain grid)
+(:objects 
+        f0-0f f1-0f 
+        f0-1f f1-1f 
+        f0-2f f1-2f 
+        shape0 shape1 shape2 shape3 
+        key0-0 
+        key1-0 
+        key2-0 
+        key3-0 
+)
+(:init
+(arm-empty)
+(place f0-0f)
+(place f1-0f)
+(place f0-1f)
+(place f1-1f)
+(place f0-2f)
+(place f1-2f)
+(shape shape0)
+(shape shape1)
+(shape shape2)
+(shape shape3)
+(key key0-0)
+(key-shape key0-0 shape0)
+(key key1-0)
+(key-shape key1-0 shape1)
+(key key2-0)
+(key-shape key2-0 shape2)
+(key key3-0)
+(key-shape key3-0 shape3)
+(conn f0-0f f1-0f)
+(conn f0-1f f1-1f)
+(conn f0-2f f1-2f)
+(conn f0-0f f0-1f)
+(conn f1-0f f1-1f)
+(conn f0-1f f0-2f)
+(conn f1-1f f1-2f)
+(conn f1-0f f0-0f)
+(conn f1-1f f0-1f)
+(conn f1-2f f0-2f)
+(conn f0-1f f0-0f)
+(conn f1-1f f1-0f)
+(conn f0-2f f0-1f)
+(conn f1-2f f1-1f)
+(open f0-0f)
+(open f1-2f)
+(locked f1-0f)
+(lock-shape f1-0f shape0)
+(locked f1-1f)
+(lock-shape f1-1f shape1)
+(locked f0-1f)
+(lock-shape f0-1f shape2)
+(locked f0-2f)
+(lock-shape f0-2f shape3)
+(at key0-0 f0-0f)
+(at key1-0 f0-2f)
+(at key2-0 f0-2f)
+(at key3-0 f1-1f)
+(at-robot f1-2f)
+)
+(:goal
+(and
+(at key3-0 f1-1f)
+)
+)
+)

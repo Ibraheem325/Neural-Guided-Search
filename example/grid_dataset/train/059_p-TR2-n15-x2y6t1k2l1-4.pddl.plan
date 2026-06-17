@@ -1,0 +1,6 @@
+(move f0-0f f0-1f)
+(move f0-1f f0-2f)
+(pickup f0-2f key0-0)
+(move f0-2f f1-2f)
+(putdown f1-2f key0-0)
+; cost = 5 (unit cost)
