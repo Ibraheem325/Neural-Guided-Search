@@ -1,0 +1,13 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=13.190] Expanded: 2, Generated: 2
+[f=13.506] Expanded: 3, Generated: 3
+[f=13.461] Expanded: 4, Generated: 5
+[f=14.496] Expanded: 4, Generated: 6
+[f=15.395] Expanded: 4, Generated: 7
+[Final] Expanded: 4, Generated: 8
+Failed to find a solution!
