@@ -177,7 +177,6 @@ def _load_optimizer_state(optimizer: optim.Optimizer, extras: dict, model_path: 
         raise RuntimeError(f'Checkpoint {model_path} does not contain optimizer state.')
     optimizer.load_state_dict(optimizer_state)
 
-
 def _train(model: rgnn.RelationalGraphNeuralNetwork,
            optimizer: optim.Adam,
            train_states: StateDataset,
@@ -187,10 +186,15 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
            device: torch.device,
            output_prefix: str = '') -> None:
     TRAIN_SIZE = 1000
-    VALIDATION_SIZE = 100
+    VALIDATION_SIZE = 500
     best_error = None  # Track the best validation loss to detect overfitting.
     print('Training model...')
     train_prefetcher = BatchPrefetcher(train_states, batch_size, device)
+    # Pre-sample a fixed validation set once so that epoch-to-epoch MAE differences
+    # reflect only model change and not sampling variance.
+    print('Pre-sampling fixed validation set...')
+    validation_batches = [_sample_batch(validation_states, batch_size, device)
+                          for _ in range(VALIDATION_SIZE)]
     try:
         for epoch in range(0, num_epochs):
             last_print_time = time.time()
@@ -211,11 +215,11 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
                     elapsed = current_time - last_print_time
                     print(f'[{epoch + 1}/{num_epochs}; {index + 1}/{TRAIN_SIZE}] Loss: {loss.item():.4f} ({elapsed:.2f}s) [sample={t1-t0:.2f}s gpu={t2-t1:.2f}s]')
                     last_print_time = current_time
-            # Validation step
+            # Validation step — use fixed pre-sampled batches
             with torch.no_grad():
                 error = torch.zeros([1], dtype=torch.float, device=device)
                 for index in range(VALIDATION_SIZE):
-                    inputs, targets = _sample_batch(validation_states, batch_size, device)
+                    inputs, targets = validation_batches[index]
                     outputs = model.forward(inputs).readout('value')
                     error += (outputs - targets).abs().sum()
                 total_samples = VALIDATION_SIZE * batch_size
@@ -228,8 +232,7 @@ def _train(model: rgnn.RelationalGraphNeuralNetwork,
                     print(f'[{epoch + 1}/{num_epochs}] Saved new best model')
     finally:
         train_prefetcher.stop()
-
-
+        
 def _main(args: argparse.Namespace) -> None:
     print(f'Torch: {torch.__version__}')
     device = create_device(False)
