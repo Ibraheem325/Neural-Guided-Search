@@ -178,11 +178,36 @@ def _select(node: Node,
             width_norm: Optional[_ValueNormalizer] = None,
             width_beta: float = 0.0,
             width_gamma: float = 0.0,
-            width_tau: float = 0.0) -> Tuple[Optional[mm.GroundAction], Optional[Node]]:
+            width_tau: float = 0.0,
+            width_lambda: float = 0.0) -> Tuple[Optional[mm.GroundAction], Optional[Node]]:
     best_score = -float("inf")
     best_action: Optional[mm.GroundAction] = None
     best_child: Optional[Node] = None
     sqrt_parent = math.sqrt(max(1, node.visit_count))
+
+    # (3) Prior-boost: raise each child's PRIOR by its uncertainty, then
+    #     renormalize over the node's children, and use the boosted prior inside
+    #     the normal pUCT term. lambda=0 -> vanilla.
+    #       P'(a) = P(a) * (1 + lambda * nw(child)),  then normalize to sum 1.
+    #     Because the boosted prior lives INSIDE the pUCT exploration term, it is
+    #     subject to the 1/(1+N) decay: uncertain children get explored EARLY,
+    #     then the boost fades as they accrue visits (unlike the flat additive
+    #     bonus, which never decays and over-explores). This is the principled
+    #     "uncertainty as an exploration prior" integration, and unlike the
+    #     multiplicative c_puct knob it CAN lift a low-prior-but-high-width child
+    #     above a peaked (confident-but-uncertain) prior.
+    boosted_prior = None
+    if width_lambda != 0.0 and width_norm is not None:
+        raw = {}
+        total = 0.0
+        for action, child in node.children.items():
+            nw_c = width_norm.normalize(child.width) if child.width is not None else 0.0
+            pb = node.prior[action] * (1.0 + width_lambda * nw_c)
+            raw[action] = pb
+            total += pb
+        if total > 0.0:
+            boosted_prior = {a: v / total for a, v in raw.items()}
+
     for action, child in node.children.items():
         if blocked is not None and child.state_key in blocked:
             continue  # cycle prevention: never re-enter a state on this descent
@@ -204,7 +229,10 @@ def _select(node: Node,
             c_eff = c_puct * (1.0 + width_beta * (nw - 0.5))
             if c_eff < 0.0:
                 c_eff = 0.0  # never let the exploration term flip sign
-        u = c_eff * node.prior[action] * sqrt_parent / (1 + n)
+
+        # prior used in the pUCT term: boosted if lambda active, else raw.
+        p_use = boosted_prior[action] if boosted_prior is not None else node.prior[action]
+        u = c_eff * p_use * sqrt_parent / (1 + n)
 
         score = q_norm + u
 
@@ -258,7 +286,8 @@ def _simulate(root: Node,
               width_norm: Optional[_ValueNormalizer],
               width_beta: float,
               width_gamma: float,
-              width_tau: float) -> Tuple[Optional[List[mm.GroundAction]], int]:
+              width_tau: float,
+              width_lambda: float) -> Tuple[Optional[List[mm.GroundAction]], int]:
     path_keys = {root.state_key}              # states visited on THIS descent
     path_nodes: List[Node] = [root]
     path_edges: List[Tuple[Node, mm.GroundAction]] = []
@@ -268,7 +297,8 @@ def _simulate(root: Node,
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm, blocked=path_keys,
                                  width_norm=width_norm, width_beta=width_beta,
-                                 width_gamma=width_gamma, width_tau=width_tau)
+                                 width_gamma=width_gamma, width_tau=width_tau,
+                                 width_lambda=width_lambda)
         if action is None:
             # Every successor is already on this descent path: locally cyclic.
             value = _leaf_value(node.state, goal, q1_model, q2_model)
@@ -314,12 +344,13 @@ def _search(root_state: mm.State,
             oracle: Optional[UncertaintyOracle],
             width_beta: float,
             width_gamma: float,
-            width_tau: float) -> Tuple[Optional[List[mm.GroundAction]], int, int]:
+            width_tau: float,
+            width_lambda: float) -> Tuple[Optional[List[mm.GroundAction]], int, int]:
     root = Node(root_state, root_key, goal.holds(root_state))
     tt: Dict[object, Node] = {root_key: root}   # state_key -> Node (transposition table)
     value_norm = _ValueNormalizer()
-    # Width normalizer is needed whenever EITHER width mechanism is active.
-    _width_active = oracle is not None and (width_beta != 0.0 or width_gamma != 0.0)
+    # Width normalizer is needed whenever ANY width mechanism is active.
+    _width_active = oracle is not None and (width_beta != 0.0 or width_gamma != 0.0 or width_lambda != 0.0)
     width_norm = _ValueNormalizer() if _width_active else None
     # Seed the root's width too (so it is consistent, though root width is not used in selection).
     if oracle is not None and not root.is_goal:
@@ -338,7 +369,7 @@ def _search(root_state: mm.State,
         goal_plan, generated = _simulate(
             root, tt, policy_model, q1_model, q2_model, goal,
             c_puct, value_norm, dead_end_value,
-            oracle, width_norm, width_beta, width_gamma, width_tau,
+            oracle, width_norm, width_beta, width_gamma, width_tau, width_lambda,
         )
         total_generated += generated
         sims += 1
@@ -391,6 +422,12 @@ def _parse_arguments() -> argparse.Namespace:
                              "tau>0: thresholded — add flat gamma only when normalized "
                              "width >= tau (fire ONLY at high-uncertainty children, the "
                              "validated one-sided regime; leaves easy states at vanilla).")
+    parser.add_argument("--width_lambda", default=0.0, type=float,
+                        help="Prior-boost integration (recommended). Each child's prior is "
+                             "multiplied by (1 + lambda*norm_width) and renormalized, then "
+                             "used inside the pUCT term. 0.0 = vanilla. Unlike beta it can "
+                             "reorder under a peaked prior; unlike the flat gamma bonus it "
+                             "decays with visits (explore uncertain children early, not forever).")
     return parser.parse_args()
 
 
@@ -412,7 +449,7 @@ def _plan(problem: mm.Problem,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
             oracle=oracle, width_beta=args.width_beta, width_gamma=args.width_gamma,
-            width_tau=args.width_tau,
+            width_tau=args.width_tau, width_lambda=args.width_lambda,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
@@ -452,9 +489,10 @@ def _main(args: argparse.Namespace) -> None:
         iqn_model.eval()
         oracle = UncertaintyOracle(iqn_model, device)
         print(f"[oracle] IQN uncertainty oracle loaded: {args.iqn_model} "
-              f"(width_beta={args.width_beta}, width_gamma={args.width_gamma})", flush=True)
-    elif args.width_beta != 0.0 or args.width_gamma != 0.0:
-        raise RuntimeError("--width_beta/--width_gamma is set but no --iqn_model was given.")
+              f"(width_beta={args.width_beta}, width_gamma={args.width_gamma}, "
+              f"width_tau={args.width_tau}, width_lambda={args.width_lambda})", flush=True)
+    elif args.width_beta != 0.0 or args.width_gamma != 0.0 or args.width_lambda != 0.0:
+        raise RuntimeError("--width_beta/--width_gamma/--width_lambda is set but no --iqn_model was given.")
 
     solution = _plan(problem, policy_model, q1_model, q2_model, oracle, args)
     if solution is None:
