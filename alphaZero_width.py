@@ -175,7 +175,8 @@ def _select(node: Node,
             value_norm: _ValueNormalizer,
             blocked: Optional[set] = None,
             width_norm: Optional[_ValueNormalizer] = None,
-            width_beta: float = 0.0) -> Tuple[Optional[mm.GroundAction], Optional[Node]]:
+            width_beta: float = 0.0,
+            width_gamma: float = 0.0) -> Tuple[Optional[mm.GroundAction], Optional[Node]]:
     best_score = -float("inf")
     best_action: Optional[mm.GroundAction] = None
     best_child: Optional[Node] = None
@@ -185,19 +186,34 @@ def _select(node: Node,
             continue  # cycle prevention: never re-enter a state on this descent
         n = node.edge_N[action]
         q_norm = value_norm.normalize(node.q(action)) if n > 0 else 0.0  # pessimistic FPU
-        # NEW: width-modulated exploration constant.
-        #   c_eff = c_puct * (1 + beta * (norm_width(child) - 0.5))
-        # beta = 0 -> c_eff = c_puct exactly (vanilla baseline reproduced).
-        # low child width  -> model is confident there -> c_eff < c_puct -> commit (fewer expansions)
-        # high child width -> model is uncertain there  -> c_eff > c_puct -> explore
-        c_eff = c_puct
-        if width_beta != 0.0 and width_norm is not None and child.width is not None:
+
+        # Width signal for this child (normalized to [0,1] over widths seen so far).
+        nw = None
+        if width_norm is not None and child.width is not None:
             nw = width_norm.normalize(child.width)
+
+        # (1) Multiplicative: width-modulated exploration constant.
+        #     c_eff = c_puct * (1 + beta * (nw - 0.5)). beta=0 -> vanilla.
+        #     NOTE: when the policy prior is peaked, scaling the exploration term
+        #     rarely reorders the argmax (first-visit score is ~ c_eff*prior, and
+        #     a strong prior dominates). Kept for comparison.
+        c_eff = c_puct
+        if width_beta != 0.0 and nw is not None:
             c_eff = c_puct * (1.0 + width_beta * (nw - 0.5))
             if c_eff < 0.0:
                 c_eff = 0.0  # never let the exploration term flip sign
         u = c_eff * node.prior[action] * sqrt_parent / (1 + n)
+
         score = q_norm + u
+
+        # (2) Additive uncertainty bonus: a separate term that does NOT pass
+        #     through the prior, so it CAN reorder selection under a peaked
+        #     policy. score += gamma * nw. gamma=0 -> vanilla.
+        #     High-width (uncertain) children get a direct selection bonus ->
+        #     search is steered toward exactly the states the model is unsure of.
+        if width_gamma != 0.0 and nw is not None:
+            score = score + width_gamma * nw
+
         if score > best_score:
             best_score, best_action, best_child = score, action, child
     return best_action, best_child
@@ -229,7 +245,8 @@ def _simulate(root: Node,
               dead_end_value: float,
               oracle: Optional[UncertaintyOracle],
               width_norm: Optional[_ValueNormalizer],
-              width_beta: float) -> Tuple[Optional[List[mm.GroundAction]], int]:
+              width_beta: float,
+              width_gamma: float) -> Tuple[Optional[List[mm.GroundAction]], int]:
     path_keys = {root.state_key}              # states visited on THIS descent
     path_nodes: List[Node] = [root]
     path_edges: List[Tuple[Node, mm.GroundAction]] = []
@@ -238,7 +255,8 @@ def _simulate(root: Node,
     # SELECT: descend by pUCT, never re-entering a state already on this path.
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm, blocked=path_keys,
-                                 width_norm=width_norm, width_beta=width_beta)
+                                 width_norm=width_norm, width_beta=width_beta,
+                                 width_gamma=width_gamma)
         if action is None:
             # Every successor is already on this descent path: locally cyclic.
             value = _leaf_value(node.state, goal, q1_model, q2_model)
@@ -282,11 +300,14 @@ def _search(root_state: mm.State,
             dead_end_value: float,
             stop_on_first_solution: bool,
             oracle: Optional[UncertaintyOracle],
-            width_beta: float) -> Tuple[Optional[List[mm.GroundAction]], int, int]:
+            width_beta: float,
+            width_gamma: float) -> Tuple[Optional[List[mm.GroundAction]], int, int]:
     root = Node(root_state, root_key, goal.holds(root_state))
     tt: Dict[object, Node] = {root_key: root}   # state_key -> Node (transposition table)
     value_norm = _ValueNormalizer()
-    width_norm = _ValueNormalizer() if (oracle is not None and width_beta != 0.0) else None
+    # Width normalizer is needed whenever EITHER width mechanism is active.
+    _width_active = oracle is not None and (width_beta != 0.0 or width_gamma != 0.0)
+    width_norm = _ValueNormalizer() if _width_active else None
     # Seed the root's width too (so it is consistent, though root width is not used in selection).
     if oracle is not None and not root.is_goal:
         rw = oracle.width(root_state, goal)
@@ -304,7 +325,7 @@ def _search(root_state: mm.State,
         goal_plan, generated = _simulate(
             root, tt, policy_model, q1_model, q2_model, goal,
             c_puct, value_norm, dead_end_value,
-            oracle, width_norm, width_beta,
+            oracle, width_norm, width_beta, width_gamma,
         )
         total_generated += generated
         sims += 1
@@ -345,9 +366,14 @@ def _parse_arguments() -> argparse.Namespace:
                         help="Optional IQN model (.pth) used ONLY as an uncertainty oracle. "
                              "If omitted, search is exactly vanilla.")
     parser.add_argument("--width_beta", default=0.0, type=float,
-                        help="Strength of width-based c_puct modulation. 0.0 = vanilla "
-                             "(baseline reproduced exactly). Positive => explore more toward "
-                             "high-width (uncertain) successors, commit at low-width ones.")
+                        help="Multiplicative width modulation of c_puct: "
+                             "c_eff = c_puct*(1 + beta*(nw-0.5)). 0.0 = vanilla. "
+                             "Weak under peaked policies (rarely reorders selection).")
+    parser.add_argument("--width_gamma", default=0.0, type=float,
+                        help="Additive uncertainty bonus on the selection score: "
+                             "score += gamma*norm_width(child). 0.0 = vanilla. "
+                             "Unlike beta, this bypasses the prior and CAN reorder "
+                             "selection toward uncertain children under a peaked policy.")
     return parser.parse_args()
 
 
@@ -368,7 +394,7 @@ def _plan(problem: mm.Problem,
             policy_model, q1_model, q2_model, goal,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
-            oracle=oracle, width_beta=args.width_beta,
+            oracle=oracle, width_beta=args.width_beta, width_gamma=args.width_gamma,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
@@ -408,9 +434,9 @@ def _main(args: argparse.Namespace) -> None:
         iqn_model.eval()
         oracle = UncertaintyOracle(iqn_model, device)
         print(f"[oracle] IQN uncertainty oracle loaded: {args.iqn_model} "
-              f"(width_beta={args.width_beta})", flush=True)
-    elif args.width_beta != 0.0:
-        raise RuntimeError("--width_beta is set but no --iqn_model was given.")
+              f"(width_beta={args.width_beta}, width_gamma={args.width_gamma})", flush=True)
+    elif args.width_beta != 0.0 or args.width_gamma != 0.0:
+        raise RuntimeError("--width_beta/--width_gamma is set but no --iqn_model was given.")
 
     solution = _plan(problem, policy_model, q1_model, q2_model, oracle, args)
     if solution is None:
