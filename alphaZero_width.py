@@ -156,8 +156,9 @@ def _expand(node: Node,
             tt[key] = child
             generated += 1
             # NEW: compute the child's uncertainty once, at creation, and register
-            # it with the width normalizer. Goal/dead-end children get no width.
-            if oracle is not None and not child.is_goal:
+            # it with the width normalizer. Only when a width mechanism is active
+            # (width_norm is not None); goal children get no width.
+            if width_norm is not None and not child.is_goal:
                 w = oracle.width(successor, goal)
                 child.width = w
                 if w is not None:
@@ -176,7 +177,8 @@ def _select(node: Node,
             blocked: Optional[set] = None,
             width_norm: Optional[_ValueNormalizer] = None,
             width_beta: float = 0.0,
-            width_gamma: float = 0.0) -> Tuple[Optional[mm.GroundAction], Optional[Node]]:
+            width_gamma: float = 0.0,
+            width_tau: float = 0.0) -> Tuple[Optional[mm.GroundAction], Optional[Node]]:
     best_score = -float("inf")
     best_action: Optional[mm.GroundAction] = None
     best_child: Optional[Node] = None
@@ -208,11 +210,20 @@ def _select(node: Node,
 
         # (2) Additive uncertainty bonus: a separate term that does NOT pass
         #     through the prior, so it CAN reorder selection under a peaked
-        #     policy. score += gamma * nw. gamma=0 -> vanilla.
-        #     High-width (uncertain) children get a direct selection bonus ->
-        #     search is steered toward exactly the states the model is unsure of.
+        #     policy. gamma=0 -> vanilla.
+        #     Two forms via width_tau:
+        #       tau <= 0 : linear bonus   score += gamma * nw   (pulls toward any
+        #                  above-average width — tends to over-explore easy states).
+        #       tau >  0 : THRESHOLDED    score += gamma  iff nw >= tau, else 0.
+        #                  Matches the validated one-sided signal: fire ONLY at
+        #                  genuinely high-width (top-regime) children, leaving
+        #                  low/medium-width (easy) states at vanilla behavior.
         if width_gamma != 0.0 and nw is not None:
-            score = score + width_gamma * nw
+            if width_tau > 0.0:
+                if nw >= width_tau:
+                    score = score + width_gamma
+            else:
+                score = score + width_gamma * nw
 
         if score > best_score:
             best_score, best_action, best_child = score, action, child
@@ -246,7 +257,8 @@ def _simulate(root: Node,
               oracle: Optional[UncertaintyOracle],
               width_norm: Optional[_ValueNormalizer],
               width_beta: float,
-              width_gamma: float) -> Tuple[Optional[List[mm.GroundAction]], int]:
+              width_gamma: float,
+              width_tau: float) -> Tuple[Optional[List[mm.GroundAction]], int]:
     path_keys = {root.state_key}              # states visited on THIS descent
     path_nodes: List[Node] = [root]
     path_edges: List[Tuple[Node, mm.GroundAction]] = []
@@ -256,7 +268,7 @@ def _simulate(root: Node,
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm, blocked=path_keys,
                                  width_norm=width_norm, width_beta=width_beta,
-                                 width_gamma=width_gamma)
+                                 width_gamma=width_gamma, width_tau=width_tau)
         if action is None:
             # Every successor is already on this descent path: locally cyclic.
             value = _leaf_value(node.state, goal, q1_model, q2_model)
@@ -301,7 +313,8 @@ def _search(root_state: mm.State,
             stop_on_first_solution: bool,
             oracle: Optional[UncertaintyOracle],
             width_beta: float,
-            width_gamma: float) -> Tuple[Optional[List[mm.GroundAction]], int, int]:
+            width_gamma: float,
+            width_tau: float) -> Tuple[Optional[List[mm.GroundAction]], int, int]:
     root = Node(root_state, root_key, goal.holds(root_state))
     tt: Dict[object, Node] = {root_key: root}   # state_key -> Node (transposition table)
     value_norm = _ValueNormalizer()
@@ -325,7 +338,7 @@ def _search(root_state: mm.State,
         goal_plan, generated = _simulate(
             root, tt, policy_model, q1_model, q2_model, goal,
             c_puct, value_norm, dead_end_value,
-            oracle, width_norm, width_beta, width_gamma,
+            oracle, width_norm, width_beta, width_gamma, width_tau,
         )
         total_generated += generated
         sims += 1
@@ -370,10 +383,14 @@ def _parse_arguments() -> argparse.Namespace:
                              "c_eff = c_puct*(1 + beta*(nw-0.5)). 0.0 = vanilla. "
                              "Weak under peaked policies (rarely reorders selection).")
     parser.add_argument("--width_gamma", default=0.0, type=float,
-                        help="Additive uncertainty bonus on the selection score: "
-                             "score += gamma*norm_width(child). 0.0 = vanilla. "
-                             "Unlike beta, this bypasses the prior and CAN reorder "
-                             "selection toward uncertain children under a peaked policy.")
+                        help="Additive uncertainty bonus on the selection score. "
+                             "0.0 = vanilla. Bypasses the prior; CAN reorder selection.")
+    parser.add_argument("--width_tau", default=0.0, type=float,
+                        help="Threshold in [0,1] for the additive bonus. tau<=0: linear "
+                             "bonus gamma*nw (pulls toward any above-average width). "
+                             "tau>0: thresholded — add flat gamma only when normalized "
+                             "width >= tau (fire ONLY at high-uncertainty children, the "
+                             "validated one-sided regime; leaves easy states at vanilla).")
     return parser.parse_args()
 
 
@@ -395,6 +412,7 @@ def _plan(problem: mm.Problem,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
             oracle=oracle, width_beta=args.width_beta, width_gamma=args.width_gamma,
+            width_tau=args.width_tau,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
