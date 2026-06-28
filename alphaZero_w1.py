@@ -159,7 +159,7 @@ def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
 
-def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, w1_lambda=0.0):
+def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, w1_lambda=0.0, w1_topk=0):
     best_score = -float("inf")
     best_action = None
     best_child = None
@@ -169,14 +169,27 @@ def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, w1_lambda=0.0)
     # transition into it, renormalize, use the boosted prior inside pUCT.
     #   P'(a) = P(a) * (1 + w1_lambda * norm_W1(parent -> child_a)), normalized.
     # Inside the pUCT term so it decays with visits. w1_lambda=0 -> vanilla.
+    #
+    # w1_topk > 0: only the k children with the HIGHEST norm_W1 are boosted; all
+    # other children keep their raw prior. This caps how many alternative branches
+    # per node get an exploration lift -- the diagnostic showed high-branching
+    # logistics has ~3 high-W1 siblings per node vs ~1 in goldminer, and lifting
+    # 3 branches/node over thousands of sims is what blows up expansions. topk=1
+    # forces the goldminer-like regime (one boosted alternative) everywhere.
     boosted_prior = None
     if w1_lambda != 0.0 and w1_norm is not None and node.curve is not None:
-        raw = {}
-        total = 0.0
+        nw_by_action = {}
         for action, child in node.children.items():
             w1 = _edge_w1(node.curve, child.curve)
-            nw = w1_norm.normalize(w1) if w1 is not None else 0.0
-            pb = node.prior[action] * (1.0 + w1_lambda * nw)
+            nw_by_action[action] = w1_norm.normalize(w1) if w1 is not None else 0.0
+        # If top-k gating is on, keep only the k largest norm_W1; zero the rest.
+        if w1_topk and w1_topk > 0 and len(nw_by_action) > w1_topk:
+            keep = set(sorted(nw_by_action, key=lambda a: nw_by_action[a], reverse=True)[:w1_topk])
+            nw_by_action = {a: (v if a in keep else 0.0) for a, v in nw_by_action.items()}
+        raw = {}
+        total = 0.0
+        for action in node.children:
+            pb = node.prior[action] * (1.0 + w1_lambda * nw_by_action[action])
             raw[action] = pb
             total += pb
         if total > 0.0:
@@ -228,7 +241,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm, blocked=path_keys,
-                                 w1_norm=w1_norm, w1_lambda=w1_lambda)
+                                 w1_norm=w1_norm, w1_lambda=w1_lambda, w1_topk=w1_topk)
         if action is None:
             value = _leaf_value(node.state, goal, q1_model, q2_model)
             _backup(path_nodes, path_edges, value, value_norm)
@@ -261,7 +274,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
 def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             max_simulations, max_time, c_puct, dead_end_value,
-            stop_on_first_solution, oracle, w1_lambda):
+            stop_on_first_solution, oracle, w1_lambda, w1_topk):
     root = Node(root_state, root_key, goal.holds(root_state))
     tt = {root_key: root}
     value_norm = _ValueNormalizer()
@@ -279,7 +292,7 @@ def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             break
         goal_plan, generated = _simulate(
             root, tt, policy_model, q1_model, q2_model, goal,
-            c_puct, value_norm, dead_end_value, oracle, w1_norm, w1_lambda,
+            c_puct, value_norm, dead_end_value, oracle, w1_norm, w1_lambda, w1_topk,
         )
         total_generated += generated
         sims += 1
@@ -315,6 +328,10 @@ def _parse_arguments():
                         help="Prior-boost strength using edge-W1: "
                              "P'(a)=P(a)*(1+w1_lambda*norm_W1(parent->child)), renormalized, "
                              "inside the pUCT term. 0.0 = vanilla.")
+    parser.add_argument("--w1_topk", default=0, type=int,
+                        help="If >0, boost only the k highest-norm-W1 children per node; "
+                             "others keep raw prior. Caps boosted-branch count per node "
+                             "(0 = boost all, current behavior).")
     return parser.parse_args()
 
 
@@ -329,7 +346,7 @@ def _plan(problem, policy_model, q1_model, q2_model, oracle, args):
             policy_model, q1_model, q2_model, goal,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
-            oracle=oracle, w1_lambda=args.w1_lambda,
+            oracle=oracle, w1_lambda=args.w1_lambda, w1_topk=args.w1_topk,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
