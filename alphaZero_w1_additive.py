@@ -81,10 +81,16 @@ class QuantileOracle:
         return qs[best].detach()
 
 
-def _edge_w1(parent_curve: Optional[torch.Tensor], child_curve: Optional[torch.Tensor]) -> Optional[float]:
+def _edge_w1(parent_curve: Optional[torch.Tensor], child_curve: Optional[torch.Tensor],
+             signed: bool = False) -> Optional[float]:
     if parent_curve is None or child_curve is None:
         return None
-    return torch.mean(torch.abs(parent_curve - child_curve)).item()
+    magnitude = torch.mean(torch.abs(parent_curve - child_curve)).item()
+    if not signed:
+        return magnitude
+    # Positive = child is better (progress), negative = child is worse (regressive).
+    sign = 1.0 if child_curve.mean().item() > parent_curve.mean().item() else -1.0
+    return sign * magnitude
 
 
 class _ValueNormalizer:
@@ -174,12 +180,15 @@ def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
 
-def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, beta=0.0):
+def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, beta=0.0, signed=False):
     """
     Additive decoupled selection:
-        U = Q_norm + [c_puct*P + beta*W1_norm] * sqrt(N(s)) / (1 + N(s,a))
-    The W1 term is INDEPENDENT of P (not a multiplier on the prior), so it can
-    compete even when P(a) is tiny. beta=0 -> vanilla pUCT.
+        U = Q_norm + [c_puct*P + beta*W1_boost] * sqrt(N(s)) / (1 + N(s,a))
+
+    W1_boost = max(0, signed_W1_norm)  if signed=True  (suppresses regressive moves)
+             = W1_norm                  if signed=False (original unsigned behaviour)
+
+    beta=0 -> vanilla pUCT.
     """
     best_score = -float("inf")
     best_action = None
@@ -192,16 +201,19 @@ def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, beta=0.0):
         if blocked is not None and child.state_key in blocked:
             continue
         n = node.edge_N[action]
-        q_norm = value_norm.normalize(node.q(action)) if n > 0 else 0.0  # frontier-blind FPU (unchanged)
+        q_norm = value_norm.normalize(node.q(action)) if n > 0 else 0.0
 
-        # additive exploration term
         explore = c_puct * node.prior[action]
         if w1_active:
             w1 = node.edge_W.get(action)
             if w1 is None:
-                w1 = _edge_w1(node.curve, child.curve)
+                w1 = _edge_w1(node.curve, child.curve, signed=signed)
             if w1 is not None:
-                explore += beta * w1_norm.normalize(w1)
+                # For signed mode: clip negatives (regressive moves) to zero so they
+                # get no additive boost; the normalizer only tracks positive values.
+                boost = max(0.0, w1) if signed else w1
+                if boost > 0.0:
+                    explore += beta * w1_norm.normalize(boost)
         u = explore * sqrt_parent / (1 + n)
 
         score = q_norm + u
@@ -222,19 +234,22 @@ def _backup(path_nodes, path_edges, leaf_value, value_norm):
         value_norm.update(node.q(action))
 
 
-def _register_edge_w1(node, w1_norm):
+def _register_edge_w1(node, w1_norm, signed=False):
     """Cache each outgoing edge-W1 in node.edge_W and feed the running normalizer."""
     if w1_norm is None or node.curve is None:
         return
     for action, child in node.children.items():
-        w1 = _edge_w1(node.curve, child.curve)
+        w1 = _edge_w1(node.curve, child.curve, signed=signed)
         if w1 is not None:
             node.edge_W[action] = w1
-            w1_norm.update(w1)
+            # In signed mode only positive values define the normalization range —
+            # negatives are clipped to zero at selection time and must not skew the scale.
+            if not signed or w1 > 0.0:
+                w1_norm.update(w1)
 
 
 def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
-              c_puct, value_norm, dead_end_value, oracle, w1_norm, beta):
+              c_puct, value_norm, dead_end_value, oracle, w1_norm, beta, signed):
     path_keys = {root.state_key}
     path_nodes = [root]
     path_edges = []
@@ -244,7 +259,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm, blocked=path_keys,
-                                 w1_norm=w1_norm, beta=beta)
+                                 w1_norm=w1_norm, beta=beta, signed=signed)
         if action is None:
             value = _leaf_value(node.state, goal, q1_model, q2_model)
             _backup(path_nodes, path_edges, value, value_norm)
@@ -265,7 +280,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
     else:
         value, generated = _expand(node, tt, policy_model, q1_model, q2_model, goal,
                                    dead_end_value, oracle, w1_active)
-        _register_edge_w1(node, w1_norm)
+        _register_edge_w1(node, w1_norm, signed=signed)
         for child_action, child in node.children.items():
             if child.is_goal:
                 goal_plan = [a for _, a in path_edges] + [child_action]
@@ -277,7 +292,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
 def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             max_simulations, max_time, c_puct, dead_end_value,
-            stop_on_first_solution, oracle, beta):
+            stop_on_first_solution, oracle, beta, signed):
     root = Node(root_state, root_key, goal.holds(root_state))
     tt = {root_key: root}
     value_norm = _ValueNormalizer()
@@ -295,7 +310,7 @@ def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             break
         goal_plan, generated = _simulate(
             root, tt, policy_model, q1_model, q2_model, goal,
-            c_puct, value_norm, dead_end_value, oracle, w1_norm, beta,
+            c_puct, value_norm, dead_end_value, oracle, w1_norm, beta, signed,
         )
         total_generated += generated
         sims += 1
@@ -331,6 +346,10 @@ def _parse_arguments():
                         help="Additive decoupled exploration weight: "
                              "U += beta*W1_norm * sqrt(N)/(1+n), independent of the prior. "
                              "0.0 = vanilla. Suggested start: 0.5*c_puct.")
+    parser.add_argument("--w1_signed", action="store_true",
+                        help="Use signed W1: only boost children whose IQN mean improves "
+                             "over the parent (progress moves). Regressive moves get zero "
+                             "boost. Has no effect when w1_beta=0.")
     return parser.parse_args()
 
 
@@ -345,7 +364,7 @@ def _plan(problem, policy_model, q1_model, q2_model, oracle, args):
             policy_model, q1_model, q2_model, goal,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
-            oracle=oracle, beta=args.w1_beta,
+            oracle=oracle, beta=args.w1_beta, signed=args.w1_signed,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
@@ -380,7 +399,7 @@ def _main(args):
         iqn_model.eval()
         oracle = QuantileOracle(iqn_model, device)
         print(f"[oracle] IQN quantile oracle loaded: {args.iqn_model} "
-              f"(w1_beta={args.w1_beta})", flush=True)
+              f"(w1_beta={args.w1_beta}, signed={args.w1_signed})", flush=True)
     elif args.w1_beta != 0.0:
         raise RuntimeError("--w1_beta is set but no --iqn_model was given.")
 
