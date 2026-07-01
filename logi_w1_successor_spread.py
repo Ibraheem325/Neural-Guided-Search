@@ -58,7 +58,8 @@ def analyze_node(state, goal, policy_model, iqn_model, taus, label="root"):
     probs = torch.softmax(logits, dim=0).tolist()
     parent_curve, parent_mean = best_curve(iqn_model, state, goal, taus)
 
-    print(f"\n=== {label} | {len(actions)} successors | IQN mean={parent_mean:.3f if parent_mean else 'N/A'} ===")
+    mean_str = f"{parent_mean:.3f}" if parent_mean is not None else "N/A"
+    print(f"\n=== {label} | {len(actions)} successors | IQN mean={mean_str} ===")
     print(f"{'Prior':>8}  {'W1':>8}  {'ChildMean':>10}  Action")
 
     w1_vals = []
