@@ -1,0 +1,31 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/grid_iqn.pth (w1_lambda=1.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1411, generated=1410
+  [sim 1000] root visits=1000, unique states=2734, generated=2733
+  [sim 1500] root visits=1500, unique states=4154, generated=4153
+  [sim 2000] root visits=2000, unique states=5475, generated=5474
+  [sim 2500] root visits=2500, unique states=6781, generated=6780
+  [sim 3000] root visits=3000, unique states=8173, generated=8172
+  [sim 3500] root visits=3500, unique states=9515, generated=9514
+  [sim 4000] root visits=4000, unique states=10647, generated=10646
+  [sim 4500] root visits=4500, unique states=11703, generated=11702
+  [sim 5000] root visits=5000, unique states=12816, generated=12815
+  [sim 5500] root visits=5500, unique states=13848, generated=13847
+  [sim 6000] root visits=6000, unique states=14809, generated=14808
+  [sim 6500] root visits=6500, unique states=15850, generated=15849
+  [sim 7000] root visits=7000, unique states=16833, generated=16832
+  [sim 7500] root visits=7500, unique states=17846, generated=17845
+  [sim 8000] root visits=8000, unique states=18877, generated=18876
+  [sim 8500] root visits=8500, unique states=19867, generated=19866
+[FANOUT] expanded_internal_nodes=7830 mean_children=4.44 mean_visited_children(fanout)=1.17 median_fanout=1 frac_nodes_fanout>1=18% frac_fanout>3=0%
+[WIDTHBUCKET] n=7830 mean_width=2.32 median_width=2.35 frac_low(<1.5)=20% frac_med(1.5-3)=55% frac_high(>=3)=24%
+[BOOSTDEPTH] n=6228 mean_depth_of_boosted_nodes=132.76 median=124 frac_shallow(depth<=10)=0% frac_deep(depth>30)=99%
+[BOOSTPAYOFF] boosted_nodes=6228 frac_with_deadend_child=0% frac_below_best_at_depth=63%
+[W1xDEPTH] d0-20:n=50,meanNW1=0.058 d20-60:n=217,meanNW1=0.080 d60-120:n=3584,meanNW1=0.072 d120-inf:n=5299,meanNW1=0.073
+[DEPTH] expanded_internal_nodes=7830 mean_depth=137.61 median_depth=129 max_depth=274 frac_depth>20=99%
+[Final] Expanded: 20741, Generated: 20741
+[search done] simulations=8928, unique states generated=20741
+Failed to find a solution!

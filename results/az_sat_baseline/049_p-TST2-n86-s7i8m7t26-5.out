@@ -1,0 +1,54 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN uncertainty oracle loaded: models/satellite_iqn.pth (width_beta=0.0, width_gamma=0.0, width_tau=0.0, width_lambda=0.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=108054, generated=108053
+  [sim 1000] root visits=1000, unique states=215230, generated=215229
+  [sim 1500] root visits=1500, unique states=321432, generated=321431
+  [sim 2000] root visits=2000, unique states=425106, generated=425105
+  [sim 2500] root visits=2500, unique states=531638, generated=531637
+  [sim 3000] root visits=3000, unique states=635572, generated=635571
+  [sim 3500] root visits=3500, unique states=739331, generated=739330
+  [sim 4000] root visits=4000, unique states=843734, generated=843733
+  [sim 4500] root visits=4500, unique states=947738, generated=947737
+  [sim 5000] root visits=5000, unique states=1051709, generated=1051708
+  [sim 5500] root visits=5500, unique states=1155420, generated=1155419
+  [sim 6000] root visits=6000, unique states=1258774, generated=1258773
+  [sim 6500] root visits=6500, unique states=1362235, generated=1362234
+  [sim 7000] root visits=7000, unique states=1464975, generated=1464974
+  [sim 7500] root visits=7500, unique states=1570657, generated=1570656
+  [sim 7514] found goal path of length 30
+[Final] Expanded: 1573556, Generated: 1573556
+[search done] simulations=7514, unique states generated=1573556
+Found a solution of length 30!
+   1: (switch_on instrument18 satellite3)
+   2: (turn_to satellite3 star1 star15)
+   3: (calibrate satellite3 instrument18 star1)
+   4: (turn_to satellite3 star29 star1)
+   5: (take_image satellite3 star29 instrument18 infrared3)
+   6: (take_image satellite3 star29 instrument18 infrared4)
+   7: (take_image satellite3 star29 instrument18 infrared1)
+   8: (switch_on instrument6 satellite1)
+   9: (turn_to satellite1 groundstation19 star10)
+  10: (calibrate satellite1 instrument6 groundstation19)
+  11: (turn_to satellite1 star26 groundstation19)
+  12: (take_image satellite1 star26 instrument6 image0)
+  13: (switch_on instrument1 satellite0)
+  14: (calibrate satellite0 instrument1 star15)
+  15: (turn_to satellite0 phenomenon27 star15)
+  16: (take_image satellite0 phenomenon27 instrument1 infrared1)
+  17: (take_image satellite0 phenomenon27 instrument1 infrared4)
+  18: (turn_to satellite0 planet28 phenomenon27)
+  19: (take_image satellite0 planet28 instrument1 infrared1)
+  20: (take_image satellite0 planet28 instrument1 infrared4)
+  21: (turn_to satellite0 star26 planet28)
+  22: (take_image satellite0 star26 instrument1 infrared1)
+  23: (turn_to satellite0 star29 star26)
+  24: (turn_to satellite1 star29 star26)
+  25: (take_image satellite1 star29 instrument6 image0)
+  26: (turn_to satellite3 star21 star29)
+  27: (turn_to satellite1 star21 star29)
+  28: (turn_to satellite0 star21 star29)
+  29: (turn_to satellite3 star2 star21)
+  30: (turn_to satellite5 star21 star13)

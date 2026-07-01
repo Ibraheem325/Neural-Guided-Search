@@ -1,0 +1,108 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/goldminer_iqn.pth (w1_lambda=2.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=961, generated=960
+  [sim 1000] root visits=1000, unique states=2290, generated=2289
+  [sim 1500] root visits=1500, unique states=3446, generated=3445
+  [sim 2000] root visits=2000, unique states=4767, generated=4766
+  [sim 2500] root visits=2500, unique states=5973, generated=5972
+  [sim 3000] root visits=3000, unique states=7041, generated=7040
+  [sim 3500] root visits=3500, unique states=8406, generated=8405
+  [sim 4000] root visits=4000, unique states=9847, generated=9846
+  [sim 4500] root visits=4500, unique states=11146, generated=11145
+  [sim 5000] root visits=5000, unique states=12469, generated=12468
+  [sim 5500] root visits=5500, unique states=13700, generated=13699
+  [sim 6000] root visits=6000, unique states=14962, generated=14961
+  [sim 6500] root visits=6500, unique states=16222, generated=16221
+  [sim 7000] root visits=7000, unique states=17462, generated=17461
+  [sim 7500] root visits=7500, unique states=18837, generated=18836
+  [sim 8000] root visits=8000, unique states=20102, generated=20101
+  [sim 8500] root visits=8500, unique states=21391, generated=21390
+  [sim 9000] root visits=9000, unique states=22671, generated=22670
+  [sim 9500] root visits=9500, unique states=23982, generated=23981
+  [sim 10000] root visits=10000, unique states=25334, generated=25333
+  [sim 10500] root visits=10500, unique states=26625, generated=26624
+  [sim 11000] root visits=11000, unique states=27883, generated=27882
+  [sim 11205] found goal path of length 77
+[Final] Expanded: 28427, Generated: 28427
+[search done] simulations=11205, unique states generated=28427
+Found a solution of length 77!
+   1: (move f2-0f f1-0f)
+   2: (move f1-0f f0-0f)
+   3: (pickup-laser f0-0f)
+   4: (move f0-0f f1-0f)
+   5: (move f1-0f f2-0f)
+   6: (move f2-0f f3-0f)
+   7: (move f3-0f f4-0f)
+   8: (move f4-0f f5-0f)
+   9: (move f5-0f f6-0f)
+  10: (fire-laser f6-0f f6-1f)
+  11: (move f6-0f f5-0f)
+  12: (fire-laser f5-0f f5-1f)
+  13: (move f5-0f f6-0f)
+  14: (move f6-0f f7-0f)
+  15: (fire-laser f7-0f f7-1f)
+  16: (move f7-0f f8-0f)
+  17: (fire-laser f8-0f f8-1f)
+  18: (move f8-0f f8-1f)
+  19: (fire-laser f8-1f f8-2f)
+  20: (move f8-1f f8-2f)
+  21: (fire-laser f8-2f f8-3f)
+  22: (move f8-2f f8-3f)
+  23: (fire-laser f8-3f f8-4f)
+  24: (move f8-3f f8-4f)
+  25: (fire-laser f8-4f f8-5f)
+  26: (move f8-4f f8-5f)
+  27: (fire-laser f8-5f f8-6f)
+  28: (move f8-5f f8-6f)
+  29: (fire-laser f8-6f f8-7f)
+  30: (move f8-6f f8-7f)
+  31: (putdown-laser f8-7f)
+  32: (move f8-7f f8-6f)
+  33: (move f8-6f f8-5f)
+  34: (move f8-5f f8-4f)
+  35: (move f8-4f f8-3f)
+  36: (move f8-3f f8-2f)
+  37: (move f8-2f f8-1f)
+  38: (move f8-1f f8-0f)
+  39: (move f8-0f f7-0f)
+  40: (move f7-0f f7-1f)
+  41: (move f7-1f f6-1f)
+  42: (move f6-1f f6-0f)
+  43: (move f6-0f f5-0f)
+  44: (move f5-0f f4-0f)
+  45: (move f4-0f f3-0f)
+  46: (move f3-0f f2-0f)
+  47: (move f2-0f f1-0f)
+  48: (move f1-0f f0-0f)
+  49: (pickup-bomb f0-0f)
+  50: (move f0-0f f1-0f)
+  51: (move f1-0f f2-0f)
+  52: (move f2-0f f3-0f)
+  53: (move f3-0f f4-0f)
+  54: (detonate-bomb f4-0f f4-1f)
+  55: (move f4-0f f3-0f)
+  56: (move f3-0f f2-0f)
+  57: (move f2-0f f1-0f)
+  58: (move f1-0f f0-0f)
+  59: (pickup-bomb f0-0f)
+  60: (move f0-0f f1-0f)
+  61: (move f1-0f f2-0f)
+  62: (move f2-0f f3-0f)
+  63: (move f3-0f f4-0f)
+  64: (move f4-0f f5-0f)
+  65: (move f5-0f f6-0f)
+  66: (move f6-0f f7-0f)
+  67: (move f7-0f f7-1f)
+  68: (move f7-1f f8-1f)
+  69: (move f8-1f f8-2f)
+  70: (move f8-2f f8-3f)
+  71: (move f8-3f f8-4f)
+  72: (move f8-4f f8-5f)
+  73: (move f8-5f f8-6f)
+  74: (move f8-6f f8-7f)
+  75: (detonate-bomb f8-7f f8-8f)
+  76: (move f8-7f f8-8f)
+  77: (pick-gold f8-8f)

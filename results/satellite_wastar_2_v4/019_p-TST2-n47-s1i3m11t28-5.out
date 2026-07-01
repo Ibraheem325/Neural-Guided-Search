@@ -1,0 +1,28 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Loading model... (models/satellite_supervised.pth)
+Using GPU:  NVIDIA L40S
+[f=46.477] Expanded: 0, Generated: 0
+[Final] Expanded: 48, Generated: 1817
+Found a solution of length 20!
+   1: (turn_to satellite0 star4 star8)
+   2: (switch_on instrument1 satellite0)
+   3: (calibrate satellite0 instrument1 star4)
+   4: (turn_to satellite0 planet30 star4)
+   5: (take_image satellite0 planet30 instrument1 thermograph2)
+   6: (take_image satellite0 planet30 instrument1 image8)
+   7: (turn_to satellite0 star31 planet30)
+   8: (take_image satellite0 star31 instrument1 infrared4)
+   9: (take_image satellite0 star31 instrument1 image8)
+  10: (turn_to satellite0 star23 star31)
+  11: (switch_off instrument1 satellite0)
+  12: (switch_on instrument0 satellite0)
+  13: (calibrate satellite0 instrument0 star23)
+  14: (turn_to satellite0 star28 star23)
+  15: (take_image satellite0 star28 instrument0 image7)
+  16: (turn_to satellite0 star29 star28)
+  17: (take_image satellite0 star29 instrument0 image7)
+  18: (take_image satellite0 star29 instrument0 image0)
+  19: (turn_to satellite0 star31 star29)
+  20: (take_image satellite0 star31 instrument0 image0)

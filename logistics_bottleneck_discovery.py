@@ -114,10 +114,10 @@ def static_info(problem):
     init = problem.get_initial_state()
     d = atoms_by_pred(init)
     return {
-        'OBJ'     : {x[0] for x in d.get('OBJ', [])},
-        'TRUCK'   : {x[0] for x in d.get('TRUCK', [])},
-        'AIRPLANE': {x[0] for x in d.get('AIRPLANE', [])},
-        'AIRPORT' : {x[0] for x in d.get('AIRPORT', [])},
+        'OBJ'     : {x[0] for x in d.get('obj', [])},
+        'TRUCK'   : {x[0] for x in d.get('truck', [])},
+        'AIRPLANE': {x[0] for x in d.get('airplane', [])},
+        'AIRPORT' : {x[0] for x in d.get('airport', [])},
         'in_city' : {x[0]: x[1] for x in d.get('in-city', [])},  # loc -> city
     }
 

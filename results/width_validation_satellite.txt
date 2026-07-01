@@ -1,0 +1,75 @@
+============================================================================
+WIDTH-AS-UNCERTAINTY VALIDATION
+domain     : example/satellite_dataset/domain.pddl
+instances  : example/satellite_dataset/train
+model      : models/satellite_iqn.pth
+seeds      : [42, 43, 44]
+width def  : sorted q[90] - q[8] on 99-pt grid
+============================================================================
+
+================  SEED 42  ================
+instances used: 40   states: 1200
+
+-- TEST 1: does width track model error? --
+   Spearman(width, error)        = -0.051   (hypothesis: > 0)
+
+-- TEST 2: is width just a depth proxy? --
+   Spearman(width, depth)        = -0.003   (width also tracks depth)
+   PARTIAL(width, error | depth) = -0.058   <-- REAL TEST (>0 => info beyond depth)
+   PARTIAL(width, forced | depth)= +0.163   (fine calibration to collapse magnitude)
+
+-- TEST 3: forced-collapse states wider at MATCHED depth? --
+   (forced collapse = near-equal predicted mean but true-cost gap >= 2.0)
+     depth band | forced n  width | normal n  width
+
+================  SEED 43  ================
+instances used: 40   states: 1200
+
+-- TEST 1: does width track model error? --
+   Spearman(width, error)        = -0.011   (hypothesis: > 0)
+
+-- TEST 2: is width just a depth proxy? --
+   Spearman(width, depth)        = -0.050   (width also tracks depth)
+   PARTIAL(width, error | depth) = -0.035   <-- REAL TEST (>0 => info beyond depth)
+   PARTIAL(width, forced | depth)= +0.088   (fine calibration to collapse magnitude)
+
+-- TEST 3: forced-collapse states wider at MATCHED depth? --
+   (forced collapse = near-equal predicted mean but true-cost gap >= 2.0)
+     depth band | forced n  width | normal n  width
+
+================  SEED 44  ================
+instances used: 40   states: 1200
+
+-- TEST 1: does width track model error? --
+   Spearman(width, error)        = +0.028   (hypothesis: > 0)
+
+-- TEST 2: is width just a depth proxy? --
+   Spearman(width, depth)        = -0.011   (width also tracks depth)
+   PARTIAL(width, error | depth) = +0.026   <-- REAL TEST (>0 => info beyond depth)
+   PARTIAL(width, forced | depth)= +0.098   (fine calibration to collapse magnitude)
+
+-- TEST 3: forced-collapse states wider at MATCHED depth? --
+   (forced collapse = near-equal predicted mean but true-cost gap >= 2.0)
+     depth band | forced n  width | normal n  width
+
+================  POOLED (all seeds)  ================
+instances used: -1   states: 3600
+
+-- TEST 1: does width track model error? --
+   Spearman(width, error)        = -0.011   (hypothesis: > 0)
+
+-- TEST 2: is width just a depth proxy? --
+   Spearman(width, depth)        = -0.022   (width also tracks depth)
+   PARTIAL(width, error | depth) = -0.023   <-- REAL TEST (>0 => info beyond depth)
+   PARTIAL(width, forced | depth)= +0.126   (fine calibration to collapse magnitude)
+
+-- TEST 3: forced-collapse states wider at MATCHED depth? --
+   (forced collapse = near-equal predicted mean but true-cost gap >= 2.0)
+     depth band | forced n  width | normal n  width
+
+Done. Interpretation guide:
+  TEST1 Spearman(width,error) > 0          -> width relates to error
+  TEST2 PARTIAL(width,error|depth) > ~0.25 -> width carries error info beyond depth (KEY)
+  TEST3 forced width > normal width in each band -> collapse regions are wider (mechanism)
+  Low PARTIAL(width,forced|depth) is expected: width is a usable THRESHOLD flag,
+  not a calibrated meter of collapse magnitude. Use width as a gate, not a linear weight.

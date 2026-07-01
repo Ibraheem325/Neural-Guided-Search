@@ -1,0 +1,36 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 228] found goal path of length 28
+[Final] Expanded: 16584, Generated: 16584
+[search done] simulations=228, unique states generated=16584
+Found a solution of length 28!
+   1: (switch_on instrument9 satellite2)
+   2: (switch_on instrument3 satellite1)
+   3: (calibrate satellite1 instrument3 groundstation0)
+   4: (turn_to satellite1 phenomenon14 groundstation0)
+   5: (take_image satellite1 phenomenon14 instrument3 image1)
+   6: (take_image satellite1 phenomenon14 instrument3 thermograph0)
+   7: (turn_to satellite2 groundstation10 phenomenon16)
+   8: (calibrate satellite2 instrument9 groundstation10)
+   9: (turn_to satellite2 star17 groundstation10)
+  10: (take_image satellite2 star17 instrument9 image1)
+  11: (turn_to satellite2 phenomenon16 star17)
+  12: (take_image satellite2 phenomenon16 instrument9 thermograph3)
+  13: (take_image satellite2 phenomenon16 instrument9 thermograph2)
+  14: (take_image satellite1 phenomenon14 instrument3 thermograph2)
+  15: (take_image satellite2 phenomenon16 instrument9 image1)
+  16: (turn_to satellite2 groundstation10 phenomenon16)
+  17: (turn_to satellite2 star15 groundstation10)
+  18: (take_image satellite2 star15 instrument9 thermograph3)
+  19: (turn_to satellite2 phenomenon16 star15)
+  20: (turn_to satellite1 groundstation10 phenomenon14)
+  21: (turn_to satellite1 phenomenon16 groundstation10)
+  22: (take_image satellite1 phenomenon16 instrument3 thermograph0)
+  23: (turn_to satellite2 phenomenon14 phenomenon16)
+  24: (take_image satellite2 phenomenon14 instrument9 thermograph3)
+  25: (turn_to satellite2 star15 phenomenon14)
+  26: (turn_to satellite3 phenomenon14 groundstation8)
+  27: (turn_to satellite3 groundstation7 phenomenon14)
+  28: (turn_to satellite1 phenomenon14 phenomenon16)

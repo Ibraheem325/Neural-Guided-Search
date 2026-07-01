@@ -1,0 +1,56 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN uncertainty oracle loaded: models/logistics_iqn.pth (width_beta=0.0, width_gamma=0.0, width_tau=0.0, width_lambda=0.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=5734, generated=5733
+  [sim 1000] root visits=1000, unique states=9727, generated=9726
+  [sim 1500] root visits=1500, unique states=14112, generated=14111
+  [sim 2000] root visits=2000, unique states=18186, generated=18185
+  [sim 2500] root visits=2500, unique states=21974, generated=21973
+  [sim 3000] root visits=3000, unique states=25741, generated=25740
+  [sim 3500] root visits=3500, unique states=29606, generated=29605
+  [sim 4000] root visits=4000, unique states=33526, generated=33525
+  [sim 4500] root visits=4500, unique states=37456, generated=37455
+  [sim 5000] root visits=5000, unique states=41567, generated=41566
+  [sim 5500] root visits=5500, unique states=45944, generated=45943
+  [sim 6000] root visits=6000, unique states=50104, generated=50103
+  [sim 6500] root visits=6500, unique states=54349, generated=54348
+  [sim 7000] root visits=7000, unique states=58557, generated=58556
+  [sim 7500] root visits=7500, unique states=62652, generated=62651
+  [sim 8000] root visits=8000, unique states=66620, generated=66619
+  [sim 8500] root visits=8500, unique states=70738, generated=70737
+  [sim 9000] root visits=9000, unique states=74737, generated=74736
+  [sim 9500] root visits=9500, unique states=78692, generated=78691
+  [sim 10000] root visits=10000, unique states=82597, generated=82596
+  [sim 10500] root visits=10500, unique states=86518, generated=86517
+  [sim 11000] root visits=11000, unique states=90418, generated=90417
+  [sim 11500] root visits=11500, unique states=94583, generated=94582
+  [sim 12000] root visits=12000, unique states=98745, generated=98744
+  [sim 12500] root visits=12500, unique states=102794, generated=102793
+  [sim 13000] root visits=13000, unique states=106904, generated=106903
+  [sim 13500] root visits=13500, unique states=111073, generated=111072
+  [sim 14000] root visits=14000, unique states=115114, generated=115113
+  [sim 14500] root visits=14500, unique states=119263, generated=119262
+  [sim 15000] root visits=15000, unique states=123534, generated=123533
+  [sim 15500] root visits=15500, unique states=127828, generated=127827
+  [sim 16000] root visits=16000, unique states=131884, generated=131883
+  [sim 16500] root visits=16500, unique states=135703, generated=135702
+  [sim 17000] root visits=17000, unique states=139700, generated=139699
+  [sim 17500] root visits=17500, unique states=143651, generated=143650
+  [sim 18000] root visits=18000, unique states=147559, generated=147558
+  [sim 18500] root visits=18500, unique states=151301, generated=151300
+  [sim 19000] root visits=19000, unique states=155105, generated=155104
+  [sim 19500] root visits=19500, unique states=158867, generated=158866
+  [sim 20000] root visits=20000, unique states=162790, generated=162789
+  [sim 20500] root visits=20500, unique states=166629, generated=166628
+  [sim 21000] root visits=21000, unique states=170422, generated=170421
+  [sim 21500] root visits=21500, unique states=174125, generated=174124
+  [sim 22000] root visits=22000, unique states=178059, generated=178058
+  [sim 22500] root visits=22500, unique states=181975, generated=181974
+  [sim 23000] root visits=23000, unique states=185859, generated=185858
+  [sim 23500] root visits=23500, unique states=189827, generated=189826
+  [sim 24000] root visits=24000, unique states=193831, generated=193830
+[Final] Expanded: 194877, Generated: 194877
+[search done] simulations=24136, unique states generated=194877
+Failed to find a solution!

@@ -1,0 +1,11 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+23.430: (move f2-4f f3-4f)
+21.705: (move f3-4f f3-3f)
+21.951: (move f3-3f f4-3f)
+23.003: (move f4-3f f4-2f)
+22.269: (move f4-2f f4-1f)
+23.003: (move f4-1f f4-2f)
+Failed to find a solution!

@@ -1,0 +1,83 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=9413, generated=9412
+  [sim 1000] root visits=1000, unique states=18023, generated=18022
+  [sim 1500] root visits=1500, unique states=26026, generated=26025
+  [sim 2000] root visits=2000, unique states=34416, generated=34415
+  [sim 2500] root visits=2500, unique states=42835, generated=42834
+  [sim 3000] root visits=3000, unique states=50847, generated=50846
+  [sim 3500] root visits=3500, unique states=59356, generated=59355
+  [sim 4000] root visits=4000, unique states=67760, generated=67759
+  [sim 4500] root visits=4500, unique states=76725, generated=76724
+  [sim 5000] root visits=5000, unique states=84661, generated=84660
+  [sim 5500] root visits=5500, unique states=92583, generated=92582
+  [sim 5736] found goal path of length 64
+[Final] Expanded: 96836, Generated: 96836
+[search done] simulations=5736, unique states generated=96836
+Found a solution of length 64!
+   1: (switch_on instrument7 satellite0)
+   2: (calibrate satellite0 instrument7 groundstation15)
+   3: (turn_to satellite0 star28 groundstation15)
+   4: (take_image satellite0 star28 instrument7 infrared7)
+   5: (take_image satellite0 star28 instrument7 spectrograph6)
+   6: (take_image satellite0 star28 instrument7 image3)
+   7: (turn_to satellite0 star24 star28)
+   8: (turn_to satellite0 phenomenon30 star24)
+   9: (take_image satellite0 phenomenon30 instrument7 infrared7)
+  10: (take_image satellite0 phenomenon30 instrument7 spectrograph6)
+  11: (take_image satellite0 phenomenon30 instrument7 image3)
+  12: (turn_to satellite0 star24 phenomenon30)
+  13: (turn_to satellite0 star29 star24)
+  14: (take_image satellite0 star29 instrument7 spectrograph6)
+  15: (take_image satellite0 star29 instrument7 image3)
+  16: (take_image satellite0 star29 instrument7 infrared7)
+  17: (turn_to satellite0 star24 star29)
+  18: (turn_to satellite0 phenomenon30 star24)
+  19: (turn_to satellite0 groundstation25 phenomenon30)
+  20: (turn_to satellite0 star28 groundstation25)
+  21: (turn_to satellite0 groundstation0 star28)
+  22: (turn_to satellite0 phenomenon31 groundstation0)
+  23: (take_image satellite0 phenomenon31 instrument7 spectrograph6)
+  24: (turn_to satellite0 star27 phenomenon31)
+  25: (switch_off instrument7 satellite0)
+  26: (switch_on instrument6 satellite0)
+  27: (calibrate satellite0 instrument6 star27)
+  28: (turn_to satellite0 star29 star27)
+  29: (take_image satellite0 star29 instrument6 thermograph1)
+  30: (turn_to satellite0 groundstation25 star29)
+  31: (turn_to satellite0 star28 groundstation25)
+  32: (take_image satellite0 star28 instrument6 thermograph1)
+  33: (turn_to satellite0 star26 star28)
+  34: (turn_to satellite0 phenomenon30 star26)
+  35: (take_image satellite0 phenomenon30 instrument6 thermograph1)
+  36: (turn_to satellite0 groundstation25 phenomenon30)
+  37: (turn_to satellite0 star29 groundstation25)
+  38: (turn_to satellite0 star1 star29)
+  39: (turn_to satellite0 star28 star1)
+  40: (turn_to satellite0 star26 star28)
+  41: (turn_to satellite0 phenomenon31 star26)
+  42: (take_image satellite0 phenomenon31 instrument6 thermograph1)
+  43: (switch_off instrument6 satellite0)
+  44: (switch_on instrument2 satellite0)
+  45: (turn_to satellite0 star1 phenomenon31)
+  46: (calibrate satellite0 instrument2 star1)
+  47: (turn_to satellite0 star28 star1)
+  48: (take_image satellite0 star28 instrument2 image8)
+  49: (take_image satellite0 star28 instrument2 spectrograph10)
+  50: (turn_to satellite0 star1 star28)
+  51: (turn_to satellite0 phenomenon30 star1)
+  52: (take_image satellite0 phenomenon30 instrument2 image8)
+  53: (turn_to satellite0 star29 phenomenon30)
+  54: (take_image satellite0 star29 instrument2 spectrograph10)
+  55: (turn_to satellite0 star28 star29)
+  56: (turn_to satellite0 star26 star28)
+  57: (turn_to satellite0 phenomenon31 star26)
+  58: (take_image satellite0 phenomenon31 instrument2 image8)
+  59: (turn_to satellite0 groundstation25 phenomenon31)
+  60: (switch_off instrument2 satellite0)
+  61: (switch_on instrument0 satellite0)
+  62: (calibrate satellite0 instrument0 groundstation25)
+  63: (turn_to satellite0 star28 groundstation25)
+  64: (take_image satellite0 star28 instrument0 infrared4)

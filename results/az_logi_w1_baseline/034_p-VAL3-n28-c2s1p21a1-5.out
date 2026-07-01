@@ -1,0 +1,37 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/logistics_iqn.pth (w1_lambda=0.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 85] found goal path of length 28
+[Final] Expanded: 2080, Generated: 2080
+[search done] simulations=85, unique states generated=2080
+Found a solution of length 28!
+   1: (load-airplane p20 a0 l1-0)
+   2: (load-airplane p19 a0 l1-0)
+   3: (load-airplane p11 a0 l1-0)
+   4: (load-airplane p16 a0 l1-0)
+   5: (fly-airplane a0 l1-0 l0-0)
+   6: (unload-airplane p20 a0 l0-0)
+   7: (unload-airplane p16 a0 l0-0)
+   8: (unload-airplane p11 a0 l0-0)
+   9: (unload-airplane p19 a0 l0-0)
+  10: (load-airplane p1 a0 l0-0)
+  11: (load-airplane p0 a0 l0-0)
+  12: (load-airplane p6 a0 l0-0)
+  13: (load-airplane p2 a0 l0-0)
+  14: (load-airplane p15 a0 l0-0)
+  15: (load-airplane p7 a0 l0-0)
+  16: (load-airplane p14 a0 l0-0)
+  17: (load-airplane p18 a0 l0-0)
+  18: (load-airplane p17 a0 l0-0)
+  19: (fly-airplane a0 l0-0 l1-0)
+  20: (unload-airplane p0 a0 l1-0)
+  21: (unload-airplane p1 a0 l1-0)
+  22: (unload-airplane p2 a0 l1-0)
+  23: (unload-airplane p6 a0 l1-0)
+  24: (unload-airplane p7 a0 l1-0)
+  25: (unload-airplane p14 a0 l1-0)
+  26: (unload-airplane p15 a0 l1-0)
+  27: (unload-airplane p17 a0 l1-0)
+  28: (unload-airplane p18 a0 l1-0)

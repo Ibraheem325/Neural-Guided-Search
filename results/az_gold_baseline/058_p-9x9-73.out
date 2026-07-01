@@ -1,0 +1,100 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN uncertainty oracle loaded: models/goldminer_iqn.pth (width_beta=0.0, width_gamma=0.0, width_tau=0.0, width_lambda=0.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1023, generated=1022
+  [sim 1000] root visits=1000, unique states=2208, generated=2207
+  [sim 1500] root visits=1500, unique states=3608, generated=3607
+  [sim 2000] root visits=2000, unique states=4924, generated=4923
+  [sim 2500] root visits=2500, unique states=6277, generated=6276
+  [sim 3000] root visits=3000, unique states=7593, generated=7592
+  [sim 3500] root visits=3500, unique states=8879, generated=8878
+  [sim 4000] root visits=4000, unique states=10263, generated=10262
+  [sim 4500] root visits=4500, unique states=11516, generated=11515
+  [sim 5000] root visits=5000, unique states=12831, generated=12830
+  [sim 5500] root visits=5500, unique states=14114, generated=14113
+  [sim 6000] root visits=6000, unique states=15391, generated=15390
+  [sim 6500] root visits=6500, unique states=16678, generated=16677
+  [sim 7000] root visits=7000, unique states=18012, generated=18011
+  [sim 7500] root visits=7500, unique states=19339, generated=19338
+  [sim 8000] root visits=8000, unique states=20710, generated=20709
+  [sim 8500] root visits=8500, unique states=22094, generated=22093
+  [sim 9000] root visits=9000, unique states=23486, generated=23485
+  [sim 9500] root visits=9500, unique states=24876, generated=24875
+  [sim 10000] root visits=10000, unique states=26269, generated=26268
+  [sim 10500] root visits=10500, unique states=27571, generated=27570
+  [sim 10578] found goal path of length 70
+[Final] Expanded: 27741, Generated: 27741
+[search done] simulations=10578, unique states generated=27741
+Found a solution of length 70!
+   1: (move f2-0f f1-0f)
+   2: (move f1-0f f0-0f)
+   3: (pickup-laser f0-0f)
+   4: (move f0-0f f1-0f)
+   5: (move f1-0f f2-0f)
+   6: (move f2-0f f3-0f)
+   7: (move f3-0f f4-0f)
+   8: (move f4-0f f5-0f)
+   9: (fire-laser f5-0f f5-1f)
+  10: (move f5-0f f5-1f)
+  11: (fire-laser f5-1f f5-2f)
+  12: (fire-laser f5-1f f4-1f)
+  13: (fire-laser f5-1f f6-1f)
+  14: (move f5-1f f6-1f)
+  15: (fire-laser f6-1f f7-1f)
+  16: (fire-laser f6-1f f6-2f)
+  17: (move f6-1f f7-1f)
+  18: (fire-laser f7-1f f8-1f)
+  19: (move f7-1f f8-1f)
+  20: (fire-laser f8-1f f8-2f)
+  21: (move f8-1f f8-2f)
+  22: (fire-laser f8-2f f8-3f)
+  23: (move f8-2f f8-3f)
+  24: (fire-laser f8-3f f8-4f)
+  25: (move f8-3f f8-4f)
+  26: (fire-laser f8-4f f8-5f)
+  27: (move f8-4f f8-5f)
+  28: (fire-laser f8-5f f8-6f)
+  29: (move f8-5f f8-6f)
+  30: (fire-laser f8-6f f8-7f)
+  31: (move f8-6f f8-7f)
+  32: (putdown-laser f8-7f)
+  33: (move f8-7f f8-6f)
+  34: (move f8-6f f8-5f)
+  35: (move f8-5f f8-4f)
+  36: (move f8-4f f8-3f)
+  37: (move f8-3f f8-2f)
+  38: (move f8-2f f8-1f)
+  39: (move f8-1f f8-0f)
+  40: (move f8-0f f7-0f)
+  41: (move f7-0f f7-1f)
+  42: (move f7-1f f6-1f)
+  43: (move f6-1f f6-2f)
+  44: (move f6-2f f5-2f)
+  45: (move f5-2f f5-1f)
+  46: (move f5-1f f5-0f)
+  47: (move f5-0f f4-0f)
+  48: (move f4-0f f3-0f)
+  49: (move f3-0f f2-0f)
+  50: (move f2-0f f1-0f)
+  51: (move f1-0f f0-0f)
+  52: (pickup-bomb f0-0f)
+  53: (move f0-0f f1-0f)
+  54: (move f1-0f f2-0f)
+  55: (move f2-0f f3-0f)
+  56: (move f3-0f f4-0f)
+  57: (move f4-0f f5-0f)
+  58: (move f5-0f f5-1f)
+  59: (move f5-1f f6-1f)
+  60: (move f6-1f f7-1f)
+  61: (move f7-1f f8-1f)
+  62: (move f8-1f f8-2f)
+  63: (move f8-2f f8-3f)
+  64: (move f8-3f f8-4f)
+  65: (move f8-4f f8-5f)
+  66: (move f8-5f f8-6f)
+  67: (move f8-6f f8-7f)
+  68: (detonate-bomb f8-7f f8-8f)
+  69: (move f8-7f f8-8f)
+  70: (pick-gold f8-8f)

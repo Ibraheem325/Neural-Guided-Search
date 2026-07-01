@@ -1,0 +1,144 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/logistics_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=29.347] Expanded: 11, Generated: 10
+[f=29.347] Expanded: 20, Generated: 20
+[f=29.347] Expanded: 28, Generated: 30
+[f=29.347] Expanded: 35, Generated: 40
+[f=29.347] Expanded: 41, Generated: 50
+[f=29.347] Expanded: 46, Generated: 60
+[f=29.347] Expanded: 50, Generated: 70
+[f=29.347] Expanded: 53, Generated: 80
+[f=29.347] Expanded: 55, Generated: 90
+[f=29.347] Expanded: 56, Generated: 100
+[f=29.444] Expanded: 118, Generated: 180
+[f=29.444] Expanded: 175, Generated: 412
+[f=29.444] Expanded: 175, Generated: 418
+[f=29.444] Expanded: 176, Generated: 460
+[f=29.537] Expanded: 183, Generated: 467
+[f=29.537] Expanded: 385, Generated: 1090
+[f=29.537] Expanded: 386, Generated: 1300
+[f=29.629] Expanded: 398, Generated: 1312
+[f=29.629] Expanded: 636, Generated: 2191
+[f=29.629] Expanded: 638, Generated: 2560
+[f=29.719] Expanded: 647, Generated: 2570
+[f=29.719] Expanded: 848, Generated: 3820
+[f=29.791] Expanded: 852, Generated: 3824
+[f=29.791] Expanded: 858, Generated: 3830
+[f=29.809] Expanded: 974, Generated: 4143
+[f=29.809] Expanded: 978, Generated: 4530
+[f=29.809] Expanded: 978, Generated: 4670
+[f=29.900] Expanded: 980, Generated: 4672
+[f=29.900] Expanded: 1023, Generated: 5026
+[f=29.900] Expanded: 1023, Generated: 5030
+[f=29.915] Expanded: 1024, Generated: 5031
+[f=29.915] Expanded: 1030, Generated: 5037
+[f=29.915] Expanded: 1035, Generated: 5042
+[f=29.915] Expanded: 1068, Generated: 5075
+[f=29.973] Expanded: 1075, Generated: 5088
+[f=29.973] Expanded: 1078, Generated: 5165
+[f=30.027] Expanded: 1079, Generated: 5173
+[f=30.027] Expanded: 1079, Generated: 5175
+[f=30.034] Expanded: 1145, Generated: 5241
+[f=30.034] Expanded: 1199, Generated: 5295
+[f=30.150] Expanded: 1210, Generated: 5306
+[f=30.150] Expanded: 1409, Generated: 5505
+[f=30.197] Expanded: 1410, Generated: 5506
+[f=30.206] Expanded: 1411, Generated: 5507
+[f=30.090] Expanded: 1415, Generated: 5511
+[f=30.090] Expanded: 1418, Generated: 5515
+[f=30.090] Expanded: 1420, Generated: 5519
+[f=30.090] Expanded: 1421, Generated: 5523
+[f=30.265] Expanded: 1423, Generated: 5525
+[f=30.265] Expanded: 1673, Generated: 5775
+[f=30.376] Expanded: 1749, Generated: 5851
+[f=30.376] Expanded: 1761, Generated: 5863
+[f=30.376] Expanded: 1848, Generated: 5950
+[f=30.376] Expanded: 1883, Generated: 5985
+[f=30.073] Expanded: 1887, Generated: 5989
+[f=30.329] Expanded: 1890, Generated: 5995
+[f=30.049] Expanded: 1894, Generated: 5999
+[f=30.172] Expanded: 1897, Generated: 6005
+[f=30.010] Expanded: 1901, Generated: 6009
+[f=30.010] Expanded: 1903, Generated: 6012
+[f=30.010] Expanded: 1904, Generated: 6015
+[f=29.952] Expanded: 1907, Generated: 6018
+[f=29.612] Expanded: 1914, Generated: 6025
+[f=29.612] Expanded: 1915, Generated: 6027
+[f=29.612] Expanded: 1917, Generated: 6031
+[f=29.658] Expanded: 1918, Generated: 6034
+[f=29.612] Expanded: 1921, Generated: 6040
+[f=29.658] Expanded: 1922, Generated: 6043
+[f=29.658] Expanded: 1924, Generated: 6049
+[f=29.705] Expanded: 1925, Generated: 6052
+[f=29.705] Expanded: 1925, Generated: 6053
+[f=29.612] Expanded: 1929, Generated: 6061
+[f=29.658] Expanded: 1930, Generated: 6064
+[f=29.658] Expanded: 1932, Generated: 6070
+[f=29.705] Expanded: 1933, Generated: 6074
+[f=29.658] Expanded: 1936, Generated: 6083
+[f=29.705] Expanded: 1937, Generated: 6087
+[f=29.705] Expanded: 1939, Generated: 6095
+[f=29.752] Expanded: 1940, Generated: 6100
+[f=29.817] Expanded: 1941, Generated: 6101
+[f=29.612] Expanded: 1946, Generated: 6111
+[f=29.658] Expanded: 1947, Generated: 6114
+[f=29.658] Expanded: 1949, Generated: 6120
+[f=29.705] Expanded: 1950, Generated: 6124
+[f=29.658] Expanded: 1953, Generated: 6133
+[f=29.705] Expanded: 1954, Generated: 6137
+[f=29.705] Expanded: 1956, Generated: 6145
+[f=29.752] Expanded: 1957, Generated: 6150
+[f=29.658] Expanded: 1961, Generated: 6162
+[f=29.705] Expanded: 1962, Generated: 6166
+[f=29.705] Expanded: 1964, Generated: 6174
+[f=29.752] Expanded: 1965, Generated: 6179
+[f=29.705] Expanded: 1968, Generated: 6191
+[f=29.752] Expanded: 1969, Generated: 6196
+[f=29.752] Expanded: 1971, Generated: 6206
+[f=29.799] Expanded: 1972, Generated: 6212
+[f=29.864] Expanded: 1976, Generated: 6216
+[f=29.864] Expanded: 1978, Generated: 6219
+[f=29.864] Expanded: 1979, Generated: 6222
+[f=29.864] Expanded: 1982, Generated: 6226
+[f=29.864] Expanded: 1982, Generated: 6227
+[f=29.864] Expanded: 1983, Generated: 6230
+[f=29.893] Expanded: 1984, Generated: 6233
+[f=29.864] Expanded: 1985, Generated: 6236
+[f=29.893] Expanded: 1986, Generated: 6240
+[f=30.035] Expanded: 1986, Generated: 6241
+[Final] Expanded: 1986, Generated: 6241
+Found a solution of length 30!
+   1: (load-airplane p0 a0 l1-0)
+   2: (load-airplane p1 a0 l1-0)
+   3: (load-airplane p9 a0 l1-0)
+   4: (load-airplane p13 a0 l1-0)
+   5: (load-airplane p16 a0 l1-0)
+   6: (load-airplane p20 a0 l1-0)
+   7: (load-airplane p6 a0 l1-0)
+   8: (load-airplane p10 a0 l1-0)
+   9: (load-airplane p14 a0 l1-0)
+  10: (load-airplane p19 a0 l1-0)
+  11: (fly-airplane a0 l1-0 l0-0)
+  12: (load-airplane p4 a0 l0-0)
+  13: (unload-airplane p10 a0 l0-0)
+  14: (unload-airplane p14 a0 l0-0)
+  15: (unload-airplane p19 a0 l0-0)
+  16: (load-airplane p2 a0 l0-0)
+  17: (unload-airplane p20 a0 l0-0)
+  18: (load-airplane p8 a0 l0-0)
+  19: (load-airplane p12 a0 l0-0)
+  20: (unload-airplane p0 a0 l0-0)
+  21: (unload-airplane p1 a0 l0-0)
+  22: (unload-airplane p6 a0 l0-0)
+  23: (unload-airplane p9 a0 l0-0)
+  24: (unload-airplane p13 a0 l0-0)
+  25: (unload-airplane p16 a0 l0-0)
+  26: (fly-airplane a0 l0-0 l1-0)
+  27: (unload-airplane p2 a0 l1-0)
+  28: (unload-airplane p4 a0 l1-0)
+  29: (unload-airplane p8 a0 l1-0)
+  30: (unload-airplane p12 a0 l1-0)

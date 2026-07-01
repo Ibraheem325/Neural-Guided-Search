@@ -1,0 +1,24 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN loaded: models/grid_iqn.pth (metric=w1, mix_alpha=0.1)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1036, generated=1035
+  [sim 1000] root visits=1000, unique states=2417, generated=2416
+  [sim 1500] root visits=1500, unique states=3602, generated=3601
+  [sim 2000] root visits=2000, unique states=4811, generated=4810
+  [sim 2500] root visits=2500, unique states=5959, generated=5958
+  [sim 3000] root visits=3000, unique states=6817, generated=6816
+  [sim 3500] root visits=3500, unique states=7425, generated=7424
+  [sim 4000] root visits=4000, unique states=8058, generated=8057
+  [sim 4500] root visits=4500, unique states=8965, generated=8964
+  [sim 5000] root visits=5000, unique states=9971, generated=9970
+  [sim 5500] root visits=5500, unique states=10890, generated=10889
+  [sim 6000] root visits=6000, unique states=11919, generated=11918
+  [sim 6500] root visits=6500, unique states=12741, generated=12740
+  [sim 7000] root visits=7000, unique states=13401, generated=13400
+  [sim 7500] root visits=7500, unique states=14165, generated=14164
+  [sim 8000] root visits=8000, unique states=15003, generated=15002
+[Final] Expanded: 15566, Generated: 15566
+[search done] simulations=8316, unique states generated=15566
+Failed to find a solution!

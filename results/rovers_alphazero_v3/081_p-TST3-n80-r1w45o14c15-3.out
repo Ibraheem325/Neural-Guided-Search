@@ -1,0 +1,20 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=29295, generated=29294
+  [sim 1000] root visits=1000, unique states=58182, generated=58181
+  [sim 1500] root visits=1500, unique states=86966, generated=86965
+  [sim 2000] root visits=2000, unique states=116439, generated=116438
+  [sim 2500] root visits=2500, unique states=149676, generated=149675
+  [sim 3000] root visits=3000, unique states=189570, generated=189569
+  [sim 3500] root visits=3500, unique states=235091, generated=235090
+  [sim 4000] root visits=4000, unique states=270646, generated=270645
+  [sim 4500] root visits=4500, unique states=317000, generated=316999
+  [sim 5000] root visits=5000, unique states=362941, generated=362940
+  [sim 5500] root visits=5500, unique states=404767, generated=404766
+  [sim 6000] root visits=6000, unique states=443720, generated=443719
+  [sim 6500] root visits=6500, unique states=480448, generated=480447
+[Final] Expanded: 512562, Generated: 512562
+[search done] simulations=6955, unique states generated=512562
+Failed to find a solution!

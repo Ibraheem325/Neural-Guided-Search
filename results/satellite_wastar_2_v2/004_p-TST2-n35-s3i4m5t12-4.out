@@ -1,0 +1,89 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Loading model... (models/satellite_supervised.pth)
+Using GPU:  NVIDIA L40S
+[f=27.559] Expanded: 0, Generated: 0
+[f=27.559] Expanded: 1, Generated: 55
+[f=28.543] Expanded: 2, Generated: 110
+[f=28.543] Expanded: 3, Generated: 165
+[f=28.543] Expanded: 4, Generated: 220
+[f=28.544] Expanded: 5, Generated: 275
+[f=28.545] Expanded: 6, Generated: 330
+[f=28.550] Expanded: 7, Generated: 385
+[f=28.551] Expanded: 8, Generated: 440
+[f=28.551] Expanded: 9, Generated: 495
+[f=28.552] Expanded: 11, Generated: 605
+[f=28.552] Expanded: 12, Generated: 660
+[f=28.555] Expanded: 13, Generated: 715
+[f=28.557] Expanded: 14, Generated: 770
+[f=28.559] Expanded: 16, Generated: 880
+[f=28.562] Expanded: 17, Generated: 935
+[f=28.563] Expanded: 18, Generated: 990
+[f=28.592] Expanded: 20, Generated: 1100
+[f=28.593] Expanded: 21, Generated: 1155
+[f=28.602] Expanded: 22, Generated: 1210
+[f=29.533] Expanded: 24, Generated: 1320
+[f=29.534] Expanded: 26, Generated: 1430
+[f=29.535] Expanded: 28, Generated: 1540
+[f=29.535] Expanded: 30, Generated: 1650
+[f=29.541] Expanded: 31, Generated: 1705
+[f=29.541] Expanded: 32, Generated: 1760
+[f=29.542] Expanded: 33, Generated: 1815
+[f=29.542] Expanded: 34, Generated: 1870
+[f=29.542] Expanded: 35, Generated: 1925
+[f=29.542] Expanded: 36, Generated: 1980
+[f=29.542] Expanded: 38, Generated: 2090
+[f=29.542] Expanded: 40, Generated: 2200
+[f=29.543] Expanded: 42, Generated: 2310
+[f=29.543] Expanded: 43, Generated: 2365
+[f=29.543] Expanded: 44, Generated: 2420
+[f=29.543] Expanded: 46, Generated: 2530
+[f=29.543] Expanded: 48, Generated: 2640
+[f=29.543] Expanded: 49, Generated: 2695
+[f=29.543] Expanded: 50, Generated: 2750
+[f=29.543] Expanded: 51, Generated: 2805
+[f=29.543] Expanded: 52, Generated: 2860
+[f=29.544] Expanded: 53, Generated: 2915
+[f=29.544] Expanded: 54, Generated: 2970
+[f=29.544] Expanded: 55, Generated: 3025
+[f=29.544] Expanded: 56, Generated: 3080
+[f=29.544] Expanded: 57, Generated: 3135
+[f=29.544] Expanded: 58, Generated: 3190
+[f=29.544] Expanded: 59, Generated: 3245
+[f=29.544] Expanded: 60, Generated: 3300
+[f=29.544] Expanded: 61, Generated: 3355
+[f=29.544] Expanded: 62, Generated: 3410
+[f=29.544] Expanded: 66, Generated: 3630
+[f=29.545] Expanded: 68, Generated: 3740
+[f=29.545] Expanded: 70, Generated: 3850
+[f=29.545] Expanded: 72, Generated: 3960
+[f=29.545] Expanded: 73, Generated: 4015
+[f=29.545] Expanded: 74, Generated: 4070
+[f=29.545] Expanded: 75, Generated: 4125
+[f=29.545] Expanded: 76, Generated: 4180
+[f=29.545] Expanded: 78, Generated: 4290
+[f=29.545] Expanded: 80, Generated: 4400
+[f=29.549] Expanded: 81, Generated: 4455
+[f=29.549] Expanded: 82, Generated: 4510
+[f=29.550] Expanded: 83, Generated: 4565
+[f=29.550] Expanded: 84, Generated: 4620
+[Final] Expanded: 121, Generated: 6623
+Found a solution of length 17!
+   1: (turn_to satellite2 groundstation11 star3)
+   2: (turn_to satellite1 star1 groundstation7)
+   3: (switch_on instrument0 satellite0)
+   4: (switch_on instrument5 satellite2)
+   5: (switch_on instrument2 satellite1)
+   6: (turn_to satellite0 groundstation7 groundstation4)
+   7: (calibrate satellite2 instrument5 groundstation11)
+   8: (turn_to satellite2 star14 groundstation11)
+   9: (take_image satellite2 star14 instrument5 infrared1)
+  10: (turn_to satellite2 star13 star14)
+  11: (take_image satellite2 star13 instrument5 thermograph0)
+  12: (turn_to satellite0 star6 groundstation7)
+  13: (calibrate satellite0 instrument0 star6)
+  14: (turn_to satellite0 phenomenon12 star6)
+  15: (take_image satellite0 phenomenon12 instrument0 image3)
+  16: (turn_to satellite0 star15 phenomenon12)
+  17: (take_image satellite0 star15 instrument0 infrared4)

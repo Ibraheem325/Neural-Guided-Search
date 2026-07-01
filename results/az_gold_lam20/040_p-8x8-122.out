@@ -1,0 +1,112 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN uncertainty oracle loaded: models/goldminer_iqn.pth (width_beta=0.0, width_gamma=0.0, width_tau=0.0, width_lambda=2.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1191, generated=1190
+  [sim 1000] root visits=1000, unique states=2040, generated=2039
+  [sim 1500] root visits=1500, unique states=3145, generated=3144
+  [sim 2000] root visits=2000, unique states=4327, generated=4326
+  [sim 2500] root visits=2500, unique states=5658, generated=5657
+  [sim 3000] root visits=3000, unique states=6841, generated=6840
+  [sim 3500] root visits=3500, unique states=8034, generated=8033
+  [sim 4000] root visits=4000, unique states=9054, generated=9053
+  [sim 4500] root visits=4500, unique states=10452, generated=10451
+  [sim 5000] root visits=5000, unique states=11862, generated=11861
+  [sim 5500] root visits=5500, unique states=13209, generated=13208
+  [sim 6000] root visits=6000, unique states=14562, generated=14561
+  [sim 6500] root visits=6500, unique states=15931, generated=15930
+  [sim 7000] root visits=7000, unique states=17259, generated=17258
+  [sim 7500] root visits=7500, unique states=18653, generated=18652
+  [sim 8000] root visits=8000, unique states=20082, generated=20081
+  [sim 8500] root visits=8500, unique states=21306, generated=21305
+  [sim 9000] root visits=9000, unique states=22595, generated=22594
+  [sim 9500] root visits=9500, unique states=23762, generated=23761
+  [sim 10000] root visits=10000, unique states=25042, generated=25041
+  [sim 10500] root visits=10500, unique states=26385, generated=26384
+  [sim 11000] root visits=11000, unique states=27672, generated=27671
+  [sim 11500] root visits=11500, unique states=28888, generated=28887
+  [sim 12000] root visits=12000, unique states=29886, generated=29885
+  [sim 12239] found goal path of length 79
+[Final] Expanded: 30482, Generated: 30482
+[search done] simulations=12239, unique states generated=30482
+Found a solution of length 79!
+   1: (move f2-0f f3-0f)
+   2: (move f3-0f f4-0f)
+   3: (move f4-0f f5-0f)
+   4: (move f5-0f f6-0f)
+   5: (pickup-laser f6-0f)
+   6: (fire-laser f6-0f f6-1f)
+   7: (move f6-0f f7-0f)
+   8: (fire-laser f7-0f f7-1f)
+   9: (move f7-0f f7-1f)
+  10: (fire-laser f7-1f f7-2f)
+  11: (move f7-1f f6-1f)
+  12: (fire-laser f6-1f f5-1f)
+  13: (fire-laser f6-1f f6-2f)
+  14: (move f6-1f f6-0f)
+  15: (move f6-0f f7-0f)
+  16: (move f7-0f f7-1f)
+  17: (move f7-1f f7-2f)
+  18: (move f7-2f f6-2f)
+  19: (fire-laser f6-2f f5-2f)
+  20: (move f6-2f f5-2f)
+  21: (move f5-2f f5-1f)
+  22: (fire-laser f5-1f f4-1f)
+  23: (move f5-1f f4-1f)
+  24: (move f4-1f f4-0f)
+  25: (move f4-0f f3-0f)
+  26: (move f3-0f f2-0f)
+  27: (move f2-0f f1-0f)
+  28: (move f1-0f f0-0f)
+  29: (fire-laser f0-0f f0-1f)
+  30: (move f0-0f f0-1f)
+  31: (fire-laser f0-1f f0-2f)
+  32: (move f0-1f f0-2f)
+  33: (fire-laser f0-2f f0-3f)
+  34: (move f0-2f f0-3f)
+  35: (fire-laser f0-3f f0-4f)
+  36: (move f0-3f f0-4f)
+  37: (fire-laser f0-4f f0-5f)
+  38: (move f0-4f f0-5f)
+  39: (fire-laser f0-5f f0-6f)
+  40: (move f0-5f f0-6f)
+  41: (putdown-laser f0-6f)
+  42: (move f0-6f f0-5f)
+  43: (move f0-5f f0-4f)
+  44: (move f0-4f f0-3f)
+  45: (move f0-3f f0-2f)
+  46: (move f0-2f f0-1f)
+  47: (move f0-1f f0-0f)
+  48: (move f0-0f f1-0f)
+  49: (move f1-0f f2-0f)
+  50: (move f2-0f f3-0f)
+  51: (move f3-0f f4-0f)
+  52: (move f4-0f f5-0f)
+  53: (move f5-0f f6-0f)
+  54: (pickup-bomb f6-0f)
+  55: (move f6-0f f5-0f)
+  56: (move f5-0f f4-0f)
+  57: (move f4-0f f3-0f)
+  58: (detonate-bomb f3-0f f3-1f)
+  59: (move f3-0f f3-1f)
+  60: (move f3-1f f4-1f)
+  61: (move f4-1f f4-0f)
+  62: (move f4-0f f5-0f)
+  63: (move f5-0f f6-0f)
+  64: (pickup-bomb f6-0f)
+  65: (move f6-0f f5-0f)
+  66: (move f5-0f f4-0f)
+  67: (move f4-0f f3-0f)
+  68: (move f3-0f f2-0f)
+  69: (move f2-0f f1-0f)
+  70: (move f1-0f f0-0f)
+  71: (move f0-0f f0-1f)
+  72: (move f0-1f f0-2f)
+  73: (move f0-2f f0-3f)
+  74: (move f0-3f f0-4f)
+  75: (move f0-4f f0-5f)
+  76: (move f0-5f f0-6f)
+  77: (detonate-bomb f0-6f f0-7f)
+  78: (move f0-6f f0-7f)
+  79: (pick-gold f0-7f)

@@ -1,0 +1,59 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN uncertainty oracle loaded: models/satellite_iqn.pth (width_beta=0.0, width_gamma=0.0, width_tau=0.0, width_lambda=0.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=37003, generated=37002
+  [sim 1000] root visits=1000, unique states=71904, generated=71903
+  [sim 1500] root visits=1500, unique states=107769, generated=107768
+  [sim 2000] root visits=2000, unique states=141052, generated=141051
+  [sim 2500] root visits=2500, unique states=173552, generated=173551
+  [sim 3000] root visits=3000, unique states=205198, generated=205197
+  [sim 3500] root visits=3500, unique states=236380, generated=236379
+  [sim 4000] root visits=4000, unique states=267810, generated=267809
+  [sim 4500] root visits=4500, unique states=298663, generated=298662
+  [sim 5000] root visits=5000, unique states=328734, generated=328733
+  [sim 5260] found goal path of length 40
+[Final] Expanded: 344187, Generated: 344187
+[search done] simulations=5260, unique states generated=344187
+Found a solution of length 40!
+   1: (switch_on instrument6 satellite2)
+   2: (turn_to satellite2 star9 groundstation0)
+   3: (calibrate satellite2 instrument6 star9)
+   4: (turn_to satellite2 star12 star9)
+   5: (take_image satellite2 star12 instrument6 infrared0)
+   6: (turn_to satellite2 star13 star12)
+   7: (take_image satellite2 star13 instrument6 infrared0)
+   8: (switch_on instrument0 satellite0)
+   9: (switch_on instrument9 satellite3)
+  10: (calibrate satellite3 instrument9 star3)
+  11: (turn_to satellite3 star14 star3)
+  12: (take_image satellite3 star14 instrument9 thermograph2)
+  13: (switch_on instrument3 satellite1)
+  14: (switch_on instrument10 satellite4)
+  15: (turn_to satellite4 star5 groundstation11)
+  16: (turn_to satellite4 star14 star5)
+  17: (turn_to satellite1 star5 groundstation8)
+  18: (calibrate satellite1 instrument3 star5)
+  19: (turn_to satellite1 phenomenon15 star5)
+  20: (take_image satellite1 phenomenon15 instrument3 thermograph2)
+  21: (turn_to satellite1 star14 phenomenon15)
+  22: (turn_to satellite0 groundstation4 phenomenon15)
+  23: (calibrate satellite0 instrument0 groundstation4)
+  24: (turn_to satellite0 star13 groundstation4)
+  25: (take_image satellite0 star13 instrument0 thermograph2)
+  26: (turn_to satellite2 star14 star13)
+  27: (turn_to satellite0 star14 star13)
+  28: (take_image satellite0 star14 instrument0 infrared0)
+  29: (turn_to satellite0 star1 star14)
+  30: (turn_to satellite3 star1 star14)
+  31: (turn_to satellite2 star1 star14)
+  32: (turn_to satellite1 star1 star14)
+  33: (turn_to satellite3 star7 star1)
+  34: (turn_to satellite0 groundstation2 star1)
+  35: (turn_to satellite3 star1 star7)
+  36: (turn_to satellite2 star7 star1)
+  37: (turn_to satellite3 star6 star1)
+  38: (turn_to satellite2 star1 star7)
+  39: (turn_to satellite1 star7 star1)
+  40: (turn_to satellite4 star1 star14)

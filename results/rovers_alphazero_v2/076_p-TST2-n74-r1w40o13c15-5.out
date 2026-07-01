@@ -1,0 +1,24 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 59] found goal path of length 16
+[Final] Expanded: 770, Generated: 770
+[search done] simulations=59, unique states generated=770
+Found a solution of length 16!
+   1: (calibrate rover0 camera8 objective2 waypoint1)
+   2: (take_image rover0 waypoint1 objective4 camera8 low_res)
+   3: (communicate_image_data rover0 general objective4 low_res waypoint1 waypoint31)
+   4: (navigate rover0 waypoint1 waypoint24)
+   5: (calibrate rover0 camera6 objective8 waypoint24)
+   6: (take_image rover0 waypoint24 objective8 camera6 high_res)
+   7: (navigate rover0 waypoint24 waypoint1)
+   8: (communicate_image_data rover0 general objective8 high_res waypoint1 waypoint31)
+   9: (navigate rover0 waypoint1 waypoint7)
+  10: (calibrate rover0 camera12 objective9 waypoint7)
+  11: (take_image rover0 waypoint7 objective5 camera12 colour)
+  12: (navigate rover0 waypoint7 waypoint27)
+  13: (calibrate rover0 camera1 objective10 waypoint27)
+  14: (navigate rover0 waypoint27 waypoint7)
+  15: (navigate rover0 waypoint7 waypoint1)
+  16: (communicate_image_data rover0 general objective5 colour waypoint1 waypoint31)

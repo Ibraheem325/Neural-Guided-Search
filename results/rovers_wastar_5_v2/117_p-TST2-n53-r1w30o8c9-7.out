@@ -1,0 +1,29 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Loading model... (models/rovers_supervised.pth)
+Using GPU:  NVIDIA L40S
+[f=110.693] Expanded: 0, Generated: 0
+[Final] Expanded: 2000, Generated: 51036
+Found a solution of length 21!
+   1: (calibrate rover0 camera4 objective1 waypoint26)
+   2: (take_image rover0 waypoint26 objective0 camera4 low_res)
+   3: (calibrate rover0 camera6 objective1 waypoint26)
+   4: (take_image rover0 waypoint26 objective1 camera6 high_res)
+   5: (calibrate rover0 camera7 objective1 waypoint26)
+   6: (calibrate rover0 camera4 objective1 waypoint26)
+   7: (navigate rover0 waypoint26 waypoint23)
+   8: (take_image rover0 waypoint23 objective1 camera4 low_res)
+   9: (calibrate rover0 camera6 objective1 waypoint23)
+  10: (sample_soil rover0 rover0store waypoint23)
+  11: (drop rover0 rover0store)
+  12: (take_image rover0 waypoint23 objective2 camera7 colour)
+  13: (navigate rover0 waypoint23 waypoint26)
+  14: (navigate rover0 waypoint26 waypoint24)
+  15: (navigate rover0 waypoint24 waypoint18)
+  16: (communicate_image_data rover0 general objective2 colour waypoint18 waypoint21)
+  17: (communicate_image_data rover0 general objective0 low_res waypoint18 waypoint21)
+  18: (communicate_soil_data rover0 general waypoint23 waypoint18 waypoint21)
+  19: (communicate_image_data rover0 general objective1 high_res waypoint18 waypoint21)
+  20: (sample_soil rover0 rover0store waypoint18)
+  21: (communicate_soil_data rover0 general waypoint18 waypoint18 waypoint21)

@@ -1,0 +1,26 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/grid_iqn.pth (w1_lambda=1.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1038, generated=1037
+  [sim 1000] root visits=1000, unique states=2013, generated=2012
+  [sim 1500] root visits=1500, unique states=3068, generated=3067
+  [sim 2000] root visits=2000, unique states=4111, generated=4110
+  [sim 2500] root visits=2500, unique states=5167, generated=5166
+  [sim 3000] root visits=3000, unique states=6214, generated=6213
+  [sim 3500] root visits=3500, unique states=7251, generated=7250
+  [sim 4000] root visits=4000, unique states=8313, generated=8312
+  [sim 4500] root visits=4500, unique states=9394, generated=9393
+  [sim 5000] root visits=5000, unique states=10479, generated=10478
+  [sim 5500] root visits=5500, unique states=11510, generated=11509
+  [sim 6000] root visits=6000, unique states=12583, generated=12582
+  [sim 6500] root visits=6500, unique states=13685, generated=13684
+[FANOUT] expanded_internal_nodes=5233 mean_children=4.29 mean_visited_children(fanout)=1.21 median_fanout=1 frac_nodes_fanout>1=22% frac_fanout>3=0%
+[WIDTHBUCKET] n=5233 mean_width=2.59 median_width=2.64 frac_low(<1.5)=7% frac_med(1.5-3)=69% frac_high(>=3)=24%
+[BOOSTDEPTH] n=4857 mean_depth_of_boosted_nodes=74.46 median=69 frac_shallow(depth<=10)=1% frac_deep(depth>30)=97%
+[BOOSTPAYOFF] boosted_nodes=4857 frac_with_deadend_child=0% frac_below_best_at_depth=91%
+[DEPTH] expanded_internal_nodes=5233 mean_depth=75.18 median_depth=70 max_depth=188 frac_depth>20=98%
+[Final] Expanded: 13797, Generated: 13797
+[search done] simulations=6551, unique states generated=13797
+Failed to find a solution!

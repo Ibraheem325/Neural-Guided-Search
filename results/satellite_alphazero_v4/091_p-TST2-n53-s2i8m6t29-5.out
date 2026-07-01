@@ -1,0 +1,45 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=26757, generated=26756
+  [sim 1000] root visits=1000, unique states=50253, generated=50252
+  [sim 1433] found goal path of length 35
+[Final] Expanded: 72210, Generated: 72210
+[search done] simulations=1433, unique states generated=72210
+Found a solution of length 35!
+   1: (turn_to satellite1 star26 star20)
+   2: (switch_on instrument4 satellite1)
+   3: (calibrate satellite1 instrument4 star26)
+   4: (turn_to satellite1 planet30 star26)
+   5: (take_image satellite1 planet30 instrument4 infrared4)
+   6: (take_image satellite1 planet30 instrument4 image0)
+   7: (turn_to satellite1 star26 planet30)
+   8: (turn_to satellite1 phenomenon31 star26)
+   9: (take_image satellite1 phenomenon31 instrument4 infrared4)
+  10: (take_image satellite1 phenomenon31 instrument4 image0)
+  11: (turn_to satellite1 star26 phenomenon31)
+  12: (turn_to satellite1 planet29 star26)
+  13: (take_image satellite1 planet29 instrument4 infrared4)
+  14: (turn_to satellite1 star26 planet29)
+  15: (turn_to satellite1 phenomenon31 star26)
+  16: (turn_to satellite1 star19 phenomenon31)
+  17: (turn_to satellite1 planet30 star19)
+  18: (turn_to satellite1 star23 planet30)
+  19: (turn_to satellite1 star32 star23)
+  20: (take_image satellite1 star32 instrument4 infrared4)
+  21: (turn_to satellite1 star19 star32)
+  22: (switch_off instrument4 satellite1)
+  23: (switch_on instrument3 satellite1)
+  24: (calibrate satellite1 instrument3 star19)
+  25: (turn_to satellite1 planet29 star19)
+  26: (take_image satellite1 planet29 instrument3 infrared3)
+  27: (turn_to satellite1 star7 planet29)
+  28: (turn_to satellite0 groundstation25 star26)
+  29: (switch_off instrument3 satellite1)
+  30: (switch_on instrument7 satellite1)
+  31: (calibrate satellite1 instrument7 star7)
+  32: (turn_to satellite1 phenomenon31 star7)
+  33: (take_image satellite1 phenomenon31 instrument7 infrared1)
+  34: (turn_to satellite1 planet30 phenomenon31)
+  35: (take_image satellite1 planet30 instrument7 infrared1)

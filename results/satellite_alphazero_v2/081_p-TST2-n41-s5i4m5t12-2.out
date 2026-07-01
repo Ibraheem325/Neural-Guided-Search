@@ -1,0 +1,72 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=39789, generated=39788
+  [sim 1000] root visits=1000, unique states=77794, generated=77793
+  [sim 1500] root visits=1500, unique states=117602, generated=117601
+  [sim 2000] root visits=2000, unique states=155662, generated=155661
+  [sim 2500] root visits=2500, unique states=193619, generated=193618
+  [sim 3000] root visits=3000, unique states=233056, generated=233055
+  [sim 3500] root visits=3500, unique states=272253, generated=272252
+  [sim 4000] root visits=4000, unique states=310777, generated=310776
+  [sim 4500] root visits=4500, unique states=348962, generated=348961
+  [sim 5000] root visits=5000, unique states=387324, generated=387323
+  [sim 5500] root visits=5500, unique states=425278, generated=425277
+  [sim 6000] root visits=6000, unique states=463240, generated=463239
+  [sim 6500] root visits=6500, unique states=501384, generated=501383
+  [sim 7000] root visits=7000, unique states=539206, generated=539205
+  [sim 7500] root visits=7500, unique states=576930, generated=576929
+  [sim 8000] root visits=8000, unique states=614562, generated=614561
+  [sim 8500] root visits=8500, unique states=652347, generated=652346
+  [sim 9000] root visits=9000, unique states=689701, generated=689700
+  [sim 9500] root visits=9500, unique states=727146, generated=727145
+  [sim 10000] root visits=10000, unique states=763808, generated=763807
+  [sim 10500] root visits=10500, unique states=801060, generated=801059
+  [sim 11000] root visits=11000, unique states=838474, generated=838473
+  [sim 11500] root visits=11500, unique states=875736, generated=875735
+  [sim 12000] root visits=12000, unique states=912785, generated=912784
+  [sim 12500] root visits=12500, unique states=950146, generated=950145
+  [sim 13000] root visits=13000, unique states=987289, generated=987288
+  [sim 13500] root visits=13500, unique states=1023821, generated=1023820
+  [sim 14000] root visits=14000, unique states=1060531, generated=1060530
+  [sim 14500] root visits=14500, unique states=1097236, generated=1097235
+  [sim 14671] found goal path of length 35
+[Final] Expanded: 1109994, Generated: 1109994
+[search done] simulations=14671, unique states generated=1109994
+Found a solution of length 35!
+   1: (switch_on instrument6 satellite1)
+   2: (turn_to satellite1 groundstation8 groundstation6)
+   3: (calibrate satellite1 instrument6 groundstation8)
+   4: (turn_to satellite1 planet14 groundstation8)
+   5: (take_image satellite1 planet14 instrument6 spectrograph0)
+   6: (turn_to satellite1 star12 planet14)
+   7: (switch_on instrument11 satellite3)
+   8: (calibrate satellite3 instrument11 star0)
+   9: (turn_to satellite3 planet15 star0)
+  10: (take_image satellite3 planet15 instrument11 infrared3)
+  11: (switch_on instrument14 satellite4)
+  12: (turn_to satellite4 groundstation6 star7)
+  13: (turn_to satellite4 groundstation1 groundstation6)
+  14: (calibrate satellite4 instrument14 groundstation1)
+  15: (turn_to satellite4 star13 groundstation1)
+  16: (take_image satellite4 star13 instrument14 infrared3)
+  17: (turn_to satellite4 star12 star13)
+  18: (take_image satellite4 star12 instrument14 image4)
+  19: (turn_to satellite4 planet15 star12)
+  20: (turn_to satellite1 planet15 star12)
+  21: (switch_on instrument8 satellite2)
+  22: (turn_to satellite2 planet15 groundstation10)
+  23: (switch_on instrument0 satellite0)
+  24: (turn_to satellite0 planet15 groundstation3)
+  25: (turn_to satellite2 groundstation6 planet15)
+  26: (calibrate satellite2 instrument8 groundstation6)
+  27: (turn_to satellite2 planet15 groundstation6)
+  28: (take_image satellite2 planet15 instrument8 thermograph1)
+  29: (turn_to satellite3 groundstation10 planet15)
+  30: (turn_to satellite2 groundstation10 planet15)
+  31: (turn_to satellite4 groundstation10 planet15)
+  32: (turn_to satellite1 groundstation10 planet15)
+  33: (turn_to satellite3 groundstation3 groundstation10)
+  34: (turn_to satellite2 groundstation3 groundstation10)
+  35: (turn_to satellite0 groundstation10 planet15)

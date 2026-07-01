@@ -1,0 +1,23 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/grid_iqn.pth (w1_lambda=1.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1471, generated=1470
+  [sim 1000] root visits=1000, unique states=2905, generated=2904
+  [sim 1500] root visits=1500, unique states=3934, generated=3933
+  [sim 2000] root visits=2000, unique states=5035, generated=5034
+  [sim 2500] root visits=2500, unique states=6197, generated=6196
+  [sim 3000] root visits=3000, unique states=7257, generated=7256
+  [sim 3500] root visits=3500, unique states=8332, generated=8331
+  [sim 4000] root visits=4000, unique states=9351, generated=9350
+  [sim 4500] root visits=4500, unique states=10336, generated=10335
+[FANOUT] expanded_internal_nodes=3652 mean_children=4.61 mean_visited_children(fanout)=1.14 median_fanout=1 frac_nodes_fanout>1=15% frac_fanout>3=0%
+[WIDTHBUCKET] n=3652 mean_width=2.52 median_width=2.56 frac_low(<1.5)=10% frac_med(1.5-3)=63% frac_high(>=3)=27%
+[BOOSTDEPTH] n=3288 mean_depth_of_boosted_nodes=91.33 median=86 frac_shallow(depth<=10)=1% frac_deep(depth>30)=96%
+[BOOSTPAYOFF] boosted_nodes=3288 frac_with_deadend_child=0% frac_below_best_at_depth=59%
+[W1xDEPTH] d0-20:n=93,meanNW1=0.075 d20-60:n=576,meanNW1=0.103 d60-120:n=2599,meanNW1=0.101 d120-inf:n=906,meanNW1=0.099
+[DEPTH] expanded_internal_nodes=3652 mean_depth=93.13 median_depth=88 max_depth=204 frac_depth>20=98%
+[Final] Expanded: 10335, Generated: 10335
+[search done] simulations=4503, unique states generated=10335
+Failed to find a solution!

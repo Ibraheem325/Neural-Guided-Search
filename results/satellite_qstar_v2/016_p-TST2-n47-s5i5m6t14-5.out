@@ -1,0 +1,55 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/satellite_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=23.000] Expanded: 5, Generated: 4
+[f=23.005] Expanded: 6, Generated: 5
+[f=23.008] Expanded: 7, Generated: 6
+[f=22.371] Expanded: 9, Generated: 8
+[f=22.381] Expanded: 10, Generated: 9
+[f=22.428] Expanded: 11, Generated: 10
+[f=21.763] Expanded: 13, Generated: 12
+[f=21.772] Expanded: 14, Generated: 13
+[f=22.422] Expanded: 15, Generated: 14
+[f=22.428] Expanded: 16, Generated: 15
+[f=22.430] Expanded: 17, Generated: 16
+[f=22.431] Expanded: 18, Generated: 17
+[f=22.431] Expanded: 19, Generated: 18
+[f=22.431] Expanded: 20, Generated: 19
+[f=22.433] Expanded: 21, Generated: 20
+[f=22.436] Expanded: 22, Generated: 21
+[f=22.440] Expanded: 23, Generated: 22
+[f=22.440] Expanded: 24, Generated: 23
+[f=22.448] Expanded: 25, Generated: 24
+[f=21.793] Expanded: 27, Generated: 26
+[f=21.831] Expanded: 28, Generated: 27
+[f=21.837] Expanded: 29, Generated: 28
+[f=22.013] Expanded: 30, Generated: 29
+[f=22.020] Expanded: 31, Generated: 30
+[f=22.116] Expanded: 32, Generated: 31
+[f=22.124] Expanded: 33, Generated: 32
+[f=20.272] Expanded: 36, Generated: 35
+[f=20.080] Expanded: 38, Generated: 37
+[f=20.692] Expanded: 40, Generated: 39
+[f=20.705] Expanded: 41, Generated: 40
+[f=19.474] Expanded: 42, Generated: 42
+[Final] Expanded: 42, Generated: 42
+Found a solution of length 16!
+   1: (switch_on instrument13 satellite4)
+   2: (switch_on instrument8 satellite2)
+   3: (calibrate satellite2 instrument8 star7)
+   4: (turn_to satellite2 star17 star7)
+   5: (take_image satellite2 star17 instrument8 image0)
+   6: (turn_to satellite2 star16 star17)
+   7: (take_image satellite2 star16 instrument8 infrared1)
+   8: (switch_on instrument7 satellite1)
+   9: (calibrate satellite1 instrument7 groundstation6)
+  10: (turn_to satellite1 phenomenon15 groundstation6)
+  11: (take_image satellite1 phenomenon15 instrument7 infrared3)
+  12: (turn_to satellite2 planet14 star16)
+  13: (turn_to satellite1 planet14 phenomenon15)
+  14: (take_image satellite2 planet14 instrument8 image0)
+  15: (take_image satellite1 planet14 instrument7 infrared3)
+  16: (turn_to satellite3 groundstation12 star16)

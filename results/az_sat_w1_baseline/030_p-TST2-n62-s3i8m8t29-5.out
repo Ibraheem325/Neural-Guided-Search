@@ -1,0 +1,87 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/satellite_iqn.pth (w1_lambda=0.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=42250, generated=42249
+  [sim 1000] root visits=1000, unique states=79741, generated=79740
+  [sim 1500] root visits=1500, unique states=114378, generated=114377
+  [sim 2000] root visits=2000, unique states=148266, generated=148265
+  [sim 2500] root visits=2500, unique states=180074, generated=180073
+  [sim 3000] root visits=3000, unique states=209761, generated=209760
+  [sim 3500] root visits=3500, unique states=251192, generated=251191
+  [sim 4000] root visits=4000, unique states=289765, generated=289764
+  [sim 4500] root visits=4500, unique states=325083, generated=325082
+  [sim 5000] root visits=5000, unique states=363767, generated=363766
+  [sim 5500] root visits=5500, unique states=402876, generated=402875
+  [sim 6000] root visits=6000, unique states=440929, generated=440928
+  [sim 6500] root visits=6500, unique states=476960, generated=476959
+  [sim 7000] root visits=7000, unique states=511616, generated=511615
+  [sim 7500] root visits=7500, unique states=546405, generated=546404
+  [sim 8000] root visits=8000, unique states=581285, generated=581284
+  [sim 8500] root visits=8500, unique states=612765, generated=612764
+  [sim 8593] found goal path of length 61
+[Final] Expanded: 618812, Generated: 618812
+[search done] simulations=8593, unique states generated=618812
+Found a solution of length 61!
+   1: (switch_on instrument0 satellite0)
+   2: (turn_to satellite0 groundstation23 star15)
+   3: (calibrate satellite0 instrument0 groundstation23)
+   4: (turn_to satellite0 planet29 groundstation23)
+   5: (take_image satellite0 planet29 instrument0 thermograph2)
+   6: (switch_on instrument11 satellite2)
+   7: (switch_on instrument7 satellite1)
+   8: (turn_to satellite1 star3 star30)
+   9: (calibrate satellite1 instrument7 star3)
+  10: (turn_to satellite1 planet31 star3)
+  11: (take_image satellite1 planet31 instrument7 image6)
+  12: (turn_to satellite1 groundstation23 planet31)
+  13: (turn_to satellite1 star30 groundstation23)
+  14: (take_image satellite1 star30 instrument7 image6)
+  15: (turn_to satellite1 groundstation23 star30)
+  16: (turn_to satellite1 phenomenon32 groundstation23)
+  17: (take_image satellite1 phenomenon32 instrument7 image6)
+  18: (turn_to satellite1 groundstation23 phenomenon32)
+  19: (turn_to satellite1 planet29 groundstation23)
+  20: (take_image satellite1 planet29 instrument7 image6)
+  21: (turn_to satellite0 groundstation23 planet29)
+  22: (turn_to satellite0 star30 groundstation23)
+  23: (take_image satellite0 star30 instrument0 thermograph2)
+  24: (turn_to satellite0 groundstation23 star30)
+  25: (turn_to satellite0 phenomenon32 groundstation23)
+  26: (take_image satellite0 phenomenon32 instrument0 thermograph2)
+  27: (turn_to satellite0 star30 phenomenon32)
+  28: (turn_to satellite0 groundstation23 star30)
+  29: (turn_to satellite0 planet31 groundstation23)
+  30: (take_image satellite0 planet31 instrument0 thermograph2)
+  31: (turn_to satellite0 star30 planet31)
+  32: (turn_to satellite0 groundstation12 star30)
+  33: (turn_to satellite0 planet29 groundstation12)
+  34: (turn_to satellite0 star28 planet29)
+  35: (turn_to satellite0 star13 star28)
+  36: (turn_to satellite0 star0 star13)
+  37: (turn_to satellite0 star18 star0)
+  38: (turn_to satellite0 star2 star18)
+  39: (turn_to satellite0 groundstation8 star2)
+  40: (turn_to satellite0 groundstation17 groundstation8)
+  41: (turn_to satellite0 groundstation14 groundstation17)
+  42: (turn_to satellite0 star7 groundstation14)
+  43: (turn_to satellite0 groundstation16 star7)
+  44: (turn_to satellite0 star27 groundstation16)
+  45: (turn_to satellite0 star22 star27)
+  46: (turn_to satellite0 groundstation19 star22)
+  47: (turn_to satellite0 groundstation23 groundstation19)
+  48: (turn_to satellite0 star15 groundstation23)
+  49: (turn_to satellite0 star20 star15)
+  50: (turn_to satellite0 star1 star20)
+  51: (turn_to satellite0 star11 star1)
+  52: (turn_to satellite2 star28 star11)
+  53: (turn_to satellite0 star30 star11)
+  54: (calibrate satellite2 instrument11 star28)
+  55: (turn_to satellite2 planet29 star28)
+  56: (take_image satellite2 planet29 instrument11 infrared3)
+  57: (turn_to satellite2 star30 planet29)
+  58: (turn_to satellite1 star30 planet29)
+  59: (take_image satellite2 star30 instrument11 infrared5)
+  60: (take_image satellite2 star30 instrument11 infrared3)
+  61: (turn_to satellite2 star11 star30)

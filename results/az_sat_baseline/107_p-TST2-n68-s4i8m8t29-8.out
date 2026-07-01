@@ -1,0 +1,39 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN uncertainty oracle loaded: models/satellite_iqn.pth (width_beta=0.0, width_gamma=0.0, width_tau=0.0, width_lambda=0.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=53461, generated=53460
+  [sim 1000] root visits=1000, unique states=118538, generated=118537
+  [sim 1500] root visits=1500, unique states=182805, generated=182804
+  [sim 2000] root visits=2000, unique states=245485, generated=245484
+  [sim 2284] found goal path of length 26
+[Final] Expanded: 281297, Generated: 281297
+[search done] simulations=2284, unique states generated=281297
+Found a solution of length 26!
+   1: (switch_on instrument8 satellite1)
+   2: (turn_to satellite1 star8 groundstation11)
+   3: (calibrate satellite1 instrument8 star8)
+   4: (turn_to satellite1 star30 star8)
+   5: (take_image satellite1 star30 instrument8 thermograph6)
+   6: (take_image satellite1 star30 instrument8 infrared5)
+   7: (switch_on instrument12 satellite2)
+   8: (calibrate satellite2 instrument12 star22)
+   9: (turn_to satellite2 phenomenon31 star22)
+  10: (take_image satellite2 phenomenon31 instrument12 thermograph4)
+  11: (switch_on instrument21 satellite3)
+  12: (turn_to satellite3 star12 star18)
+  13: (calibrate satellite3 instrument21 star12)
+  14: (turn_to satellite3 planet32 star12)
+  15: (take_image satellite3 planet32 instrument21 thermograph7)
+  16: (turn_to satellite3 phenomenon29 planet32)
+  17: (take_image satellite3 phenomenon29 instrument21 infrared5)
+  18: (turn_to satellite3 star30 phenomenon29)
+  19: (switch_on instrument2 satellite0)
+  20: (calibrate satellite0 instrument2 groundstation5)
+  21: (turn_to satellite0 phenomenon31 groundstation5)
+  22: (take_image satellite0 phenomenon31 instrument2 thermograph2)
+  23: (turn_to satellite0 star30 phenomenon31)
+  24: (turn_to satellite2 star30 phenomenon31)
+  25: (take_image satellite2 star30 instrument12 thermograph4)
+  26: (turn_to satellite0 star24 star30)

@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/diag_grid_branching.py", line 292, in <module>
+    run(_parse())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/diag_grid_branching.py", line 218, in run
+    problem = mm.Problem(domain, str(args.problem))
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir/wrapper_formalism.py", line 1916, in __init__
+    self._advanced_problem = domain._advanced_parser.parse_problem(problem_path_or_content, "", AdvancedParserOptions())
+RuntimeError: 
+

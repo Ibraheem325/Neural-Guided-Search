@@ -1,5 +1,6 @@
 import argparse
 import math
+import os as _os_top
 import time
 import pymimir as mm
 import pymimir_rgnn as rgnn
@@ -159,7 +160,7 @@ def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
 
-def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, w1_lambda=0.0, w1_topk=0):
+def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, w1_lambda=0.0, w1_topk=0, fpu_reduction=0.0, w1_visit_gated=False):
     best_score = -float("inf")
     best_action = None
     best_child = None
@@ -189,7 +190,10 @@ def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, w1_lambda=0.0,
         raw = {}
         total = 0.0
         for action in node.children:
-            pb = node.prior[action] * (1.0 + w1_lambda * nw_by_action[action])
+            if w1_visit_gated and node.edge_N.get(action, 0) == 0:
+                pb = node.prior[action]            # unvisited: raw prior, no boost
+            else:
+                pb = node.prior[action] * (1.0 + w1_lambda * nw_by_action[action])
             raw[action] = pb
             total += pb
         if total > 0.0:
@@ -199,7 +203,13 @@ def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, w1_lambda=0.0,
         if blocked is not None and child.state_key in blocked:
             continue
         n = node.edge_N[action]
-        q_norm = value_norm.normalize(node.q(action)) if n > 0 else 0.0  # pessimistic FPU
+        if n > 0:
+            q_norm = value_norm.normalize(node.q(action))
+        elif fpu_reduction > 0.0:
+            parent_v = value_norm.normalize(node.value) if node.value > -float('inf') else 0.0
+            q_norm = max(0.0, parent_v - fpu_reduction)   # FPU: anchor to parent value
+        else:
+            q_norm = 0.0  # original frontier-blind FPU
         p_use = boosted_prior[action] if boosted_prior is not None else node.prior[action]
         u = c_puct * p_use * sqrt_parent / (1 + n)
         score = q_norm + u
@@ -221,17 +231,20 @@ def _backup(path_nodes, path_edges, leaf_value, value_norm):
 
 
 def _register_edge_w1(node, w1_norm):
-    """Register a node's outgoing edge-W1 values with the running normalizer."""
+    """Register a node's outgoing edge-W1 values with the running normalizer.
+    Also cache the raw W1 per edge in node.edge_W for cheap post-hoc analysis."""
     if w1_norm is None or node.curve is None:
         return
-    for child in node.children.values():
+    for action, child in node.children.items():
         w1 = _edge_w1(node.curve, child.curve)
         if w1 is not None:
+            node.edge_W[action] = w1
             w1_norm.update(w1)
 
 
 def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
-              c_puct, value_norm, dead_end_value, oracle, w1_norm, w1_lambda):
+              c_puct, value_norm, dead_end_value, oracle, w1_norm, w1_lambda, w1_topk,
+              fpu_reduction=0.0, w1_visit_gated=False):
     path_keys = {root.state_key}
     path_nodes = [root]
     path_edges = []
@@ -241,7 +254,8 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm, blocked=path_keys,
-                                 w1_norm=w1_norm, w1_lambda=w1_lambda, w1_topk=w1_topk)
+                                 w1_norm=w1_norm, w1_lambda=w1_lambda, w1_topk=w1_topk,
+                                 fpu_reduction=fpu_reduction, w1_visit_gated=w1_visit_gated)
         if action is None:
             value = _leaf_value(node.state, goal, q1_model, q2_model)
             _backup(path_nodes, path_edges, value, value_norm)
@@ -274,7 +288,8 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
 def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             max_simulations, max_time, c_puct, dead_end_value,
-            stop_on_first_solution, oracle, w1_lambda, w1_topk):
+            stop_on_first_solution, oracle, w1_lambda, w1_topk,
+            fpu_reduction=0.0, w1_visit_gated=False):
     root = Node(root_state, root_key, goal.holds(root_state))
     tt = {root_key: root}
     value_norm = _ValueNormalizer()
@@ -293,6 +308,7 @@ def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
         goal_plan, generated = _simulate(
             root, tt, policy_model, q1_model, q2_model, goal,
             c_puct, value_norm, dead_end_value, oracle, w1_norm, w1_lambda, w1_topk,
+            fpu_reduction=fpu_reduction, w1_visit_gated=w1_visit_gated,
         )
         total_generated += generated
         sims += 1
@@ -307,6 +323,225 @@ def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             print(f"  [sim {sims}] root visits={root.visit_count}, "
                   f"unique states={len(tt)}, generated={total_generated}", flush=True)
 
+    import os as _os
+    if _os.environ.get("AZ_FANOUT") == "1":
+        # Per EXPANDED node, count distinct children visited (edge_N>0) = fan-out.
+        # Also count, for nodes with cached curves, how many children have high
+        # normalized W1 (the boost targets). Pure post-hoc inspection of tt.
+        fanouts = []
+        nchild = []
+        for node in tt.values():
+            if not node.expanded or node.is_dead_end or node.is_goal:
+                continue
+            if not node.children:
+                continue
+            visited = sum(1 for a in node.children if node.edge_N.get(a, 0) > 0)
+            fanouts.append(visited)
+            nchild.append(len(node.children))
+        # Depth of each node: BFS from root over the children DAG (min depth).
+        from collections import deque as _deque
+        _depth = {root.state_key: 0}
+        _dq = _deque([root])
+        while _dq:
+            _nd = _dq.popleft()
+            _d = _depth[_nd.state_key]
+            for _ch in _nd.children.values():
+                if _ch.state_key not in _depth:
+                    _depth[_ch.state_key] = _d + 1
+                    _dq.append(_ch)
+        _exp_depths = [_depth[n.state_key] for n in tt.values()
+                       if n.expanded and not n.is_dead_end and not n.is_goal
+                       and n.children and n.state_key in _depth]
+        import numpy as _np
+        if fanouts:
+            fo = _np.array(fanouts); nc = _np.array(nchild)
+            print(f"[FANOUT] expanded_internal_nodes={len(fo)} "
+                  f"mean_children={nc.mean():.2f} "
+                  f"mean_visited_children(fanout)={fo.mean():.2f} "
+                  f"median_fanout={_np.median(fo):.0f} "
+                  f"frac_nodes_fanout>1={100*(fo>1).mean():.0f}% "
+                  f"frac_fanout>3={100*(fo>3).mean():.0f}%", flush=True)
+            # Width-bucket: for each expanded internal node, get its cached
+            # curve width (q90-q8). Bucket into low/med/high using the
+            # ~1.3-1.4 "flat/blind" range measured at the grid lock-bottleneck
+            # probe as a reference. Tells us whether expansion concentrates
+            # where the model is confidently-wrong (low width, signal blind)
+            # or where it's genuinely uncertain (high width, signal present).
+            widths = []
+            for node in tt.values():
+                if not node.expanded or node.is_dead_end or node.is_goal or not node.children:
+                    continue
+                if node.curve is None:
+                    continue
+                w = (node.curve[90] - node.curve[8]).item()
+                widths.append(w)
+            if widths:
+                wa = _np.array(widths)
+                low = (wa < 1.5).mean()
+                med = ((wa >= 1.5) & (wa < 3.0)).mean()
+                high = (wa >= 3.0).mean()
+                print(f"[WIDTHBUCKET] n={len(wa)} mean_width={wa.mean():.2f} "
+                      f"median_width={_np.median(wa):.2f} "
+                      f"frac_low(<1.5)={100*low:.0f}% "
+                      f"frac_med(1.5-3)={100*med:.0f}% "
+                      f"frac_high(>=3)={100*high:.0f}%", flush=True)
+            # Depth of boosted (medium/high width) nodes vs low-width nodes:
+            # does the boost act mostly near the root (shallow) or deep in
+            # the tree? Reuses the BFS depth map already computed for DEPTH.
+            from collections import deque as _deque2
+            _depth2 = {root.state_key: 0}; _dq2 = _deque2([root])
+            while _dq2:
+                _nd = _dq2.popleft(); _d = _depth2[_nd.state_key]
+                for _ch in _nd.children.values():
+                    if _ch.state_key not in _depth2:
+                        _depth2[_ch.state_key] = _d + 1; _dq2.append(_ch)
+            shallow_widths = []; deep_widths = []
+            depths_of_widenodes = []
+            idx = 0
+            for node in tt.values():
+                if not node.expanded or node.is_dead_end or node.is_goal or not node.children:
+                    continue
+                if node.curve is None or node.state_key not in _depth2:
+                    continue
+                w = (node.curve[90] - node.curve[8]).item()
+                d = _depth2[node.state_key]
+                if w >= 1.5:  # medium+high (the "boosted" range)
+                    depths_of_widenodes.append(d)
+            if depths_of_widenodes:
+                dw = _np.array(depths_of_widenodes)
+                print(f"[BOOSTDEPTH] n={len(dw)} mean_depth_of_boosted_nodes={dw.mean():.2f} "
+                      f"median={_np.median(dw):.0f} "
+                      f"frac_shallow(depth<=10)={100*(dw<=10).mean():.0f}% "
+                      f"frac_deep(depth>30)={100*(dw>30).mean():.0f}%", flush=True)
+            # Did boosting toward uncertain (medium/high width) nodes actually
+            # pay off, or did it lead into dead ends / unproductive states?
+            # For each boosted node, check: was it (or any of its direct
+            # children) a dead end? And compare its backed-up value to the
+            # best value seen among ALL nodes at the same depth (a rough
+            # "did this catch up to the best progress at this depth" check).
+            from collections import defaultdict as _dd
+            best_value_at_depth = _dd(lambda: -float("inf"))
+            for node in tt.values():
+                if node.state_key in _depth2:
+                    d = _depth2[node.state_key]
+                    if node.value > best_value_at_depth[d]:
+                        best_value_at_depth[d] = node.value
+            boosted_deadend = 0; boosted_total = 0
+            boosted_below_best = 0; boosted_value_checked = 0
+            for node in tt.values():
+                if not node.expanded or node.is_dead_end or node.is_goal or not node.children:
+                    continue
+                if node.curve is None or node.state_key not in _depth2:
+                    continue
+                w = (node.curve[90] - node.curve[8]).item()
+                if w < 1.5:
+                    continue
+                boosted_total += 1
+                # any direct child a dead end?
+                if any(c.is_dead_end for c in node.children.values()):
+                    boosted_deadend += 1
+                d = _depth2[node.state_key]
+                if node.value > -float("inf") and best_value_at_depth[d] > -float("inf"):
+                    boosted_value_checked += 1
+                    if node.value < best_value_at_depth[d] - 1.0:  # meaningfully below the best at this depth
+                        boosted_below_best += 1
+            if boosted_total:
+                print(f"[BOOSTPAYOFF] boosted_nodes={boosted_total} "
+                      f"frac_with_deadend_child={100*boosted_deadend/boosted_total:.0f}% "
+                      f"frac_below_best_at_depth={100*boosted_below_best/max(1,boosted_value_checked):.0f}%", flush=True)
+            # [W1xDEPTH]: read CACHED edge_W (no tensor recompute) bucketed by
+            # parent depth, normalized via w1_norm. High at all depths -> depth
+            # discount is the fix. Decays with depth but tunnel persists -> FPU.
+            bands = [(0,20),(20,60),(60,120),(120,10**9)]
+            acc = {b: [] for b in bands}
+            for node in tt.values():
+                if node.state_key not in _depth2 or not node.edge_W:
+                    continue
+                d = _depth2[node.state_key]
+                b = next(bb for bb in bands if bb[0] <= d < bb[1])
+                for action, w1 in node.edge_W.items():
+                    if node.edge_N.get(action, 0) > 0 and w1_norm is not None:
+                        acc[b].append(w1_norm.normalize(w1))
+            parts = []
+            for b in bands:
+                vals = acc[b]
+                lbl = f"{b[0]}-{'inf' if b[1]>10**8 else b[1]}"
+                parts.append(f"d{lbl}:n={len(vals)},meanNW1={_np.mean(vals):.3f}" if vals else f"d{lbl}:n=0")
+            print("[W1xDEPTH] " + " ".join(parts), flush=True)
+            # [PRIORCONC]: across ALL expanded nodes with >=2 children, what
+            # fraction have the policy essentially locked onto one action?
+            # Full precision, no rounding.
+            max_priors = []
+            for node in tt.values():
+                if not node.expanded or len(node.children) < 2:
+                    continue
+                mp = max(node.prior.values())
+                max_priors.append(mp)
+            if max_priors:
+                mp_arr = _np.array(max_priors)
+                print(f"[PRIORCONC] n_branching_nodes={len(mp_arr)} "
+                      f"mean_max_prior={mp_arr.mean():.6f} "
+                      f"frac_max_prior>0.999={100*(mp_arr>0.999).mean():.1f}% "
+                      f"frac_max_prior>0.99={100*(mp_arr>0.99).mean():.1f}% "
+                      f"frac_max_prior>0.9={100*(mp_arr>0.9).mean():.1f}% "
+                      f"frac_max_prior<0.7={100*(mp_arr<0.7).mean():.1f}%", flush=True)
+            # [NODEBREAKDOWN]: for a few branching nodes with >=2 children,
+            # print each child's N, q_norm, prior, boosted-prior, u, score.
+            # Answers: is the losing sibling closing the gap, or stuck?
+            shown = 0
+            for node in tt.values():
+                if shown >= 5 or not node.expanded or len(node.children) < 2:
+                    continue
+                if node.visit_count < 5:
+                    continue
+                shown += 1
+                d = _depth2.get(node.state_key, -1)
+                print(f"[NODEBREAKDOWN] depth={d} node_visits={node.visit_count} children={len(node.children)}")
+                sqrt_parent = (max(1, node.visit_count)) ** 0.5
+                nw = {}
+                if node.curve is not None:
+                    for a, c in node.children.items():
+                        w1v = _edge_w1(node.curve, c.curve)
+                        nw[a] = w1_norm.normalize(w1v) if (w1v is not None and w1_norm) else 0.0
+                for a, c in sorted(node.children.items(), key=lambda kv: -node.edge_N.get(kv[0],0)):
+                    n = node.edge_N.get(a, 0)
+                    q_norm = value_norm.normalize(node.q(a)) if n > 0 else 0.0
+                    boosted = node.prior[a] * (1.0 + 1.0 * nw.get(a, 0.0))
+                    u = c_puct * boosted * sqrt_parent / (1 + n)
+                    print(f"    N={n:6d} prior={node.prior[a]:.3f} W1norm={nw.get(a,0.0):.3f} "
+                          f"q_norm={q_norm:.3f} u={u:.3f} score={q_norm+u:.3f}")
+            # [QxDEPTH]: among VISITED siblings, how separable are their q-values
+            # (std across children) and does mean-q degrade with depth? Flat/low
+            # spread = no backup pressure -> search has no reason to stop diving.
+            qbands = {b: {'spread': [], 'meanq': []} for b in bands}
+            for node in tt.values():
+                if node.state_key not in _depth2 or not node.children:
+                    continue
+                d = _depth2[node.state_key]
+                b = next(bb for bb in bands if bb[0] <= d < bb[1])
+                qs = []
+                for action in node.children:
+                    if node.edge_N.get(action, 0) > 0:
+                        qs.append(value_norm.normalize(node.q(action)))
+                if len(qs) >= 2:
+                    qbands[b]['spread'].append(float(_np.std(qs)))
+                if qs:
+                    qbands[b]['meanq'].append(float(_np.mean(qs)))
+            qparts = []
+            for b in bands:
+                sp = qbands[b]['spread']; mq = qbands[b]['meanq']
+                lbl = f"{b[0]}-{'inf' if b[1]>10**8 else b[1]}"
+                if mq:
+                    qparts.append(f"d{lbl}:n={len(mq)},meanq={_np.mean(mq):.3f},sibStd={_np.mean(sp) if sp else 0.0:.3f}")
+                else:
+                    qparts.append(f"d{lbl}:n=0")
+            print("[QxDEPTH] " + " ".join(qparts), flush=True)
+            if _exp_depths:
+                _ed = _np.array(_exp_depths)
+                print(f"[DEPTH] expanded_internal_nodes={len(_ed)} "
+                      f"mean_depth={_ed.mean():.2f} median_depth={_np.median(_ed):.0f} "
+                      f"max_depth={_ed.max():.0f} "
+                      f"frac_depth>20={100*(_ed>20).mean():.0f}%", flush=True)
     return best_plan, sims, total_generated
 
 
@@ -328,6 +563,10 @@ def _parse_arguments():
                         help="Prior-boost strength using edge-W1: "
                              "P'(a)=P(a)*(1+w1_lambda*norm_W1(parent->child)), renormalized, "
                              "inside the pUCT term. 0.0 = vanilla.")
+    parser.add_argument("--fpu_reduction", default=0.0, type=float,
+                        help="Fix A: unvisited child FPU = parent_value - this (0=off, original frontier-blind).")
+    parser.add_argument("--w1_visit_gated", action="store_true",
+                        help="Fix B: apply W1 boost only to already-visited children (unvisited use raw prior).")
     parser.add_argument("--w1_topk", default=0, type=int,
                         help="If >0, boost only the k highest-norm-W1 children per node; "
                              "others keep raw prior. Caps boosted-branch count per node "
@@ -347,6 +586,7 @@ def _plan(problem, policy_model, q1_model, q2_model, oracle, args):
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
             oracle=oracle, w1_lambda=args.w1_lambda, w1_topk=args.w1_topk,
+            fpu_reduction=args.fpu_reduction, w1_visit_gated=args.w1_visit_gated,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)

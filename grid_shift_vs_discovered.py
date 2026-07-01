@@ -80,7 +80,7 @@ def w1(q1, q2): return float(np.mean(np.abs(q1 - q2)))
 def collect(domain, model, instances, taus, seed, cap, maxi, sper):
     random.seed(seed)
     files = sorted(f for f in Path(instances).glob('*.pddl') if f.name != 'domain.pddl')
-    W, ERR, NKEY, TRAP = [], [], [], []
+    W, ERR, NKEY, TRAP, DEPTH = [], [], [], [], []
     used = 0
     with torch.no_grad():
         for f in files:
@@ -111,24 +111,25 @@ def collect(domain, model, instances, taus, seed, cap, maxi, sper):
                     b2 = int(means2.argmax().item()); wv = w1(q_s, qs2[b2].cpu().numpy())
                 nk, trap = features(s)
                 W.append(wv); ERR.append(abs(means[best].item() - (-float(ls.steps_to_goal))))
-                NKEY.append(nk); TRAP.append(trap); taken += 1
+                NKEY.append(nk); TRAP.append(trap); DEPTH.append(float(ls.steps_to_goal)); taken += 1
             if used >= maxi: break
-    return map(np.array, (W, ERR, NKEY, TRAP))
+    return map(np.array, (W, ERR, NKEY, TRAP, DEPTH))
 
 
-def report(tag, W, ERR, NKEY, TRAP):
+def report(tag, W, ERR, NKEY, TRAP, DEPTH):
     print(f"\n================  {tag}  ================")
     print(f"states={len(W)}")
     print(f"(1) Spearman(W1, error)            = {spearman(W, ERR):+.3f}")
     print(f"    Spearman(W1, num_keys)         = {spearman(W, NKEY):+.3f}")
     print(f"    Spearman(error, num_keys)      = {spearman(ERR, NKEY):+.3f}")
+    print(f"    PARTIAL(W1, error | depth)     = {partial(W, ERR, DEPTH):+.3f}  <- depth-controlled, matches the width 0.37 number")
     print(f"(3) PARTIAL(W1, error | num_keys)  = {partial(W, ERR, NKEY):+.3f}  <- W1 flags per-state trouble beyond instance complexity?")
     print(f"    PARTIAL(W1, num_keys | error)  = {partial(W, NKEY, ERR):+.3f}  <- or does W1 just flag complex instances?")
     print("(2) mean W1 by key-count:")
     for k in sorted(set(NKEY.tolist())):
         m = NKEY == k
         if m.sum() >= 10:
-            print(f"      num_keys={int(k)}: n={int(m.sum():4d}) meanW1={W[m].mean():.3f}  meanErr={ERR[m].mean():.3f}")
+            print(f"      num_keys={int(k)}: n={int(m.sum())} meanW1={W[m].mean():.3f}  meanErr={ERR[m].mean():.3f}")
     t = TRAP.astype(bool)
     if t.sum() >= 5:
         print(f"(4) wrong-key-trap: W1={W[t].mean():.3f} (n={int(t.sum())}) vs elsewhere {W[~t].mean():.3f}")
@@ -146,14 +147,14 @@ def main():
     taus = torch.linspace(0.01, 0.99, args.num_quantiles, device=dev).unsqueeze(0)
     print("="*70); print("W1 shift vs DISCOVERED bottleneck (key multiplicity) — grid")
     print(f"model: {args.model}  seeds: {args.seeds}"); print("="*70)
-    AW, AE, AN, AT = [], [], [], []
+    AW, AE, AN, AT, AD = [], [], [], [], []
     for sd in args.seeds:
-        W, E, N, T = collect(domain, model, args.instances, taus, sd,
+        W, E, N, T, D = collect(domain, model, args.instances, taus, sd,
                               args.state_cap, args.max_instances, args.states_per_instance)
-        report(f"SEED {sd}", W, E, N, T)
-        AW.append(W); AE.append(E); AN.append(N); AT.append(T)
+        report(f"SEED {sd}", W, E, N, T, D)
+        AW.append(W); AE.append(E); AN.append(N); AT.append(T); AD.append(D)
     if len(args.seeds) > 1:
-        report("POOLED", *[np.concatenate(x) for x in (AW, AE, AN, AT)])
+        report("POOLED", *[np.concatenate(x) for x in (AW, AE, AN, AT, AD)])
     print("\nRead: if PARTIAL(W1,error|num_keys) stays >0, W1 flags genuine per-state")
     print("trouble beyond just 'complex instance'. If it collapses, W1 mostly tracks")
     print("instance complexity. Both can be true; the partial says how much is per-state.")

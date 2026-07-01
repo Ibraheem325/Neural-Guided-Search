@@ -277,6 +277,27 @@ def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             print(f"  [sim {sims}] root visits={root.visit_count}, "
                   f"unique states={len(tt)}, generated={total_generated}", flush=True)
 
+    import os as _os
+    if _os.environ.get("AZ_FANOUT") == "1":
+        from collections import deque as _deque
+        _depth = {root.state_key: 0}; _dq=_deque([root])
+        while _dq:
+            _nd=_dq.popleft(); _d=_depth[_nd.state_key]
+            for _ch in _nd.children.values():
+                if _ch.state_key not in _depth:
+                    _depth[_ch.state_key]=_d+1; _dq.append(_ch)
+        import numpy as _np
+        fo=[]; dep=[]
+        for node in tt.values():
+            if not node.expanded or node.is_dead_end or node.is_goal or not node.children: continue
+            fo.append(sum(1 for a in node.children if node.edge_N.get(a,0)>0))
+            if node.state_key in _depth: dep.append(_depth[node.state_key])
+        if fo:
+            fo=_np.array(fo)
+            print(f"[FANOUT] internal_nodes={len(fo)} mean_children={_np.mean([len(n.children) for n in tt.values() if n.expanded and n.children]):.1f} mean_fanout={fo.mean():.2f} frac_fanout>1={100*(fo>1).mean():.0f}%", flush=True)
+        if dep:
+            dep=_np.array(dep)
+            print(f"[DEPTH] mean_depth={dep.mean():.2f} max_depth={dep.max():.0f}", flush=True)
     return best_plan, sims, total_generated
 
 

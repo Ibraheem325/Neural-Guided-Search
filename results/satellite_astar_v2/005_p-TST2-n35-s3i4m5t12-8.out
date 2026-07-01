@@ -1,0 +1,100 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Loading model... (models/satellite_supervised.pth)
+Using GPU:  NVIDIA L40S
+[f=14.725] Expanded: 0, Generated: 0
+[f=14.725] Expanded: 2, Generated: 110
+[f=14.780] Expanded: 3, Generated: 165
+[f=14.781] Expanded: 4, Generated: 220
+[f=14.796] Expanded: 5, Generated: 276
+[f=14.798] Expanded: 6, Generated: 332
+[f=14.802] Expanded: 7, Generated: 388
+[f=14.802] Expanded: 8, Generated: 444
+[f=14.802] Expanded: 9, Generated: 500
+[f=14.809] Expanded: 10, Generated: 556
+[f=14.810] Expanded: 11, Generated: 612
+[f=14.810] Expanded: 12, Generated: 668
+[f=14.823] Expanded: 13, Generated: 721
+[f=14.825] Expanded: 14, Generated: 774
+[f=14.826] Expanded: 15, Generated: 827
+[f=14.841] Expanded: 17, Generated: 931
+[f=14.852] Expanded: 20, Generated: 1090
+[f=14.853] Expanded: 23, Generated: 1249
+[f=14.853] Expanded: 25, Generated: 1353
+[f=14.868] Expanded: 27, Generated: 1457
+[f=15.163] Expanded: 28, Generated: 1510
+[f=15.163] Expanded: 29, Generated: 1563
+[f=15.169] Expanded: 30, Generated: 1617
+[f=15.170] Expanded: 31, Generated: 1671
+[f=15.171] Expanded: 32, Generated: 1725
+[f=15.172] Expanded: 33, Generated: 1779
+[f=15.174] Expanded: 34, Generated: 1832
+[f=15.179] Expanded: 35, Generated: 1887
+[f=15.179] Expanded: 36, Generated: 1942
+[f=15.216] Expanded: 37, Generated: 1993
+[f=15.216] Expanded: 38, Generated: 2044
+[f=15.217] Expanded: 39, Generated: 2095
+[f=15.217] Expanded: 40, Generated: 2146
+[f=15.217] Expanded: 41, Generated: 2197
+[f=15.217] Expanded: 42, Generated: 2249
+[f=15.217] Expanded: 43, Generated: 2300
+[f=15.217] Expanded: 44, Generated: 2351
+[f=15.217] Expanded: 45, Generated: 2403
+[f=15.217] Expanded: 46, Generated: 2455
+[f=15.217] Expanded: 47, Generated: 2506
+[f=15.217] Expanded: 48, Generated: 2558
+[f=15.218] Expanded: 49, Generated: 2609
+[f=15.218] Expanded: 50, Generated: 2660
+[f=15.218] Expanded: 51, Generated: 2712
+[f=15.218] Expanded: 52, Generated: 2764
+[f=15.230] Expanded: 53, Generated: 2815
+[f=15.230] Expanded: 54, Generated: 2866
+[f=15.230] Expanded: 55, Generated: 2917
+[f=15.231] Expanded: 56, Generated: 2968
+[f=15.231] Expanded: 57, Generated: 3019
+[f=15.231] Expanded: 58, Generated: 3070
+[f=15.238] Expanded: 59, Generated: 3121
+[f=15.238] Expanded: 60, Generated: 3172
+[f=15.239] Expanded: 61, Generated: 3223
+[f=15.239] Expanded: 62, Generated: 3274
+[f=15.242] Expanded: 63, Generated: 3325
+[f=15.243] Expanded: 64, Generated: 3376
+[f=15.251] Expanded: 65, Generated: 3427
+[f=15.252] Expanded: 66, Generated: 3478
+[f=15.444] Expanded: 67, Generated: 3532
+[f=15.446] Expanded: 68, Generated: 3586
+[f=15.447] Expanded: 69, Generated: 3640
+[f=15.447] Expanded: 70, Generated: 3694
+[f=15.447] Expanded: 71, Generated: 3748
+[f=15.448] Expanded: 72, Generated: 3802
+[f=15.448] Expanded: 73, Generated: 3856
+[f=15.449] Expanded: 74, Generated: 3910
+[f=15.450] Expanded: 76, Generated: 4018
+[f=15.455] Expanded: 77, Generated: 4072
+[f=15.455] Expanded: 78, Generated: 4126
+[f=15.465] Expanded: 79, Generated: 4180
+[f=15.470] Expanded: 81, Generated: 4288
+[f=15.470] Expanded: 82, Generated: 4344
+[f=15.470] Expanded: 83, Generated: 4400
+[f=15.496] Expanded: 84, Generated: 4452
+[f=15.499] Expanded: 85, Generated: 4504
+[f=15.503] Expanded: 86, Generated: 4557
+[f=15.504] Expanded: 87, Generated: 4609
+[Final] Expanded: 117, Generated: 6281
+Found a solution of length 15!
+   1: (switch_on instrument5 satellite2)
+   2: (switch_on instrument2 satellite1)
+   3: (turn_to satellite1 star8 groundstation7)
+   4: (calibrate satellite1 instrument2 star8)
+   5: (turn_to satellite1 phenomenon14 star8)
+   6: (take_image satellite1 phenomenon14 instrument2 image0)
+   7: (turn_to satellite1 planet15 phenomenon14)
+   8: (take_image satellite1 planet15 instrument2 infrared3)
+   9: (switch_on instrument0 satellite0)
+  10: (turn_to satellite2 star8 planet15)
+  11: (calibrate satellite2 instrument5 star8)
+  12: (turn_to satellite2 star12 star8)
+  13: (take_image satellite2 star12 instrument5 thermograph2)
+  14: (turn_to satellite2 phenomenon13 star12)
+  15: (take_image satellite2 phenomenon13 instrument5 thermograph2)

@@ -1,0 +1,58 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/cuda/__init__.py:187: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 12020). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+  return torch._C._cuda_getDeviceCount() > 0
+Using CPU.
+Expanding full state space for ground truth...
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/TensorAdvancedIndexing.cpp:1514.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 7] found goal path of length 7
+  [sim 500] root visits=500, unique states=12, generated=11
+  [sim 1000] root visits=1000, unique states=12, generated=11
+  [sim 1500] root visits=1500, unique states=12, generated=11
+  [sim 2000] root visits=2000, unique states=12, generated=11
+  [sim 2500] root visits=2500, unique states=12, generated=11
+  [sim 3000] root visits=3000, unique states=12, generated=11
+  [sim 3500] root visits=3500, unique states=12, generated=11
+  [sim 4000] root visits=4000, unique states=12, generated=11
+  [sim 4500] root visits=4500, unique states=12, generated=11
+  [sim 5000] root visits=5000, unique states=12, generated=11
+  [sim 5500] root visits=5500, unique states=12, generated=11
+  [sim 6000] root visits=6000, unique states=12, generated=11
+  [sim 6500] root visits=6500, unique states=12, generated=11
+  [sim 7000] root visits=7000, unique states=12, generated=11
+  [sim 7500] root visits=7500, unique states=12, generated=11
+  [sim 8000] root visits=8000, unique states=12, generated=11
+  [sim 8500] root visits=8500, unique states=12, generated=11
+  [sim 9000] root visits=9000, unique states=12, generated=11
+  [sim 9500] root visits=9500, unique states=12, generated=11
+  [sim 10000] root visits=10000, unique states=12, generated=11
+  [sim 10500] root visits=10500, unique states=12, generated=11
+  [sim 11000] root visits=11000, unique states=12, generated=11
+  [sim 11500] root visits=11500, unique states=12, generated=11
+  [sim 12000] root visits=12000, unique states=12, generated=11
+  [sim 12500] root visits=12500, unique states=12, generated=11
+  [sim 13000] root visits=13000, unique states=12, generated=11
+  [sim 13500] root visits=13500, unique states=12, generated=11
+  [sim 14000] root visits=14000, unique states=12, generated=11
+  [sim 14500] root visits=14500, unique states=12, generated=11
+  [sim 15000] root visits=15000, unique states=12, generated=11
+  [sim 15500] root visits=15500, unique states=12, generated=11
+  [sim 16000] root visits=16000, unique states=12, generated=11
+  [sim 16500] root visits=16500, unique states=12, generated=11
+  [sim 17000] root visits=17000, unique states=12, generated=11
+  [sim 17500] root visits=17500, unique states=12, generated=11
+  [sim 18000] root visits=18000, unique states=12, generated=11
+  [sim 18500] root visits=18500, unique states=12, generated=11
+  [sim 19000] root visits=19000, unique states=12, generated=11
+  [sim 19500] root visits=19500, unique states=12, generated=11
+  [sim 20000] root visits=20000, unique states=12, generated=11
+
+==== Grid branching diagnosis ====
+total branching nodes visited: 6
+  (C) policy already correct      : 6  (100.0%)
+  (A) confidently wrong, no signal: 0  (0.0%)
+  (B) signal present, unused      : 0  (0.0%)
+
+Interpretation:
+  A >> B  -> supervisor right: signal genuinely absent, no pUCT change helps.
+  B sizable -> equation IS the bottleneck; correct child carries metric but
+               isn't explored. Worth redesigning the pUCT term.

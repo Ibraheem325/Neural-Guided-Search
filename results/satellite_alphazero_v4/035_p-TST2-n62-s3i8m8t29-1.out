@@ -1,0 +1,45 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=44319, generated=44318
+  [sim 1000] root visits=1000, unique states=90993, generated=90992
+  [sim 1500] root visits=1500, unique states=135362, generated=135361
+  [sim 1783] found goal path of length 34
+[Final] Expanded: 159321, Generated: 159321
+[search done] simulations=1783, unique states generated=159321
+Found a solution of length 34!
+   1: (turn_to satellite1 groundstation16 star30)
+   2: (switch_on instrument12 satellite1)
+   3: (turn_to satellite1 star15 groundstation16)
+   4: (calibrate satellite1 instrument12 star15)
+   5: (turn_to satellite1 phenomenon31 star15)
+   6: (take_image satellite1 phenomenon31 instrument12 image1)
+   7: (take_image satellite1 phenomenon31 instrument12 image6)
+   8: (turn_to satellite1 star15 phenomenon31)
+   9: (turn_to satellite1 star30 star15)
+  10: (take_image satellite1 star30 instrument12 image1)
+  11: (take_image satellite1 star30 instrument12 image6)
+  12: (turn_to satellite1 star15 star30)
+  13: (turn_to satellite1 star29 star15)
+  14: (take_image satellite1 star29 instrument12 image6)
+  15: (take_image satellite1 star29 instrument12 image1)
+  16: (turn_to satellite1 star15 star29)
+  17: (turn_to satellite1 phenomenon31 star15)
+  18: (turn_to satellite1 star6 phenomenon31)
+  19: (turn_to satellite1 star30 star6)
+  20: (turn_to satellite1 groundstation16 star30)
+  21: (turn_to satellite1 star32 groundstation16)
+  22: (take_image satellite1 star32 instrument12 image6)
+  23: (switch_on instrument16 satellite2)
+  24: (turn_to satellite2 groundstation24 star15)
+  25: (calibrate satellite2 instrument16 groundstation24)
+  26: (turn_to satellite2 phenomenon31 groundstation24)
+  27: (take_image satellite2 phenomenon31 instrument16 thermograph3)
+  28: (switch_on instrument0 satellite0)
+  29: (turn_to satellite0 star21 star7)
+  30: (calibrate satellite0 instrument0 star21)
+  31: (turn_to satellite0 star30 star21)
+  32: (take_image satellite0 star30 instrument0 thermograph0)
+  33: (turn_to satellite0 star29 star30)
+  34: (take_image satellite0 star29 instrument0 thermograph7)

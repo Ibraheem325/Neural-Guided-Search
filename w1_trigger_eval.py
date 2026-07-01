@@ -62,6 +62,8 @@ def collect(domain, model, instances, taus, seed, cap, maxi, sper):
                 if taken >= sper: break
                 ls = ss.get_state_label(s)
                 if ls.is_goal: continue
+                if ls.is_dead_end: continue
+                if ls.is_dead_end: continue
                 acts = s.generate_applicable_actions()
                 if len(acts) < 1: continue
                 qv, _ = model.forward([(s, goal)], taus=taus.expand(1, taus.shape[1]))[0]

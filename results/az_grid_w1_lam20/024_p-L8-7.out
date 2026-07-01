@@ -1,0 +1,15 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/grid_iqn.pth (w1_lambda=2.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1400, generated=1399
+  [sim 1000] root visits=1000, unique states=2885, generated=2884
+  [sim 1500] root visits=1500, unique states=4372, generated=4371
+  [sim 2000] root visits=2000, unique states=5834, generated=5833
+  [sim 2500] root visits=2500, unique states=7235, generated=7234
+  [sim 3000] root visits=3000, unique states=8693, generated=8692
+  [sim 3500] root visits=3500, unique states=10199, generated=10198
+[Final] Expanded: 10526, Generated: 10526
+[search done] simulations=3609, unique states generated=10526
+Failed to find a solution!

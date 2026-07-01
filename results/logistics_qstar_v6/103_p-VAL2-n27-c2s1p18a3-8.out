@@ -1,0 +1,178 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/logistics_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=22.092] Expanded: 2, Generated: 1
+[f=22.092] Expanded: 5, Generated: 4
+[f=22.095] Expanded: 17, Generated: 16
+[f=22.103] Expanded: 23, Generated: 28
+[f=22.149] Expanded: 35, Generated: 40
+[f=22.149] Expanded: 71, Generated: 76
+[f=22.196] Expanded: 98, Generated: 121
+[f=22.196] Expanded: 101, Generated: 135
+[f=22.196] Expanded: 101, Generated: 136
+[f=22.236] Expanded: 101, Generated: 165
+[f=22.236] Expanded: 101, Generated: 180
+[f=22.236] Expanded: 101, Generated: 184
+[f=22.274] Expanded: 105, Generated: 196
+[f=22.322] Expanded: 117, Generated: 208
+[f=22.322] Expanded: 177, Generated: 268
+[f=22.349] Expanded: 191, Generated: 283
+[f=22.349] Expanded: 207, Generated: 316
+[f=22.349] Expanded: 207, Generated: 328
+[f=22.355] Expanded: 211, Generated: 332
+[f=22.355] Expanded: 245, Generated: 404
+[f=22.355] Expanded: 247, Generated: 448
+[f=22.398] Expanded: 255, Generated: 456
+[f=22.398] Expanded: 332, Generated: 533
+[f=22.398] Expanded: 367, Generated: 568
+[f=22.409] Expanded: 367, Generated: 688
+[f=22.409] Expanded: 367, Generated: 712
+[f=22.411] Expanded: 367, Generated: 822
+[f=22.411] Expanded: 367, Generated: 952
+[f=22.148] Expanded: 380, Generated: 965
+[f=22.251] Expanded: 408, Generated: 1005
+[f=22.251] Expanded: 410, Generated: 1025
+[f=22.326] Expanded: 448, Generated: 1109
+[f=22.326] Expanded: 450, Generated: 1145
+[f=22.399] Expanded: 458, Generated: 1154
+[f=22.399] Expanded: 480, Generated: 1265
+[f=22.443] Expanded: 480, Generated: 1268
+[f=22.448] Expanded: 492, Generated: 1309
+[f=22.448] Expanded: 492, Generated: 1325
+[f=22.448] Expanded: 492, Generated: 1328
+[f=22.460] Expanded: 612, Generated: 1568
+[f=22.470] Expanded: 621, Generated: 1577
+[f=22.470] Expanded: 629, Generated: 1586
+[f=22.470] Expanded: 636, Generated: 1595
+[f=22.470] Expanded: 642, Generated: 1604
+[f=22.470] Expanded: 647, Generated: 1613
+[f=22.470] Expanded: 656, Generated: 1622
+[f=22.470] Expanded: 663, Generated: 1631
+[f=22.470] Expanded: 669, Generated: 1640
+[f=22.470] Expanded: 674, Generated: 1649
+[f=22.470] Expanded: 678, Generated: 1658
+[f=22.470] Expanded: 686, Generated: 1667
+[f=22.470] Expanded: 693, Generated: 1676
+[f=22.470] Expanded: 698, Generated: 1685
+[f=22.470] Expanded: 702, Generated: 1694
+[f=22.470] Expanded: 705, Generated: 1703
+[f=22.470] Expanded: 712, Generated: 1712
+[f=22.470] Expanded: 718, Generated: 1721
+[f=22.470] Expanded: 723, Generated: 1730
+[f=22.470] Expanded: 726, Generated: 1739
+[f=22.470] Expanded: 728, Generated: 1748
+[f=22.470] Expanded: 734, Generated: 1759
+[f=22.470] Expanded: 739, Generated: 1768
+[f=22.470] Expanded: 744, Generated: 1780
+[f=22.470] Expanded: 748, Generated: 1789
+[f=22.470] Expanded: 752, Generated: 1801
+[f=22.470] Expanded: 755, Generated: 1810
+[f=22.470] Expanded: 757, Generated: 1823
+[f=22.477] Expanded: 757, Generated: 1824
+[f=22.470] Expanded: 759, Generated: 1836
+[f=22.470] Expanded: 761, Generated: 1845
+[f=22.470] Expanded: 762, Generated: 1858
+[f=22.477] Expanded: 762, Generated: 1868
+[f=21.455] Expanded: 767, Generated: 1873
+[f=21.462] Expanded: 767, Generated: 1879
+[f=22.409] Expanded: 768, Generated: 1880
+[f=22.441] Expanded: 768, Generated: 1881
+[f=22.453] Expanded: 768, Generated: 1882
+[f=21.827] Expanded: 773, Generated: 1887
+[f=21.827] Expanded: 774, Generated: 1889
+[f=21.901] Expanded: 775, Generated: 1890
+[f=21.827] Expanded: 777, Generated: 1894
+[f=21.866] Expanded: 778, Generated: 1897
+[f=21.925] Expanded: 781, Generated: 1900
+[f=21.827] Expanded: 784, Generated: 1906
+[f=21.866] Expanded: 785, Generated: 1909
+[f=21.925] Expanded: 786, Generated: 1910
+[f=21.866] Expanded: 788, Generated: 1916
+[f=21.904] Expanded: 789, Generated: 1919
+[f=21.904] Expanded: 789, Generated: 1920
+[f=21.975] Expanded: 795, Generated: 1926
+[f=22.018] Expanded: 798, Generated: 1929
+[f=22.018] Expanded: 799, Generated: 1930
+[f=22.055] Expanded: 800, Generated: 1931
+[f=22.119] Expanded: 800, Generated: 1935
+[f=22.161] Expanded: 800, Generated: 1941
+[f=22.092] Expanded: 806, Generated: 1947
+[f=22.118] Expanded: 811, Generated: 1953
+[f=22.118] Expanded: 812, Generated: 1959
+[f=22.145] Expanded: 816, Generated: 1965
+[f=22.145] Expanded: 816, Generated: 1967
+[f=22.145] Expanded: 816, Generated: 1971
+[f=22.092] Expanded: 820, Generated: 1976
+[f=22.118] Expanded: 822, Generated: 1979
+[f=22.118] Expanded: 823, Generated: 1985
+[f=22.145] Expanded: 824, Generated: 1987
+[f=22.145] Expanded: 824, Generated: 1991
+[f=22.092] Expanded: 827, Generated: 1996
+[f=22.118] Expanded: 828, Generated: 1999
+[f=22.118] Expanded: 828, Generated: 2002
+[f=22.145] Expanded: 828, Generated: 2004
+[f=22.092] Expanded: 830, Generated: 2009
+[f=22.118] Expanded: 830, Generated: 2012
+[f=22.092] Expanded: 831, Generated: 2017
+[f=22.092] Expanded: 836, Generated: 2023
+[f=22.118] Expanded: 838, Generated: 2026
+[f=22.118] Expanded: 839, Generated: 2029
+[f=22.118] Expanded: 839, Generated: 2032
+[f=22.145] Expanded: 840, Generated: 2034
+[f=22.145] Expanded: 840, Generated: 2036
+[f=22.145] Expanded: 840, Generated: 2038
+[f=22.092] Expanded: 843, Generated: 2043
+[f=22.118] Expanded: 844, Generated: 2046
+[f=22.118] Expanded: 844, Generated: 2049
+[f=22.145] Expanded: 844, Generated: 2051
+[f=22.092] Expanded: 846, Generated: 2056
+[f=22.118] Expanded: 846, Generated: 2059
+[f=22.092] Expanded: 847, Generated: 2064
+[f=22.092] Expanded: 847, Generated: 2065
+[f=22.092] Expanded: 851, Generated: 2072
+[f=22.118] Expanded: 852, Generated: 2075
+[f=22.118] Expanded: 852, Generated: 2078
+[f=22.145] Expanded: 852, Generated: 2080
+[f=22.092] Expanded: 854, Generated: 2085
+[f=22.118] Expanded: 854, Generated: 2088
+[f=22.092] Expanded: 855, Generated: 2093
+[f=22.148] Expanded: 855, Generated: 2094
+[f=22.092] Expanded: 858, Generated: 2100
+[f=22.118] Expanded: 858, Generated: 2103
+[f=22.092] Expanded: 859, Generated: 2108
+[f=22.148] Expanded: 859, Generated: 2111
+[f=22.092] Expanded: 861, Generated: 2120
+[f=22.148] Expanded: 861, Generated: 2121
+[f=22.148] Expanded: 862, Generated: 2124
+[f=22.148] Expanded: 862, Generated: 2127
+[f=22.201] Expanded: 862, Generated: 2131
+[f=22.239] Expanded: 862, Generated: 2132
+[f=22.302] Expanded: 862, Generated: 2133
+[f=22.326] Expanded: 862, Generated: 2134
+[Final] Expanded: 862, Generated: 2134
+Found a solution of length 22!
+   1: (load-airplane p1 a2 l1-0)
+   2: (load-airplane p8 a2 l1-0)
+   3: (load-airplane p9 a2 l1-0)
+   4: (load-airplane p17 a2 l1-0)
+   5: (load-airplane p0 a0 l0-0)
+   6: (load-airplane p2 a0 l0-0)
+   7: (load-airplane p5 a0 l0-0)
+   8: (load-airplane p11 a0 l0-0)
+   9: (load-airplane p12 a0 l0-0)
+  10: (load-airplane p7 a0 l0-0)
+  11: (fly-airplane a2 l1-0 l0-0)
+  12: (unload-airplane p1 a2 l0-0)
+  13: (unload-airplane p8 a2 l0-0)
+  14: (unload-airplane p9 a2 l0-0)
+  15: (unload-airplane p17 a2 l0-0)
+  16: (fly-airplane a0 l0-0 l1-0)
+  17: (unload-airplane p0 a0 l1-0)
+  18: (unload-airplane p2 a0 l1-0)
+  19: (unload-airplane p11 a0 l1-0)
+  20: (unload-airplane p5 a0 l1-0)
+  21: (unload-airplane p7 a0 l1-0)
+  22: (unload-airplane p12 a0 l1-0)

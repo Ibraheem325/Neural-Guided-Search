@@ -1,0 +1,147 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/rovers_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=4.610] Expanded: 3, Generated: 2
+[f=4.664] Expanded: 4, Generated: 3
+[f=5.282] Expanded: 4, Generated: 4
+[f=5.822] Expanded: 6, Generated: 6
+[f=5.866] Expanded: 7, Generated: 7
+[f=6.161] Expanded: 8, Generated: 8
+[f=6.208] Expanded: 9, Generated: 9
+[f=6.407] Expanded: 10, Generated: 10
+[f=6.410] Expanded: 11, Generated: 11
+[f=6.414] Expanded: 12, Generated: 12
+[f=6.417] Expanded: 13, Generated: 13
+[f=6.454] Expanded: 13, Generated: 14
+[f=6.499] Expanded: 14, Generated: 15
+[f=6.538] Expanded: 15, Generated: 16
+[f=6.550] Expanded: 16, Generated: 17
+[f=6.106] Expanded: 18, Generated: 19
+[f=6.432] Expanded: 19, Generated: 20
+[f=6.446] Expanded: 20, Generated: 21
+[f=6.549] Expanded: 21, Generated: 22
+[f=6.572] Expanded: 22, Generated: 23
+[f=6.457] Expanded: 25, Generated: 26
+[f=6.024] Expanded: 28, Generated: 29
+[f=6.035] Expanded: 29, Generated: 30
+[f=6.035] Expanded: 30, Generated: 31
+[f=6.639] Expanded: 31, Generated: 32
+[f=6.666] Expanded: 32, Generated: 33
+[f=6.679] Expanded: 33, Generated: 34
+[f=6.696] Expanded: 34, Generated: 35
+[f=6.697] Expanded: 35, Generated: 36
+[f=6.709] Expanded: 36, Generated: 37
+[f=6.023] Expanded: 37, Generated: 39
+[f=6.723] Expanded: 38, Generated: 40
+[f=6.755] Expanded: 39, Generated: 41
+[f=6.759] Expanded: 40, Generated: 42
+[f=6.783] Expanded: 40, Generated: 43
+[f=6.790] Expanded: 41, Generated: 44
+[f=6.812] Expanded: 42, Generated: 45
+[f=6.816] Expanded: 43, Generated: 46
+[f=6.822] Expanded: 44, Generated: 47
+[f=6.826] Expanded: 45, Generated: 48
+[f=6.630] Expanded: 47, Generated: 50
+[f=6.632] Expanded: 48, Generated: 51
+[f=6.628] Expanded: 50, Generated: 53
+[f=6.630] Expanded: 51, Generated: 54
+[f=6.588] Expanded: 53, Generated: 56
+[f=6.683] Expanded: 54, Generated: 57
+[f=6.586] Expanded: 56, Generated: 59
+[f=6.681] Expanded: 57, Generated: 60
+[f=6.909] Expanded: 58, Generated: 61
+[f=6.918] Expanded: 59, Generated: 62
+[f=6.954] Expanded: 60, Generated: 63
+[f=6.773] Expanded: 62, Generated: 65
+[f=6.826] Expanded: 63, Generated: 66
+[f=6.777] Expanded: 65, Generated: 68
+[f=6.830] Expanded: 66, Generated: 69
+[f=7.077] Expanded: 66, Generated: 70
+[f=7.085] Expanded: 66, Generated: 71
+[f=7.177] Expanded: 66, Generated: 72
+[f=7.178] Expanded: 66, Generated: 73
+[f=7.179] Expanded: 66, Generated: 74
+[f=7.193] Expanded: 66, Generated: 75
+[f=7.194] Expanded: 66, Generated: 76
+[f=7.208] Expanded: 66, Generated: 77
+[f=6.820] Expanded: 68, Generated: 79
+[f=6.830] Expanded: 69, Generated: 80
+[f=7.224] Expanded: 69, Generated: 81
+[f=7.229] Expanded: 69, Generated: 82
+[f=7.033] Expanded: 71, Generated: 84
+[f=7.045] Expanded: 72, Generated: 85
+[f=7.054] Expanded: 73, Generated: 86
+[f=7.055] Expanded: 74, Generated: 87
+[f=6.490] Expanded: 75, Generated: 89
+[f=6.515] Expanded: 75, Generated: 90
+[f=6.488] Expanded: 76, Generated: 92
+[f=6.512] Expanded: 76, Generated: 93
+[f=6.452] Expanded: 77, Generated: 95
+[f=6.476] Expanded: 77, Generated: 96
+[f=6.345] Expanded: 78, Generated: 98
+[f=6.369] Expanded: 78, Generated: 99
+[f=7.116] Expanded: 79, Generated: 101
+[f=7.288] Expanded: 79, Generated: 102
+[f=7.070] Expanded: 81, Generated: 104
+[f=7.303] Expanded: 82, Generated: 105
+[f=7.306] Expanded: 82, Generated: 106
+[f=7.308] Expanded: 83, Generated: 107
+[f=7.014] Expanded: 85, Generated: 109
+[f=7.014] Expanded: 85, Generated: 110
+[f=7.060] Expanded: 85, Generated: 111
+[f=7.061] Expanded: 86, Generated: 112
+[f=7.325] Expanded: 86, Generated: 113
+[f=7.326] Expanded: 86, Generated: 114
+[f=7.329] Expanded: 86, Generated: 115
+[f=7.330] Expanded: 86, Generated: 116
+[f=7.336] Expanded: 86, Generated: 117
+[f=7.339] Expanded: 87, Generated: 118
+[f=7.346] Expanded: 88, Generated: 119
+[f=7.348] Expanded: 88, Generated: 120
+[f=7.348] Expanded: 88, Generated: 121
+[f=7.355] Expanded: 88, Generated: 122
+[f=7.355] Expanded: 89, Generated: 123
+[f=7.368] Expanded: 89, Generated: 125
+[f=7.373] Expanded: 90, Generated: 126
+[f=7.007] Expanded: 91, Generated: 128
+[f=7.008] Expanded: 92, Generated: 129
+[f=7.054] Expanded: 92, Generated: 130
+[f=7.055] Expanded: 93, Generated: 131
+[f=7.385] Expanded: 94, Generated: 132
+[f=7.388] Expanded: 95, Generated: 133
+[f=7.395] Expanded: 96, Generated: 134
+[f=7.037] Expanded: 98, Generated: 136
+[f=7.038] Expanded: 98, Generated: 137
+[f=7.084] Expanded: 98, Generated: 138
+[f=7.084] Expanded: 99, Generated: 139
+[f=7.044] Expanded: 101, Generated: 141
+[f=7.045] Expanded: 101, Generated: 142
+[f=7.092] Expanded: 102, Generated: 143
+[f=7.092] Expanded: 102, Generated: 144
+[f=7.415] Expanded: 102, Generated: 145
+[f=7.416] Expanded: 102, Generated: 146
+[f=7.430] Expanded: 102, Generated: 147
+[f=7.455] Expanded: 102, Generated: 148
+[f=7.456] Expanded: 102, Generated: 149
+[f=7.460] Expanded: 102, Generated: 150
+[f=7.460] Expanded: 103, Generated: 151
+[f=7.247] Expanded: 106, Generated: 154
+[f=7.252] Expanded: 107, Generated: 155
+[f=7.254] Expanded: 108, Generated: 156
+[f=7.462] Expanded: 109, Generated: 157
+[f=7.465] Expanded: 110, Generated: 158
+[f=7.467] Expanded: 110, Generated: 159
+[f=7.467] Expanded: 110, Generated: 160
+[f=7.278] Expanded: 111, Generated: 162
+[Final] Expanded: 111, Generated: 162
+Found a solution of length 7!
+   1: (calibrate rover0 camera4 objective7 waypoint1)
+   2: (take_image rover0 waypoint1 objective7 camera4 high_res)
+   3: (calibrate rover0 camera4 objective7 waypoint1)
+   4: (take_image rover0 waypoint1 objective4 camera4 high_res)
+   5: (navigate rover0 waypoint1 waypoint8)
+   6: (communicate_image_data rover0 general objective4 high_res waypoint8 waypoint10)
+   7: (communicate_image_data rover0 general objective7 high_res waypoint8 waypoint10)

@@ -1,0 +1,31 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/grid_iqn.pth (w1_lambda=0.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 57] found goal path of length 22
+[Final] Expanded: 178, Generated: 178
+[search done] simulations=57, unique states generated=178
+Found a solution of length 22!
+   1: (move f0-2f f1-2f)
+   2: (move f1-2f f2-2f)
+   3: (move f2-2f f2-3f)
+   4: (pickup f2-3f key1-0)
+   5: (move f2-3f f2-4f)
+   6: (unlock f2-4f f2-5f key1-0 shape1)
+   7: (move f2-4f f2-5f)
+   8: (pickup-and-loose f2-5f key2-2 key1-0)
+   9: (move f2-5f f2-4f)
+  10: (move f2-4f f3-4f)
+  11: (move f3-4f f3-3f)
+  12: (move f3-3f f3-2f)
+  13: (move f3-2f f4-2f)
+  14: (unlock f4-2f f5-2f key2-2 shape2)
+  15: (move f4-2f f5-2f)
+  16: (putdown f5-2f key2-2)
+  17: (pickup f5-2f key0-2)
+  18: (move f5-2f f6-2f)
+  19: (unlock f6-2f f6-1f key0-2 shape0)
+  20: (move f6-2f f6-1f)
+  21: (move f6-1f f6-0f)
+  22: (putdown f6-0f key0-2)

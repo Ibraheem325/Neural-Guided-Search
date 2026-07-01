@@ -1,0 +1,39 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_supervised.pth)
+Using GPU:  NVIDIA L40S
+[f=20.896] Expanded: 0, Generated: 0
+[f=20.896] Expanded: 1, Generated: 4
+[f=21.040] Expanded: 2, Generated: 8
+[f=21.052] Expanded: 3, Generated: 13
+[f=22.038] Expanded: 6, Generated: 28
+[f=22.101] Expanded: 7, Generated: 31
+[f=22.108] Expanded: 15, Generated: 65
+[f=22.183] Expanded: 16, Generated: 69
+[f=22.202] Expanded: 20, Generated: 86
+[f=22.256] Expanded: 21, Generated: 89
+[f=22.277] Expanded: 22, Generated: 91
+[Final] Expanded: 38, Generated: 149
+Found a solution of length 21!
+   1: (move f0-2f f0-1f)
+   2: (pickup f0-1f key0-1)
+   3: (move f0-1f f1-1f)
+   4: (move f1-1f f1-0f)
+   5: (move f1-0f f2-0f)
+   6: (unlock f2-0f f3-0f key0-1 shape0)
+   7: (move f2-0f f3-0f)
+   8: (pickup-and-loose f3-0f key1-1 key0-1)
+   9: (unlock f3-0f f3-1f key1-1 shape1)
+  10: (pickup-and-loose f3-0f key0-1 key1-1)
+  11: (move f3-0f f3-1f)
+  12: (putdown f3-1f key0-1)
+  13: (move f3-1f f3-0f)
+  14: (pickup f3-0f key1-1)
+  15: (move f3-0f f2-0f)
+  16: (move f2-0f f1-0f)
+  17: (move f1-0f f0-0f)
+  18: (move f0-0f f0-1f)
+  19: (move f0-1f f0-2f)
+  20: (move f0-2f f0-3f)
+  21: (putdown f0-3f key1-1)

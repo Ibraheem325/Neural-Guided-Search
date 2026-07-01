@@ -124,6 +124,8 @@ def collect_records(domain, model, instances, taus, *, seed,
                 ls = ss.get_state_label(s)
                 if ls.is_goal:
                     continue
+                if ls.is_dead_end:
+                    continue
                 actions = s.generate_applicable_actions()
                 if len(actions) < 1:
                     continue

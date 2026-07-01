@@ -1,0 +1,22 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+17.949: (grasp left shot14)
+14.929: (fill-shot shot14 ingredient3 left right dispenser3)
+15.435: (pour-shot-to-clean-shaker shot14 ingredient3 shaker1 left l0 l1)
+14.144: (leave left shot14)
+14.693: (grasp left shot9)
+15.290: (grasp right shot1)
+14.693: (leave left shot9)
+15.290: (grasp left shot7)
+14.693: (leave right shot1)
+15.290: (grasp right shot9)
+14.693: (leave left shot7)
+15.290: (grasp left shot1)
+14.693: (leave right shot9)
+15.290: (grasp right shot7)
+14.693: (leave left shot1)
+15.290: (grasp left shot9)
+14.693: (leave right shot7)
+Failed to find a solution!

@@ -1,0 +1,35 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/satellite_iqn.pth (w1_lambda=2.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=23876, generated=23875
+  [sim 635] found goal path of length 25
+[Final] Expanded: 29467, Generated: 29467
+[search done] simulations=635, unique states generated=29467
+Found a solution of length 25!
+   1: (switch_on instrument2 satellite1)
+   2: (turn_to satellite1 star13 groundstation6)
+   3: (calibrate satellite1 instrument2 star13)
+   4: (turn_to satellite1 phenomenon16 star13)
+   5: (take_image satellite1 phenomenon16 instrument2 image4)
+   6: (take_image satellite1 phenomenon16 instrument2 spectrograph0)
+   7: (take_image satellite1 phenomenon16 instrument2 image2)
+   8: (switch_on instrument1 satellite0)
+   9: (turn_to satellite0 groundstation7 phenomenon14)
+  10: (calibrate satellite0 instrument1 groundstation7)
+  11: (turn_to satellite0 star15 groundstation7)
+  12: (take_image satellite0 star15 instrument1 infrared5)
+  13: (take_image satellite0 star15 instrument1 image2)
+  14: (turn_to satellite0 phenomenon14 star15)
+  15: (switch_on instrument6 satellite2)
+  16: (turn_to satellite2 groundstation12 groundstation11)
+  17: (calibrate satellite2 instrument6 groundstation12)
+  18: (turn_to satellite2 phenomenon16 groundstation12)
+  19: (take_image satellite2 phenomenon16 instrument6 image3)
+  20: (turn_to satellite1 planet17 phenomenon16)
+  21: (turn_to satellite2 phenomenon14 phenomenon16)
+  22: (take_image satellite1 planet17 instrument2 spectrograph0)
+  23: (turn_to satellite1 phenomenon14 planet17)
+  24: (take_image satellite1 phenomenon14 instrument2 image4)
+  25: (turn_to satellite2 groundstation12 phenomenon14)

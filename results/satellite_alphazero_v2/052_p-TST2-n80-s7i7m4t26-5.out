@@ -1,0 +1,67 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=106457, generated=106456
+  [sim 1000] root visits=1000, unique states=215013, generated=215012
+  [sim 1500] root visits=1500, unique states=322604, generated=322603
+  [sim 2000] root visits=2000, unique states=427916, generated=427915
+  [sim 2500] root visits=2500, unique states=531409, generated=531408
+  [sim 3000] root visits=3000, unique states=633433, generated=633432
+  [sim 3500] root visits=3500, unique states=735481, generated=735480
+  [sim 4000] root visits=4000, unique states=836181, generated=836180
+  [sim 4500] root visits=4500, unique states=935234, generated=935233
+  [sim 5000] root visits=5000, unique states=1035346, generated=1035345
+  [sim 5500] root visits=5500, unique states=1134103, generated=1134102
+  [sim 6000] root visits=6000, unique states=1232245, generated=1232244
+  [sim 6500] root visits=6500, unique states=1331122, generated=1331121
+  [sim 7000] root visits=7000, unique states=1430567, generated=1430566
+  [sim 7500] root visits=7500, unique states=1528852, generated=1528851
+  [sim 8000] root visits=8000, unique states=1623480, generated=1623479
+  [sim 8500] root visits=8500, unique states=1711668, generated=1711667
+  [sim 9000] root visits=9000, unique states=1809400, generated=1809399
+  [sim 9500] root visits=9500, unique states=1908522, generated=1908521
+  [sim 10000] root visits=10000, unique states=2005629, generated=2005628
+  [sim 10500] root visits=10500, unique states=2101620, generated=2101619
+  [sim 11000] root visits=11000, unique states=2196161, generated=2196160
+  [sim 11500] root visits=11500, unique states=2289806, generated=2289805
+  [sim 12000] root visits=12000, unique states=2383187, generated=2383186
+  [sim 12500] root visits=12500, unique states=2475127, generated=2475126
+  [sim 13000] root visits=13000, unique states=2566855, generated=2566854
+  [sim 13270] found goal path of length 33
+[Final] Expanded: 2615623, Generated: 2615623
+[search done] simulations=13270, unique states generated=2615623
+Found a solution of length 33!
+   1: (switch_on instrument9 satellite2)
+   2: (turn_to satellite2 star4 star3)
+   3: (calibrate satellite2 instrument9 star4)
+   4: (turn_to satellite2 star28 star4)
+   5: (take_image satellite2 star28 instrument9 image0)
+   6: (turn_to satellite2 phenomenon29 star28)
+   7: (take_image satellite2 phenomenon29 instrument9 infrared1)
+   8: (turn_to satellite2 star26 phenomenon29)
+   9: (take_image satellite2 star26 instrument9 infrared1)
+  10: (turn_to satellite2 star27 star26)
+  11: (switch_on instrument1 satellite0)
+  12: (switch_on instrument33 satellite6)
+  13: (turn_to satellite6 star27 star17)
+  14: (turn_to satellite0 star6 star20)
+  15: (turn_to satellite0 star27 star6)
+  16: (switch_on instrument12 satellite3)
+  17: (turn_to satellite3 star27 groundstation16)
+  18: (switch_on instrument2 satellite1)
+  19: (switch_on instrument31 satellite5)
+  20: (calibrate satellite5 instrument31 star0)
+  21: (turn_to satellite5 star27 star0)
+  22: (take_image satellite5 star27 instrument31 thermograph2)
+  23: (turn_to satellite5 groundstation9 star27)
+  24: (turn_to satellite5 star28 groundstation9)
+  25: (turn_to satellite2 groundstation9 star27)
+  26: (turn_to satellite2 star22 groundstation9)
+  27: (turn_to satellite5 groundstation9 star28)
+  28: (turn_to satellite2 groundstation9 star22)
+  29: (turn_to satellite5 star27 groundstation9)
+  30: (turn_to satellite2 star28 groundstation9)
+  31: (turn_to satellite5 groundstation9 star27)
+  32: (turn_to satellite5 star22 groundstation9)
+  33: (turn_to satellite4 groundstation9 star0)

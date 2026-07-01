@@ -1,0 +1,35 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/grid_iqn.pth (w1_lambda=1.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1417, generated=1416
+  [sim 1000] root visits=1000, unique states=2779, generated=2778
+  [sim 1500] root visits=1500, unique states=4100, generated=4099
+  [sim 2000] root visits=2000, unique states=5492, generated=5491
+  [sim 2500] root visits=2500, unique states=6831, generated=6830
+  [sim 3000] root visits=3000, unique states=8196, generated=8195
+  [sim 3500] root visits=3500, unique states=9552, generated=9551
+  [sim 4000] root visits=4000, unique states=10979, generated=10978
+  [sim 4500] root visits=4500, unique states=12334, generated=12333
+  [sim 5000] root visits=5000, unique states=13659, generated=13658
+  [sim 5500] root visits=5500, unique states=14920, generated=14919
+  [sim 6000] root visits=6000, unique states=16270, generated=16269
+  [sim 6500] root visits=6500, unique states=17619, generated=17618
+  [sim 7000] root visits=7000, unique states=18875, generated=18874
+  [sim 7500] root visits=7500, unique states=20187, generated=20186
+  [sim 8000] root visits=8000, unique states=21502, generated=21501
+  [sim 8500] root visits=8500, unique states=22841, generated=22840
+  [sim 9000] root visits=9000, unique states=24152, generated=24151
+  [sim 9500] root visits=9500, unique states=25422, generated=25421
+  [sim 10000] root visits=10000, unique states=26650, generated=26649
+[FANOUT] expanded_internal_nodes=9984 mean_children=4.55 mean_visited_children(fanout)=1.17 median_fanout=1 frac_nodes_fanout>1=19% frac_fanout>3=0%
+[WIDTHBUCKET] n=9984 mean_width=2.46 median_width=2.64 frac_low(<1.5)=18% frac_med(1.5-3)=48% frac_high(>=3)=34%
+[BOOSTDEPTH] n=8164 mean_depth_of_boosted_nodes=114.93 median=105 frac_shallow(depth<=10)=0% frac_deep(depth>30)=99%
+[BOOSTPAYOFF] boosted_nodes=8164 frac_with_deadend_child=0% frac_below_best_at_depth=68%
+[W1xDEPTH] d0-20:n=38,meanNW1=0.047 d20-60:n=377,meanNW1=0.064 d60-120:n=6418,meanNW1=0.068 d120-inf:n=4872,meanNW1=0.058
+[QxDEPTH] d0-20:n=31,meanq=0.850,sibStd=0.195 d20-60:n=302,meanq=0.942,sibStd=0.009 d60-120:n=5157,meanq=0.807,sibStd=0.004 d120-inf:n=4129,meanq=0.890,sibStd=0.001
+[DEPTH] expanded_internal_nodes=9984 mean_depth=121.40 median_depth=112 max_depth=238 frac_depth>20=100%
+[Final] Expanded: 27240, Generated: 27240
+[search done] simulations=10244, unique states generated=27240
+Failed to find a solution!

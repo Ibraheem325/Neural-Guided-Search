@@ -1,0 +1,24 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=20875, generated=20874
+  [sim 790] found goal path of length 15
+[Final] Expanded: 32448, Generated: 32448
+[search done] simulations=790, unique states generated=32448
+Found a solution of length 15!
+   1: (switch_on instrument0 satellite0)
+   2: (turn_to satellite0 star0 groundstation4)
+   3: (calibrate satellite0 instrument0 star0)
+   4: (turn_to satellite0 star13 star0)
+   5: (take_image satellite0 star13 instrument0 image4)
+   6: (turn_to satellite0 star15 star13)
+   7: (take_image satellite0 star15 instrument0 spectrograph0)
+   8: (turn_to satellite1 star3 star15)
+   9: (switch_on instrument5 satellite2)
+  10: (turn_to satellite2 star3 groundstation4)
+  11: (calibrate satellite2 instrument5 star3)
+  12: (turn_to satellite2 star12 star3)
+  13: (take_image satellite2 star12 instrument5 image3)
+  14: (turn_to satellite2 star14 star12)
+  15: (take_image satellite2 star14 instrument5 infrared1)

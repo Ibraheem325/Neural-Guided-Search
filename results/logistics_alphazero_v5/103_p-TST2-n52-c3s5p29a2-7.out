@@ -1,0 +1,29 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=9759, generated=9758
+  [sim 1000] root visits=1000, unique states=17000, generated=16999
+  [sim 1500] root visits=1500, unique states=24432, generated=24431
+  [sim 2000] root visits=2000, unique states=31068, generated=31067
+  [sim 2500] root visits=2500, unique states=38044, generated=38043
+  [sim 3000] root visits=3000, unique states=46572, generated=46571
+  [sim 3500] root visits=3500, unique states=54416, generated=54415
+  [sim 4000] root visits=4000, unique states=61816, generated=61815
+  [sim 4500] root visits=4500, unique states=69043, generated=69042
+  [sim 5000] root visits=5000, unique states=76873, generated=76872
+  [sim 5500] root visits=5500, unique states=84880, generated=84879
+  [sim 6000] root visits=6000, unique states=92694, generated=92693
+  [sim 6500] root visits=6500, unique states=100594, generated=100593
+  [sim 7000] root visits=7000, unique states=108523, generated=108522
+  [sim 7500] root visits=7500, unique states=116720, generated=116719
+  [sim 8000] root visits=8000, unique states=125149, generated=125148
+  [sim 8500] root visits=8500, unique states=133697, generated=133696
+  [sim 9000] root visits=9000, unique states=142224, generated=142223
+  [sim 9500] root visits=9500, unique states=150569, generated=150568
+  [sim 10000] root visits=10000, unique states=159025, generated=159024
+  [sim 10500] root visits=10500, unique states=167425, generated=167424
+  [sim 11000] root visits=11000, unique states=175835, generated=175834
+[Final] Expanded: 183479, Generated: 183479
+[search done] simulations=11458, unique states generated=183479
+Failed to find a solution!

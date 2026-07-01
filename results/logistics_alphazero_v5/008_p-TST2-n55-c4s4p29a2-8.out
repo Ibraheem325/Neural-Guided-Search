@@ -1,0 +1,57 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=11436, generated=11435
+  [sim 1000] root visits=1000, unique states=22912, generated=22911
+  [sim 1500] root visits=1500, unique states=36022, generated=36021
+  [sim 2000] root visits=2000, unique states=48812, generated=48811
+  [sim 2500] root visits=2500, unique states=61039, generated=61038
+  [sim 3000] root visits=3000, unique states=73360, generated=73359
+  [sim 3500] root visits=3500, unique states=85831, generated=85830
+  [sim 4000] root visits=4000, unique states=98155, generated=98154
+  [sim 4500] root visits=4500, unique states=110809, generated=110808
+  [sim 5000] root visits=5000, unique states=123482, generated=123481
+  [sim 5500] root visits=5500, unique states=135881, generated=135880
+  [sim 6000] root visits=6000, unique states=148198, generated=148197
+  [sim 6500] root visits=6500, unique states=160416, generated=160415
+  [sim 7000] root visits=7000, unique states=172444, generated=172443
+  [sim 7500] root visits=7500, unique states=184869, generated=184868
+  [sim 8000] root visits=8000, unique states=197392, generated=197391
+  [sim 8500] root visits=8500, unique states=209449, generated=209448
+  [sim 9000] root visits=9000, unique states=221602, generated=221601
+  [sim 9500] root visits=9500, unique states=233807, generated=233806
+  [sim 10000] root visits=10000, unique states=246046, generated=246045
+  [sim 10500] root visits=10500, unique states=258373, generated=258372
+  [sim 11000] root visits=11000, unique states=270641, generated=270640
+  [sim 11500] root visits=11500, unique states=283050, generated=283049
+  [sim 12000] root visits=12000, unique states=295324, generated=295323
+  [sim 12500] root visits=12500, unique states=307638, generated=307637
+  [sim 13000] root visits=13000, unique states=319987, generated=319986
+  [sim 13500] root visits=13500, unique states=332474, generated=332473
+  [sim 14000] root visits=14000, unique states=345057, generated=345056
+  [sim 14500] root visits=14500, unique states=357614, generated=357613
+  [sim 15000] root visits=15000, unique states=370009, generated=370008
+  [sim 15500] root visits=15500, unique states=382359, generated=382358
+  [sim 16000] root visits=16000, unique states=394705, generated=394704
+  [sim 16500] root visits=16500, unique states=407082, generated=407081
+  [sim 17000] root visits=17000, unique states=419497, generated=419496
+  [sim 17500] root visits=17500, unique states=431933, generated=431932
+  [sim 18000] root visits=18000, unique states=444416, generated=444415
+  [sim 18500] root visits=18500, unique states=456867, generated=456866
+  [sim 19000] root visits=19000, unique states=469251, generated=469250
+  [sim 19500] root visits=19500, unique states=481512, generated=481511
+  [sim 20000] root visits=20000, unique states=493233, generated=493232
+  [sim 20500] root visits=20500, unique states=505105, generated=505104
+  [sim 21000] root visits=21000, unique states=516969, generated=516968
+  [sim 21500] root visits=21500, unique states=528962, generated=528961
+  [sim 22000] root visits=22000, unique states=540824, generated=540823
+  [sim 22500] root visits=22500, unique states=552735, generated=552734
+  [sim 23000] root visits=23000, unique states=564727, generated=564726
+  [sim 23500] root visits=23500, unique states=576679, generated=576678
+  [sim 24000] root visits=24000, unique states=588615, generated=588614
+  [sim 24500] root visits=24500, unique states=600602, generated=600601
+  [sim 25000] root visits=25000, unique states=612607, generated=612606
+[Final] Expanded: 620812, Generated: 620812
+[search done] simulations=25344, unique states generated=620812
+Failed to find a solution!

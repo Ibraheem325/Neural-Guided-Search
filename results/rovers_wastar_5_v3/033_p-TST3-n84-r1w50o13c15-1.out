@@ -1,0 +1,24 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Loading model... (models/rovers_supervised.pth)
+Using GPU:  NVIDIA L40S
+[f=55.342] Expanded: 0, Generated: 0
+[Final] Expanded: 1920, Generated: 44971
+Found a solution of length 16!
+   1: (calibrate rover0 camera12 objective12 waypoint45)
+   2: (sample_soil rover0 rover0store waypoint45)
+   3: (navigate rover0 waypoint45 waypoint9)
+   4: (take_image rover0 waypoint9 objective6 camera12 low_res)
+   5: (drop rover0 rover0store)
+   6: (communicate_soil_data rover0 general waypoint45 waypoint9 waypoint33)
+   7: (sample_soil rover0 rover0store waypoint9)
+   8: (communicate_soil_data rover0 general waypoint9 waypoint9 waypoint33)
+   9: (drop rover0 rover0store)
+  10: (navigate rover0 waypoint9 waypoint45)
+  11: (navigate rover0 waypoint45 waypoint43)
+  12: (navigate rover0 waypoint43 waypoint4)
+  13: (sample_soil rover0 rover0store waypoint4)
+  14: (navigate rover0 waypoint4 waypoint43)
+  15: (communicate_soil_data rover0 general waypoint4 waypoint43 waypoint33)
+  16: (communicate_image_data rover0 general objective6 low_res waypoint43 waypoint33)

@@ -1,0 +1,41 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=11898, generated=11897
+  [sim 645] found goal path of length 32
+[Final] Expanded: 15407, Generated: 15407
+[search done] simulations=645, unique states generated=15407
+Found a solution of length 32!
+   1: (turn_to satellite1 star1 groundstation12)
+   2: (switch_on instrument1 satellite1)
+   3: (calibrate satellite1 instrument1 star1)
+   4: (turn_to satellite1 phenomenon13 star1)
+   5: (take_image satellite1 phenomenon13 instrument1 image0)
+   6: (take_image satellite1 phenomenon13 instrument1 infrared5)
+   7: (turn_to satellite0 star2 groundstation11)
+   8: (turn_to satellite1 star10 phenomenon13)
+   9: (turn_to satellite1 phenomenon15 star10)
+  10: (take_image satellite1 phenomenon15 instrument1 infrared5)
+  11: (take_image satellite1 phenomenon15 instrument1 image0)
+  12: (turn_to satellite1 groundstation12 phenomenon15)
+  13: (turn_to satellite1 star16 groundstation12)
+  14: (take_image satellite1 star16 instrument1 infrared5)
+  15: (take_image satellite1 star16 instrument1 image0)
+  16: (turn_to satellite1 phenomenon13 star16)
+  17: (turn_to satellite1 groundstation12 phenomenon13)
+  18: (turn_to satellite1 phenomenon15 groundstation12)
+  19: (turn_to satellite1 star10 phenomenon15)
+  20: (turn_to satellite1 phenomenon14 star10)
+  21: (take_image satellite1 phenomenon14 instrument1 image0)
+  22: (switch_on instrument0 satellite0)
+  23: (turn_to satellite0 groundstation12 star2)
+  24: (calibrate satellite0 instrument0 groundstation12)
+  25: (turn_to satellite0 phenomenon15 groundstation12)
+  26: (take_image satellite0 phenomenon15 instrument0 infrared4)
+  27: (take_image satellite0 phenomenon15 instrument0 infrared1)
+  28: (turn_to satellite0 phenomenon13 phenomenon15)
+  29: (take_image satellite0 phenomenon13 instrument0 infrared3)
+  30: (turn_to satellite0 phenomenon14 phenomenon13)
+  31: (take_image satellite0 phenomenon14 instrument0 infrared1)
+  32: (turn_to satellite0 star2 phenomenon14)

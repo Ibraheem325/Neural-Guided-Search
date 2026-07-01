@@ -1,0 +1,109 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/logistics_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=20.047] Expanded: 13, Generated: 12
+[f=20.088] Expanded: 40, Generated: 52
+[f=20.088] Expanded: 43, Generated: 72
+[f=20.178] Expanded: 83, Generated: 192
+[f=20.265] Expanded: 100, Generated: 221
+[f=20.265] Expanded: 113, Generated: 312
+[f=20.351] Expanded: 125, Generated: 372
+[f=20.412] Expanded: 134, Generated: 381
+[f=20.412] Expanded: 142, Generated: 390
+[f=20.412] Expanded: 149, Generated: 399
+[f=20.412] Expanded: 155, Generated: 408
+[f=20.412] Expanded: 160, Generated: 417
+[f=20.412] Expanded: 168, Generated: 426
+[f=20.412] Expanded: 175, Generated: 436
+[f=20.412] Expanded: 181, Generated: 445
+[f=20.412] Expanded: 186, Generated: 454
+[f=20.412] Expanded: 194, Generated: 463
+[f=20.412] Expanded: 200, Generated: 473
+[f=20.412] Expanded: 205, Generated: 482
+[f=20.412] Expanded: 209, Generated: 491
+[f=20.412] Expanded: 217, Generated: 500
+[f=20.412] Expanded: 224, Generated: 509
+[f=20.412] Expanded: 229, Generated: 518
+[f=20.412] Expanded: 233, Generated: 527
+[f=20.412] Expanded: 236, Generated: 536
+[f=20.412] Expanded: 242, Generated: 545
+[f=20.412] Expanded: 247, Generated: 554
+[f=20.412] Expanded: 250, Generated: 564
+[f=20.412] Expanded: 252, Generated: 573
+[f=20.412] Expanded: 257, Generated: 582
+[f=20.412] Expanded: 261, Generated: 591
+[f=20.412] Expanded: 264, Generated: 601
+[f=20.412] Expanded: 265, Generated: 610
+[f=20.412] Expanded: 269, Generated: 619
+[f=20.412] Expanded: 272, Generated: 628
+[f=20.412] Expanded: 274, Generated: 638
+[f=20.412] Expanded: 275, Generated: 647
+[f=20.431] Expanded: 275, Generated: 672
+[f=20.356] Expanded: 280, Generated: 677
+[f=20.432] Expanded: 283, Generated: 683
+[f=20.356] Expanded: 288, Generated: 689
+[f=20.432] Expanded: 291, Generated: 693
+[f=20.432] Expanded: 291, Generated: 695
+[f=20.437] Expanded: 291, Generated: 697
+[f=20.437] Expanded: 291, Generated: 704
+[f=20.472] Expanded: 385, Generated: 845
+[f=20.472] Expanded: 411, Generated: 1064
+[f=20.473] Expanded: 493, Generated: 1238
+[f=20.473] Expanded: 501, Generated: 1424
+[f=20.530] Expanded: 561, Generated: 1664
+[f=20.530] Expanded: 562, Generated: 1665
+[f=20.530] Expanded: 573, Generated: 1676
+[f=20.532] Expanded: 693, Generated: 1916
+[f=20.532] Expanded: 693, Generated: 2048
+[f=20.532] Expanded: 693, Generated: 2276
+[f=20.534] Expanded: 693, Generated: 2396
+[f=20.588] Expanded: 697, Generated: 2401
+[f=20.588] Expanded: 705, Generated: 2453
+[f=20.588] Expanded: 705, Generated: 2456
+[f=20.590] Expanded: 735, Generated: 2513
+[f=20.590] Expanded: 735, Generated: 2516
+[f=20.591] Expanded: 735, Generated: 2534
+[f=20.591] Expanded: 735, Generated: 2636
+[f=20.592] Expanded: 755, Generated: 2754
+[f=20.592] Expanded: 755, Generated: 2756
+[f=20.626] Expanded: 755, Generated: 2777
+[f=20.626] Expanded: 755, Generated: 2872
+[f=20.626] Expanded: 755, Generated: 2876
+[f=20.631] Expanded: 785, Generated: 2906
+[f=19.875] Expanded: 793, Generated: 2914
+[f=19.957] Expanded: 795, Generated: 2916
+[f=19.957] Expanded: 796, Generated: 2917
+[f=19.957] Expanded: 798, Generated: 2920
+[f=19.957] Expanded: 799, Generated: 2923
+[f=20.077] Expanded: 800, Generated: 2925
+[f=20.140] Expanded: 801, Generated: 2926
+[f=20.140] Expanded: 806, Generated: 2931
+[f=20.077] Expanded: 808, Generated: 2935
+[f=20.140] Expanded: 811, Generated: 2938
+[f=20.118] Expanded: 812, Generated: 2941
+[f=20.167] Expanded: 812, Generated: 2942
+[Final] Expanded: 812, Generated: 2942
+Found a solution of length 20!
+   1: (load-airplane p7 a1 l0-0)
+   2: (load-airplane p12 a1 l0-0)
+   3: (load-airplane p13 a1 l0-0)
+   4: (load-airplane p14 a1 l0-0)
+   5: (load-airplane p15 a1 l0-0)
+   6: (load-airplane p0 a1 l0-0)
+   7: (fly-airplane a1 l0-0 l1-0)
+   8: (load-airplane p9 a1 l1-0)
+   9: (load-airplane p2 a1 l1-0)
+  10: (load-airplane p11 a1 l1-0)
+  11: (unload-airplane p0 a1 l1-0)
+  12: (unload-airplane p7 a1 l1-0)
+  13: (unload-airplane p12 a1 l1-0)
+  14: (unload-airplane p13 a1 l1-0)
+  15: (unload-airplane p14 a1 l1-0)
+  16: (unload-airplane p15 a1 l1-0)
+  17: (fly-airplane a1 l1-0 l0-0)
+  18: (unload-airplane p2 a1 l0-0)
+  19: (unload-airplane p9 a1 l0-0)
+  20: (unload-airplane p11 a1 l0-0)

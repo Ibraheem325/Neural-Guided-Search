@@ -1,0 +1,17 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN loaded: models/grid_iqn.pth (metric=w1, mix_alpha=0.05)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1566, generated=1565
+  [sim 1000] root visits=1000, unique states=2983, generated=2982
+  [sim 1500] root visits=1500, unique states=4112, generated=4111
+  [sim 2000] root visits=2000, unique states=5306, generated=5305
+  [sim 2500] root visits=2500, unique states=6770, generated=6769
+  [sim 3000] root visits=3000, unique states=8293, generated=8292
+  [sim 3500] root visits=3500, unique states=9471, generated=9470
+  [sim 4000] root visits=4000, unique states=10488, generated=10487
+  [sim 4500] root visits=4500, unique states=11895, generated=11894
+  [sim 5000] root visits=5000, unique states=13320, generated=13319
+  [sim 5500] root visits=5500, unique states=14646, generated=14645
+  [sim 6000] root visits=6000, unique states=16082, generated=16081

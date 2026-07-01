@@ -1,0 +1,15 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/logistics_iqn.pth (w1_lambda=1.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=16184, generated=16183
+  [sim 1000] root visits=1000, unique states=32477, generated=32476
+  [sim 1500] root visits=1500, unique states=48217, generated=48216
+  [sim 2000] root visits=2000, unique states=63719, generated=63718
+  [sim 2500] root visits=2500, unique states=79934, generated=79933
+  [sim 3000] root visits=3000, unique states=96290, generated=96289
+  [sim 3500] root visits=3500, unique states=113045, generated=113044
+[Final] Expanded: 117006, Generated: 117006
+[search done] simulations=3628, unique states generated=117006
+Failed to find a solution!

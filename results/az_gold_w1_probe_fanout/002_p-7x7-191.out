@@ -1,0 +1,53 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/goldminer_iqn.pth (w1_lambda=1.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 77] found goal path of length 38
+[FANOUT] expanded_internal_nodes=67 mean_children=4.85 mean_visited_children(fanout)=0.99 median_fanout=1 frac_nodes_fanout>1=12% frac_fanout>3=0%
+[WIDTHBUCKET] n=67 mean_width=3.56 median_width=3.69 frac_low(<1.5)=4% frac_med(1.5-3)=19% frac_high(>=3)=76%
+[BOOSTDEPTH] n=64 mean_depth_of_boosted_nodes=13.52 median=11 frac_shallow(depth<=10)=47% frac_deep(depth>30)=6%
+[BOOSTPAYOFF] boosted_nodes=64 frac_with_deadend_child=0% frac_below_best_at_depth=45%
+[W1xDEPTH] d0-20:n=49,meanNW1=0.074 d20-60:n=17,meanNW1=0.093 d60-120:n=0 d120-inf:n=0
+[DEPTH] expanded_internal_nodes=67 mean_depth=14.52 median_depth=11 max_depth=37 frac_depth>20=25%
+[Final] Expanded: 197, Generated: 197
+[search done] simulations=77, unique states generated=197
+Found a solution of length 38!
+   1: (move f1-0f f2-0f)
+   2: (move f2-0f f3-0f)
+   3: (pickup-laser f3-0f)
+   4: (fire-laser f3-0f f3-1f)
+   5: (move f3-0f f2-0f)
+   6: (move f2-0f f1-0f)
+   7: (move f1-0f f0-0f)
+   8: (fire-laser f0-0f f0-1f)
+   9: (move f0-0f f0-1f)
+  10: (fire-laser f0-1f f0-2f)
+  11: (move f0-1f f0-2f)
+  12: (fire-laser f0-2f f0-3f)
+  13: (move f0-2f f0-3f)
+  14: (fire-laser f0-3f f0-4f)
+  15: (move f0-3f f0-4f)
+  16: (fire-laser f0-4f f0-5f)
+  17: (move f0-4f f0-5f)
+  18: (putdown-laser f0-5f)
+  19: (move f0-5f f0-4f)
+  20: (move f0-4f f0-3f)
+  21: (move f0-3f f0-2f)
+  22: (move f0-2f f0-1f)
+  23: (move f0-1f f0-0f)
+  24: (move f0-0f f1-0f)
+  25: (move f1-0f f2-0f)
+  26: (move f2-0f f3-0f)
+  27: (pickup-bomb f3-0f)
+  28: (move f3-0f f2-0f)
+  29: (move f2-0f f1-0f)
+  30: (move f1-0f f0-0f)
+  31: (move f0-0f f0-1f)
+  32: (move f0-1f f0-2f)
+  33: (move f0-2f f0-3f)
+  34: (move f0-3f f0-4f)
+  35: (move f0-4f f0-5f)
+  36: (detonate-bomb f0-5f f0-6f)
+  37: (move f0-5f f0-6f)
+  38: (pick-gold f0-6f)

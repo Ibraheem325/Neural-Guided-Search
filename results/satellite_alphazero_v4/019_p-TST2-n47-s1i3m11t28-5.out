@@ -1,0 +1,36 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 418] found goal path of length 28
+[Final] Expanded: 10111, Generated: 10111
+[search done] simulations=418, unique states generated=10111
+Found a solution of length 28!
+   1: (switch_on instrument0 satellite0)
+   2: (turn_to satellite0 groundstation25 star8)
+   3: (calibrate satellite0 instrument0 groundstation25)
+   4: (turn_to satellite0 star31 groundstation25)
+   5: (take_image satellite0 star31 instrument0 image0)
+   6: (take_image satellite0 star31 instrument0 image7)
+   7: (take_image satellite0 star31 instrument0 infrared3)
+   8: (take_image satellite0 star31 instrument0 infrared10)
+   9: (take_image satellite0 star31 instrument0 thermograph9)
+  10: (take_image satellite0 star31 instrument0 image6)
+  11: (turn_to satellite0 star4 star31)
+  12: (turn_to satellite0 star29 star4)
+  13: (take_image satellite0 star29 instrument0 image7)
+  14: (take_image satellite0 star29 instrument0 image0)
+  15: (turn_to satellite0 star31 star29)
+  16: (turn_to satellite0 star4 star31)
+  17: (turn_to satellite0 star28 star4)
+  18: (take_image satellite0 star28 instrument0 image7)
+  19: (switch_off instrument0 satellite0)
+  20: (switch_on instrument1 satellite0)
+  21: (turn_to satellite0 groundstation12 star28)
+  22: (calibrate satellite0 instrument1 groundstation12)
+  23: (turn_to satellite0 star31 groundstation12)
+  24: (take_image satellite0 star31 instrument1 image8)
+  25: (take_image satellite0 star31 instrument1 infrared4)
+  26: (turn_to satellite0 planet30 star31)
+  27: (take_image satellite0 planet30 instrument1 thermograph2)
+  28: (take_image satellite0 planet30 instrument1 image8)

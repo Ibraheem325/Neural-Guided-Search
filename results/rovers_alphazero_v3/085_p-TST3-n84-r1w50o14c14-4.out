@@ -1,0 +1,58 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=20827, generated=20826
+  [sim 1000] root visits=1000, unique states=38956, generated=38955
+  [sim 1500] root visits=1500, unique states=61207, generated=61206
+  [sim 2000] root visits=2000, unique states=81905, generated=81904
+  [sim 2500] root visits=2500, unique states=100640, generated=100639
+  [sim 3000] root visits=3000, unique states=118206, generated=118205
+  [sim 3500] root visits=3500, unique states=140955, generated=140954
+  [sim 4000] root visits=4000, unique states=163937, generated=163936
+  [sim 4500] root visits=4500, unique states=186647, generated=186646
+  [sim 5000] root visits=5000, unique states=212752, generated=212751
+  [sim 5500] root visits=5500, unique states=234271, generated=234270
+  [sim 5511] found goal path of length 39
+[Final] Expanded: 234670, Generated: 234670
+[search done] simulations=5511, unique states generated=234670
+Found a solution of length 39!
+   1: (calibrate rover0 camera13 objective8 waypoint20)
+   2: (calibrate rover0 camera12 objective3 waypoint20)
+   3: (calibrate rover0 camera0 objective7 waypoint20)
+   4: (calibrate rover0 camera1 objective11 waypoint20)
+   5: (take_image rover0 waypoint20 objective9 camera0 low_res)
+   6: (navigate rover0 waypoint20 waypoint22)
+   7: (navigate rover0 waypoint22 waypoint3)
+   8: (communicate_image_data rover0 general objective9 low_res waypoint3 waypoint11)
+   9: (calibrate rover0 camera8 objective13 waypoint3)
+  10: (calibrate rover0 camera5 objective9 waypoint3)
+  11: (take_image rover0 waypoint3 objective0 camera5 high_res)
+  12: (communicate_image_data rover0 general objective0 high_res waypoint3 waypoint11)
+  13: (navigate rover0 waypoint3 waypoint22)
+  14: (navigate rover0 waypoint22 waypoint0)
+  15: (calibrate rover0 camera5 objective9 waypoint0)
+  16: (take_image rover0 waypoint0 objective5 camera5 high_res)
+  17: (navigate rover0 waypoint0 waypoint22)
+  18: (navigate rover0 waypoint22 waypoint35)
+  19: (communicate_image_data rover0 general objective5 high_res waypoint35 waypoint11)
+  20: (navigate rover0 waypoint35 waypoint22)
+  21: (navigate rover0 waypoint22 waypoint20)
+  22: (navigate rover0 waypoint20 waypoint21)
+  23: (navigate rover0 waypoint21 waypoint40)
+  24: (sample_soil rover0 rover0store waypoint40)
+  25: (navigate rover0 waypoint40 waypoint21)
+  26: (navigate rover0 waypoint21 waypoint20)
+  27: (navigate rover0 waypoint20 waypoint1)
+  28: (navigate rover0 waypoint1 waypoint14)
+  29: (drop rover0 rover0store)
+  30: (sample_soil rover0 rover0store waypoint14)
+  31: (navigate rover0 waypoint14 waypoint1)
+  32: (navigate rover0 waypoint1 waypoint10)
+  33: (communicate_soil_data rover0 general waypoint40 waypoint10 waypoint11)
+  34: (communicate_soil_data rover0 general waypoint14 waypoint10 waypoint11)
+  35: (navigate rover0 waypoint10 waypoint12)
+  36: (drop rover0 rover0store)
+  37: (sample_soil rover0 rover0store waypoint12)
+  38: (navigate rover0 waypoint12 waypoint10)
+  39: (communicate_soil_data rover0 general waypoint12 waypoint10 waypoint11)

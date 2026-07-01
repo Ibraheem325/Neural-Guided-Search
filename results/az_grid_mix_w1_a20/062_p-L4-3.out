@@ -1,0 +1,31 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN loaded: models/grid_iqn.pth (metric=w1, mix_alpha=0.2)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1622, generated=1621
+  [sim 1000] root visits=1000, unique states=3231, generated=3230
+  [sim 1500] root visits=1500, unique states=4795, generated=4794
+  [sim 2000] root visits=2000, unique states=6278, generated=6277
+  [sim 2500] root visits=2500, unique states=7830, generated=7829
+  [sim 3000] root visits=3000, unique states=9394, generated=9393
+  [sim 3500] root visits=3500, unique states=10943, generated=10942
+  [sim 4000] root visits=4000, unique states=12372, generated=12371
+  [sim 4500] root visits=4500, unique states=12891, generated=12890
+  [sim 5000] root visits=5000, unique states=13789, generated=13788
+  [sim 5500] root visits=5500, unique states=14640, generated=14639
+  [sim 6000] root visits=6000, unique states=15638, generated=15637
+  [sim 6500] root visits=6500, unique states=17091, generated=17090
+  [sim 7000] root visits=7000, unique states=18394, generated=18393
+  [sim 7500] root visits=7500, unique states=19285, generated=19284
+  [sim 8000] root visits=8000, unique states=20649, generated=20648
+  [sim 8500] root visits=8500, unique states=21769, generated=21768
+  [sim 9000] root visits=9000, unique states=22943, generated=22942
+  [sim 9500] root visits=9500, unique states=24349, generated=24348
+  [sim 10000] root visits=10000, unique states=25762, generated=25761
+  [sim 10500] root visits=10500, unique states=27139, generated=27138
+  [sim 11000] root visits=11000, unique states=28525, generated=28524
+  [sim 11500] root visits=11500, unique states=29891, generated=29890
+[Final] Expanded: 30058, Generated: 30058
+[search done] simulations=11556, unique states generated=30058
+Failed to find a solution!

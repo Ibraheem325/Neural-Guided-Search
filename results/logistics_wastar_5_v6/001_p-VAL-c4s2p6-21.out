@@ -1,0 +1,142 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Loading model... (models/logistics_supervised.pth)
+Using GPU:  NVIDIA L40S
+[f=76.083] Expanded: 0, Generated: 0
+[f=76.083] Expanded: 49, Generated: 744
+[f=76.516] Expanded: 50, Generated: 761
+[f=76.560] Expanded: 51, Generated: 775
+[f=76.568] Expanded: 52, Generated: 792
+[f=76.666] Expanded: 53, Generated: 810
+[f=76.691] Expanded: 54, Generated: 827
+[f=76.693] Expanded: 55, Generated: 841
+[f=76.699] Expanded: 56, Generated: 859
+[f=76.706] Expanded: 57, Generated: 877
+[f=76.774] Expanded: 58, Generated: 891
+[f=76.888] Expanded: 59, Generated: 907
+[f=76.969] Expanded: 60, Generated: 924
+[f=77.047] Expanded: 61, Generated: 938
+[f=77.059] Expanded: 62, Generated: 952
+[f=77.063] Expanded: 63, Generated: 968
+[f=77.103] Expanded: 64, Generated: 984
+[f=77.124] Expanded: 65, Generated: 999
+[f=77.158] Expanded: 66, Generated: 1014
+[f=77.176] Expanded: 67, Generated: 1032
+[f=77.207] Expanded: 68, Generated: 1046
+[f=77.243] Expanded: 69, Generated: 1060
+[f=77.651] Expanded: 70, Generated: 1077
+[f=77.826] Expanded: 71, Generated: 1094
+[f=77.865] Expanded: 72, Generated: 1111
+[f=78.011] Expanded: 73, Generated: 1125
+[f=78.023] Expanded: 74, Generated: 1139
+[f=78.134] Expanded: 75, Generated: 1153
+[f=78.140] Expanded: 76, Generated: 1170
+[f=78.161] Expanded: 77, Generated: 1187
+[f=78.172] Expanded: 78, Generated: 1201
+[f=78.196] Expanded: 79, Generated: 1214
+[f=78.199] Expanded: 80, Generated: 1229
+[f=78.207] Expanded: 81, Generated: 1242
+[f=78.216] Expanded: 82, Generated: 1260
+[f=78.218] Expanded: 83, Generated: 1273
+[f=78.249] Expanded: 84, Generated: 1291
+[f=78.282] Expanded: 85, Generated: 1305
+[f=78.283] Expanded: 86, Generated: 1319
+[f=78.299] Expanded: 87, Generated: 1336
+[f=78.305] Expanded: 88, Generated: 1350
+[f=78.318] Expanded: 89, Generated: 1364
+[f=78.335] Expanded: 90, Generated: 1381
+[f=79.081] Expanded: 91, Generated: 1396
+[f=79.099] Expanded: 92, Generated: 1410
+[f=79.104] Expanded: 93, Generated: 1427
+[f=79.125] Expanded: 94, Generated: 1444
+[f=79.160] Expanded: 95, Generated: 1457
+[f=79.171] Expanded: 96, Generated: 1470
+[f=79.182] Expanded: 97, Generated: 1483
+[f=79.235] Expanded: 98, Generated: 1500
+[f=79.248] Expanded: 99, Generated: 1514
+[f=79.263] Expanded: 100, Generated: 1531
+[f=79.270] Expanded: 101, Generated: 1545
+[f=79.271] Expanded: 102, Generated: 1558
+[f=79.278] Expanded: 103, Generated: 1573
+[f=79.278] Expanded: 104, Generated: 1587
+[f=79.287] Expanded: 105, Generated: 1603
+[f=79.289] Expanded: 106, Generated: 1621
+[f=79.293] Expanded: 107, Generated: 1634
+[f=79.299] Expanded: 108, Generated: 1650
+[f=79.320] Expanded: 109, Generated: 1666
+[f=79.358] Expanded: 110, Generated: 1680
+[f=79.373] Expanded: 111, Generated: 1697
+[f=79.376] Expanded: 112, Generated: 1714
+[f=79.397] Expanded: 113, Generated: 1731
+[f=79.408] Expanded: 114, Generated: 1748
+[f=79.464] Expanded: 115, Generated: 1761
+[f=79.635] Expanded: 116, Generated: 1776
+[f=79.845] Expanded: 117, Generated: 1792
+[f=80.043] Expanded: 118, Generated: 1808
+[f=80.043] Expanded: 119, Generated: 1823
+[f=80.091] Expanded: 120, Generated: 1837
+[f=80.108] Expanded: 121, Generated: 1851
+[f=80.174] Expanded: 122, Generated: 1869
+[f=80.200] Expanded: 123, Generated: 1886
+[f=80.222] Expanded: 124, Generated: 1900
+[f=80.236] Expanded: 125, Generated: 1913
+[f=80.240] Expanded: 126, Generated: 1927
+[f=80.240] Expanded: 127, Generated: 1940
+[f=80.240] Expanded: 128, Generated: 1954
+[f=80.251] Expanded: 129, Generated: 1967
+[f=80.252] Expanded: 130, Generated: 1983
+[f=80.258] Expanded: 131, Generated: 1996
+[f=80.264] Expanded: 132, Generated: 2012
+[f=80.268] Expanded: 133, Generated: 2025
+[f=80.285] Expanded: 134, Generated: 2041
+[f=80.330] Expanded: 135, Generated: 2058
+[f=80.338] Expanded: 136, Generated: 2075
+[f=80.354] Expanded: 137, Generated: 2089
+[f=80.356] Expanded: 138, Generated: 2104
+[f=80.361] Expanded: 139, Generated: 2120
+[f=80.362] Expanded: 140, Generated: 2137
+[f=80.369] Expanded: 141, Generated: 2152
+[f=80.370] Expanded: 142, Generated: 2169
+[f=80.374] Expanded: 143, Generated: 2183
+[f=80.395] Expanded: 144, Generated: 2199
+[f=80.429] Expanded: 145, Generated: 2212
+[f=80.437] Expanded: 146, Generated: 2226
+[f=80.449] Expanded: 147, Generated: 2243
+[f=80.450] Expanded: 148, Generated: 2258
+[f=80.524] Expanded: 149, Generated: 2273
+[f=80.556] Expanded: 150, Generated: 2289
+[Final] Expanded: 6456, Generated: 108728
+Found a solution of length 32!
+   1: (load-airplane p1 a0 l3-0)
+   2: (drive-truck t0 l0-0 l0-1 c0)
+   3: (load-truck p4 t1 l1-1)
+   4: (drive-truck t1 l1-1 l1-0 c1)
+   5: (unload-truck p4 t1 l1-0)
+   6: (fly-airplane a0 l3-0 l0-0)
+   7: (load-truck p0 t0 l0-1)
+   8: (drive-truck t0 l0-1 l0-0 c0)
+   9: (unload-truck p0 t0 l0-0)
+  10: (load-airplane p0 a0 l0-0)
+  11: (drive-truck t0 l0-0 l0-1 c0)
+  12: (load-truck p5 t0 l0-1)
+  13: (fly-airplane a0 l0-0 l3-0)
+  14: (load-truck p3 t0 l0-1)
+  15: (drive-truck t0 l0-1 l0-0 c0)
+  16: (unload-truck p3 t0 l0-0)
+  17: (drive-truck t0 l0-0 l0-1 c0)
+  18: (fly-airplane a0 l3-0 l0-0)
+  19: (load-airplane p3 a0 l0-0)
+  20: (fly-airplane a0 l0-0 l3-0)
+  21: (unload-airplane p3 a0 l3-0)
+  22: (drive-truck t0 l0-1 l0-0 c0)
+  23: (unload-truck p5 t0 l0-0)
+  24: (fly-airplane a0 l3-0 l0-0)
+  25: (load-airplane p5 a0 l0-0)
+  26: (fly-airplane a0 l0-0 l2-0)
+  27: (unload-airplane p0 a0 l2-0)
+  28: (unload-airplane p5 a0 l2-0)
+  29: (unload-airplane p1 a0 l2-0)
+  30: (load-truck p1 t2 l2-0)
+  31: (drive-truck t2 l2-0 l2-1 c2)
+  32: (unload-truck p1 t2 l2-1)

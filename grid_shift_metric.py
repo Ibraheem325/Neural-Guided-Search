@@ -82,7 +82,7 @@ def atoms_by_pred(state):
     d = {}
     for atom in state.get_atoms():
         name = atom.get_predicate().get_name()
-        d.setdefault(name, []).append([str(o) for o in atom.get_objects()])
+        d.setdefault(name, []).append([str(o) for o in atom.get_terms()])
     return d
 
 def is_unlock_critical(state):

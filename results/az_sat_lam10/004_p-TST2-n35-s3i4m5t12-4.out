@@ -1,0 +1,25 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN uncertainty oracle loaded: models/satellite_iqn.pth (width_beta=0.0, width_gamma=0.0, width_tau=0.0, width_lambda=1.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=21872, generated=21871
+  [sim 624] found goal path of length 15
+[Final] Expanded: 27481, Generated: 27481
+[search done] simulations=624, unique states generated=27481
+Found a solution of length 15!
+   1: (switch_on instrument0 satellite0)
+   2: (turn_to satellite0 star6 groundstation4)
+   3: (calibrate satellite0 instrument0 star6)
+   4: (turn_to satellite0 star15 star6)
+   5: (take_image satellite0 star15 instrument0 infrared4)
+   6: (turn_to satellite0 star13 star15)
+   7: (take_image satellite0 star13 instrument0 thermograph0)
+   8: (turn_to satellite0 phenomenon12 star13)
+   9: (take_image satellite0 phenomenon12 instrument0 image3)
+  10: (turn_to satellite0 star14 phenomenon12)
+  11: (switch_on instrument5 satellite2)
+  12: (turn_to satellite2 groundstation4 star3)
+  13: (calibrate satellite2 instrument5 groundstation4)
+  14: (turn_to satellite2 star14 groundstation4)
+  15: (take_image satellite2 star14 instrument5 infrared1)

@@ -59,7 +59,7 @@ def main():
 
     def policy_prior(state, goal):
         acts = state.generate_applicable_actions()
-        logits = pol_raw.forward([(state, acts, goal)]).readout('policy')
+        logits = pol_raw.forward([(state, acts, goal)]).readout('policy')[0]
         return torch.softmax(logits, dim=0).cpu().numpy(), acts
 
     files = sorted(f for f in Path(f'{base}/{args.split}').glob('*.pddl') if f.name != 'domain.pddl')

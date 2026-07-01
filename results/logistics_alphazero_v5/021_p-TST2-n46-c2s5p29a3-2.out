@@ -1,0 +1,29 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=11048, generated=11047
+  [sim 1000] root visits=1000, unique states=21805, generated=21804
+  [sim 1500] root visits=1500, unique states=32254, generated=32253
+  [sim 2000] root visits=2000, unique states=41951, generated=41950
+  [sim 2500] root visits=2500, unique states=51849, generated=51848
+  [sim 3000] root visits=3000, unique states=61470, generated=61469
+  [sim 3500] root visits=3500, unique states=70686, generated=70685
+  [sim 4000] root visits=4000, unique states=80144, generated=80143
+  [sim 4500] root visits=4500, unique states=89252, generated=89251
+  [sim 5000] root visits=5000, unique states=98287, generated=98286
+  [sim 5500] root visits=5500, unique states=107197, generated=107196
+  [sim 6000] root visits=6000, unique states=116238, generated=116237
+  [sim 6500] root visits=6500, unique states=125420, generated=125419
+  [sim 7000] root visits=7000, unique states=134407, generated=134406
+  [sim 7500] root visits=7500, unique states=143460, generated=143459
+  [sim 8000] root visits=8000, unique states=152726, generated=152725
+  [sim 8500] root visits=8500, unique states=161930, generated=161929
+  [sim 9000] root visits=9000, unique states=170834, generated=170833
+  [sim 9500] root visits=9500, unique states=179637, generated=179636
+  [sim 10000] root visits=10000, unique states=188586, generated=188585
+  [sim 10500] root visits=10500, unique states=197422, generated=197421
+  [sim 11000] root visits=11000, unique states=206253, generated=206252
+[Final] Expanded: 209662, Generated: 209662
+[search done] simulations=11196, unique states generated=209662
+Failed to find a solution!

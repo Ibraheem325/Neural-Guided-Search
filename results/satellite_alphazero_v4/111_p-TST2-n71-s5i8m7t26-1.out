@@ -1,0 +1,44 @@
+Torch: 2.12.0+cu130
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Using GPU:  NVIDIA L40S
+  [sim 500] root visits=500, unique states=62101, generated=62100
+  [sim 1000] root visits=1000, unique states=135687, generated=135686
+  [sim 1117] found goal path of length 34
+[Final] Expanded: 152519, Generated: 152519
+[search done] simulations=1117, unique states generated=152519
+Found a solution of length 34!
+   1: (switch_on instrument8 satellite2)
+   2: (turn_to satellite2 groundstation16 star21)
+   3: (calibrate satellite2 instrument8 groundstation16)
+   4: (turn_to satellite2 planet27 groundstation16)
+   5: (take_image satellite2 planet27 instrument8 thermograph2)
+   6: (turn_to satellite2 star1 planet27)
+   7: (turn_to satellite2 star29 star1)
+   8: (take_image satellite2 star29 instrument8 thermograph2)
+   9: (switch_on instrument3 satellite0)
+  10: (turn_to satellite0 groundstation2 star19)
+  11: (calibrate satellite0 instrument3 groundstation2)
+  12: (turn_to satellite0 planet27 groundstation2)
+  13: (take_image satellite0 planet27 instrument3 infrared5)
+  14: (take_image satellite0 planet27 instrument3 thermograph0)
+  15: (turn_to satellite0 star1 planet27)
+  16: (turn_to satellite0 planet28 star1)
+  17: (take_image satellite0 planet28 instrument3 infrared5)
+  18: (take_image satellite0 planet28 instrument3 thermograph2)
+  19: (take_image satellite0 planet28 instrument3 thermograph0)
+  20: (turn_to satellite0 star5 planet28)
+  21: (turn_to satellite0 planet27 star5)
+  22: (turn_to satellite0 groundstation2 planet27)
+  23: (turn_to satellite0 star29 groundstation2)
+  24: (take_image satellite0 star29 instrument3 infrared5)
+  25: (turn_to satellite0 groundstation9 star29)
+  26: (switch_on instrument19 satellite3)
+  27: (turn_to satellite3 groundstation0 groundstation2)
+  28: (calibrate satellite3 instrument19 groundstation0)
+  29: (turn_to satellite3 planet27 groundstation0)
+  30: (take_image satellite3 planet27 instrument19 image6)
+  31: (turn_to satellite3 planet28 planet27)
+  32: (take_image satellite3 planet28 instrument19 thermograph3)
+  33: (turn_to satellite3 phenomenon26 planet28)
+  34: (take_image satellite3 phenomenon26 instrument19 thermograph3)

@@ -1,0 +1,94 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN loaded: models/grid_iqn.pth (metric=w1, mix_alpha=0.2)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1296, generated=1295
+  [sim 1000] root visits=1000, unique states=2160, generated=2159
+  [sim 1500] root visits=1500, unique states=3409, generated=3408
+  [sim 2000] root visits=2000, unique states=4294, generated=4293
+  [sim 2500] root visits=2500, unique states=5479, generated=5478
+  [sim 3000] root visits=3000, unique states=6485, generated=6484
+  [sim 3500] root visits=3500, unique states=7426, generated=7425
+  [sim 4000] root visits=4000, unique states=8443, generated=8442
+  [sim 4500] root visits=4500, unique states=9638, generated=9637
+  [sim 5000] root visits=5000, unique states=10679, generated=10678
+  [sim 5500] root visits=5500, unique states=11740, generated=11739
+  [sim 6000] root visits=6000, unique states=12872, generated=12871
+  [sim 6500] root visits=6500, unique states=13989, generated=13988
+  [sim 7000] root visits=7000, unique states=15023, generated=15022
+  [sim 7500] root visits=7500, unique states=15949, generated=15948
+  [sim 8000] root visits=8000, unique states=17042, generated=17041
+  [sim 8500] root visits=8500, unique states=18064, generated=18063
+  [sim 9000] root visits=9000, unique states=19108, generated=19107
+  [sim 9500] root visits=9500, unique states=19898, generated=19897
+  [sim 10000] root visits=10000, unique states=20355, generated=20354
+  [sim 10500] root visits=10500, unique states=21324, generated=21323
+  [sim 11000] root visits=11000, unique states=22401, generated=22400
+  [sim 11500] root visits=11500, unique states=23505, generated=23504
+  [sim 12000] root visits=12000, unique states=24613, generated=24612
+  [sim 12028] found goal path of length 61
+[Final] Expanded: 24686, Generated: 24686
+[search done] simulations=12028, unique states generated=24686
+Found a solution of length 61!
+   1: (pickup f6-1f key0-0)
+   2: (move f6-1f f6-2f)
+   3: (move f6-2f f5-2f)
+   4: (move f5-2f f5-1f)
+   5: (putdown f5-1f key0-0)
+   6: (move f5-1f f5-2f)
+   7: (move f5-2f f4-2f)
+   8: (move f4-2f f4-3f)
+   9: (move f4-3f f5-3f)
+  10: (move f5-3f f5-4f)
+  11: (move f5-4f f6-4f)
+  12: (pickup f6-4f key0-2)
+  13: (move f6-4f f5-4f)
+  14: (move f5-4f f4-4f)
+  15: (move f4-4f f4-3f)
+  16: (putdown f4-3f key0-2)
+  17: (move f4-3f f4-2f)
+  18: (move f4-2f f5-2f)
+  19: (move f5-2f f5-1f)
+  20: (pickup f5-1f key0-0)
+  21: (unlock f5-1f f4-1f key0-0 shape0)
+  22: (move f5-1f f4-1f)
+  23: (move f4-1f f3-1f)
+  24: (move f3-1f f3-0f)
+  25: (unlock f3-0f f2-0f key0-0 shape0)
+  26: (move f3-0f f2-0f)
+  27: (putdown f2-0f key0-0)
+  28: (pickup f2-0f key1-1)
+  29: (unlock f2-0f f1-0f key1-1 shape1)
+  30: (move f2-0f f3-0f)
+  31: (putdown f3-0f key1-1)
+  32: (move f3-0f f2-0f)
+  33: (move f2-0f f2-1f)
+  34: (move f2-1f f3-1f)
+  35: (move f3-1f f4-1f)
+  36: (move f4-1f f5-1f)
+  37: (move f5-1f f5-2f)
+  38: (move f5-2f f5-3f)
+  39: (move f5-3f f5-4f)
+  40: (move f5-4f f5-5f)
+  41: (pickup f5-5f key2-1)
+  42: (move f5-5f f4-5f)
+  43: (move f4-5f f3-5f)
+  44: (move f3-5f f2-5f)
+  45: (move f2-5f f1-5f)
+  46: (move f1-5f f0-5f)
+  47: (pickup-and-loose f0-5f key3-1 key2-1)
+  48: (move f0-5f f0-4f)
+  49: (move f0-4f f0-3f)
+  50: (move f0-3f f1-3f)
+  51: (move f1-3f f2-3f)
+  52: (move f2-3f f3-3f)
+  53: (putdown f3-3f key3-1)
+  54: (move f3-3f f2-3f)
+  55: (move f2-3f f1-3f)
+  56: (move f1-3f f0-3f)
+  57: (pickup f0-3f key2-0)
+  58: (move f0-3f f1-3f)
+  59: (move f1-3f f2-3f)
+  60: (move f2-3f f3-3f)
+  61: (putdown f3-3f key2-0)

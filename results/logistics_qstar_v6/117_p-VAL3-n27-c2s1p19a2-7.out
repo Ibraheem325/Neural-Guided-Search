@@ -1,0 +1,71 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/logistics_dqn.pth)
+Using GPU:  NVIDIA L40S
+Starting Q* search...
+[f=18.163] Expanded: 5, Generated: 4
+[f=18.154] Expanded: 9, Generated: 8
+[f=18.154] Expanded: 12, Generated: 12
+[f=18.154] Expanded: 14, Generated: 16
+[f=18.154] Expanded: 15, Generated: 20
+[f=18.168] Expanded: 18, Generated: 23
+[f=18.168] Expanded: 21, Generated: 32
+[f=18.198] Expanded: 37, Generated: 48
+[f=18.212] Expanded: 37, Generated: 52
+[f=18.212] Expanded: 37, Generated: 64
+[f=18.324] Expanded: 41, Generated: 76
+[f=18.336] Expanded: 45, Generated: 84
+[f=18.336] Expanded: 45, Generated: 88
+[f=18.368] Expanded: 69, Generated: 112
+[f=18.380] Expanded: 73, Generated: 116
+[f=18.380] Expanded: 93, Generated: 136
+[f=18.411] Expanded: 93, Generated: 152
+[f=18.411] Expanded: 93, Generated: 184
+[f=18.411] Expanded: 93, Generated: 204
+[f=18.411] Expanded: 93, Generated: 232
+[f=18.203] Expanded: 98, Generated: 237
+[f=18.237] Expanded: 104, Generated: 249
+[f=18.273] Expanded: 108, Generated: 259
+[f=18.273] Expanded: 108, Generated: 261
+[f=17.245] Expanded: 109, Generated: 266
+[f=17.246] Expanded: 113, Generated: 270
+[f=18.245] Expanded: 113, Generated: 271
+[f=17.861] Expanded: 119, Generated: 277
+[f=17.882] Expanded: 120, Generated: 279
+[f=17.882] Expanded: 122, Generated: 283
+[f=17.929] Expanded: 123, Generated: 286
+[f=17.882] Expanded: 126, Generated: 292
+[f=17.929] Expanded: 127, Generated: 295
+[f=17.929] Expanded: 129, Generated: 301
+[f=17.975] Expanded: 130, Generated: 305
+[f=17.998] Expanded: 134, Generated: 309
+[f=18.029] Expanded: 136, Generated: 311
+[f=18.029] Expanded: 137, Generated: 315
+[f=17.998] Expanded: 140, Generated: 319
+[f=18.029] Expanded: 141, Generated: 321
+[f=18.029] Expanded: 141, Generated: 323
+[f=17.998] Expanded: 143, Generated: 327
+[f=18.029] Expanded: 143, Generated: 329
+[f=17.998] Expanded: 144, Generated: 333
+[f=18.208] Expanded: 144, Generated: 334
+[Final] Expanded: 144, Generated: 334
+Found a solution of length 18!
+   1: (load-airplane p6 a1 l1-0)
+   2: (load-airplane p12 a1 l1-0)
+   3: (load-airplane p18 a1 l1-0)
+   4: (load-airplane p13 a1 l1-0)
+   5: (load-airplane p7 a0 l0-0)
+   6: (load-airplane p8 a0 l0-0)
+   7: (load-airplane p16 a0 l0-0)
+   8: (load-airplane p15 a0 l0-0)
+   9: (fly-airplane a0 l0-0 l1-0)
+  10: (unload-airplane p7 a0 l1-0)
+  11: (unload-airplane p8 a0 l1-0)
+  12: (unload-airplane p15 a0 l1-0)
+  13: (unload-airplane p16 a0 l1-0)
+  14: (fly-airplane a1 l1-0 l0-0)
+  15: (unload-airplane p18 a1 l0-0)
+  16: (unload-airplane p6 a1 l0-0)
+  17: (unload-airplane p12 a1 l0-0)
+  18: (unload-airplane p13 a1 l0-0)

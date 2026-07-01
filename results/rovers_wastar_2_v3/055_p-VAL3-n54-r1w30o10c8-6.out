@@ -1,0 +1,19 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:151: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  max_msg.index_reduce_(0, output_indices, output_messages, reduce='amax', include_self=True)
+Torch: 2.12.0+cu130
+Loading model... (models/rovers_supervised.pth)
+Using GPU:  NVIDIA L40S
+[f=28.560] Expanded: 0, Generated: 0
+[Final] Expanded: 22, Generated: 261
+Found a solution of length 11!
+   1: (navigate rover0 waypoint12 waypoint0)
+   2: (calibrate rover0 camera1 objective6 waypoint0)
+   3: (take_image rover0 waypoint0 objective6 camera1 low_res)
+   4: (communicate_image_data rover0 general objective6 low_res waypoint0 waypoint12)
+   5: (calibrate rover0 camera2 objective4 waypoint0)
+   6: (take_image rover0 waypoint0 objective4 camera2 high_res)
+   7: (navigate rover0 waypoint0 waypoint23)
+   8: (calibrate rover0 camera7 objective1 waypoint23)
+   9: (take_image rover0 waypoint23 objective0 camera7 high_res)
+  10: (communicate_image_data rover0 general objective4 high_res waypoint23 waypoint12)
+  11: (communicate_image_data rover0 general objective0 high_res waypoint23 waypoint12)

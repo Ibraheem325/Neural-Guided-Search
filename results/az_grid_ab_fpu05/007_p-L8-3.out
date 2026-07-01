@@ -1,0 +1,39 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN quantile oracle loaded: models/grid_iqn.pth (w1_lambda=1.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1474, generated=1473
+  [sim 1000] root visits=1000, unique states=2594, generated=2593
+  [sim 1500] root visits=1500, unique states=3358, generated=3357
+  [sim 2000] root visits=2000, unique states=4118, generated=4117
+  [sim 2500] root visits=2500, unique states=4879, generated=4878
+  [sim 3000] root visits=3000, unique states=5660, generated=5659
+  [sim 3500] root visits=3500, unique states=6468, generated=6467
+  [sim 4000] root visits=4000, unique states=7236, generated=7235
+  [sim 4500] root visits=4500, unique states=8014, generated=8013
+  [sim 5000] root visits=5000, unique states=8839, generated=8838
+  [sim 5500] root visits=5500, unique states=9622, generated=9621
+  [sim 6000] root visits=6000, unique states=10382, generated=10381
+  [sim 6500] root visits=6500, unique states=11185, generated=11184
+  [sim 7000] root visits=7000, unique states=11983, generated=11982
+  [sim 7500] root visits=7500, unique states=12757, generated=12756
+  [sim 8000] root visits=8000, unique states=13533, generated=13532
+  [sim 8500] root visits=8500, unique states=14231, generated=14230
+  [sim 9000] root visits=9000, unique states=15006, generated=15005
+  [sim 9500] root visits=9500, unique states=15755, generated=15754
+  [sim 10000] root visits=10000, unique states=16528, generated=16527
+  [sim 10500] root visits=10500, unique states=17299, generated=17298
+  [sim 11000] root visits=11000, unique states=18032, generated=18031
+  [sim 11500] root visits=11500, unique states=18777, generated=18776
+  [sim 12000] root visits=12000, unique states=19508, generated=19507
+  [sim 12500] root visits=12500, unique states=20231, generated=20230
+[FANOUT] expanded_internal_nodes=7134 mean_children=4.63 mean_visited_children(fanout)=1.18 median_fanout=1 frac_nodes_fanout>1=19% frac_fanout>3=0%
+[WIDTHBUCKET] n=7134 mean_width=2.50 median_width=2.56 frac_low(<1.5)=10% frac_med(1.5-3)=65% frac_high(>=3)=25%
+[BOOSTDEPTH] n=6416 mean_depth_of_boosted_nodes=150.15 median=140 frac_shallow(depth<=10)=0% frac_deep(depth>30)=98%
+[BOOSTPAYOFF] boosted_nodes=6416 frac_with_deadend_child=0% frac_below_best_at_depth=85%
+[W1xDEPTH] d0-20:n=26,meanNW1=0.067 d20-60:n=817,meanNW1=0.078 d60-120:n=2150,meanNW1=0.080 d120-inf:n=5409,meanNW1=0.070
+[DEPTH] expanded_internal_nodes=7134 mean_depth=155.30 median_depth=147 max_depth=336 frac_depth>20=100%
+[Final] Expanded: 20762, Generated: 20762
+[search done] simulations=12858, unique states generated=20762
+Failed to find a solution!

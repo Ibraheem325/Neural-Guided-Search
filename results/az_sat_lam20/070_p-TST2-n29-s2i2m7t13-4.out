@@ -1,0 +1,14 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[oracle] IQN uncertainty oracle loaded: models/satellite_iqn.pth (width_beta=0.0, width_gamma=0.0, width_tau=0.0, width_lambda=2.0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=12874, generated=12873
+  [sim 1000] root visits=1000, unique states=25631, generated=25630
+  [sim 1500] root visits=1500, unique states=37574, generated=37573
+  [sim 2000] root visits=2000, unique states=48042, generated=48041
+  [sim 2500] root visits=2500, unique states=58460, generated=58459
+  [sim 3000] root visits=3000, unique states=67768, generated=67767
+[Final] Expanded: 72162, Generated: 72162
+[search done] simulations=3224, unique states generated=72162
+Failed to find a solution!
