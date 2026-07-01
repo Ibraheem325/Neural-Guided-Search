@@ -180,22 +180,51 @@ def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
 
-def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, beta=0.0, signed=False):
+def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, beta=0.0,
+            signed=False, relative=False):
     """
     Additive decoupled selection:
         U = Q_norm + [c_puct*P + beta*W1_boost] * sqrt(N(s)) / (1 + N(s,a))
 
-    W1_boost = max(0, signed_W1_norm)  if signed=True  (suppresses regressive moves)
-             = W1_norm                  if signed=False (original unsigned behaviour)
+    Three modes (mutually exclusive, relative takes priority):
+      relative=True  -- boost(a) = max(0, signed_W1(a) - signed_W1(dominant))
+                        where dominant = highest-prior non-blocked child.
+                        Activates only when some alternative genuinely beats the
+                        dominant in IQN-predicted progress; self-silencing on
+                        nodes where the policy already picks the best-W1 action.
+      signed=True    -- boost(a) = max(0, signed_W1(a))
+                        Suppresses regressive moves, boosts any progress move.
+      (neither)      -- boost(a) = unsigned W1(a)  (original behaviour)
 
-    beta=0 -> vanilla pUCT.
+    beta=0 -> vanilla pUCT regardless of mode.
     """
     best_score = -float("inf")
     best_action = None
     best_child = None
     sqrt_parent = math.sqrt(max(1, node.visit_count))
 
+    use_signed = signed or relative
     w1_active = beta != 0.0 and w1_norm is not None and node.curve is not None
+
+    # Relative mode: find the signed W1 of the highest-prior non-blocked child.
+    # The additive boost for each action is then max(0, signed_W1(a) - dom_signed),
+    # which is zero for the dominant and for anything worse, and positive only for
+    # alternatives that show more IQN-predicted progress than the dominant choice.
+    dom_signed = 0.0
+    if relative and w1_active:
+        dom_action = None
+        dom_prior = -1.0
+        for a, c in node.children.items():
+            if blocked is not None and c.state_key in blocked:
+                continue
+            if node.prior[a] > dom_prior:
+                dom_prior = node.prior[a]
+                dom_action = a
+        if dom_action is not None:
+            dom_w1 = node.edge_W.get(dom_action)
+            if dom_w1 is None:
+                dom_w1 = _edge_w1(node.curve, node.children[dom_action].curve, signed=True)
+            dom_signed = dom_w1 if dom_w1 is not None else 0.0
 
     for action, child in node.children.items():
         if blocked is not None and child.state_key in blocked:
@@ -207,12 +236,16 @@ def _select(node, c_puct, value_norm, blocked=None, w1_norm=None, beta=0.0, sign
         if w1_active:
             w1 = node.edge_W.get(action)
             if w1 is None:
-                w1 = _edge_w1(node.curve, child.curve, signed=signed)
+                w1 = _edge_w1(node.curve, child.curve, signed=use_signed)
             if w1 is not None:
-                # For signed mode: clip negatives (regressive moves) to zero so they
-                # get no additive boost; the normalizer only tracks positive values.
-                boost = max(0.0, w1) if signed else w1
+                if relative:
+                    boost = max(0.0, w1 - dom_signed)
+                elif signed:
+                    boost = max(0.0, w1)
+                else:
+                    boost = w1
                 if boost > 0.0:
+                    w1_norm.update(boost)   # live-calibrate normalizer on relative boosts
                     explore += beta * w1_norm.normalize(boost)
         u = explore * sqrt_parent / (1 + n)
 
@@ -234,22 +267,30 @@ def _backup(path_nodes, path_edges, leaf_value, value_norm):
         value_norm.update(node.q(action))
 
 
-def _register_edge_w1(node, w1_norm, signed=False):
-    """Cache each outgoing edge-W1 in node.edge_W and feed the running normalizer."""
+def _register_edge_w1(node, w1_norm, signed=False, relative=False):
+    """Cache each outgoing edge-W1 in node.edge_W and feed the running normalizer.
+
+    Relative mode caches signed W1 (for dom_signed lookup in _select) but does NOT
+    update the normalizer here — the normalizer is calibrated live in _select on the
+    actual relative boosts so its range matches what is actually applied.
+    """
     if w1_norm is None or node.curve is None:
         return
+    use_signed = signed or relative
     for action, child in node.children.items():
-        w1 = _edge_w1(node.curve, child.curve, signed=signed)
+        w1 = _edge_w1(node.curve, child.curve, signed=use_signed)
         if w1 is not None:
             node.edge_W[action] = w1
-            # In signed mode only positive values define the normalization range —
-            # negatives are clipped to zero at selection time and must not skew the scale.
-            if not signed or w1 > 0.0:
-                w1_norm.update(w1)
+            if not relative:
+                # Signed mode: only positive values define the normalizer range.
+                # Unsigned mode: all values update the normalizer.
+                if not use_signed or w1 > 0.0:
+                    w1_norm.update(w1)
+            # relative mode: normalizer updated in _select on actual boost values.
 
 
 def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
-              c_puct, value_norm, dead_end_value, oracle, w1_norm, beta, signed):
+              c_puct, value_norm, dead_end_value, oracle, w1_norm, beta, signed, relative):
     path_keys = {root.state_key}
     path_nodes = [root]
     path_edges = []
@@ -259,7 +300,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm, blocked=path_keys,
-                                 w1_norm=w1_norm, beta=beta, signed=signed)
+                                 w1_norm=w1_norm, beta=beta, signed=signed, relative=relative)
         if action is None:
             value = _leaf_value(node.state, goal, q1_model, q2_model)
             _backup(path_nodes, path_edges, value, value_norm)
@@ -280,7 +321,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
     else:
         value, generated = _expand(node, tt, policy_model, q1_model, q2_model, goal,
                                    dead_end_value, oracle, w1_active)
-        _register_edge_w1(node, w1_norm, signed=signed)
+        _register_edge_w1(node, w1_norm, signed=signed, relative=relative)
         for child_action, child in node.children.items():
             if child.is_goal:
                 goal_plan = [a for _, a in path_edges] + [child_action]
@@ -292,7 +333,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
 def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             max_simulations, max_time, c_puct, dead_end_value,
-            stop_on_first_solution, oracle, beta, signed):
+            stop_on_first_solution, oracle, beta, signed, relative):
     root = Node(root_state, root_key, goal.holds(root_state))
     tt = {root_key: root}
     value_norm = _ValueNormalizer()
@@ -310,7 +351,7 @@ def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             break
         goal_plan, generated = _simulate(
             root, tt, policy_model, q1_model, q2_model, goal,
-            c_puct, value_norm, dead_end_value, oracle, w1_norm, beta, signed,
+            c_puct, value_norm, dead_end_value, oracle, w1_norm, beta, signed, relative,
         )
         total_generated += generated
         sims += 1
@@ -350,6 +391,11 @@ def _parse_arguments():
                         help="Use signed W1: only boost children whose IQN mean improves "
                              "over the parent (progress moves). Regressive moves get zero "
                              "boost. Has no effect when w1_beta=0.")
+    parser.add_argument("--w1_relative", action="store_true",
+                        help="Relative signed W1: boost(a) = max(0, signed_W1(a) - signed_W1(dominant)). "
+                             "Activates only when some alternative has higher IQN-predicted progress "
+                             "than the highest-prior action; self-silencing otherwise. "
+                             "Takes precedence over --w1_signed. Has no effect when w1_beta=0.")
     return parser.parse_args()
 
 
@@ -364,7 +410,7 @@ def _plan(problem, policy_model, q1_model, q2_model, oracle, args):
             policy_model, q1_model, q2_model, goal,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
-            oracle=oracle, beta=args.w1_beta, signed=args.w1_signed,
+            oracle=oracle, beta=args.w1_beta, signed=args.w1_signed, relative=args.w1_relative,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
@@ -398,8 +444,9 @@ def _main(args):
         iqn_model, _, _ = _load_iqn_model(domain, args.iqn_model, device)
         iqn_model.eval()
         oracle = QuantileOracle(iqn_model, device)
+        mode = "relative" if args.w1_relative else ("signed" if args.w1_signed else "unsigned")
         print(f"[oracle] IQN quantile oracle loaded: {args.iqn_model} "
-              f"(w1_beta={args.w1_beta}, signed={args.w1_signed})", flush=True)
+              f"(w1_beta={args.w1_beta}, mode={mode})", flush=True)
     elif args.w1_beta != 0.0:
         raise RuntimeError("--w1_beta is set but no --iqn_model was given.")
 
