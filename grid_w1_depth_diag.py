@@ -205,7 +205,7 @@ def _simulate(root, tt, policy, q1, q2, goal, c_puct, vnorm, dead_val,
             _backup(path_nodes, path_edges, val, vnorm)
             return None, 0, len(path_nodes) - 1, path_w1, path_visited_children
 
-        w1_val = _edge_w1(node.curve, child.curve) if (node.curve and child.curve) else None
+        w1_val = _edge_w1(node.curve, child.curve) if (node.curve is not None and child.curve is not None) else None
         path_w1.append(w1_val)
 
         path_edges.append((node, action))
