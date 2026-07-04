@@ -1,0 +1,37 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[config] ensemble vote: M=6 members, v_lambda=0.0 v_beta=0.25 v_n0=256 c_puct=1.5
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 51] found goal path of length 28
+[Final] Expanded: 145, Generated: 145
+[search done] simulations=51, unique states generated=145
+Found a solution of length 28!
+   1: (pickup f1-0f key2-2)
+   2: (move f1-0f f1-1f)
+   3: (unlock f1-1f f0-1f key2-2 shape2)
+   4: (move f1-1f f0-1f)
+   5: (move f0-1f f0-2f)
+   6: (pickup-and-loose f0-2f key2-0 key2-2)
+   7: (move f0-2f f0-1f)
+   8: (move f0-1f f1-1f)
+   9: (putdown f1-1f key2-0)
+  10: (pickup f1-1f key0-1)
+  11: (unlock f1-1f f1-2f key0-1 shape0)
+  12: (move f1-1f f0-1f)
+  13: (move f0-1f f0-2f)
+  14: (pickup-and-loose f0-2f key1-1 key0-1)
+  15: (move f0-2f f0-1f)
+  16: (unlock f0-1f f0-0f key1-1 shape1)
+  17: (move f0-1f f1-1f)
+  18: (putdown f1-1f key1-1)
+  19: (move f1-1f f1-0f)
+  20: (move f1-0f f0-0f)
+  21: (pickup f0-0f key0-0)
+  22: (move f0-0f f0-1f)
+  23: (putdown f0-1f key0-0)
+  24: (move f0-1f f0-0f)
+  25: (pickup f0-0f key1-2)
+  26: (move f0-0f f1-0f)
+  27: (move f1-0f f1-1f)
+  28: (putdown f1-1f key1-2)
