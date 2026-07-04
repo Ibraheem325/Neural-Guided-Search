@@ -1,34 +1,31 @@
 """
-AlphaZero (transposition-table DAG) with a VISIT-RAMPED ADDITIVE W1 prior floor.
+AlphaZero (transposition-table DAG) guided by an IQN ENSEMBLE VOTE.
 
-Motivation (from the Grid/Goldminer W1 analyses):
-  - Multiplicative boost  P'(a) = P(a)(1 + lambda*nW1(a))  cannot act where the
-    policy is peaked: P(a)=0 gates the boost shut (0 * anything = 0). On Grid,
-    ~90-98% of plan-path nodes are peaked, so the boost only ever acts on the
-    few flat "key-choice" nodes.
-  - Every variant that instead injects exploration unconditionally (decoupled
-    additive c1*P + c2*f, prior mixing az_grid_mix_w1_a*, threshold gating
-    az_grid_t*) destroyed coverage: the peaked policy is RIGHT most of the
-    time, and easy instances get wrecked by permanent extra exploration.
+Motivation (grid_ensemble_disagreement.py, July 2026): at the 321 nodes of
+the 22 hard Grid instances where the policy confidently picks the wrong
+action, the 6-model IQN ensemble's value comparison prefers the correct
+successor 59% of the time (policy: 0%), while at correct nodes it agrees
+with the policy 65% of the time. First signal measured on Grid that
+discriminates in BOTH directions (W1: 20%/20%, width: 15%/23%).
+Disagreement magnitude carries no information (same spread at mistake and
+correct nodes) -- the usable signal is the vote DIRECTION.
 
-This formula is exactly baseline pUCT until a node accumulates evidence of
-being stuck (many visits without the search moving on), then gradually opens
-alternatives, ordered by W1:
+Signal: when a node is expanded, every ensemble member values every child
+(mean of the best action's sorted quantile curve; goal children count as
++inf, dead ends as -inf). Each member votes for its top child. The signal
+of child a is its vote share:
 
-    P'(a) = ( P(a) + beta * min(1, N(s)/N0) * nW1(a) ) / Z(s)
+    vote(a) = (# models whose top-valued child is a) / M          in [0, 1]
+
+Selection (same validated machinery as alphaZero_w1_ramp.py):
+
+    P'(a) = ( P(a) * (1 + lambda * vote(a)) + beta * min(1, N(s)/N0) * vote(a) ) / Z
     U(s,a) = Q_norm(s,a) + c_puct * P'(a) * sqrt(N(s)) / (1 + N(s,a))
 
-  - N(s)=0 (fresh node)   -> P' = P, identical to baseline. Easy instances,
-    which never hammer a single node N0 times, are untouched by construction.
-  - N(s)>=N0 (stuck node) -> every action gets an additive floor proportional
-    to its normalized edge-W1, so a P=0 sibling can be reached. This restores
-    the UCT requirement that every action has nonzero effective prior, i.e.
-    the exploration-term guarantee the standard formula loses at P(a)=0.
-  - W1 only decides the ORDER in which alternatives open (its one demonstrated
-    skill), not a permanent redistribution of the prior.
-
-beta controls how much prior mass the alternatives can gain once ramped;
-N0 controls how many parent visits count as "stuck".
+lambda: immediate multiplicative boost (acts at flat decision nodes).
+beta / N0: delayed additive floor (opens P=0 siblings at peaked nodes once
+the node has been visited N0 times; 83% of policy mistakes sit at peaked
+nodes, which the multiplicative part cannot reach).
 """
 import argparse
 import math
@@ -64,38 +61,58 @@ class ModelWrapper(rl.ActionScalarModel):
         return list(zip(values_list, actions_list))
 
 
-class QuantileOracle:
-    def __init__(self, iqn_model, device: torch.device, num_quantiles: int = 99) -> None:
-        self._model = iqn_model
+class EnsembleOracle:
+    """Votes of M IQN models over a node's children."""
+
+    def __init__(self, iqn_models, device: torch.device, num_quantiles: int = 99) -> None:
+        self._models = iqn_models
         self._device = device
         self._taus = torch.linspace(0.01, 0.99, num_quantiles, device=device).unsqueeze(0)
 
     @torch.no_grad()
-    def best_curve(self, state: mm.State, goal: mm.GroundConjunctiveCondition) -> Optional[torch.Tensor]:
-        q_values, _ = self._model.forward(
-            [(state, goal)], taus=self._taus.expand(1, self._taus.shape[1]))[0]
-        if q_values.shape[0] == 0:
-            return None
-        qs, _ = torch.sort(q_values, dim=1)
-        means = qs.mean(dim=1)
-        best = int(means.argmax().item())
-        return qs[best].detach()
+    def _values(self, model, states_goals):
+        """Batched: value of each state = mean of best action's sorted curve."""
+        n = len(states_goals)
+        taus = self._taus.expand(n, self._taus.shape[1])
+        out = model.forward(states_goals, taus=taus)
+        values = []
+        for q_values, _ in out:
+            if q_values.shape[0] == 0:
+                values.append(float("-inf"))       # dead end
+                continue
+            qs, _ = torch.sort(q_values, dim=1)
+            values.append(qs.mean(dim=1).max().item())
+        return values
 
+    @torch.no_grad()
+    def votes(self, children, goal):
+        """children: list of (action, child_node). Returns {action: vote share}."""
+        idx_of = {}
+        batch = []
+        for i, (action, child) in enumerate(children):
+            idx_of[action] = i
+            batch.append((child.state, goal))
 
-def _edge_w1(parent_curve, child_curve) -> Optional[float]:
-    if parent_curve is None or child_curve is None:
-        return None
-    return torch.mean(torch.abs(parent_curve - child_curve)).item()
-
-
-def _edge_signal(node, child, signal):
-    """Per-edge guidance value: 'w1' = belief shift parent->child;
-    'width' = belief spread q[90]-q[8] at the child state."""
-    if signal == "width":
-        if child.curve is None:
-            return None
-        return (child.curve[90] - child.curve[8]).item()
-    return _edge_w1(node.curve, child.curve)
+        counts = {action: 0 for action, _ in children}
+        m_used = 0
+        goal_actions = [a for a, c in children if c.is_goal]
+        if goal_actions:
+            # A goal child outranks anything a value model could say.
+            for a in goal_actions:
+                counts[a] = len(self._models)
+            m_used = len(self._models)
+        else:
+            for model in self._models:
+                vals = self._values(model, batch)
+                best_i = max(range(len(vals)), key=lambda i: vals[i])
+                if vals[best_i] == float("-inf"):
+                    continue
+                best_action = children[best_i][0]
+                counts[best_action] += 1
+                m_used += 1
+        if m_used == 0:
+            return {a: 0.0 for a, _ in children}
+        return {a: c / m_used for a, c in counts.items()}
 
 
 class _ValueNormalizer:
@@ -119,8 +136,8 @@ class Node:
     __slots__ = (
         "state", "state_key", "is_goal",
         "expanded", "is_dead_end",
-        "children", "prior", "edge_N", "edge_W", "visit_count",
-        "value", "curve",
+        "children", "prior", "edge_N", "vote", "visit_count",
+        "value",
     )
 
     def __init__(self, state: mm.State, state_key, is_goal: bool) -> None:
@@ -132,10 +149,9 @@ class Node:
         self.children: Dict[mm.GroundAction, "Node"] = {}
         self.prior: Dict[mm.GroundAction, float] = {}
         self.edge_N: Dict[mm.GroundAction, int] = {}
-        self.edge_W: Dict[mm.GroundAction, float] = {}
+        self.vote: Dict[mm.GroundAction, float] = {}
         self.value = -float("inf")
         self.visit_count = 0
-        self.curve = None
 
     def q(self, action):
         child = self.children[action]
@@ -153,15 +169,12 @@ def _leaf_value(state, goal, q1_model, q2_model) -> float:
 
 
 def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
-            oracle, w1_active) -> Tuple[float, int]:
+            oracle) -> Tuple[float, int]:
     logits, actions = policy_model.forward([(node.state, goal)])[0]
     node.expanded = True
     if len(actions) == 0:
         node.is_dead_end = True
         return dead_end_value, 0
-
-    if w1_active and node.curve is None and not node.is_goal:
-        node.curve = oracle.best_curve(node.state, goal)
 
     probs = torch.softmax(logits, dim=0)
     generated = 0
@@ -173,73 +186,30 @@ def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
             child = Node(successor, key, goal.holds(successor))
             tt[key] = child
             generated += 1
-            if w1_active and not child.is_goal:
-                child.curve = oracle.best_curve(successor, goal)
         node.children[action] = child
         node.prior[action] = probs[i].item()
         node.edge_N[action] = 0
 
+    if oracle is not None:
+        node.vote = oracle.votes(list(node.children.items()), goal)
+
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
 
-def _register_edge_w1(node, w1_norm, signal="w1"):
-    if w1_norm is None or node.curve is None:
-        return
-    for action, child in node.children.items():
-        v = _edge_signal(node, child, signal)
-        if v is not None:
-            node.edge_W[action] = v
-            w1_norm.update(v)
-
-
 def _select(node, c_puct, value_norm, blocked=None,
-            w1_norm=None, w1_beta=0.0, w1_n0=32, w1_lambda=0.0, w1_ramp_topk=0,
-            w1_ramp_uniform=False, signal="w1"):
-    """
-    Combined multiplicative boost + visit-ramped additive W1 floor:
-        ramp  = min(1, N(s)/N0)
-        P'(a) = ( P(a) * (1 + lambda * nW1(a)) + beta * ramp * nW1(a) ) / Z
-        U     = Q_norm + c_puct * P'(a) * sqrt(N(s)) / (1 + N(s,a))
-    The multiplicative part acts immediately at flat decision nodes; the
-    additive part opens P=0 siblings only after the node has been visited
-    ~N0 times. beta=0 -> pure multiplicative; lambda=0 -> pure ramp;
-    both 0 -> baseline.
-    w1_ramp_topk > 0 restricts the ADDITIVE floor to the k children with the
-    highest W1 (Goldminer regime: ~1.5 high-W1 siblings per node). This caps
-    how many alternative branches per node the escape hatch can open, which
-    is what blew up expansions when the floor applied to every sibling along
-    a deep corridor.
-    """
+            v_lambda=0.0, v_beta=0.0, v_n0=256):
     boosted_prior = None
-    if (w1_beta != 0.0 or w1_lambda != 0.0) and w1_norm is not None \
-            and node.curve is not None:
-        ramp = min(1.0, node.visit_count / float(w1_n0)) if w1_beta != 0.0 else 0.0
-        nw_by_action = {}
-        for action, child in node.children.items():
-            v = node.edge_W.get(action)
-            if v is None:
-                v = _edge_signal(node, child, signal)
-                if v is not None:
-                    node.edge_W[action] = v
-            nw_by_action[action] = w1_norm.normalize(v) if v is not None else 0.0
-        floor_actions = set(nw_by_action)
-        if w1_ramp_topk and w1_ramp_topk > 0 and len(nw_by_action) > w1_ramp_topk:
-            floor_actions = set(sorted(nw_by_action, key=lambda a: nw_by_action[a],
-                                       reverse=True)[:w1_ramp_topk])
+    if (v_lambda != 0.0 or v_beta != 0.0) and node.vote:
+        ramp = min(1.0, node.visit_count / float(v_n0)) if v_beta != 0.0 else 0.0
         raw = {}
         total = 0.0
         for action in node.children:
-            nw = nw_by_action[action]
-            pb = node.prior[action] * (1.0 + w1_lambda * nw)
-            if action in floor_actions:
-                # uniform floor ignores the W1 ranking: every floored child
-                # gets the same weight (control for "does W1's ordering help?")
-                floor_w = 0.5 if w1_ramp_uniform else nw
-                pb += w1_beta * ramp * floor_w
+            v = node.vote.get(action, 0.0)
+            pb = node.prior[action] * (1.0 + v_lambda * v) + v_beta * ramp * v
             raw[action] = pb
             total += pb
         if total > 0.0:
-            boosted_prior = {a: v / total for a, v in raw.items()}
+            boosted_prior = {a: p / total for a, p in raw.items()}
 
     best_score = -float("inf")
     best_action = None
@@ -272,19 +242,15 @@ def _backup(path_nodes, path_edges, leaf_value, value_norm):
 
 
 def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
-              c_puct, value_norm, dead_end_value, oracle, w1_norm, w1_beta, w1_n0, w1_lambda, w1_ramp_topk, w1_ramp_uniform, signal):
+              c_puct, value_norm, dead_end_value, oracle, v_lambda, v_beta, v_n0):
     path_keys = {root.state_key}
     path_nodes = [root]
     path_edges = []
     node = root
 
-    w1_active = oracle is not None and (w1_beta != 0.0 or w1_lambda != 0.0)
-
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm, blocked=path_keys,
-                                w1_norm=w1_norm, w1_beta=w1_beta, w1_n0=w1_n0, w1_lambda=w1_lambda,
-                                w1_ramp_topk=w1_ramp_topk, w1_ramp_uniform=w1_ramp_uniform,
-                                signal=signal)
+                                v_lambda=v_lambda, v_beta=v_beta, v_n0=v_n0)
         if action is None:
             value = _leaf_value(node.state, goal, q1_model, q2_model)
             _backup(path_nodes, path_edges, value, value_norm)
@@ -304,8 +270,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
         value = dead_end_value
     else:
         value, generated = _expand(node, tt, policy_model, q1_model, q2_model, goal,
-                                   dead_end_value, oracle, w1_active)
-        _register_edge_w1(node, w1_norm, signal)
+                                   dead_end_value, oracle)
         for child_action, child in node.children.items():
             if child.is_goal:
                 goal_plan = [a for _, a in path_edges] + [child_action]
@@ -317,14 +282,10 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
 def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             max_simulations, max_time, c_puct, dead_end_value,
-            stop_on_first_solution, oracle, w1_beta, w1_n0, w1_lambda, w1_ramp_topk, w1_ramp_uniform, signal):
+            stop_on_first_solution, oracle, v_lambda, v_beta, v_n0):
     root = Node(root_state, root_key, goal.holds(root_state))
     tt = {root_key: root}
     value_norm = _ValueNormalizer()
-    w1_active = oracle is not None and (w1_beta != 0.0 or w1_lambda != 0.0)
-    w1_norm = _ValueNormalizer() if w1_active else None
-    if w1_active and not root.is_goal:
-        root.curve = oracle.best_curve(root_state, goal)
     best_plan = None
     total_generated = 0
     start = time.time()
@@ -335,7 +296,7 @@ def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             break
         goal_plan, generated = _simulate(
             root, tt, policy_model, q1_model, q2_model, goal,
-            c_puct, value_norm, dead_end_value, oracle, w1_norm, w1_beta, w1_n0, w1_lambda, w1_ramp_topk, w1_ramp_uniform, signal,
+            c_puct, value_norm, dead_end_value, oracle, v_lambda, v_beta, v_n0,
         )
         total_generated += generated
         sims += 1
@@ -354,28 +315,23 @@ def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
 
 
 def _parse_arguments():
-    parser = argparse.ArgumentParser(description="AlphaZero with visit-ramped additive W1 prior floor")
+    parser = argparse.ArgumentParser(description="AlphaZero guided by an IQN ensemble vote")
     parser.add_argument("--domain", required=True, type=Path)
     parser.add_argument("--problem", required=True, type=Path)
     parser.add_argument("--policy_model", required=True, type=Path)
     parser.add_argument("--q1_model", required=True, type=Path)
     parser.add_argument("--q2_model", default=None, type=Path)
-    parser.add_argument("--iqn_model", required=True, type=Path)
+    parser.add_argument("--iqn_models", required=True, nargs="+", type=Path,
+                        help="Paths of the ensemble members (2+ IQN checkpoints)")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
-    parser.add_argument("--w1_beta", default=0.5, type=float,
-                        help="Max additive prior mass an alternative can gain once the ramp saturates.")
-    parser.add_argument("--w1_lambda", default=0.0, type=float,
-                        help="Multiplicative boost strength (0 = off).")
-    parser.add_argument("--w1_n0", default=32, type=int,
-                        help="Parent visits at which the ramp saturates ('stuck' threshold).")
-    parser.add_argument("--w1_ramp_topk", default=0, type=int,
-                        help="Restrict the additive floor to the k highest-W1 children (0 = all).")
-    parser.add_argument("--signal", choices=["w1", "width"], default="w1",
-                        help="Per-edge guidance: w1 = parent->child belief shift; width = q90-q8 spread at child.")
-    parser.add_argument("--w1_ramp_uniform", action="store_true",
-                        help="Floor uses uniform weight instead of the W1 ranking (control).")
+    parser.add_argument("--v_lambda", default=1.5, type=float,
+                        help="Multiplicative vote boost strength (0 = off)")
+    parser.add_argument("--v_beta", default=0.0, type=float,
+                        help="Delayed additive floor strength (0 = off)")
+    parser.add_argument("--v_n0", default=256, type=int,
+                        help="Parent visits at which the additive floor saturates")
     parser.add_argument("--dead_end_value", default=-1000.0, type=float)
     parser.add_argument("--keep_searching", action="store_true")
     return parser.parse_args()
@@ -392,9 +348,7 @@ def _plan(problem, policy_model, q1_model, q2_model, oracle, args):
             policy_model, q1_model, q2_model, goal,
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
-            oracle=oracle, w1_beta=args.w1_beta, w1_n0=args.w1_n0, w1_lambda=args.w1_lambda,
-            w1_ramp_topk=args.w1_ramp_topk, w1_ramp_uniform=args.w1_ramp_uniform,
-            signal=args.signal,
+            oracle=oracle, v_lambda=args.v_lambda, v_beta=args.v_beta, v_n0=args.v_n0,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
@@ -423,10 +377,15 @@ def _main(args):
         q2_raw, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.q2_model, device)
         q2_model = ModelWrapper(q2_raw, "q")
 
-    iqn_raw, _, _ = _load_iqn_model(domain, args.iqn_model, device)
-    iqn_raw.eval()
-    oracle = QuantileOracle(iqn_raw, device)
-    print(f"[config] signal={args.signal} ramp boost: w1_beta={args.w1_beta} w1_n0={args.w1_n0} w1_lambda={args.w1_lambda} topk={args.w1_ramp_topk} uniform={args.w1_ramp_uniform} c_puct={args.c_puct}", flush=True)
+    members = []
+    for p in args.iqn_models:
+        m, _, _ = _load_iqn_model(domain, p, device)
+        m.eval()
+        members.append(m)
+    oracle = EnsembleOracle(members, device)
+    print(f"[config] ensemble vote: M={len(members)} members, "
+          f"v_lambda={args.v_lambda} v_beta={args.v_beta} v_n0={args.v_n0} "
+          f"c_puct={args.c_puct}", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, oracle, args)
     if solution is None:

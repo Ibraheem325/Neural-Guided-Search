@@ -38,6 +38,13 @@ ALGORITHMS = {
         "--c1", "1.5", "--c2", "0.5",
         "--max_time", "60",
     ],
+    "widthmult_l15": [
+        "venv/bin/python", "alphaZero_w1_ramp.py",
+        "--domain", DOMAIN,
+        "--policy_model", POLICY, "--q1_model", Q1, "--q2_model", Q2,
+        "--iqn_model", IQN, "--signal", "width", "--w1_lambda", "1.5", "--w1_beta", "0",
+        "--max_time", "60",
+    ],
     "decoupled_c2_1.5": [
         "venv/bin/python", "alphaZero_decoupled.py",
         "--domain", DOMAIN,
