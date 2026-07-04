@@ -10,3 +10,38 @@ Using GPU:  NVIDIA L40S
   [sim 2500] root visits=2500, unique states=5442, generated=5441
   [sim 3000] root visits=3000, unique states=6443, generated=6442
   [sim 3500] root visits=3500, unique states=7430, generated=7429
+  [sim 4000] root visits=4000, unique states=8260, generated=8259
+  [sim 4500] root visits=4500, unique states=9250, generated=9249
+[FANOUT] expanded_internal_nodes=3911 mean_children=4.32 mean_visited_children(fanout)=1.16 median_fanout=1 frac_nodes_fanout>1=16% frac_fanout>3=0%
+[WIDTHBUCKET] n=3911 mean_width=2.11 median_width=1.75 frac_low(<1.5)=31% frac_med(1.5-3)=46% frac_high(>=3)=22%
+[BOOSTDEPTH] n=2688 mean_depth_of_boosted_nodes=211.07 median=222 frac_shallow(depth<=10)=1% frac_deep(depth>30)=98%
+[BOOSTPAYOFF] boosted_nodes=2688 frac_with_deadend_child=0% frac_below_best_at_depth=24%
+[W1xDEPTH] d0-20:n=39,meanNW1=0.077 d20-60:n=56,meanNW1=0.085 d60-120:n=75,meanNW1=0.094 d120-inf:n=4379,meanNW1=0.077
+[PRIORCONC] n_branching_nodes=3911 mean_max_prior=0.903791 frac_max_prior>0.999=51.4% frac_max_prior>0.99=57.9% frac_max_prior>0.9=72.3% frac_max_prior<0.7=15.2%
+[NODEBREAKDOWN] depth=0 node_visits=4674 children=3
+    N=  4671 prior=1.000 W1norm=0.011 q_norm=1.000 u=0.022 score=1.022
+    N=     1 prior=0.000 W1norm=0.050 q_norm=0.009 u=0.000 score=0.009
+    N=     1 prior=0.000 W1norm=0.118 q_norm=0.000 u=0.000 score=0.000
+[NODEBREAKDOWN] depth=1 node_visits=4671 children=3
+    N=  4670 prior=1.000 W1norm=0.005 q_norm=1.000 u=0.022 score=1.022
+    N=     0 prior=0.000 W1norm=0.070 q_norm=0.000 u=0.000 score=0.000
+    N=     0 prior=0.000 W1norm=0.011 q_norm=0.000 u=0.000 score=0.000
+[NODEBREAKDOWN] depth=2 node_visits=4670 children=3
+    N=  4669 prior=1.000 W1norm=0.118 q_norm=1.000 u=0.025 score=1.025
+    N=     0 prior=0.000 W1norm=0.085 q_norm=0.000 u=0.000 score=0.000
+    N=     0 prior=0.000 W1norm=0.005 q_norm=0.000 u=0.000 score=0.000
+[NODEBREAKDOWN] depth=3 node_visits=4669 children=4
+    N=  4668 prior=1.000 W1norm=0.125 q_norm=1.000 u=0.025 score=1.025
+    N=     0 prior=0.000 W1norm=0.030 q_norm=0.000 u=0.000 score=0.000
+    N=     0 prior=0.000 W1norm=0.118 q_norm=0.000 u=0.000 score=0.000
+    N=     0 prior=0.000 W1norm=0.044 q_norm=0.000 u=0.000 score=0.000
+[NODEBREAKDOWN] depth=4 node_visits=4668 children=4
+    N=  4667 prior=1.000 W1norm=0.014 q_norm=1.000 u=0.022 score=1.022
+    N=     0 prior=0.000 W1norm=0.140 q_norm=0.000 u=0.000 score=0.000
+    N=     0 prior=0.000 W1norm=0.125 q_norm=0.000 u=0.000 score=0.000
+    N=     0 prior=0.000 W1norm=0.036 q_norm=0.000 u=0.000 score=0.000
+[QxDEPTH] d0-20:n=35,meanq=0.905,sibStd=0.199 d20-60:n=54,meanq=0.986,sibStd=0.000 d60-120:n=73,meanq=1.000,sibStd=0.000 d120-inf:n=3648,meanq=0.974,sibStd=0.001
+[DEPTH] expanded_internal_nodes=3911 mean_depth=219.63 median_depth=231 max_depth=291 frac_depth>20=99%
+[Final] Expanded: 9704, Generated: 9704
+[search done] simulations=4674, unique states generated=9704
+Failed to find a solution!

@@ -1,0 +1,29 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[config] ramp boost: w1_beta=0.25 w1_n0=512 w1_lambda=0.0 topk=1 uniform=True c_puct=1.5
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=4153, generated=4152
+  [sim 1000] root visits=1000, unique states=7754, generated=7753
+  [sim 1500] root visits=1500, unique states=10946, generated=10945
+  [sim 2000] root visits=2000, unique states=14216, generated=14215
+  [sim 2500] root visits=2500, unique states=17640, generated=17639
+  [sim 3000] root visits=3000, unique states=20693, generated=20692
+  [sim 3500] root visits=3500, unique states=23580, generated=23579
+  [sim 4000] root visits=4000, unique states=26302, generated=26301
+  [sim 4500] root visits=4500, unique states=28878, generated=28877
+  [sim 5000] root visits=5000, unique states=31713, generated=31712
+  [sim 5500] root visits=5500, unique states=34392, generated=34391
+  [sim 6000] root visits=6000, unique states=36995, generated=36994
+  [sim 6500] root visits=6500, unique states=39484, generated=39483
+  [sim 7000] root visits=7000, unique states=41974, generated=41973
+  [sim 7500] root visits=7500, unique states=44328, generated=44327
+  [sim 8000] root visits=8000, unique states=46913, generated=46912
+  [sim 8500] root visits=8500, unique states=49440, generated=49439
+  [sim 9000] root visits=9000, unique states=51892, generated=51891
+  [sim 9500] root visits=9500, unique states=54539, generated=54538
+  [sim 10000] root visits=10000, unique states=57161, generated=57160
+  [sim 10500] root visits=10500, unique states=59662, generated=59661
+[Final] Expanded: 61381, Generated: 61381
+[search done] simulations=10833, unique states generated=61381
+Failed to find a solution!
