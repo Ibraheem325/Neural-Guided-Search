@@ -108,6 +108,9 @@ def main():
     tot_mist = tot_allwrong = tot_d1 = tot_d2 = 0
     all_ks, all_gapstds = [], []
     all_ctrl_ks, all_ctrl_gapstds = [], []
+    k_hist = [0]*(len(models)+1)          # k = # models preferring CORRECT child
+    per_model_wrong = [0]*len(models)     # each model prefers WRONG child
+    per_model_total = [0]*len(models)
 
     with torch.no_grad():
         for inst in hard:
@@ -176,16 +179,20 @@ def main():
                     plan_succ = plan_a.apply(state)
                     gaps = []
                     k = 0
-                    for m in models:
+                    for mi, m in enumerate(models):
                         v_dom = state_value(m, dom_succ, goal, taus)
                         v_plan = state_value(m, plan_succ, goal, taus)
                         if v_dom is None or v_plan is None:
                             continue
                         gaps.append(v_plan - v_dom)
+                        per_model_total[mi] += 1
                         if v_plan > v_dom:
                             k += 1
+                        else:
+                            per_model_wrong[mi] += 1
                     if gaps:
                         mist += 1
+                        k_hist[k] += 1
                         ks.append(k)
                         if len(gaps) > 1:
                             gapstds.append(statistics.stdev(gaps))
@@ -238,6 +245,27 @@ def main():
             print(f"  mean ensemble std of value gap: "
                   f"{statistics.mean(all_ctrl_gapstds):.4f}")
         print("Discrimination requires: dissent HIGH at mistakes, LOW here.")
+    M = len(models)
+    if sum(k_hist):
+        n = sum(k_hist)
+        print(f"\nDistribution of k (# of {M} models preferring the CORRECT child) "
+              f"over {n} mistake nodes:")
+        for k in range(M+1):
+            print(f"  k={k}: {k_hist[k]:4d} ({100*k_hist[k]/n:4.0f}%)")
+        maj_wrong = sum(k_hist[k] for k in range(M+1) if k < (M/2.0))
+        maj_corr = sum(k_hist[k] for k in range(M+1) if k > (M/2.0))
+        tie = n - maj_wrong - maj_corr
+        print(f"\n  ENSEMBLE MAJORITY prefers WRONG child : {maj_wrong} ({100*maj_wrong/n:.0f}%)")
+        print(f"  ENSEMBLE MAJORITY prefers CORRECT child: {maj_corr} ({100*maj_corr/n:.0f}%)")
+        print(f"  tie (k=M/2)                            : {tie} ({100*tie/n:.0f}%)")
+        print(f"\n  Per-model 'confidently wrong' rate (prefers wrong child) at mistake nodes:")
+        for mi in range(M):
+            tot = per_model_total[mi] or 1
+            tag = " (original)" if mi == M-1 else ""
+            print(f"    model {mi+1}{tag}: {per_model_wrong[mi]}/{per_model_total[mi]} "
+                  f"= {100*per_model_wrong[mi]/tot:.0f}%")
+        avg = sum(per_model_wrong)/max(1,sum(per_model_total))
+        print(f"    AVERAGE single model wrong rate       : {100*avg:.0f}%")
     print("\nInterpretation: high all_wrong % => models fail together, ensemble "
           "variance is blind here.\nHigh dis>=1 % => disagreement exists at the "
           "mistakes; ensemble variance is a candidate signal.")

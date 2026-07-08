@@ -61,6 +61,29 @@ class ModelWrapper(rl.ActionScalarModel):
         return list(zip(values_list, actions_list))
 
 
+class PolicyEnsemble:
+    """Averages the softmax priors of M seed-diverse SAC policies.
+    M=1 reproduces the single-policy behaviour exactly."""
+
+    def __init__(self, policies):
+        self.policies = policies
+
+    @torch.no_grad()
+    def forward(self, state_goals):
+        out = []
+        per_policy = [pol.forward(state_goals) for pol in self.policies]
+        for i in range(len(state_goals)):
+            actions = per_policy[0][i][1]
+            acc = None
+            for pp in per_policy:
+                logits = pp[i][0]
+                p = torch.softmax(logits, dim=0)
+                acc = p.clone() if acc is None else acc + p
+            acc = acc / len(self.policies)
+            out.append((acc, actions))       # (averaged probabilities, actions)
+        return out
+
+
 class EnsembleOracle:
     """Votes of M IQN models over a node's children."""
 
@@ -170,13 +193,12 @@ def _leaf_value(state, goal, q1_model, q2_model) -> float:
 
 def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
             oracle) -> Tuple[float, int]:
-    logits, actions = policy_model.forward([(node.state, goal)])[0]
+    probs, actions = policy_model.forward([(node.state, goal)])[0]
     node.expanded = True
     if len(actions) == 0:
         node.is_dead_end = True
         return dead_end_value, 0
 
-    probs = torch.softmax(logits, dim=0)
     generated = 0
     for i, action in enumerate(actions):
         successor = action.apply(node.state)
@@ -197,15 +219,29 @@ def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
 
 
 def _select(node, c_puct, value_norm, blocked=None,
-            v_lambda=0.0, v_beta=0.0, v_n0=256):
+            v_lambda=0.0, v_beta=0.0, v_n0=256, boost_active=True, v_floor_thresh=0.0,
+            v_floor_disagree=False):
     boosted_prior = None
-    if (v_lambda != 0.0 or v_beta != 0.0) and node.vote:
+    if boost_active and (v_lambda != 0.0 or v_beta != 0.0) and node.vote:
         ramp = min(1.0, node.visit_count / float(v_n0)) if v_beta != 0.0 else 0.0
+        # Disagreement gate: the additive floor fires at a node only when the
+        # ensemble's plurality vote goes to a child OTHER than the policy's
+        # chosen (argmax-prior) child -- i.e. the value models collectively
+        # disagree with the policy. At easy/correct nodes the ensemble votes
+        # for the dominant child (agreement) -> floor stays off, no tax. At
+        # hard mistake nodes the ensemble votes for a sibling -> floor opens it.
+        floor_on = ramp
+        if v_floor_disagree and node.vote:
+            dom_action = max(node.prior, key=node.prior.get)
+            top_vote_action = max(node.vote, key=node.vote.get)
+            if top_vote_action == dom_action:
+                floor_on = 0.0
         raw = {}
         total = 0.0
         for action in node.children:
             v = node.vote.get(action, 0.0)
-            pb = node.prior[action] * (1.0 + v_lambda * v) + v_beta * ramp * v
+            floor_v = v if v >= v_floor_thresh else 0.0
+            pb = node.prior[action] * (1.0 + v_lambda * v) + v_beta * floor_on * floor_v
             raw[action] = pb
             total += pb
         if total > 0.0:
@@ -242,7 +278,7 @@ def _backup(path_nodes, path_edges, leaf_value, value_norm):
 
 
 def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
-              c_puct, value_norm, dead_end_value, oracle, v_lambda, v_beta, v_n0):
+              c_puct, value_norm, dead_end_value, oracle, v_lambda, v_beta, v_n0, boost_active, v_floor_thresh, v_floor_disagree):
     path_keys = {root.state_key}
     path_nodes = [root]
     path_edges = []
@@ -250,7 +286,9 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
     while node.expanded and not node.is_goal and not node.is_dead_end:
         action, child = _select(node, c_puct, value_norm, blocked=path_keys,
-                                v_lambda=v_lambda, v_beta=v_beta, v_n0=v_n0)
+                                v_lambda=v_lambda, v_beta=v_beta, v_n0=v_n0,
+                                boost_active=boost_active, v_floor_thresh=v_floor_thresh,
+                                v_floor_disagree=v_floor_disagree)
         if action is None:
             value = _leaf_value(node.state, goal, q1_model, q2_model)
             _backup(path_nodes, path_edges, value, value_norm)
@@ -282,7 +320,7 @@ def _simulate(root, tt, policy_model, q1_model, q2_model, goal,
 
 def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
             max_simulations, max_time, c_puct, dead_end_value,
-            stop_on_first_solution, oracle, v_lambda, v_beta, v_n0):
+            stop_on_first_solution, oracle, v_lambda, v_beta, v_n0, v_warmup, v_floor_thresh, v_floor_disagree):
     root = Node(root_state, root_key, goal.holds(root_state))
     tt = {root_key: root}
     value_norm = _ValueNormalizer()
@@ -294,9 +332,11 @@ def _search(root_state, root_key, policy_model, q1_model, q2_model, goal,
     while sims < max_simulations:
         if max_time is not None and (time.time() - start) > max_time:
             break
+        boost_active = total_generated >= v_warmup
         goal_plan, generated = _simulate(
             root, tt, policy_model, q1_model, q2_model, goal,
             c_puct, value_norm, dead_end_value, oracle, v_lambda, v_beta, v_n0,
+            boost_active, v_floor_thresh, v_floor_disagree,
         )
         total_generated += generated
         sims += 1
@@ -319,6 +359,9 @@ def _parse_arguments():
     parser.add_argument("--domain", required=True, type=Path)
     parser.add_argument("--problem", required=True, type=Path)
     parser.add_argument("--policy_model", required=True, type=Path)
+    parser.add_argument("--policy_models", nargs="+", default=None, type=Path,
+                        help="If given, average these seed-diverse policies' priors "
+                             "(de-peaks confidently-wrong mistake nodes). Overrides --policy_model.")
     parser.add_argument("--q1_model", required=True, type=Path)
     parser.add_argument("--q2_model", default=None, type=Path)
     parser.add_argument("--iqn_models", required=True, nargs="+", type=Path,
@@ -332,6 +375,15 @@ def _parse_arguments():
                         help="Delayed additive floor strength (0 = off)")
     parser.add_argument("--v_n0", default=256, type=int,
                         help="Parent visits at which the additive floor saturates")
+    parser.add_argument("--v_warmup", default=0, type=int,
+                        help="Global: keep pure-baseline selection until the search has "
+                             "generated this many states (protects easy instances). 0 = off.")
+    parser.add_argument("--v_floor_thresh", default=0.0, type=float,
+                        help="Additive floor only opens siblings with vote share >= this "
+                             "(discriminative gate; 0.5 = majority-backed only).")
+    parser.add_argument("--v_floor_disagree", action="store_true",
+                        help="Floor fires only at nodes where the ensemble plurality vote "
+                             "disagrees with the policy argmax (targets mistake nodes).")
     parser.add_argument("--dead_end_value", default=-1000.0, type=float)
     parser.add_argument("--keep_searching", action="store_true")
     return parser.parse_args()
@@ -349,6 +401,8 @@ def _plan(problem, policy_model, q1_model, q2_model, oracle, args):
             args.max_simulations, args.max_time, args.c_puct, args.dead_end_value,
             stop_on_first_solution=not args.keep_searching,
             oracle=oracle, v_lambda=args.v_lambda, v_beta=args.v_beta, v_n0=args.v_n0,
+            v_warmup=args.v_warmup, v_floor_thresh=args.v_floor_thresh,
+            v_floor_disagree=args.v_floor_disagree,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
@@ -367,10 +421,15 @@ def _main(args):
     problem = mm.Problem(domain, str(args.problem))
     device = create_device(False)
 
-    policy_raw, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.policy_model, device)
+    policy_paths = args.policy_models if args.policy_models else [args.policy_model]
+    policies = []
+    for pp in policy_paths:
+        praw, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, pp, device)
+        policies.append(ModelWrapper(praw, "policy"))
+    policy_model = PolicyEnsemble(policies)
     q1_raw, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.q1_model, device)
-    policy_model = ModelWrapper(policy_raw, "policy")
     q1_model = ModelWrapper(q1_raw, "q")
+    print(f"[config] policy ensemble: {len(policies)} policies", flush=True)
 
     q2_model = None
     if args.q2_model is not None:
@@ -385,7 +444,7 @@ def _main(args):
     oracle = EnsembleOracle(members, device)
     print(f"[config] ensemble vote: M={len(members)} members, "
           f"v_lambda={args.v_lambda} v_beta={args.v_beta} v_n0={args.v_n0} "
-          f"c_puct={args.c_puct}", flush=True)
+          f"v_warmup={args.v_warmup} v_floor_thresh={args.v_floor_thresh} c_puct={args.c_puct}", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, oracle, args)
     if solution is None:

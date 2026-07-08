@@ -64,6 +64,26 @@ class ModelWrapper(rl.ActionScalarModel):
         return list(zip(values_list, actions_list))
 
 
+class PolicyEnsemble:
+    """Averages the softmax priors of M seed-diverse SAC policies; M=1 == single."""
+
+    def __init__(self, policies):
+        self.policies = policies
+
+    @torch.no_grad()
+    def forward(self, state_goals):
+        out = []
+        per_policy = [pol.forward(state_goals) for pol in self.policies]
+        for i in range(len(state_goals)):
+            actions = per_policy[0][i][1]
+            acc = None
+            for pp in per_policy:
+                p = torch.softmax(pp[i][0], dim=0)
+                acc = p.clone() if acc is None else acc + p
+            out.append((acc / len(self.policies), actions))
+        return out
+
+
 class QuantileOracle:
     def __init__(self, iqn_model, device: torch.device, num_quantiles: int = 99) -> None:
         self._model = iqn_model
@@ -154,7 +174,7 @@ def _leaf_value(state, goal, q1_model, q2_model) -> float:
 
 def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
             oracle, w1_active) -> Tuple[float, int]:
-    logits, actions = policy_model.forward([(node.state, goal)])[0]
+    probs, actions = policy_model.forward([(node.state, goal)])[0]
     node.expanded = True
     if len(actions) == 0:
         node.is_dead_end = True
@@ -163,7 +183,6 @@ def _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value,
     if w1_active and node.curve is None and not node.is_goal:
         node.curve = oracle.best_curve(node.state, goal)
 
-    probs = torch.softmax(logits, dim=0)
     generated = 0
     for i, action in enumerate(actions):
         successor = action.apply(node.state)
@@ -358,6 +377,9 @@ def _parse_arguments():
     parser.add_argument("--domain", required=True, type=Path)
     parser.add_argument("--problem", required=True, type=Path)
     parser.add_argument("--policy_model", required=True, type=Path)
+    parser.add_argument("--policy_models", nargs="+", default=None, type=Path,
+                        help="If given, average these seed-diverse policies' priors "
+                             "(de-peaks mistake nodes so the W1 multiplicative boost can act).")
     parser.add_argument("--q1_model", required=True, type=Path)
     parser.add_argument("--q2_model", default=None, type=Path)
     parser.add_argument("--iqn_model", required=True, type=Path)
@@ -413,9 +435,12 @@ def _main(args):
     problem = mm.Problem(domain, str(args.problem))
     device = create_device(False)
 
-    policy_raw, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.policy_model, device)
+    policy_paths = args.policy_models if args.policy_models else [args.policy_model]
+    policies = [ModelWrapper(rgnn.RelationalGraphNeuralNetwork.load(domain, pp, device)[0], "policy")
+                for pp in policy_paths]
+    policy_model = PolicyEnsemble(policies)
+    print(f"[config] policy ensemble: {len(policies)} policies", flush=True)
     q1_raw, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.q1_model, device)
-    policy_model = ModelWrapper(policy_raw, "policy")
     q1_model = ModelWrapper(q1_raw, "q")
 
     q2_model = None
