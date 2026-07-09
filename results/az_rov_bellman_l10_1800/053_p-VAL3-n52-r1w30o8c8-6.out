@@ -1,0 +1,23 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=1.0 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 15] found goal path of length 13
+[Final] Expanded: 343, Generated: 343
+[Cost] IQN forward calls (Bellman signal): 63
+[search done] simulations=15, unique states generated=343
+Found a solution of length 13!
+   1: (navigate rover0 waypoint12 waypoint26)
+   2: (calibrate rover0 camera2 objective3 waypoint26)
+   3: (calibrate rover0 camera3 objective3 waypoint26)
+   4: (calibrate rover0 camera5 objective3 waypoint26)
+   5: (take_image rover0 waypoint26 objective2 camera2 high_res)
+   6: (communicate_image_data rover0 general objective2 high_res waypoint26 waypoint12)
+   7: (calibrate rover0 camera4 objective2 waypoint26)
+   8: (calibrate rover0 camera2 objective3 waypoint26)
+   9: (take_image rover0 waypoint26 objective5 camera2 high_res)
+  10: (communicate_image_data rover0 general objective5 high_res waypoint26 waypoint12)
+  11: (calibrate rover0 camera2 objective3 waypoint26)
+  12: (take_image rover0 waypoint26 objective1 camera2 high_res)
+  13: (communicate_image_data rover0 general objective1 high_res waypoint26 waypoint12)

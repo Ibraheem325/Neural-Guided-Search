@@ -1,0 +1,89 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=0.5 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=25669, generated=25668, iqn_calls=2268
+  [sim 1000] root visits=1000, unique states=51811, generated=51810, iqn_calls=4519
+  [sim 1500] root visits=1500, unique states=78372, generated=78371, iqn_calls=6740
+  [sim 2000] root visits=2000, unique states=103842, generated=103841, iqn_calls=8952
+  [sim 2500] root visits=2500, unique states=130186, generated=130185, iqn_calls=11093
+  [sim 3000] root visits=3000, unique states=157802, generated=157801, iqn_calls=13255
+  [sim 3500] root visits=3500, unique states=187092, generated=187091, iqn_calls=15430
+  [sim 4000] root visits=4000, unique states=213197, generated=213196, iqn_calls=17589
+  [sim 4500] root visits=4500, unique states=244958, generated=244957, iqn_calls=19744
+  [sim 5000] root visits=5000, unique states=272728, generated=272727, iqn_calls=21934
+  [sim 5241] found goal path of length 69
+[Final] Expanded: 285344, Generated: 285344
+[Cost] IQN forward calls (Bellman signal): 22993
+[search done] simulations=5241, unique states generated=285344
+Found a solution of length 69!
+   1: (navigate rover0 waypoint4 waypoint1)
+   2: (calibrate rover0 camera14 objective3 waypoint1)
+   3: (calibrate rover0 camera12 objective0 waypoint1)
+   4: (calibrate rover0 camera6 objective3 waypoint1)
+   5: (calibrate rover0 camera4 objective1 waypoint1)
+   6: (calibrate rover0 camera11 objective1 waypoint1)
+   7: (calibrate rover0 camera5 objective1 waypoint1)
+   8: (calibrate rover0 camera7 objective0 waypoint1)
+   9: (calibrate rover0 camera0 objective0 waypoint1)
+  10: (calibrate rover0 camera9 objective11 waypoint1)
+  11: (take_image rover0 waypoint1 objective10 camera7 low_res)
+  12: (communicate_image_data rover0 general objective10 low_res waypoint1 waypoint12)
+  13: (calibrate rover0 camera7 objective0 waypoint1)
+  14: (calibrate rover0 camera1 objective9 waypoint1)
+  15: (take_image rover0 waypoint1 objective7 camera11 high_res)
+  16: (communicate_image_data rover0 general objective7 high_res waypoint1 waypoint12)
+  17: (calibrate rover0 camera11 objective1 waypoint1)
+  18: (take_image rover0 waypoint1 objective9 camera0 colour)
+  19: (communicate_image_data rover0 general objective9 colour waypoint1 waypoint12)
+  20: (calibrate rover0 camera0 objective0 waypoint1)
+  21: (take_image rover0 waypoint1 objective10 camera0 colour)
+  22: (communicate_image_data rover0 general objective10 colour waypoint1 waypoint12)
+  23: (take_image rover0 waypoint1 objective7 camera5 low_res)
+  24: (communicate_image_data rover0 general objective7 low_res waypoint1 waypoint12)
+  25: (navigate rover0 waypoint1 waypoint4)
+  26: (calibrate rover0 camera2 objective4 waypoint4)
+  27: (calibrate rover0 camera13 objective12 waypoint4)
+  28: (take_image rover0 waypoint4 objective14 camera11 high_res)
+  29: (navigate rover0 waypoint4 waypoint29)
+  30: (navigate rover0 waypoint29 waypoint6)
+  31: (calibrate rover0 camera3 objective4 waypoint6)
+  32: (navigate rover0 waypoint6 waypoint29)
+  33: (navigate rover0 waypoint29 waypoint4)
+  34: (navigate rover0 waypoint4 waypoint16)
+  35: (navigate rover0 waypoint16 waypoint33)
+  36: (sample_rock rover0 rover0store waypoint33)
+  37: (navigate rover0 waypoint33 waypoint16)
+  38: (navigate rover0 waypoint16 waypoint4)
+  39: (navigate rover0 waypoint4 waypoint22)
+  40: (communicate_image_data rover0 general objective14 high_res waypoint22 waypoint12)
+  41: (communicate_rock_data rover0 general waypoint33 waypoint22 waypoint12)
+  42: (navigate rover0 waypoint22 waypoint4)
+  43: (navigate rover0 waypoint4 waypoint13)
+  44: (navigate rover0 waypoint13 waypoint19)
+  45: (navigate rover0 waypoint19 waypoint8)
+  46: (drop rover0 rover0store)
+  47: (navigate rover0 waypoint8 waypoint19)
+  48: (sample_rock rover0 rover0store waypoint19)
+  49: (navigate rover0 waypoint19 waypoint8)
+  50: (drop rover0 rover0store)
+  51: (navigate rover0 waypoint8 waypoint19)
+  52: (navigate rover0 waypoint19 waypoint13)
+  53: (navigate rover0 waypoint13 waypoint26)
+  54: (navigate rover0 waypoint26 waypoint25)
+  55: (sample_rock rover0 rover0store waypoint25)
+  56: (navigate rover0 waypoint25 waypoint26)
+  57: (navigate rover0 waypoint26 waypoint13)
+  58: (navigate rover0 waypoint13 waypoint19)
+  59: (navigate rover0 waypoint19 waypoint8)
+  60: (drop rover0 rover0store)
+  61: (navigate rover0 waypoint8 waypoint19)
+  62: (navigate rover0 waypoint19 waypoint13)
+  63: (navigate rover0 waypoint13 waypoint4)
+  64: (navigate rover0 waypoint4 waypoint16)
+  65: (navigate rover0 waypoint16 waypoint28)
+  66: (calibrate rover0 camera10 objective2 waypoint28)
+  67: (navigate rover0 waypoint28 waypoint16)
+  68: (navigate rover0 waypoint16 waypoint7)
+  69: (communicate_rock_data rover0 general waypoint19 waypoint7 waypoint12)

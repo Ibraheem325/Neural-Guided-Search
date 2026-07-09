@@ -1,0 +1,105 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=1.0 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=8181, generated=8180, iqn_calls=2208
+  [sim 1000] root visits=1000, unique states=17028, generated=17027, iqn_calls=4434
+  [sim 1500] root visits=1500, unique states=25623, generated=25622, iqn_calls=6663
+  [sim 2000] root visits=2000, unique states=33908, generated=33907, iqn_calls=8927
+  [sim 2500] root visits=2500, unique states=42166, generated=42165, iqn_calls=11042
+  [sim 3000] root visits=3000, unique states=49421, generated=49420, iqn_calls=13308
+  [sim 3500] root visits=3500, unique states=57334, generated=57333, iqn_calls=15644
+  [sim 4000] root visits=4000, unique states=63974, generated=63973, iqn_calls=18029
+  [sim 4500] root visits=4500, unique states=72730, generated=72729, iqn_calls=20122
+  [sim 5000] root visits=5000, unique states=82154, generated=82153, iqn_calls=22211
+  [sim 5500] root visits=5500, unique states=91798, generated=91797, iqn_calls=24386
+  [sim 6000] root visits=6000, unique states=101520, generated=101519, iqn_calls=26505
+  [sim 6500] root visits=6500, unique states=110994, generated=110993, iqn_calls=28686
+  [sim 6971] found goal path of length 82
+[Final] Expanded: 119763, Generated: 119763
+[Cost] IQN forward calls (Bellman signal): 30689
+[search done] simulations=6971, unique states generated=119763
+Found a solution of length 82!
+   1: (calibrate rover0 camera4 objective3 waypoint27)
+   2: (navigate rover0 waypoint27 waypoint21)
+   3: (calibrate rover0 camera0 objective1 waypoint21)
+   4: (calibrate rover1 camera3 objective6 waypoint28)
+   5: (calibrate rover0 camera5 objective5 waypoint21)
+   6: (take_image rover0 waypoint21 objective3 camera0 colour)
+   7: (communicate_image_data rover0 general objective3 colour waypoint21 waypoint27)
+   8: (calibrate rover0 camera0 objective1 waypoint21)
+   9: (take_image rover0 waypoint21 objective5 camera0 low_res)
+  10: (communicate_image_data rover0 general objective5 low_res waypoint21 waypoint27)
+  11: (calibrate rover0 camera0 objective1 waypoint21)
+  12: (take_image rover1 waypoint28 objective6 camera3 high_res)
+  13: (communicate_image_data rover1 general objective6 high_res waypoint28 waypoint27)
+  14: (calibrate rover1 camera3 objective6 waypoint28)
+  15: (take_image rover0 waypoint21 objective5 camera0 low_res)
+  16: (take_image rover0 waypoint21 objective5 camera5 high_res)
+  17: (communicate_image_data rover0 general objective5 high_res waypoint21 waypoint27)
+  18: (calibrate rover0 camera0 objective1 waypoint21)
+  19: (take_image rover0 waypoint21 objective6 camera0 low_res)
+  20: (communicate_image_data rover0 general objective6 low_res waypoint21 waypoint27)
+  21: (navigate rover0 waypoint21 waypoint4)
+  22: (navigate rover1 waypoint28 waypoint13)
+  23: (sample_rock rover1 rover1store waypoint13)
+  24: (navigate rover1 waypoint13 waypoint17)
+  25: (drop rover1 rover1store)
+  26: (sample_rock rover1 rover1store waypoint17)
+  27: (navigate rover1 waypoint17 waypoint13)
+  28: (communicate_rock_data rover1 general waypoint13 waypoint13 waypoint27)
+  29: (communicate_rock_data rover1 general waypoint17 waypoint13 waypoint27)
+  30: (navigate rover1 waypoint13 waypoint28)
+  31: (navigate rover1 waypoint28 waypoint2)
+  32: (navigate rover1 waypoint2 waypoint26)
+  33: (navigate rover0 waypoint4 waypoint21)
+  34: (navigate rover0 waypoint21 waypoint9)
+  35: (navigate rover1 waypoint26 waypoint2)
+  36: (navigate rover1 waypoint2 waypoint4)
+  37: (navigate rover1 waypoint4 waypoint12)
+  38: (navigate rover1 waypoint12 waypoint16)
+  39: (drop rover1 rover1store)
+  40: (navigate rover1 waypoint16 waypoint12)
+  41: (navigate rover1 waypoint12 waypoint4)
+  42: (sample_rock rover1 rover1store waypoint4)
+  43: (navigate rover1 waypoint4 waypoint2)
+  44: (navigate rover1 waypoint2 waypoint26)
+  45: (drop rover1 rover1store)
+  46: (sample_rock rover1 rover1store waypoint26)
+  47: (navigate rover1 waypoint26 waypoint2)
+  48: (navigate rover1 waypoint2 waypoint4)
+  49: (navigate rover1 waypoint4 waypoint12)
+  50: (navigate rover1 waypoint12 waypoint16)
+  51: (navigate rover0 waypoint9 waypoint21)
+  52: (navigate rover1 waypoint16 waypoint12)
+  53: (navigate rover1 waypoint12 waypoint4)
+  54: (navigate rover0 waypoint21 waypoint23)
+  55: (navigate rover1 waypoint4 waypoint2)
+  56: (navigate rover1 waypoint2 waypoint26)
+  57: (navigate rover0 waypoint23 waypoint21)
+  58: (navigate rover0 waypoint21 waypoint4)
+  59: (navigate rover1 waypoint26 waypoint2)
+  60: (navigate rover0 waypoint4 waypoint21)
+  61: (navigate rover1 waypoint2 waypoint28)
+  62: (navigate rover0 waypoint21 waypoint9)
+  63: (navigate rover1 waypoint28 waypoint29)
+  64: (navigate rover1 waypoint29 waypoint9)
+  65: (navigate rover0 waypoint9 waypoint21)
+  66: (navigate rover0 waypoint21 waypoint4)
+  67: (navigate rover1 waypoint9 waypoint29)
+  68: (navigate rover0 waypoint4 waypoint21)
+  69: (navigate rover0 waypoint21 waypoint23)
+  70: (navigate rover1 waypoint29 waypoint9)
+  71: (navigate rover1 waypoint9 waypoint23)
+  72: (navigate rover0 waypoint23 waypoint21)
+  73: (navigate rover0 waypoint21 waypoint9)
+  74: (drop rover1 rover1store)
+  75: (navigate rover1 waypoint23 waypoint9)
+  76: (sample_rock rover1 rover1store waypoint9)
+  77: (navigate rover0 waypoint9 waypoint21)
+  78: (navigate rover0 waypoint21 waypoint4)
+  79: (navigate rover1 waypoint9 waypoint29)
+  80: (communicate_rock_data rover1 general waypoint4 waypoint29 waypoint27)
+  81: (communicate_rock_data rover1 general waypoint26 waypoint29 waypoint27)
+  82: (communicate_rock_data rover1 general waypoint9 waypoint29 waypoint27)

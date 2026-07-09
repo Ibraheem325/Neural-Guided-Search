@@ -1,0 +1,20 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=4.0 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=14340, generated=14339, iqn_calls=1630
+  [sim 1000] root visits=1000, unique states=34807, generated=34806, iqn_calls=3982
+  [sim 1500] root visits=1500, unique states=54028, generated=54027, iqn_calls=6330
+  [sim 2000] root visits=2000, unique states=73220, generated=73219, iqn_calls=8622
+  [sim 2500] root visits=2500, unique states=92049, generated=92048, iqn_calls=10594
+  [sim 3000] root visits=3000, unique states=108509, generated=108508, iqn_calls=12513
+  [sim 3500] root visits=3500, unique states=124469, generated=124468, iqn_calls=14432
+  [sim 4000] root visits=4000, unique states=139232, generated=139231, iqn_calls=16201
+  [sim 4500] root visits=4500, unique states=153412, generated=153411, iqn_calls=18007
+  [sim 5000] root visits=5000, unique states=167693, generated=167692, iqn_calls=19766
+  [sim 5500] root visits=5500, unique states=181853, generated=181852, iqn_calls=21523
+[Final] Expanded: 182663, Generated: 182663
+[Cost] IQN forward calls (Bellman signal): 21627
+[search done] simulations=5532, unique states generated=182663
+Failed to find a solution!
