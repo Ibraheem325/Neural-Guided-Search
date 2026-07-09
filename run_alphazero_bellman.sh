@@ -34,6 +34,7 @@ LAMBDA=$8
 K=$9
 SIGNAL=${10}
 MAXTIME=${11}
+CONST_W=${12:-0.0}     # only used when SIGNAL=constant
 
 FILES=($(ls ${TEST_DIR}/*.pddl | grep -v domain | sort))
 IDX=$((SLURM_ARRAY_TASK_ID - 1))
@@ -46,4 +47,5 @@ venv/bin/python alphaZero_bellman.py \
     --policy_model "$POLICY" --q1_model "$Q1" --q2_model "$Q2" \
     --iqn_model "$IQN" \
     --bellman_lambda "$LAMBDA" --bellman_k "$K" --signal "$SIGNAL" \
+    --const_w "$CONST_W" \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1

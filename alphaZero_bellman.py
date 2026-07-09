@@ -81,13 +81,18 @@ class _Signal:
         self.k = 4
         self.err_scale = 3.0
         self.w_max = 0.95
-        self.mode = "bellman"      # or "outcome"
+        self.mode = "bellman"      # bellman | outcome | constant
+        self.const_w = 0.0         # constant mode: fixed widening at every node
         self.gamma = 0.999
         self.reward = -1.0
         self.iqn_calls = 0         # cost counter: total IQN forward passes
+        self.w_sum = 0.0           # to report the mean widening actually applied
+        self.w_count = 0
 
     @property
     def active(self) -> bool:
+        if self.mode == "constant":
+            return self.const_w > 0.0     # signal-free control: no IQN needed
         return self.lam > 0.0 and self.iqn is not None
 
 
@@ -161,16 +166,24 @@ def _widen_prior(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
     inconsistency of the node's top action. No-op if the signal is off."""
     if not _SIG.active or len(node.prior) <= 1:
         return
-    top_action = max(node.prior, key=node.prior.get)
-    err, outcome = _bellman_err(node.state, goal, top_action)
 
-    if _SIG.mode == "outcome":
-        w = _SIG.lam if outcome != "goal" else 0.0
+    if _SIG.mode == "constant":
+        # CONTROL: same flattening everywhere, no Bellman check. Tests whether
+        # the signal's *placement* matters or merely the amount of widening.
+        w = _SIG.const_w
     else:
-        if err is None:
-            return
-        w = _SIG.lam * (err / _SIG.err_scale)
+        top_action = max(node.prior, key=node.prior.get)
+        err, outcome = _bellman_err(node.state, goal, top_action)
+        if _SIG.mode == "outcome":
+            w = _SIG.lam if outcome != "goal" else 0.0
+        else:
+            if err is None:
+                return
+            w = _SIG.lam * (err / _SIG.err_scale)
+
     w = max(0.0, min(_SIG.w_max, w))
+    _SIG.w_sum += w
+    _SIG.w_count += 1
     if w <= 0.0:
         return
     uniform = 1.0 / len(node.prior)
@@ -404,8 +417,12 @@ def _parse_arguments() -> argparse.Namespace:
                         help="Normalizer: w = lambda * err/err_scale (clamped to w_max).")
     parser.add_argument("--w_max", default=0.95, type=float,
                         help="Max fraction of prior mass moved to uniform at a node.")
-    parser.add_argument("--signal", default="bellman", choices=["bellman", "outcome"],
-                        help="bellman: graded min-W1 error; outcome: binary rollout-reaches-goal.")
+    parser.add_argument("--signal", default="bellman",
+                        choices=["bellman", "outcome", "constant"],
+                        help="bellman: graded min-W1 error; outcome: binary rollout-reaches-goal; "
+                             "constant: CONTROL, widen every node by --const_w with no signal.")
+    parser.add_argument("--const_w", default=0.0, type=float,
+                        help="Constant widening weight for --signal constant (no IQN used).")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
@@ -433,6 +450,8 @@ def _plan(problem: mm.Problem,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
         print(f"[Cost] IQN forward calls (Bellman signal): {_SIG.iqn_calls}", flush=True)
+        mean_w = (_SIG.w_sum / _SIG.w_count) if _SIG.w_count else 0.0
+        print(f"[Widen] nodes widened: {_SIG.w_count}, mean w: {mean_w:.4f}", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
 
         if plan is None:
@@ -461,7 +480,13 @@ def _main(args: argparse.Namespace) -> None:
         q2_raw, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.q2_model, device)
         q2_model = ModelWrapper(q2_raw, "q")
 
-    if args.bellman_lambda > 0.0:
+    if args.signal == "constant":
+        _SIG.mode = "constant"
+        _SIG.const_w = args.const_w
+        _SIG.w_max = args.w_max
+        print(f"[Bellman] CONTROL signal=constant const_w={args.const_w} (no IQN, no Bellman check)",
+              flush=True)
+    elif args.bellman_lambda > 0.0:
         assert args.iqn_model is not None, "--bellman_lambda > 0 requires --iqn_model"
         iqn, _, _ = _load_iqn_model(domain, args.iqn_model, device)
         iqn.eval()
