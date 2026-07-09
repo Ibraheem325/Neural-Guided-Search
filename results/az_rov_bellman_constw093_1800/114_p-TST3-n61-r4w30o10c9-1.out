@@ -29,3 +29,19 @@ Using GPU:  NVIDIA L40S
   [sim 12000] root visits=12000, unique states=274699, generated=274698, iqn_calls=0
   [sim 12500] root visits=12500, unique states=286068, generated=286067, iqn_calls=0
   [sim 13000] root visits=13000, unique states=297461, generated=297460, iqn_calls=0
+  [sim 13500] root visits=13500, unique states=307429, generated=307428, iqn_calls=0
+  [sim 14000] root visits=14000, unique states=317320, generated=317319, iqn_calls=0
+  [sim 14500] root visits=14500, unique states=327895, generated=327894, iqn_calls=0
+  [sim 15000] root visits=15000, unique states=337936, generated=337935, iqn_calls=0
+  [sim 15500] root visits=15500, unique states=348572, generated=348571, iqn_calls=0
+  [sim 16000] root visits=16000, unique states=359575, generated=359574, iqn_calls=0
+  [sim 16500] root visits=16500, unique states=371461, generated=371460, iqn_calls=0
+  [sim 17000] root visits=17000, unique states=381091, generated=381090, iqn_calls=0
+  [sim 17500] root visits=17500, unique states=391375, generated=391374, iqn_calls=0
+  [sim 18000] root visits=18000, unique states=403867, generated=403866, iqn_calls=0
+  [sim 18500] root visits=18500, unique states=419964, generated=419963, iqn_calls=0
+[Final] Expanded: 436862, Generated: 436862
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 18991, mean w: 0.9300
+[search done] simulations=18991, unique states generated=436862
+Failed to find a solution!

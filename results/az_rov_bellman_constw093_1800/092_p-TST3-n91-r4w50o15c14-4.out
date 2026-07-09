@@ -29,3 +29,9 @@ Using GPU:  NVIDIA L40S
   [sim 12000] root visits=12000, unique states=989836, generated=989835, iqn_calls=0
   [sim 12500] root visits=12500, unique states=1030866, generated=1030865, iqn_calls=0
   [sim 13000] root visits=13000, unique states=1071292, generated=1071291, iqn_calls=0
+  [sim 13500] root visits=13500, unique states=1112489, generated=1112488, iqn_calls=0
+[Final] Expanded: 1127573, Generated: 1127573
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 13666, mean w: 0.9300
+[search done] simulations=13666, unique states generated=1127573
+Failed to find a solution!
