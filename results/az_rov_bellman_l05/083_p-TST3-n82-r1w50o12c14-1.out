@@ -1,0 +1,39 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=0.5 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 76] found goal path of length 29
+[Final] Expanded: 3115, Generated: 3115
+[Cost] IQN forward calls (Bellman signal): 331
+[search done] simulations=76, unique states generated=3115
+Found a solution of length 29!
+   1: (calibrate rover0 camera2 objective0 waypoint45)
+   2: (calibrate rover0 camera3 objective2 waypoint45)
+   3: (calibrate rover0 camera12 objective11 waypoint45)
+   4: (calibrate rover0 camera13 objective6 waypoint45)
+   5: (calibrate rover0 camera4 objective11 waypoint45)
+   6: (calibrate rover0 camera6 objective11 waypoint45)
+   7: (take_image rover0 waypoint45 objective6 camera2 high_res)
+   8: (navigate rover0 waypoint45 waypoint14)
+   9: (communicate_image_data rover0 general objective6 high_res waypoint14 waypoint33)
+  10: (take_image rover0 waypoint14 objective11 camera12 low_res)
+  11: (communicate_image_data rover0 general objective11 low_res waypoint14 waypoint33)
+  12: (sample_soil rover0 rover0store waypoint14)
+  13: (communicate_soil_data rover0 general waypoint14 waypoint14 waypoint33)
+  14: (navigate rover0 waypoint14 waypoint45)
+  15: (navigate rover0 waypoint45 waypoint8)
+  16: (navigate rover0 waypoint8 waypoint11)
+  17: (navigate rover0 waypoint11 waypoint48)
+  18: (drop rover0 rover0store)
+  19: (navigate rover0 waypoint48 waypoint11)
+  20: (sample_soil rover0 rover0store waypoint11)
+  21: (navigate rover0 waypoint11 waypoint8)
+  22: (navigate rover0 waypoint8 waypoint19)
+  23: (drop rover0 rover0store)
+  24: (sample_soil rover0 rover0store waypoint19)
+  25: (navigate rover0 waypoint19 waypoint8)
+  26: (navigate rover0 waypoint8 waypoint11)
+  27: (navigate rover0 waypoint11 waypoint31)
+  28: (communicate_soil_data rover0 general waypoint19 waypoint31 waypoint33)
+  29: (communicate_soil_data rover0 general waypoint11 waypoint31 waypoint33)

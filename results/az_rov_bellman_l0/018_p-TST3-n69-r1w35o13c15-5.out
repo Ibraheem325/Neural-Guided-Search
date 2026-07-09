@@ -1,0 +1,13 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no IQN signal)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=27008, generated=27007, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=49186, generated=49185, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=67743, generated=67742, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=91654, generated=91653, iqn_calls=0
+[Final] Expanded: 98819, Generated: 98819
+[Cost] IQN forward calls (Bellman signal): 0
+[search done] simulations=2141, unique states generated=98819
+Failed to find a solution!
