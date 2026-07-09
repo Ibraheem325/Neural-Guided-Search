@@ -1,0 +1,34 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] CONTROL signal=constant const_w=0.6 (no IQN, no Bellman check)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 58] found goal path of length 23
+[Final] Expanded: 3776, Generated: 3776
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 58, mean w: 0.6000
+[search done] simulations=58, unique states generated=3776
+Found a solution of length 23!
+   1: (calibrate rover0 camera3 objective11 waypoint35)
+   2: (calibrate rover0 camera9 objective6 waypoint35)
+   3: (calibrate rover0 camera11 objective4 waypoint35)
+   4: (calibrate rover0 camera6 objective7 waypoint35)
+   5: (calibrate rover0 camera7 objective7 waypoint35)
+   6: (calibrate rover0 camera10 objective12 waypoint35)
+   7: (calibrate rover0 camera8 objective12 waypoint35)
+   8: (calibrate rover0 camera1 objective10 waypoint35)
+   9: (take_image rover0 waypoint35 objective10 camera8 high_res)
+  10: (navigate rover0 waypoint35 waypoint28)
+  11: (communicate_image_data rover0 general objective10 high_res waypoint28 waypoint38)
+  12: (calibrate rover0 camera8 objective12 waypoint28)
+  13: (calibrate rover0 camera5 objective2 waypoint28)
+  14: (take_image rover0 waypoint28 objective2 camera1 low_res)
+  15: (communicate_image_data rover0 general objective2 low_res waypoint28 waypoint38)
+  16: (take_image rover0 waypoint28 objective2 camera9 high_res)
+  17: (communicate_image_data rover0 general objective2 high_res waypoint28 waypoint38)
+  18: (navigate rover0 waypoint28 waypoint38)
+  19: (calibrate rover0 camera1 objective10 waypoint38)
+  20: (calibrate rover0 camera2 objective10 waypoint38)
+  21: (take_image rover0 waypoint38 objective8 camera1 low_res)
+  22: (navigate rover0 waypoint38 waypoint28)
+  23: (communicate_image_data rover0 general objective8 low_res waypoint28 waypoint38)

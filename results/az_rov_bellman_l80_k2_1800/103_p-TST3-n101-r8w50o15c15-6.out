@@ -1,0 +1,28 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=8.0 k=2 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=33183, generated=33182, iqn_calls=1284
+  [sim 1000] root visits=1000, unique states=63487, generated=63486, iqn_calls=2433
+  [sim 1500] root visits=1500, unique states=93884, generated=93883, iqn_calls=3679
+  [sim 2000] root visits=2000, unique states=122775, generated=122774, iqn_calls=5162
+  [sim 2500] root visits=2500, unique states=165978, generated=165977, iqn_calls=6650
+  [sim 3000] root visits=3000, unique states=220779, generated=220778, iqn_calls=8115
+  [sim 3500] root visits=3500, unique states=274502, generated=274501, iqn_calls=9611
+  [sim 4000] root visits=4000, unique states=338686, generated=338685, iqn_calls=11018
+  [sim 4500] root visits=4500, unique states=395190, generated=395189, iqn_calls=12475
+  [sim 5000] root visits=5000, unique states=449280, generated=449279, iqn_calls=13919
+  [sim 5500] root visits=5500, unique states=498822, generated=498821, iqn_calls=15294
+  [sim 6000] root visits=6000, unique states=545801, generated=545800, iqn_calls=16650
+  [sim 6500] root visits=6500, unique states=591143, generated=591142, iqn_calls=18041
+  [sim 7000] root visits=7000, unique states=633150, generated=633149, iqn_calls=19419
+  [sim 7500] root visits=7500, unique states=675383, generated=675382, iqn_calls=20770
+  [sim 8000] root visits=8000, unique states=716536, generated=716535, iqn_calls=22117
+  [sim 8500] root visits=8500, unique states=757003, generated=757002, iqn_calls=23457
+  [sim 9000] root visits=9000, unique states=799432, generated=799431, iqn_calls=24803
+[Final] Expanded: 822246, Generated: 822246
+[Cost] IQN forward calls (Bellman signal): 25569
+[Widen] nodes widened: 9282, mean w: 0.8197
+[search done] simulations=9282, unique states generated=822246
+Failed to find a solution!
