@@ -1,0 +1,119 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] CONTROL signal=constant const_w=0.8 (no IQN, no Bellman check)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=16391, generated=16390, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=41424, generated=41423, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=62482, generated=62481, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=81617, generated=81616, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=101963, generated=101962, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=122322, generated=122321, iqn_calls=0
+  [sim 3500] root visits=3500, unique states=130675, generated=130674, iqn_calls=0
+  [sim 4000] root visits=4000, unique states=138141, generated=138140, iqn_calls=0
+  [sim 4500] root visits=4500, unique states=154662, generated=154661, iqn_calls=0
+  [sim 5000] root visits=5000, unique states=175550, generated=175549, iqn_calls=0
+  [sim 5500] root visits=5500, unique states=194080, generated=194079, iqn_calls=0
+  [sim 6000] root visits=6000, unique states=210369, generated=210368, iqn_calls=0
+  [sim 6500] root visits=6500, unique states=237543, generated=237542, iqn_calls=0
+  [sim 7000] root visits=7000, unique states=256155, generated=256154, iqn_calls=0
+  [sim 7500] root visits=7500, unique states=271684, generated=271683, iqn_calls=0
+  [sim 8000] root visits=8000, unique states=281137, generated=281136, iqn_calls=0
+  [sim 8500] root visits=8500, unique states=293398, generated=293397, iqn_calls=0
+  [sim 9000] root visits=9000, unique states=316729, generated=316728, iqn_calls=0
+  [sim 9500] root visits=9500, unique states=342912, generated=342911, iqn_calls=0
+  [sim 10000] root visits=10000, unique states=371853, generated=371852, iqn_calls=0
+  [sim 10500] root visits=10500, unique states=392652, generated=392651, iqn_calls=0
+  [sim 11000] root visits=11000, unique states=415583, generated=415582, iqn_calls=0
+  [sim 11500] root visits=11500, unique states=437617, generated=437616, iqn_calls=0
+  [sim 12000] root visits=12000, unique states=461774, generated=461773, iqn_calls=0
+  [sim 12500] root visits=12500, unique states=487091, generated=487090, iqn_calls=0
+  [sim 13000] root visits=13000, unique states=516063, generated=516062, iqn_calls=0
+  [sim 13500] root visits=13500, unique states=541215, generated=541214, iqn_calls=0
+  [sim 14000] root visits=14000, unique states=566290, generated=566289, iqn_calls=0
+  [sim 14500] root visits=14500, unique states=592678, generated=592677, iqn_calls=0
+  [sim 15000] root visits=15000, unique states=621766, generated=621765, iqn_calls=0
+  [sim 15500] root visits=15500, unique states=648576, generated=648575, iqn_calls=0
+  [sim 16000] root visits=16000, unique states=676583, generated=676582, iqn_calls=0
+  [sim 16500] root visits=16500, unique states=704376, generated=704375, iqn_calls=0
+  [sim 17000] root visits=17000, unique states=729422, generated=729421, iqn_calls=0
+  [sim 17500] root visits=17500, unique states=745099, generated=745098, iqn_calls=0
+  [sim 18000] root visits=18000, unique states=757259, generated=757258, iqn_calls=0
+  [sim 18500] root visits=18500, unique states=767971, generated=767970, iqn_calls=0
+  [sim 19000] root visits=19000, unique states=778499, generated=778498, iqn_calls=0
+  [sim 19500] root visits=19500, unique states=788368, generated=788367, iqn_calls=0
+  [sim 20000] root visits=20000, unique states=798079, generated=798078, iqn_calls=0
+  [sim 20151] found goal path of length 68
+[Final] Expanded: 802922, Generated: 802922
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 20136, mean w: 0.8000
+[search done] simulations=20151, unique states generated=802922
+Found a solution of length 68!
+   1: (calibrate rover0 camera6 objective3 waypoint20)
+   2: (take_image rover0 waypoint20 objective3 camera6 low_res)
+   3: (calibrate rover0 camera6 objective3 waypoint20)
+   4: (navigate rover0 waypoint20 waypoint25)
+   5: (navigate rover0 waypoint25 waypoint30)
+   6: (communicate_image_data rover0 general objective3 low_res waypoint30 waypoint33)
+   7: (calibrate rover0 camera5 objective12 waypoint30)
+   8: (calibrate rover0 camera11 objective5 waypoint30)
+   9: (calibrate rover0 camera13 objective4 waypoint30)
+  10: (calibrate rover0 camera0 objective7 waypoint30)
+  11: (calibrate rover0 camera7 objective8 waypoint30)
+  12: (calibrate rover0 camera1 objective7 waypoint30)
+  13: (take_image rover0 waypoint30 objective0 camera7 colour)
+  14: (communicate_image_data rover0 general objective0 colour waypoint30 waypoint33)
+  15: (take_image rover0 waypoint30 objective3 camera13 high_res)
+  16: (communicate_image_data rover0 general objective3 high_res waypoint30 waypoint33)
+  17: (navigate rover0 waypoint30 waypoint25)
+  18: (navigate rover0 waypoint25 waypoint20)
+  19: (navigate rover0 waypoint20 waypoint24)
+  20: (sample_soil rover0 rover0store waypoint24)
+  21: (navigate rover0 waypoint24 waypoint35)
+  22: (drop rover0 rover0store)
+  23: (navigate rover0 waypoint35 waypoint24)
+  24: (navigate rover0 waypoint24 waypoint20)
+  25: (navigate rover0 waypoint20 waypoint18)
+  26: (navigate rover0 waypoint18 waypoint43)
+  27: (sample_soil rover0 rover0store waypoint43)
+  28: (navigate rover0 waypoint43 waypoint4)
+  29: (drop rover0 rover0store)
+  30: (navigate rover0 waypoint4 waypoint43)
+  31: (navigate rover0 waypoint43 waypoint10)
+  32: (calibrate rover0 camera10 objective3 waypoint10)
+  33: (navigate rover0 waypoint10 waypoint43)
+  34: (navigate rover0 waypoint43 waypoint4)
+  35: (calibrate rover0 camera3 objective6 waypoint4)
+  36: (navigate rover0 waypoint4 waypoint43)
+  37: (navigate rover0 waypoint43 waypoint18)
+  38: (navigate rover0 waypoint18 waypoint16)
+  39: (sample_soil rover0 rover0store waypoint16)
+  40: (navigate rover0 waypoint16 waypoint42)
+  41: (drop rover0 rover0store)
+  42: (navigate rover0 waypoint42 waypoint16)
+  43: (navigate rover0 waypoint16 waypoint38)
+  44: (communicate_soil_data rover0 general waypoint43 waypoint38 waypoint33)
+  45: (communicate_soil_data rover0 general waypoint16 waypoint38 waypoint33)
+  46: (communicate_soil_data rover0 general waypoint24 waypoint38 waypoint33)
+  47: (navigate rover0 waypoint38 waypoint16)
+  48: (navigate rover0 waypoint16 waypoint42)
+  49: (calibrate rover0 camera8 objective11 waypoint42)
+  50: (navigate rover0 waypoint42 waypoint16)
+  51: (navigate rover0 waypoint16 waypoint38)
+  52: (calibrate rover0 camera7 objective8 waypoint38)
+  53: (navigate rover0 waypoint38 waypoint16)
+  54: (navigate rover0 waypoint16 waypoint18)
+  55: (navigate rover0 waypoint18 waypoint20)
+  56: (navigate rover0 waypoint20 waypoint24)
+  57: (navigate rover0 waypoint24 waypoint40)
+  58: (sample_soil rover0 rover0store waypoint40)
+  59: (navigate rover0 waypoint40 waypoint24)
+  60: (navigate rover0 waypoint24 waypoint20)
+  61: (navigate rover0 waypoint20 waypoint22)
+  62: (navigate rover0 waypoint22 waypoint26)
+  63: (drop rover0 rover0store)
+  64: (sample_soil rover0 rover0store waypoint26)
+  65: (navigate rover0 waypoint26 waypoint22)
+  66: (navigate rover0 waypoint22 waypoint5)
+  67: (communicate_soil_data rover0 general waypoint40 waypoint5 waypoint33)
+  68: (communicate_soil_data rover0 general waypoint26 waypoint5 waypoint33)
