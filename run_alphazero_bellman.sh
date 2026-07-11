@@ -35,6 +35,14 @@ K=$9
 SIGNAL=${10}
 MAXTIME=${11}
 CONST_W=${12:-0.0}     # only used when SIGNAL=constant
+# Cap on the widening weight. NOTE: this silently truncates CONST_W if left at the
+# default -- a w=1.0 arm submitted without arg 13 actually runs at 0.95. So for
+# SIGNAL=constant, default W_MAX to CONST_W itself rather than to 0.95.
+if [ "$SIGNAL" = "constant" ]; then
+    W_MAX=${13:-$CONST_W}
+else
+    W_MAX=${13:-0.95}
+fi
 
 FILES=($(ls ${TEST_DIR}/*.pddl | grep -v domain | sort))
 IDX=$((SLURM_ARRAY_TASK_ID - 1))
@@ -47,5 +55,5 @@ venv/bin/python alphaZero_bellman.py \
     --policy_model "$POLICY" --q1_model "$Q1" --q2_model "$Q2" \
     --iqn_model "$IQN" \
     --bellman_lambda "$LAMBDA" --bellman_k "$K" --signal "$SIGNAL" \
-    --const_w "$CONST_W" \
+    --const_w "$CONST_W" --w_max "$W_MAX" \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1

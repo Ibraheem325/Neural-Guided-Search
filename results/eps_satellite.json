@@ -1,0 +1,36 @@
+{
+ "domain_file": "/Users/ibrahim/Documents/Bachelor Thesis/Domains/Domains2/satellite/domain.pddl",
+ "k": 4,
+ "eps": 0.33,
+ "instances_used": 60,
+ "skipped_slow": 2,
+ "skipped_trivial": 0,
+ "summaries": [
+  {
+   "tag": "policy-visited states",
+   "n_trans": 2905,
+   "frac_incorrect": 0.810671256454389,
+   "auc_transition": 0.5087048832271762,
+   "med_err_incorrect": 1.3370541334152222,
+   "med_err_correct": 1.2465176582336426,
+   "n_nodes": 368,
+   "policy_mistake_rate": 0.12228260869565218,
+   "auc_node": 0.48359133126934983,
+   "n_mistake_nodes": 45,
+   "n_correct_nodes": 323
+  },
+  {
+   "tag": "optimal-plan states",
+   "n_trans": 2808,
+   "frac_incorrect": 0.8301282051282052,
+   "auc_transition": 0.500491506780815,
+   "med_err_incorrect": 1.4061487913131714,
+   "med_err_correct": 1.5507807731628418,
+   "n_nodes": 359,
+   "policy_mistake_rate": 0.06406685236768803,
+   "auc_node": 0.4528985507246377,
+   "n_mistake_nodes": 23,
+   "n_correct_nodes": 336
+  }
+ ]
+}
