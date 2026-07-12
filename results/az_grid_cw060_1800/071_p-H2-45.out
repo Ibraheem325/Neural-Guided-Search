@@ -1,0 +1,75 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] CONTROL signal=constant const_w=0.6 (no IQN, no Bellman check)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=936, generated=935, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=1383, generated=1382, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=1879, generated=1878, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=2714, generated=2713, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=3633, generated=3632, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=4482, generated=4481, iqn_calls=0
+  [sim 3500] root visits=3500, unique states=5281, generated=5280, iqn_calls=0
+  [sim 4000] root visits=4000, unique states=5973, generated=5972, iqn_calls=0
+  [sim 4500] root visits=4500, unique states=6655, generated=6654, iqn_calls=0
+  [sim 5000] root visits=5000, unique states=7283, generated=7282, iqn_calls=0
+  [sim 5500] root visits=5500, unique states=7973, generated=7972, iqn_calls=0
+  [sim 6000] root visits=6000, unique states=8670, generated=8669, iqn_calls=0
+  [sim 6500] root visits=6500, unique states=9247, generated=9246, iqn_calls=0
+  [sim 7000] root visits=7000, unique states=9925, generated=9924, iqn_calls=0
+  [sim 7500] root visits=7500, unique states=10550, generated=10549, iqn_calls=0
+  [sim 8000] root visits=8000, unique states=11128, generated=11127, iqn_calls=0
+  [sim 8500] root visits=8500, unique states=11462, generated=11461, iqn_calls=0
+  [sim 9000] root visits=9000, unique states=11951, generated=11950, iqn_calls=0
+  [sim 9500] root visits=9500, unique states=12606, generated=12605, iqn_calls=0
+  [sim 10000] root visits=10000, unique states=13089, generated=13088, iqn_calls=0
+  [sim 10500] root visits=10500, unique states=13646, generated=13645, iqn_calls=0
+  [sim 11000] root visits=11000, unique states=14152, generated=14151, iqn_calls=0
+  [sim 11500] root visits=11500, unique states=14609, generated=14608, iqn_calls=0
+  [sim 12000] root visits=12000, unique states=15115, generated=15114, iqn_calls=0
+  [sim 12500] root visits=12500, unique states=15691, generated=15690, iqn_calls=0
+  [sim 13000] root visits=13000, unique states=16133, generated=16132, iqn_calls=0
+  [sim 13500] root visits=13500, unique states=16575, generated=16574, iqn_calls=0
+  [sim 14000] root visits=14000, unique states=17069, generated=17068, iqn_calls=0
+  [sim 14500] root visits=14500, unique states=17659, generated=17658, iqn_calls=0
+  [sim 15000] root visits=15000, unique states=18148, generated=18147, iqn_calls=0
+  [sim 15500] root visits=15500, unique states=18618, generated=18617, iqn_calls=0
+  [sim 16000] root visits=16000, unique states=19053, generated=19052, iqn_calls=0
+  [sim 16500] root visits=16500, unique states=19476, generated=19475, iqn_calls=0
+  [sim 17000] root visits=17000, unique states=19953, generated=19952, iqn_calls=0
+  [sim 17500] root visits=17500, unique states=20433, generated=20432, iqn_calls=0
+  [sim 18000] root visits=18000, unique states=20924, generated=20923, iqn_calls=0
+  [sim 18500] root visits=18500, unique states=21436, generated=21435, iqn_calls=0
+  [sim 19000] root visits=19000, unique states=21955, generated=21954, iqn_calls=0
+  [sim 19500] root visits=19500, unique states=22517, generated=22516, iqn_calls=0
+  [sim 20000] root visits=20000, unique states=23717, generated=23716, iqn_calls=0
+  [sim 20500] root visits=20500, unique states=24291, generated=24290, iqn_calls=0
+  [sim 21000] root visits=21000, unique states=24641, generated=24640, iqn_calls=0
+  [sim 21500] root visits=21500, unique states=24984, generated=24983, iqn_calls=0
+  [sim 22000] root visits=22000, unique states=25368, generated=25367, iqn_calls=0
+  [sim 22500] root visits=22500, unique states=25805, generated=25804, iqn_calls=0
+  [sim 23000] root visits=23000, unique states=26197, generated=26196, iqn_calls=0
+  [sim 23500] root visits=23500, unique states=26679, generated=26678, iqn_calls=0
+  [sim 24000] root visits=24000, unique states=27243, generated=27242, iqn_calls=0
+  [sim 24500] root visits=24500, unique states=27839, generated=27838, iqn_calls=0
+  [sim 25000] root visits=25000, unique states=28343, generated=28342, iqn_calls=0
+  [sim 25500] root visits=25500, unique states=28781, generated=28780, iqn_calls=0
+  [sim 26000] root visits=26000, unique states=29261, generated=29260, iqn_calls=0
+  [sim 26500] root visits=26500, unique states=29756, generated=29755, iqn_calls=0
+  [sim 27000] root visits=27000, unique states=30280, generated=30279, iqn_calls=0
+  [sim 27500] root visits=27500, unique states=30767, generated=30766, iqn_calls=0
+  [sim 28000] root visits=28000, unique states=31115, generated=31114, iqn_calls=0
+  [sim 28500] root visits=28500, unique states=31521, generated=31520, iqn_calls=0
+  [sim 29000] root visits=29000, unique states=31977, generated=31976, iqn_calls=0
+  [sim 29500] root visits=29500, unique states=32344, generated=32343, iqn_calls=0
+  [sim 30000] root visits=30000, unique states=32751, generated=32750, iqn_calls=0
+  [sim 30500] root visits=30500, unique states=33234, generated=33233, iqn_calls=0
+  [sim 31000] root visits=31000, unique states=33751, generated=33750, iqn_calls=0
+  [sim 31500] root visits=31500, unique states=34190, generated=34189, iqn_calls=0
+  [sim 32000] root visits=32000, unique states=34721, generated=34720, iqn_calls=0
+  [sim 32500] root visits=32500, unique states=35248, generated=35247, iqn_calls=0
+[Final] Expanded: 35395, Generated: 35395
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 13385, mean w: 0.6000
+[search done] simulations=32654, unique states generated=35395
+Failed to find a solution!

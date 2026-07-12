@@ -1,0 +1,125 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] CONTROL signal=constant const_w=0.6 (no IQN, no Bellman check)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=375, generated=374, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=494, generated=493, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=687, generated=686, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=710, generated=709, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=710, generated=709, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=778, generated=777, iqn_calls=0
+  [sim 3500] root visits=3500, unique states=905, generated=904, iqn_calls=0
+  [sim 4000] root visits=4000, unique states=1025, generated=1024, iqn_calls=0
+  [sim 4500] root visits=4500, unique states=1137, generated=1136, iqn_calls=0
+  [sim 5000] root visits=5000, unique states=1204, generated=1203, iqn_calls=0
+  [sim 5500] root visits=5500, unique states=1280, generated=1279, iqn_calls=0
+  [sim 6000] root visits=6000, unique states=1390, generated=1389, iqn_calls=0
+  [sim 6500] root visits=6500, unique states=1485, generated=1484, iqn_calls=0
+  [sim 7000] root visits=7000, unique states=1555, generated=1554, iqn_calls=0
+  [sim 7500] root visits=7500, unique states=1637, generated=1636, iqn_calls=0
+  [sim 8000] root visits=8000, unique states=1728, generated=1727, iqn_calls=0
+  [sim 8500] root visits=8500, unique states=1816, generated=1815, iqn_calls=0
+  [sim 9000] root visits=9000, unique states=1889, generated=1888, iqn_calls=0
+  [sim 9500] root visits=9500, unique states=1972, generated=1971, iqn_calls=0
+  [sim 10000] root visits=10000, unique states=2075, generated=2074, iqn_calls=0
+  [sim 10500] root visits=10500, unique states=2141, generated=2140, iqn_calls=0
+  [sim 11000] root visits=11000, unique states=2218, generated=2217, iqn_calls=0
+  [sim 11500] root visits=11500, unique states=2306, generated=2305, iqn_calls=0
+  [sim 12000] root visits=12000, unique states=2379, generated=2378, iqn_calls=0
+  [sim 12500] root visits=12500, unique states=2447, generated=2446, iqn_calls=0
+  [sim 13000] root visits=13000, unique states=2533, generated=2532, iqn_calls=0
+  [sim 13500] root visits=13500, unique states=2602, generated=2601, iqn_calls=0
+  [sim 14000] root visits=14000, unique states=2674, generated=2673, iqn_calls=0
+  [sim 14500] root visits=14500, unique states=2936, generated=2935, iqn_calls=0
+  [sim 15000] root visits=15000, unique states=3344, generated=3343, iqn_calls=0
+  [sim 15500] root visits=15500, unique states=3563, generated=3562, iqn_calls=0
+  [sim 16000] root visits=16000, unique states=4207, generated=4206, iqn_calls=0
+  [sim 16500] root visits=16500, unique states=4555, generated=4554, iqn_calls=0
+  [sim 17000] root visits=17000, unique states=4958, generated=4957, iqn_calls=0
+  [sim 17500] root visits=17500, unique states=5283, generated=5282, iqn_calls=0
+  [sim 18000] root visits=18000, unique states=5672, generated=5671, iqn_calls=0
+  [sim 18500] root visits=18500, unique states=5921, generated=5920, iqn_calls=0
+  [sim 19000] root visits=19000, unique states=6157, generated=6156, iqn_calls=0
+  [sim 19500] root visits=19500, unique states=6416, generated=6415, iqn_calls=0
+  [sim 20000] root visits=20000, unique states=6670, generated=6669, iqn_calls=0
+  [sim 20500] root visits=20500, unique states=6907, generated=6906, iqn_calls=0
+  [sim 21000] root visits=21000, unique states=7211, generated=7210, iqn_calls=0
+  [sim 21500] root visits=21500, unique states=7412, generated=7411, iqn_calls=0
+  [sim 22000] root visits=22000, unique states=7687, generated=7686, iqn_calls=0
+  [sim 22500] root visits=22500, unique states=7918, generated=7917, iqn_calls=0
+  [sim 23000] root visits=23000, unique states=7988, generated=7987, iqn_calls=0
+  [sim 23500] root visits=23500, unique states=8137, generated=8136, iqn_calls=0
+  [sim 23530] found goal path of length 67
+[Final] Expanded: 8142, Generated: 8142
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 3944, mean w: 0.6000
+[search done] simulations=23530, unique states generated=8142
+Found a solution of length 67!
+   1: (move f5-0f f6-0f)
+   2: (move f6-0f f7-0f)
+   3: (pickup-laser f7-0f)
+   4: (fire-laser f7-0f f7-1f)
+   5: (move f7-0f f6-0f)
+   6: (move f6-0f f5-0f)
+   7: (move f5-0f f4-0f)
+   8: (move f4-0f f3-0f)
+   9: (fire-laser f3-0f f3-1f)
+  10: (putdown-laser f3-0f)
+  11: (move f3-0f f4-0f)
+  12: (move f4-0f f5-0f)
+  13: (move f5-0f f6-0f)
+  14: (move f6-0f f7-0f)
+  15: (pickup-bomb f7-0f)
+  16: (move f7-0f f7-1f)
+  17: (detonate-bomb f7-1f f6-1f)
+  18: (move f7-1f f7-0f)
+  19: (move f7-0f f6-0f)
+  20: (move f6-0f f5-0f)
+  21: (move f5-0f f4-0f)
+  22: (move f4-0f f3-0f)
+  23: (pickup-laser f3-0f)
+  24: (move f3-0f f3-1f)
+  25: (fire-laser f3-1f f3-2f)
+  26: (move f3-1f f3-2f)
+  27: (fire-laser f3-2f f3-3f)
+  28: (move f3-2f f3-3f)
+  29: (fire-laser f3-3f f3-4f)
+  30: (move f3-3f f3-4f)
+  31: (fire-laser f3-4f f3-5f)
+  32: (move f3-4f f3-5f)
+  33: (fire-laser f3-5f f3-6f)
+  34: (move f3-5f f3-6f)
+  35: (fire-laser f3-6f f3-7f)
+  36: (move f3-6f f3-7f)
+  37: (putdown-laser f3-7f)
+  38: (move f3-7f f3-6f)
+  39: (move f3-6f f3-5f)
+  40: (move f3-5f f3-4f)
+  41: (move f3-4f f3-3f)
+  42: (move f3-3f f3-2f)
+  43: (move f3-2f f3-1f)
+  44: (move f3-1f f3-0f)
+  45: (move f3-0f f4-0f)
+  46: (move f4-0f f5-0f)
+  47: (move f5-0f f6-0f)
+  48: (move f6-0f f6-1f)
+  49: (move f6-1f f7-1f)
+  50: (move f7-1f f7-0f)
+  51: (pickup-bomb f7-0f)
+  52: (move f7-0f f7-1f)
+  53: (move f7-1f f6-1f)
+  54: (move f6-1f f6-0f)
+  55: (move f6-0f f5-0f)
+  56: (move f5-0f f4-0f)
+  57: (move f4-0f f3-0f)
+  58: (move f3-0f f3-1f)
+  59: (move f3-1f f3-2f)
+  60: (move f3-2f f3-3f)
+  61: (move f3-3f f3-4f)
+  62: (move f3-4f f3-5f)
+  63: (move f3-5f f3-6f)
+  64: (move f3-6f f3-7f)
+  65: (detonate-bomb f3-7f f2-7f)
+  66: (move f3-7f f2-7f)
+  67: (pick-gold f2-7f)

@@ -1,0 +1,45 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no IQN signal)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=7353, generated=7352, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=17096, generated=17095, iqn_calls=0
+  [sim 1124] found goal path of length 32
+[Final] Expanded: 19410, Generated: 19410
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 0, mean w: 0.0000
+[search done] simulations=1124, unique states generated=19410
+Found a solution of length 32!
+   1: (navigate rover0 waypoint27 waypoint24)
+   2: (navigate rover1 waypoint28 waypoint13)
+   3: (calibrate rover1 camera7 objective2 waypoint13)
+   4: (calibrate rover0 camera4 objective3 waypoint24)
+   5: (take_image rover1 waypoint13 objective8 camera7 high_res)
+   6: (communicate_image_data rover1 general objective8 high_res waypoint13 waypoint27)
+   7: (navigate rover1 waypoint13 waypoint6)
+   8: (calibrate rover1 camera7 objective2 waypoint6)
+   9: (take_image rover1 waypoint6 objective1 camera7 colour)
+  10: (navigate rover1 waypoint6 waypoint13)
+  11: (communicate_image_data rover1 general objective1 colour waypoint13 waypoint27)
+  12: (navigate rover0 waypoint24 waypoint27)
+  13: (navigate rover0 waypoint27 waypoint25)
+  14: (navigate rover0 waypoint25 waypoint10)
+  15: (navigate rover1 waypoint13 waypoint28)
+  16: (navigate rover1 waypoint28 waypoint2)
+  17: (navigate rover1 waypoint2 waypoint4)
+  18: (navigate rover1 waypoint4 waypoint22)
+  19: (sample_rock rover1 rover1store waypoint22)
+  20: (navigate rover1 waypoint22 waypoint4)
+  21: (navigate rover1 waypoint4 waypoint2)
+  22: (navigate rover1 waypoint2 waypoint15)
+  23: (navigate rover1 waypoint15 waypoint10)
+  24: (drop rover1 rover1store)
+  25: (sample_rock rover1 rover1store waypoint10)
+  26: (navigate rover0 waypoint10 waypoint16)
+  27: (navigate rover1 waypoint10 waypoint15)
+  28: (navigate rover0 waypoint16 waypoint10)
+  29: (navigate rover1 waypoint15 waypoint2)
+  30: (navigate rover1 waypoint2 waypoint20)
+  31: (communicate_rock_data rover1 general waypoint22 waypoint20 waypoint27)
+  32: (communicate_rock_data rover1 general waypoint10 waypoint20 waypoint27)
