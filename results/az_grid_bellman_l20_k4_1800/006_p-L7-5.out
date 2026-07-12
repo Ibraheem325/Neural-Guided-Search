@@ -1,0 +1,50 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=2.0 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=659, generated=658, iqn_calls=1118
+  [sim 1000] root visits=1000, unique states=1466, generated=1465, iqn_calls=2504
+  [sim 1500] root visits=1500, unique states=2040, generated=2039, iqn_calls=3463
+  [sim 2000] root visits=2000, unique states=2521, generated=2520, iqn_calls=4223
+  [sim 2500] root visits=2500, unique states=3000, generated=2999, iqn_calls=4962
+  [sim 3000] root visits=3000, unique states=3443, generated=3442, iqn_calls=5656
+  [sim 3500] root visits=3500, unique states=3918, generated=3917, iqn_calls=6374
+  [sim 4000] root visits=4000, unique states=4389, generated=4388, iqn_calls=7086
+  [sim 4500] root visits=4500, unique states=4967, generated=4966, iqn_calls=8000
+  [sim 5000] root visits=5000, unique states=5559, generated=5558, iqn_calls=8953
+  [sim 5500] root visits=5500, unique states=6143, generated=6142, iqn_calls=9871
+  [sim 6000] root visits=6000, unique states=6783, generated=6782, iqn_calls=10862
+  [sim 6500] root visits=6500, unique states=7348, generated=7347, iqn_calls=11783
+  [sim 7000] root visits=7000, unique states=7933, generated=7932, iqn_calls=12750
+  [sim 7500] root visits=7500, unique states=8520, generated=8519, iqn_calls=13659
+  [sim 8000] root visits=8000, unique states=9173, generated=9172, iqn_calls=14792
+  [sim 8500] root visits=8500, unique states=9862, generated=9861, iqn_calls=15966
+  [sim 9000] root visits=9000, unique states=10413, generated=10412, iqn_calls=16861
+  [sim 9500] root visits=9500, unique states=10950, generated=10949, iqn_calls=17728
+  [sim 10000] root visits=10000, unique states=11442, generated=11441, iqn_calls=18579
+  [sim 10500] root visits=10500, unique states=11927, generated=11926, iqn_calls=19445
+  [sim 11000] root visits=11000, unique states=12323, generated=12322, iqn_calls=20064
+  [sim 11500] root visits=11500, unique states=12636, generated=12635, iqn_calls=20554
+  [sim 12000] root visits=12000, unique states=12866, generated=12865, iqn_calls=20944
+  [sim 12500] root visits=12500, unique states=13009, generated=13008, iqn_calls=21174
+  [sim 13000] root visits=13000, unique states=13141, generated=13140, iqn_calls=21413
+  [sim 13500] root visits=13500, unique states=13368, generated=13367, iqn_calls=21747
+  [sim 14000] root visits=14000, unique states=13596, generated=13595, iqn_calls=22097
+  [sim 14500] root visits=14500, unique states=13797, generated=13796, iqn_calls=22419
+  [sim 15000] root visits=15000, unique states=14043, generated=14042, iqn_calls=22811
+  [sim 15500] root visits=15500, unique states=14359, generated=14358, iqn_calls=23297
+  [sim 16000] root visits=16000, unique states=14716, generated=14715, iqn_calls=23850
+  [sim 16500] root visits=16500, unique states=15038, generated=15037, iqn_calls=24357
+  [sim 17000] root visits=17000, unique states=15376, generated=15375, iqn_calls=24911
+  [sim 17500] root visits=17500, unique states=15715, generated=15714, iqn_calls=25465
+  [sim 18000] root visits=18000, unique states=16044, generated=16043, iqn_calls=25959
+  [sim 18500] root visits=18500, unique states=16373, generated=16372, iqn_calls=26437
+  [sim 19000] root visits=19000, unique states=16657, generated=16656, iqn_calls=26906
+  [sim 19500] root visits=19500, unique states=16920, generated=16919, iqn_calls=27357
+  [sim 20000] root visits=20000, unique states=17204, generated=17203, iqn_calls=27830
+[Final] Expanded: 17293, Generated: 17293
+[Cost] IQN forward calls (Bellman signal): 27973
+[Widen] nodes widened: 6291, mean w: 0.8646
+[search done] simulations=20137, unique states generated=17293
+Failed to find a solution!

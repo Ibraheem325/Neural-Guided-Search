@@ -1,0 +1,56 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=8.0 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=716, generated=715, iqn_calls=1228
+  [sim 1000] root visits=1000, unique states=1433, generated=1432, iqn_calls=2425
+  [sim 1500] root visits=1500, unique states=1931, generated=1930, iqn_calls=3298
+  [sim 2000] root visits=2000, unique states=2325, generated=2324, iqn_calls=4018
+  [sim 2500] root visits=2500, unique states=2797, generated=2796, iqn_calls=4809
+  [sim 3000] root visits=3000, unique states=3320, generated=3319, iqn_calls=5643
+  [sim 3500] root visits=3500, unique states=3794, generated=3793, iqn_calls=6464
+  [sim 4000] root visits=4000, unique states=4262, generated=4261, iqn_calls=7291
+  [sim 4500] root visits=4500, unique states=4748, generated=4747, iqn_calls=8116
+  [sim 5000] root visits=5000, unique states=5232, generated=5231, iqn_calls=8929
+  [sim 5500] root visits=5500, unique states=5626, generated=5625, iqn_calls=9645
+  [sim 6000] root visits=6000, unique states=6019, generated=6018, iqn_calls=10341
+  [sim 6500] root visits=6500, unique states=6437, generated=6436, iqn_calls=11075
+  [sim 7000] root visits=7000, unique states=6863, generated=6862, iqn_calls=11816
+  [sim 7500] root visits=7500, unique states=7272, generated=7271, iqn_calls=12570
+  [sim 8000] root visits=8000, unique states=7681, generated=7680, iqn_calls=13283
+  [sim 8460] found goal path of length 29
+[Final] Expanded: 8072, Generated: 8072
+[Cost] IQN forward calls (Bellman signal): 13947
+[Widen] nodes widened: 3180, mean w: 0.9411
+[search done] simulations=8460, unique states generated=8072
+Found a solution of length 29!
+   1: (move f0-2f f0-3f)
+   2: (move f0-3f f0-4f)
+   3: (move f0-4f f1-4f)
+   4: (move f1-4f f2-4f)
+   5: (move f2-4f f3-4f)
+   6: (move f3-4f f3-3f)
+   7: (move f3-3f f2-3f)
+   8: (pickup f2-3f key1-0)
+   9: (move f2-3f f2-4f)
+  10: (unlock f2-4f f2-5f key1-0 shape1)
+  11: (move f2-4f f2-5f)
+  12: (putdown f2-5f key1-0)
+  13: (pickup f2-5f key2-2)
+  14: (move f2-5f f1-5f)
+  15: (move f1-5f f1-4f)
+  16: (move f1-4f f2-4f)
+  17: (move f2-4f f2-3f)
+  18: (move f2-3f f3-3f)
+  19: (move f3-3f f4-3f)
+  20: (move f4-3f f4-2f)
+  21: (unlock f4-2f f5-2f key2-2 shape2)
+  22: (move f4-2f f5-2f)
+  23: (putdown f5-2f key2-2)
+  24: (pickup f5-2f key0-2)
+  25: (move f5-2f f6-2f)
+  26: (unlock f6-2f f6-1f key0-2 shape0)
+  27: (move f6-2f f6-1f)
+  28: (move f6-1f f6-0f)
+  29: (putdown f6-0f key0-2)

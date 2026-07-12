@@ -1,0 +1,61 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=2.0 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=414, generated=413, iqn_calls=699
+  [sim 1000] root visits=1000, unique states=784, generated=783, iqn_calls=1424
+  [sim 1500] root visits=1500, unique states=865, generated=864, iqn_calls=1575
+  [sim 2000] root visits=2000, unique states=955, generated=954, iqn_calls=1772
+  [sim 2500] root visits=2500, unique states=1077, generated=1076, iqn_calls=2037
+  [sim 3000] root visits=3000, unique states=1091, generated=1090, iqn_calls=2075
+  [sim 3500] root visits=3500, unique states=1130, generated=1129, iqn_calls=2165
+  [sim 4000] root visits=4000, unique states=1237, generated=1236, iqn_calls=2412
+  [sim 4240] found goal path of length 42
+[Final] Expanded: 1307, Generated: 1307
+[Cost] IQN forward calls (Bellman signal): 2555
+[Widen] nodes widened: 575, mean w: 0.7402
+[search done] simulations=4240, unique states generated=1307
+Found a solution of length 42!
+   1: (move f2-0f f1-0f)
+   2: (pickup-laser f1-0f)
+   3: (move f1-0f f2-0f)
+   4: (move f2-0f f3-0f)
+   5: (move f3-0f f4-0f)
+   6: (move f4-0f f5-0f)
+   7: (move f5-0f f6-0f)
+   8: (fire-laser f6-0f f6-1f)
+   9: (move f6-0f f6-1f)
+  10: (fire-laser f6-1f f6-2f)
+  11: (move f6-1f f6-2f)
+  12: (fire-laser f6-2f f6-3f)
+  13: (move f6-2f f6-3f)
+  14: (fire-laser f6-3f f6-4f)
+  15: (move f6-3f f6-4f)
+  16: (fire-laser f6-4f f6-5f)
+  17: (move f6-4f f6-5f)
+  18: (putdown-laser f6-5f)
+  19: (move f6-5f f6-4f)
+  20: (move f6-4f f6-3f)
+  21: (move f6-3f f6-2f)
+  22: (move f6-2f f6-1f)
+  23: (move f6-1f f6-0f)
+  24: (move f6-0f f5-0f)
+  25: (move f5-0f f4-0f)
+  26: (move f4-0f f3-0f)
+  27: (move f3-0f f2-0f)
+  28: (move f2-0f f1-0f)
+  29: (pickup-bomb f1-0f)
+  30: (move f1-0f f2-0f)
+  31: (move f2-0f f3-0f)
+  32: (move f3-0f f4-0f)
+  33: (move f4-0f f5-0f)
+  34: (move f5-0f f6-0f)
+  35: (move f6-0f f6-1f)
+  36: (move f6-1f f6-2f)
+  37: (move f6-2f f6-3f)
+  38: (move f6-3f f6-4f)
+  39: (move f6-4f f6-5f)
+  40: (detonate-bomb f6-5f f6-6f)
+  41: (move f6-5f f6-6f)
+  42: (pick-gold f6-6f)

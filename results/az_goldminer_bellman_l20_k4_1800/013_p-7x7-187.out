@@ -1,0 +1,60 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=2.0 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=482, generated=481, iqn_calls=844
+  [sim 1000] root visits=1000, unique states=600, generated=599, iqn_calls=1088
+  [sim 1500] root visits=1500, unique states=818, generated=817, iqn_calls=1485
+  [sim 2000] root visits=2000, unique states=989, generated=988, iqn_calls=1815
+  [sim 2500] root visits=2500, unique states=1126, generated=1125, iqn_calls=2101
+  [sim 3000] root visits=3000, unique states=1253, generated=1252, iqn_calls=2359
+  [sim 3500] root visits=3500, unique states=1398, generated=1397, iqn_calls=2647
+  [sim 4000] root visits=4000, unique states=1516, generated=1515, iqn_calls=2845
+  [sim 4500] root visits=4500, unique states=1944, generated=1943, iqn_calls=3739
+  [sim 5000] root visits=5000, unique states=2138, generated=2137, iqn_calls=4193
+  [sim 5500] root visits=5500, unique states=2723, generated=2722, iqn_calls=5356
+  [sim 6000] root visits=6000, unique states=3280, generated=3279, iqn_calls=6553
+  [sim 6500] root visits=6500, unique states=3663, generated=3662, iqn_calls=7368
+  [sim 7000] root visits=7000, unique states=3811, generated=3810, iqn_calls=7696
+  [sim 7500] root visits=7500, unique states=3973, generated=3972, iqn_calls=8018
+  [sim 7909] found goal path of length 34
+[Final] Expanded: 4374, Generated: 4374
+[Cost] IQN forward calls (Bellman signal): 8795
+[Widen] nodes widened: 1870, mean w: 0.6965
+[search done] simulations=7909, unique states generated=4374
+Found a solution of length 34!
+   1: (move f0-0f f1-0f)
+   2: (move f1-0f f2-0f)
+   3: (pickup-laser f2-0f)
+   4: (move f2-0f f3-0f)
+   5: (move f3-0f f4-0f)
+   6: (fire-laser f4-0f f4-1f)
+   7: (move f4-0f f4-1f)
+   8: (fire-laser f4-1f f4-2f)
+   9: (move f4-1f f4-2f)
+  10: (fire-laser f4-2f f4-3f)
+  11: (move f4-2f f4-3f)
+  12: (fire-laser f4-3f f4-4f)
+  13: (move f4-3f f4-4f)
+  14: (fire-laser f4-4f f4-5f)
+  15: (move f4-4f f4-5f)
+  16: (putdown-laser f4-5f)
+  17: (move f4-5f f4-4f)
+  18: (move f4-4f f4-3f)
+  19: (move f4-3f f4-2f)
+  20: (move f4-2f f4-1f)
+  21: (move f4-1f f4-0f)
+  22: (move f4-0f f3-0f)
+  23: (move f3-0f f2-0f)
+  24: (pickup-bomb f2-0f)
+  25: (move f2-0f f3-0f)
+  26: (move f3-0f f4-0f)
+  27: (move f4-0f f4-1f)
+  28: (move f4-1f f4-2f)
+  29: (move f4-2f f4-3f)
+  30: (move f4-3f f4-4f)
+  31: (move f4-4f f4-5f)
+  32: (detonate-bomb f4-5f f4-6f)
+  33: (move f4-5f f4-6f)
+  34: (pick-gold f4-6f)

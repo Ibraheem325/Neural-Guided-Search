@@ -1,0 +1,41 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] signal=bellman lambda=2.0 k=4 err_scale=3.0 w_max=0.95
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 68] found goal path of length 30
+[Final] Expanded: 94, Generated: 94
+[Cost] IQN forward calls (Bellman signal): 161
+[Widen] nodes widened: 37, mean w: 0.5972
+[search done] simulations=68, unique states generated=94
+Found a solution of length 30!
+   1: (move f2-0f f3-0f)
+   2: (pickup-laser f3-0f)
+   3: (move f3-0f f4-0f)
+   4: (fire-laser f4-0f f4-1f)
+   5: (move f4-0f f4-1f)
+   6: (fire-laser f4-1f f4-2f)
+   7: (move f4-1f f4-2f)
+   8: (fire-laser f4-2f f4-3f)
+   9: (move f4-2f f4-3f)
+  10: (fire-laser f4-3f f4-4f)
+  11: (move f4-3f f4-4f)
+  12: (fire-laser f4-4f f4-5f)
+  13: (move f4-4f f4-5f)
+  14: (putdown-laser f4-5f)
+  15: (move f4-5f f4-4f)
+  16: (move f4-4f f4-3f)
+  17: (move f4-3f f4-2f)
+  18: (move f4-2f f4-1f)
+  19: (move f4-1f f4-0f)
+  20: (move f4-0f f3-0f)
+  21: (pickup-bomb f3-0f)
+  22: (move f3-0f f4-0f)
+  23: (move f4-0f f4-1f)
+  24: (move f4-1f f4-2f)
+  25: (move f4-2f f4-3f)
+  26: (move f4-3f f4-4f)
+  27: (move f4-4f f4-5f)
+  28: (detonate-bomb f4-5f f4-6f)
+  29: (move f4-5f f4-6f)
+  30: (pick-gold f4-6f)
