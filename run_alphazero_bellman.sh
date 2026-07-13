@@ -50,10 +50,16 @@ PROB=${FILES[$IDX]}
 NAME=$(basename "$PROB" .pddl)
 
 mkdir -p "$OUTDIR"
+# arg 14: pass "adaptive" to normalize err by the running median of this search's
+# own errors (recommended -- a fixed err_scale is domain-specific and saturates w).
+ADAPTIVE=${14:-}
+ADAPTIVE_FLAG=""
+[ "$ADAPTIVE" = "adaptive" ] && ADAPTIVE_FLAG="--adaptive_scale"
+
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
     --policy_model "$POLICY" --q1_model "$Q1" --q2_model "$Q2" \
     --iqn_model "$IQN" \
     --bellman_lambda "$LAMBDA" --bellman_k "$K" --signal "$SIGNAL" \
-    --const_w "$CONST_W" --w_max "$W_MAX" \
+    --const_w "$CONST_W" --w_max "$W_MAX" $ADAPTIVE_FLAG \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1

@@ -88,6 +88,28 @@ class _Signal:
         self.iqn_calls = 0         # cost counter: total IQN forward passes
         self.w_sum = 0.0           # to report the mean widening actually applied
         self.w_count = 0
+        # --- adaptive error scale ---------------------------------------
+        # err is a W1 distance between value curves, so its magnitude scales
+        # with the value magnitude (i.e. with plan length) and differs per
+        # domain AND per instance. A fixed err_scale therefore saturates w at
+        # the cap on some instances (prior erased -> search wanders) while
+        # leaving dynamic range on others. Instead, normalize by the running
+        # MEDIAN of the errors seen in THIS search, so w answers "how
+        # inconsistent is this node relative to a typical node here?".
+        self.adaptive = False
+        self.err_hist: list[float] = []
+        self.warmup = 32           # use err_scale until we have this many samples
+
+    def scale(self, err: float) -> float:
+        """Denominator for w. Adaptive: running median of this search's errors."""
+        if not self.adaptive:
+            return self.err_scale
+        self.err_hist.append(err)
+        if len(self.err_hist) < self.warmup:
+            return self.err_scale
+        h = sorted(self.err_hist)
+        med = h[len(h) // 2]
+        return max(med, 1e-6)
 
     @property
     def active(self) -> bool:
@@ -179,7 +201,7 @@ def _widen_prior(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
         else:
             if err is None:
                 return
-            w = _SIG.lam * (err / _SIG.err_scale)
+            w = _SIG.lam * (err / _SIG.scale(err))
 
     w = max(0.0, min(_SIG.w_max, w))
     _SIG.w_sum += w
@@ -414,7 +436,15 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument("--bellman_k", default=4, type=int,
                         help="Rollout horizon for the consistency check.")
     parser.add_argument("--err_scale", default=3.0, type=float,
-                        help="Normalizer: w = lambda * err/err_scale (clamped to w_max).")
+                        help="Fixed normalizer: w = lambda * err/err_scale. NOTE this is a "
+                             "domain-specific magnitude (err scales with plan length); a value "
+                             "tuned on one domain saturates w on another. Prefer --adaptive_scale.")
+    parser.add_argument("--adaptive_scale", action="store_true",
+                        help="Normalize err by the RUNNING MEDIAN of this search's own errors "
+                             "instead of --err_scale. Makes the scale domain- and instance-"
+                             "independent. With this on, lambda has a direct meaning: it is the "
+                             "widening applied at the MEDIAN node (w = lambda * err/median), so "
+                             "use lambda ~0.2-0.8, NOT the 2-8 range used with a fixed scale.")
     parser.add_argument("--w_max", default=0.95, type=float,
                         help="Max fraction of prior mass moved to uniform at a node.")
     parser.add_argument("--signal", default="bellman",
@@ -497,8 +527,11 @@ def _main(args: argparse.Namespace) -> None:
         _SIG.err_scale = args.err_scale
         _SIG.w_max = args.w_max
         _SIG.mode = args.signal
+        _SIG.adaptive = args.adaptive_scale
+        scale_desc = ("adaptive (running median of this search's errors)"
+                      if args.adaptive_scale else f"fixed {args.err_scale}")
         print(f"[Bellman] signal={args.signal} lambda={args.bellman_lambda} k={args.bellman_k} "
-              f"err_scale={args.err_scale} w_max={args.w_max}", flush=True)
+              f"scale={scale_desc} w_max={args.w_max}", flush=True)
     else:
         print("[Bellman] lambda=0 -> baseline (no IQN signal)", flush=True)
 
