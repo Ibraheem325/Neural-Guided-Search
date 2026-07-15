@@ -219,21 +219,13 @@ def _qcritic_value(state: mm.State, goal: mm.GroundConjunctiveCondition) -> Opti
     return torch.minimum(v1, v2).max().item()
 
 
-def _value_err(state: mm.State, goal: mm.GroundConjunctiveCondition,
-               action: mm.GroundAction) -> Optional[float]:
-    """Bellman inconsistency of `action` at `state` with an INDEPENDENT endpoint:
-        | mean Z_iqn(s,a)  -  (accumulated cost + gamma^k * V_Qcritic(s_k)) |
-    over a k-step IQN-greedy rollout. This is the offline-validated signal."""
-    qs, actions = _iqn_curves(state, goal)
-    if qs is None:
-        return None
-    amap = {_canon(str(a)): i for i, a in enumerate(actions)}
-    ai = amap.get(_canon(str(action)))
-    if ai is None:
-        return None
-    v_par = qs[ai].mean().item()
-
-    cur = action.apply(state)
+def _value_err_from_parent(v_par: float, first_succ: mm.State,
+                           goal: mm.GroundConjunctiveCondition) -> Optional[float]:
+    """| v_par - (accumulated cost + gamma^k * V_Qcritic(s_k)) | over a k-step
+    IQN-greedy rollout from `first_succ`. The offline check showed the signal
+    comes from the INDEPENDENT Q-critic endpoint, not the depth, so k=1 works
+    and skips the rollout entirely (1 Q-critic eval, no IQN calls)."""
+    cur = first_succ
     visited = {get_state_key(cur)}
     acc, disc = 0.0, 1.0
     for step in range(1, _SIG.k + 1):
@@ -241,16 +233,13 @@ def _value_err(state: mm.State, goal: mm.GroundConjunctiveCondition,
         disc *= _SIG.gamma
         if goal.holds(cur):
             return abs(v_par - acc)                      # grounded target
-        cq, cact = _iqn_curves(cur, goal)
+        if step == _SIG.k:                               # endpoint: no IQN needed
+            vq = _qcritic_value(cur, goal)
+            return None if vq is None else abs(v_par - (acc + disc * vq))
+        cq, cact = _iqn_curves(cur, goal)                # only to continue rollout
         if cq is None:
             return None
-        scores = cq.mean(dim=1)
-        if step == _SIG.k:
-            vq = _qcritic_value(cur, goal)
-            if vq is None:
-                return None
-            return abs(v_par - (acc + disc * vq))
-        nxt = cact[int(scores.argmax())].apply(cur)
+        nxt = cact[int(cq.mean(dim=1).argmax())].apply(cur)
         key = get_state_key(nxt)
         if key in visited:
             vq = _qcritic_value(cur, goal)
@@ -261,12 +250,21 @@ def _value_err(state: mm.State, goal: mm.GroundConjunctiveCondition,
 
 
 def _compute_value_errs(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
-    """Fill node.verr with the per-action value-inconsistency, for selection to
-    discount the value term of unreliable actions. No-op if the channel is off."""
+    """Fill node.verr with per-action value-inconsistency (IQN parent value vs
+    Q-critic-endpoint Bellman target). Parent IQN curves computed ONCE per node.
+    No-op if the channel is off."""
     if not _SIG.value_active or len(node.prior) <= 1:
         return
+    qs, actions = _iqn_curves(node.state, goal)          # once per node
+    if qs is None:
+        return
+    amap = {_canon(str(a)): i for i, a in enumerate(actions)}
     for a in node.children:
-        e = _value_err(node.state, goal, a)
+        ai = amap.get(_canon(str(a)))
+        if ai is None:
+            continue
+        v_par = qs[ai].mean().item()
+        e = _value_err_from_parent(v_par, a.apply(node.state), goal)
         if e is not None:
             node.verr[a] = e
             _SIG.verr_hist.append(e)
