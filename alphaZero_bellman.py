@@ -113,6 +113,8 @@ class _Signal:
         self.q1 = None
         self.q2 = None
         self.verr_hist: list[float] = []
+        self.vdist_hist: list[float] = []   # forensic: est. distance-to-goal of scored states
+        self.vw_sum = 0.0; self.vw_count = 0   # forensic: actual value-discount applied
 
     def scale(self, err: float) -> float:
         """Denominator for w. Adaptive: running median of this search's errors."""
@@ -268,6 +270,10 @@ def _compute_value_errs(node: "Node", goal: mm.GroundConjunctiveCondition) -> No
         if e is not None:
             node.verr[a] = e
             _SIG.verr_hist.append(e)
+            # FORENSIC: the IQN value is ~ -(steps to goal), so -v_par estimates
+            # this state's distance. The offline AUC was only validated at d<=17;
+            # record what distances search ACTUALLY visits.
+            _SIG.vdist_hist.append(-v_par)
 
 
 def _value_discount(node: "Node", action) -> float:
@@ -277,6 +283,7 @@ def _value_discount(node: "Node", action) -> float:
         return 1.0
     w = _SIG.value_lam * (node.verr[action] / _SIG.vscale())
     w = max(0.0, min(_SIG.w_max, w))
+    _SIG.vw_sum += w; _SIG.vw_count += 1
     return 1.0 - w
 
 
@@ -596,6 +603,17 @@ def _plan(problem: mm.Problem,
             vh = sorted(_SIG.verr_hist)
             print(f"[Value] actions scored: {len(vh)}, median verr: "
                   f"{vh[len(vh)//2]:.4f}", flush=True)
+        if _SIG.vw_count:
+            print(f"[Forensic] value discount actually applied: mean w = "
+                  f"{_SIG.vw_sum/_SIG.vw_count:.4f} over {_SIG.vw_count} selection evals", flush=True)
+        if _SIG.vdist_hist:
+            dh = sorted(_SIG.vdist_hist)
+            q = lambda f: dh[min(len(dh)-1, int(f*len(dh)))]
+            inreg = sum(1 for d in dh if d <= 17)
+            print(f"[Forensic] est. distance-to-goal of states the signal scored: "
+                  f"p10 {q(.10):.0f}  median {q(.50):.0f}  p90 {q(.90):.0f}  max {dh[-1]:.0f}", flush=True)
+            print(f"[Forensic] fraction INSIDE the validated regime (d<=17): "
+                  f"{100*inreg/len(dh):.1f}%  ({inreg}/{len(dh)})", flush=True)
         print(f"[search done] simulations={sims}, unique states generated={generated}", flush=True)
 
         if plan is None:

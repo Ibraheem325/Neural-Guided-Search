@@ -121,6 +121,12 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--bt_final', default=0.1, type=float, help='Final Boltzmann temperature')
     parser.add_argument('--bt_steps', default=600, type=int, help='Number of steps for the Boltzmann temperature to decrease from the initial value to the final value')
     parser.add_argument('--discount_factor', default=0.999, type=float, help='Discount factor')
+    parser.add_argument('--no_use_bounds', dest='use_bounds', action='store_false',
+                        help='Disable clamping IQN targets to [observed_return, -1]. Default is to '
+                             'clamp (the original behaviour). The clamp is a correct bound but pins '
+                             'targets into the short range seen in training, which is a suspect for '
+                             'the value saturating at ~-9.5 on large instances.')
+    parser.set_defaults(use_bounds=True)
     parser.add_argument('--train_horizon', default=100, type=int, help='Maximum rollout length for the training set')
     parser.add_argument('--validation_horizon', default=400, type=int, help='Maximum rollout length for the validation set')
     parser.add_argument('--lr_initial', default=0.001, type=float, help='Initial learning rate')
@@ -271,6 +277,12 @@ def _train(
     validation_problems: list[mm.Problem],
     args: argparse.Namespace,
 ):
+    # use_bounds clamps each target to [observed_return, -1] (ConstantRewardFunction
+    # .get_value_bounds) for transitions on a solution. The bound is CORRECT -- the
+    # true value does lie in that range -- but with short training trajectories it
+    # pins every target into a short range, which may be why the IQN's output
+    # saturates at ~-9.5 while the SAC critic (identical architecture + data, but no
+    # clamp in its loss) still responds out to ~-65. --no_use_bounds tests that.
     loss_function = rl.IQNOptimization(
         model,
         optimizer,
@@ -280,7 +292,7 @@ def _train(
         args.num_quantiles,
         args.num_target_quantiles,
         args.num_selection_quantiles,
-        True,
+        args.use_bounds,
     )
     reward_function = rl.ConstantRewardFunction(-1)
     replay_buffer = rl.PrioritizedReplayBuffer(args.max_buffer_size)
