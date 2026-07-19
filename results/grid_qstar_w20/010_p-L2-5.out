@@ -1,0 +1,38 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 2.0
+Starting Q* search...
+[f=30.941] Expanded: 2, Generated: 1
+[f=26.544] Expanded: 7, Generated: 6
+[f=26.275] Expanded: 9, Generated: 8
+[f=27.612] Expanded: 10, Generated: 9
+[f=28.502] Expanded: 12, Generated: 11
+[f=29.360] Expanded: 12, Generated: 12
+[f=27.283] Expanded: 15, Generated: 15
+[f=22.909] Expanded: 22, Generated: 22
+[f=21.280] Expanded: 24, Generated: 25
+[Final] Expanded: 24, Generated: 25
+Found a solution of length 20!
+   1: (move f0-1f f1-1f)
+   2: (move f1-1f f2-1f)
+   3: (move f2-1f f2-0f)
+   4: (move f2-0f f3-0f)
+   5: (move f3-0f f4-0f)
+   6: (pickup f4-0f key2-0)
+   7: (move f4-0f f4-1f)
+   8: (move f4-1f f4-2f)
+   9: (move f4-2f f3-2f)
+  10: (move f3-2f f3-3f)
+  11: (move f3-3f f2-3f)
+  12: (move f2-3f f2-4f)
+  13: (putdown f2-4f key2-0)
+  14: (move f2-4f f3-4f)
+  15: (move f3-4f f3-3f)
+  16: (move f3-3f f4-3f)
+  17: (pickup f4-3f key2-1)
+  18: (move f4-3f f4-2f)
+  19: (move f4-2f f4-1f)
+  20: (putdown f4-1f key2-1)

@@ -1,0 +1,164 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 4.0
+Starting Q* search...
+[f=225.796] Expanded: 7, Generated: 6
+[f=224.716] Expanded: 9, Generated: 8
+[f=224.751] Expanded: 9, Generated: 9
+[f=226.037] Expanded: 10, Generated: 10
+[f=216.000] Expanded: 13, Generated: 14
+[f=216.137] Expanded: 14, Generated: 15
+[f=211.249] Expanded: 15, Generated: 17
+[f=212.764] Expanded: 16, Generated: 18
+[f=186.056] Expanded: 20, Generated: 22
+[f=182.651] Expanded: 22, Generated: 24
+[f=185.309] Expanded: 23, Generated: 25
+[f=185.623] Expanded: 23, Generated: 26
+[f=171.246] Expanded: 27, Generated: 30
+[f=172.836] Expanded: 28, Generated: 31
+[f=174.005] Expanded: 29, Generated: 32
+[f=171.915] Expanded: 31, Generated: 34
+[f=171.921] Expanded: 31, Generated: 35
+[f=173.902] Expanded: 32, Generated: 36
+[f=174.641] Expanded: 32, Generated: 37
+[f=174.860] Expanded: 33, Generated: 38
+[f=166.481] Expanded: 35, Generated: 40
+[f=167.325] Expanded: 36, Generated: 41
+[f=167.846] Expanded: 37, Generated: 42
+[f=169.930] Expanded: 38, Generated: 43
+[f=158.457] Expanded: 41, Generated: 46
+[f=160.624] Expanded: 42, Generated: 48
+[f=164.286] Expanded: 42, Generated: 49
+[f=167.257] Expanded: 43, Generated: 50
+[f=167.555] Expanded: 44, Generated: 51
+[f=168.827] Expanded: 45, Generated: 52
+[f=170.758] Expanded: 46, Generated: 53
+[f=170.765] Expanded: 47, Generated: 54
+[f=170.778] Expanded: 48, Generated: 55
+[f=171.089] Expanded: 49, Generated: 57
+[f=171.704] Expanded: 49, Generated: 58
+[f=172.031] Expanded: 49, Generated: 59
+[f=172.038] Expanded: 49, Generated: 60
+[f=172.044] Expanded: 49, Generated: 61
+[f=172.111] Expanded: 49, Generated: 62
+[f=172.386] Expanded: 49, Generated: 63
+[f=172.567] Expanded: 49, Generated: 64
+[f=172.631] Expanded: 50, Generated: 65
+[f=172.743] Expanded: 51, Generated: 66
+[f=170.730] Expanded: 52, Generated: 68
+[f=166.616] Expanded: 54, Generated: 70
+[f=170.078] Expanded: 55, Generated: 71
+[f=168.926] Expanded: 58, Generated: 74
+[f=171.345] Expanded: 59, Generated: 75
+[f=172.504] Expanded: 60, Generated: 76
+[f=147.028] Expanded: 66, Generated: 82
+[f=130.756] Expanded: 69, Generated: 85
+[f=132.349] Expanded: 70, Generated: 86
+[f=133.123] Expanded: 70, Generated: 87
+[f=133.822] Expanded: 71, Generated: 88
+[f=133.866] Expanded: 72, Generated: 89
+[f=133.490] Expanded: 74, Generated: 91
+[f=134.047] Expanded: 75, Generated: 92
+[f=131.794] Expanded: 77, Generated: 94
+[f=131.882] Expanded: 77, Generated: 95
+[f=134.526] Expanded: 77, Generated: 96
+[f=134.544] Expanded: 77, Generated: 97
+[f=133.563] Expanded: 78, Generated: 99
+[f=135.025] Expanded: 78, Generated: 100
+[f=135.262] Expanded: 79, Generated: 101
+[f=134.222] Expanded: 80, Generated: 103
+[f=134.297] Expanded: 82, Generated: 105
+[f=135.646] Expanded: 82, Generated: 106
+[f=135.654] Expanded: 82, Generated: 107
+[f=135.727] Expanded: 82, Generated: 108
+[f=135.762] Expanded: 82, Generated: 109
+[f=135.819] Expanded: 82, Generated: 110
+[f=132.809] Expanded: 83, Generated: 112
+[f=132.834] Expanded: 83, Generated: 113
+[f=135.982] Expanded: 84, Generated: 114
+[f=136.111] Expanded: 85, Generated: 115
+[f=136.133] Expanded: 85, Generated: 116
+[f=136.139] Expanded: 86, Generated: 117
+[f=136.159] Expanded: 87, Generated: 118
+[f=136.166] Expanded: 88, Generated: 119
+[f=136.377] Expanded: 89, Generated: 120
+[f=132.637] Expanded: 90, Generated: 122
+[f=125.506] Expanded: 93, Generated: 126
+[f=125.520] Expanded: 94, Generated: 127
+[f=122.725] Expanded: 96, Generated: 129
+[f=123.632] Expanded: 96, Generated: 130
+[f=126.943] Expanded: 96, Generated: 131
+[f=126.980] Expanded: 97, Generated: 132
+[f=127.426] Expanded: 97, Generated: 133
+[f=93.106] Expanded: 106, Generated: 142
+[f=94.181] Expanded: 108, Generated: 144
+[f=87.431] Expanded: 113, Generated: 149
+[f=68.925] Expanded: 118, Generated: 154
+[f=74.933] Expanded: 119, Generated: 155
+[f=67.411] Expanded: 122, Generated: 159
+[Final] Expanded: 122, Generated: 159
+Found a solution of length 61!
+   1: (move f5-1f f4-1f)
+   2: (move f4-1f f4-2f)
+   3: (pickup f4-2f key3-2)
+   4: (move f4-2f f3-2f)
+   5: (move f3-2f f3-1f)
+   6: (unlock f3-1f f3-0f key3-2 shape3)
+   7: (move f3-1f f3-0f)
+   8: (putdown f3-0f key3-2)
+   9: (move f3-0f f3-1f)
+  10: (move f3-1f f3-2f)
+  11: (move f3-2f f3-3f)
+  12: (pickup f3-3f key0-2)
+  13: (move f3-3f f4-3f)
+  14: (move f4-3f f4-4f)
+  15: (move f4-4f f4-5f)
+  16: (unlock f4-5f f4-6f key0-2 shape0)
+  17: (move f4-5f f5-5f)
+  18: (move f5-5f f5-4f)
+  19: (unlock f5-4f f5-3f key0-2 shape0)
+  20: (pickup-and-loose f5-4f key3-0 key0-2)
+  21: (move f5-4f f5-3f)
+  22: (move f5-3f f4-3f)
+  23: (move f4-3f f3-3f)
+  24: (unlock f3-3f f2-3f key3-0 shape3)
+  25: (move f3-3f f4-3f)
+  26: (move f4-3f f5-3f)
+  27: (move f5-3f f6-3f)
+  28: (putdown f6-3f key3-0)
+  29: (move f6-3f f6-4f)
+  30: (move f6-4f f5-4f)
+  31: (pickup f5-4f key0-2)
+  32: (move f5-4f f5-3f)
+  33: (move f5-3f f5-2f)
+  34: (move f5-2f f5-1f)
+  35: (move f5-1f f6-1f)
+  36: (putdown f6-1f key0-2)
+  37: (move f6-1f f5-1f)
+  38: (move f5-1f f4-1f)
+  39: (move f4-1f f3-1f)
+  40: (move f3-1f f2-1f)
+  41: (move f2-1f f2-2f)
+  42: (pickup f2-2f key1-1)
+  43: (move f2-2f f2-3f)
+  44: (move f2-3f f2-4f)
+  45: (pickup-and-loose f2-4f key1-2 key1-1)
+  46: (move f2-4f f2-3f)
+  47: (pickup-and-loose f2-3f key3-1 key1-2)
+  48: (move f2-3f f3-3f)
+  49: (move f3-3f f4-3f)
+  50: (move f4-3f f4-2f)
+  51: (putdown f4-2f key3-1)
+  52: (move f4-2f f4-3f)
+  53: (move f4-3f f4-4f)
+  54: (move f4-4f f4-5f)
+  55: (move f4-5f f4-6f)
+  56: (pickup f4-6f key2-1)
+  57: (move f4-6f f3-6f)
+  58: (move f3-6f f2-6f)
+  59: (move f2-6f f2-5f)
+  60: (move f2-5f f2-4f)
+  61: (putdown f2-4f key2-1)

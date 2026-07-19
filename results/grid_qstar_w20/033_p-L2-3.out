@@ -1,0 +1,66 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 2.0
+Starting Q* search...
+[f=77.762] Expanded: 3, Generated: 2
+[f=65.879] Expanded: 9, Generated: 8
+[f=66.482] Expanded: 11, Generated: 10
+[f=66.891] Expanded: 12, Generated: 11
+[f=67.084] Expanded: 13, Generated: 12
+[f=67.159] Expanded: 14, Generated: 13
+[f=58.802] Expanded: 18, Generated: 17
+[f=58.825] Expanded: 19, Generated: 18
+[f=58.832] Expanded: 19, Generated: 19
+[f=59.713] Expanded: 20, Generated: 21
+[f=60.253] Expanded: 21, Generated: 22
+[f=60.433] Expanded: 22, Generated: 24
+[f=60.969] Expanded: 23, Generated: 26
+[f=61.368] Expanded: 23, Generated: 27
+[f=61.432] Expanded: 24, Generated: 28
+[f=60.975] Expanded: 26, Generated: 30
+[f=61.062] Expanded: 27, Generated: 31
+[f=61.272] Expanded: 28, Generated: 32
+[f=62.017] Expanded: 29, Generated: 33
+[f=62.070] Expanded: 29, Generated: 34
+[f=62.127] Expanded: 29, Generated: 35
+[f=62.245] Expanded: 29, Generated: 36
+[f=62.249] Expanded: 29, Generated: 37
+[f=62.279] Expanded: 29, Generated: 38
+[f=62.022] Expanded: 31, Generated: 40
+[f=59.770] Expanded: 33, Generated: 42
+[f=31.990] Expanded: 41, Generated: 50
+[f=30.317] Expanded: 44, Generated: 54
+[Final] Expanded: 44, Generated: 54
+Found a solution of length 29!
+   1: (move f1-1f f1-2f)
+   2: (move f1-2f f1-3f)
+   3: (move f1-3f f2-3f)
+   4: (move f2-3f f3-3f)
+   5: (pickup f3-3f key2-1)
+   6: (move f3-3f f3-2f)
+   7: (move f3-2f f2-2f)
+   8: (move f2-2f f1-2f)
+   9: (move f1-2f f1-3f)
+  10: (unlock f1-3f f1-4f key2-1 shape2)
+  11: (move f1-3f f1-4f)
+  12: (putdown f1-4f key2-1)
+  13: (move f1-4f f2-4f)
+  14: (move f2-4f f2-3f)
+  15: (move f2-3f f3-3f)
+  16: (move f3-3f f3-2f)
+  17: (move f3-2f f4-2f)
+  18: (move f4-2f f4-1f)
+  19: (move f4-1f f4-0f)
+  20: (pickup f4-0f key1-0)
+  21: (move f4-0f f4-1f)
+  22: (move f4-1f f3-1f)
+  23: (unlock f3-1f f2-1f key1-0 shape1)
+  24: (move f3-1f f2-1f)
+  25: (pickup-and-loose f2-1f key0-1 key1-0)
+  26: (move f2-1f f1-1f)
+  27: (move f1-1f f1-2f)
+  28: (move f1-2f f0-2f)
+  29: (pickup-and-loose f0-2f key2-0 key0-1)
