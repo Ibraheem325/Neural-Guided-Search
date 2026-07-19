@@ -11,9 +11,15 @@ import itertools
 
 
 class NeuralQFunction():
-    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork):
+    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, heuristic_weight: float = 1.0):
         self._model = model
         self._model.eval()
+        # h = -Q is COMPRESSED (DQN outputs ~-123 where true cost-to-go ~700), so
+        # f = g + h is dominated by g and Q* degenerates toward uniform-cost search.
+        # Multiplying h by w re-scales it onto the true cost scale = weighted A*.
+        # Only w matters (a constant bias would add equally to every f, ordering-
+        # invariant), so no per-instance fit is needed.
+        self._w = heuristic_weight
 
     def compute_costs(self, state, goal=None):
         if goal is None:
@@ -24,14 +30,17 @@ class NeuralQFunction():
         with torch.no_grad():
             q_tensor = self._model.forward([(state, applicable_actions, goal)]).readout('q')
             q_tensor = q_tensor[0]
-            costs = (-q_tensor).cpu().tolist()
+            costs = (self._w * (-q_tensor)).cpu().tolist()
         return (applicable_actions, costs)
 
 
 def qstar_search(problem, initial_state, q_function,
                  on_expand_state=None,
                  on_generate_state=None,
-                 on_finish_f_layer=None):
+                 on_finish_f_layer=None,
+                 max_time=None):
+    import time as _time
+    _start = _time.time()
     goal = problem.get_goal_condition()
     if goal.holds(initial_state):
         return ("Solved", [])
@@ -52,6 +61,8 @@ def qstar_search(problem, initial_state, q_function,
         heapq.heappush(openlist, (f, next(counter), 0.0, initial_state, a))
 
     while openlist:
+        if max_time is not None and (_time.time() - _start) > max_time:
+            return ("Timeout", None)
         f, _, g_of_s, current_state, action = heapq.heappop(openlist)
         if best_g[get_state_key(current_state)] < g_of_s:
             continue
@@ -106,6 +117,9 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--domain', required=True, type=Path, help='Path to the domain file')
     parser.add_argument('--problem', required=True, type=Path, help='Path to the problem file')
     parser.add_argument('--model', required=True, type=Path, help='Path to a pre-trained Q model')
+    parser.add_argument('--heuristic_weight', default=1.0, type=float,
+                        help='Multiply h=-Q by this (weighted A*). >1 un-compresses a compressed heuristic.')
+    parser.add_argument('--max_time', default=None, type=float, help='Wall-clock budget in seconds.')
     args = parser.parse_args()
     return args
 
@@ -118,7 +132,8 @@ def _main(args: argparse.Namespace) -> None:
     device = create_device(False)
     model, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, args.model, device)
     initial_state = problem.get_initial_state()
-    q_function = NeuralQFunction(model)
+    q_function = NeuralQFunction(model, heuristic_weight=args.heuristic_weight)
+    print(f'heuristic_weight = {args.heuristic_weight}')
 
     num_expanded = 0
     num_generated = 0
@@ -139,6 +154,7 @@ def _main(args: argparse.Namespace) -> None:
         on_expand_state=increment_expanded,
         on_generate_state=increment_generated,
         on_finish_f_layer=print_f_layer,
+        max_time=args.max_time,
     )
 
     print(f'[Final] Expanded: {num_expanded}, Generated: {num_generated}')
