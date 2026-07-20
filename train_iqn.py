@@ -7,26 +7,72 @@ import torch
 import torch.optim as optim
 
 from pathlib import Path
+from pymimir_rgnn.modules import SumReadout
 from utils import create_device
+
+# Requesting BOTH action and object embeddings needs >=2 readouts, which hits a late-binding
+# closure bug in pymimir_rgnn that makes every output return the last readout's tensor.
+# Importing this applies the fix; it is a no-op for single-output models. See the module docstring.
+import rgnn_readout_fix  # noqa: F401
 
 
 class IQNModelWrapper(rl.ActionQuantileModel):
-    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, num_cosines: int = 64, random_layer_count: bool = False, embedding_size: int = 32) -> None:
+    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, num_cosines: int = 64, random_layer_count: bool = False, embedding_size: int = 32, tau_conditioning: str = 'multiply', use_object_context: bool = False) -> None:
         super().__init__()
+        assert tau_conditioning in ('multiply', 'film'), f'Unknown tau_conditioning: {tau_conditioning}.'
         self.model = model
         self.num_cosines = num_cosines
         self.random_layer_count = random_layer_count
-        self.cosine_projection = torch.nn.Linear(num_cosines, embedding_size)
+        self.tau_conditioning = tau_conditioning
+        self.embedding_size = embedding_size
+        self.use_object_context = use_object_context
+        # The head operates on the per-action FEATURE: the action embedding alone (E), or the
+        # action embedding concatenated with the global object context (2E), matching the DQN.
+        feature_size = embedding_size * (2 if use_object_context else 1)
+        self.feature_size = feature_size
+        if use_object_context:
+            # Mirrors the DQN's ActionScalarReadout: aggregate object embeddings per state with
+            # a SumReadout, then concatenate onto each action embedding before the head.
+            self.object_readout = SumReadout(embedding_size, embedding_size)
+        if tau_conditioning == 'film':
+            # FiLM: tau produces a per-channel (scale, shift) applied as
+            #   h = a * (1 + gamma) + beta.
+            # No ReLU, so no channel is zeroed, and zero-init makes the layer start as the
+            # IDENTITY (h = a) -- i.e. a direct readout like the DQN's, which can reach large
+            # magnitudes immediately. Tau-dependence is then learned on top of that.
+            self.film_projection = torch.nn.Linear(num_cosines, 2 * feature_size)
+            torch.nn.init.zeros_(self.film_projection.weight)
+            torch.nn.init.zeros_(self.film_projection.bias)
+        else:
+            # Original: h = a * relu(W cos(tau)). The ReLU zeroes ~half the channels for any
+            # given tau and attenuates the signal before the head, ceiling the output range
+            # (measured: IQN bottoms out at -16.7/-21.3 where the DQN reaches -171).
+            self.cosine_projection = torch.nn.Linear(num_cosines, feature_size)
+        # Activation matches the DQN's readout, which uses mish everywhere and no ReLU
+        # (pymimir_rgnn.modules.MLP: Linear -> mish -> Linear). ReLU hard-zeroes negative
+        # pre-activations; mish is smooth and keeps gradient there. Since the DQN drives to
+        # -171 through this exact activation and the IQN ceilings at -21, aligning removes a
+        # variable. 'relu' is kept so existing multiply-checkpoints reproduce bit-for-bit.
+        activation = torch.nn.Mish() if tau_conditioning == 'film' else torch.nn.ReLU()
         self.quantile_head = torch.nn.Sequential(
-            torch.nn.Linear(embedding_size, embedding_size),
-            torch.nn.ReLU(),
-            torch.nn.Linear(embedding_size, 1),
+            torch.nn.Linear(feature_size, feature_size),
+            activation,
+            torch.nn.Linear(feature_size, 1),
         )
         self.register_buffer('cosine_basis', torch.arange(num_cosines, dtype=torch.float).view(1, 1, -1) * torch.pi)
 
     def _encode_taus(self, taus: torch.Tensor) -> torch.Tensor:
         cosines = torch.cos(taus.unsqueeze(-1) * self.cosine_basis)  # type: ignore
+        if self.tau_conditioning == 'film':
+            return self.film_projection(cosines)  # [B, N, 2E], no ReLU
         return torch.relu(self.cosine_projection(cosines))
+
+    def _combine(self, action_embeddings: torch.Tensor, tau_embedding: torch.Tensor) -> torch.Tensor:
+        """Condition [A, E] action embeddings on [N, *] tau features -> [A, N, E]."""
+        if self.tau_conditioning == 'film':
+            gamma, beta = tau_embedding.chunk(2, dim=-1)  # each [N, E]
+            return action_embeddings.unsqueeze(1) * (1.0 + gamma.unsqueeze(0)) + beta.unsqueeze(0)
+        return action_embeddings.unsqueeze(1) * tau_embedding.unsqueeze(0)
 
     def forward(
         self,
@@ -45,14 +91,30 @@ class IQNModelWrapper(rl.ActionQuantileModel):
             original_layer_count = self.model.get_hparam_config().num_layers
             new_layer_count = random.randint(original_layer_count // 2, original_layer_count)
             self.model.get_hparam_config().num_layers = new_layer_count
-            action_embeddings_batch = self.model.forward(input_list).readout('action_embedding')
+            forward_state = self.model.forward(input_list)
             self.model.get_hparam_config().num_layers = original_layer_count
         else:
-            flat_embeddings = self.model.forward(input_list).readout('action_embedding')
+            forward_state = self.model.forward(input_list)
+        flat_embeddings = forward_state.readout('action_embedding')
 
         # New API returns flat [total_actions, embedding_size] tensor; split per state
         action_counts = [len(actions) for actions in actions_list]
         action_embeddings_batch = torch.split(flat_embeddings, action_counts)
+
+        if self.use_object_context:
+            # Same construction as the DQN's ActionScalarReadout: aggregate this state's object
+            # embeddings into one vector and concatenate it onto every action embedding, so the
+            # head sees global problem context (plausibly what encodes distance SCALE).
+            flat_objects = forward_state.readout('object_embedding')
+            object_counts = torch.tensor(
+                [len(state.get_problem().get_objects()) for state, _ in state_goals],
+                device=flat_objects.device,
+            )
+            object_aggregation = self.object_readout(flat_objects, object_counts)  # [B, E]
+            action_embeddings_batch = tuple(
+                torch.cat((ae, agg.unsqueeze(0).expand(ae.shape[0], -1)), dim=1) if ae.shape[0] > 0 else ae
+                for ae, agg in zip(action_embeddings_batch, object_aggregation)
+            )
 
         device = next(self.parameters()).device
         if taus is None:
@@ -66,7 +128,7 @@ class IQNModelWrapper(rl.ActionQuantileModel):
             if action_embeddings.shape[0] == 0:
                 q_values = torch.empty((0, tau_embedding.shape[0]), device=device)
             else:
-                q_values = self.quantile_head(action_embeddings.unsqueeze(1) * tau_embedding.unsqueeze(0)).squeeze(-1)
+                q_values = self.quantile_head(self._combine(action_embeddings, tau_embedding)).squeeze(-1)
             outputs.append((q_values, actions))
         return outputs
 
@@ -138,6 +200,18 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--num_rollouts', default=4, type=int, help='Number of trajectories to compute in parallel')
     parser.add_argument('--train_steps', default=32, type=int, help='Number of training steps per iteration')
     parser.add_argument('--num_cosines', default=64, type=int, help='Number of cosine basis features used for tau embeddings')
+    parser.add_argument('--tau_conditioning', default='multiply', choices=['multiply', 'film'],
+                        help="How tau conditions the action embedding. 'multiply' (default, original) uses "
+                             "h = a * relu(W cos(tau)), whose ReLU zeroes ~half the channels and ceilings the "
+                             "output range (IQN bottoms out at ~-21 where the DQN reaches -171). 'film' uses "
+                             "h = a * (1 + gamma) + beta with zero-init, starting as a direct DQN-like readout.")
+    parser.add_argument('--use_object_context', action='store_true',
+                        help="Feed the head cat(action_embedding, SumReadout(object_embeddings)), the same global "
+                             "object context the DQN's readout always gets. Plausibly encodes problem SCALE, a "
+                             "candidate cause of the IQN's output-range ceiling (-21 vs the DQN's -171).")
+    parser.add_argument('--bounds_weight', default=None, type=float,
+                        help='If set, use SOFT bounds (a penalty of this weight, like the DQN) instead of the '
+                             'hard target clamp. 0.0 disables bounds entirely. Overrides --no_use_bounds.')
     parser.add_argument('--num_quantiles', default=64, type=int, help='Number of quantiles used for the online IQN loss')
     parser.add_argument('--num_target_quantiles', default=64, type=int, help='Number of quantiles used for the target distribution')
     parser.add_argument('--num_selection_quantiles', default=32, type=int, help='Number of quantiles used for greedy target action selection')
@@ -166,7 +240,15 @@ def _parse_instances(input: Path) -> tuple[mm.Domain, list[mm.Problem]]:
     return domain, problems
 
 
-def _create_base_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str) -> rgnn.RelationalGraphNeuralNetwork:
+def _create_base_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, use_object_context: bool = False) -> rgnn.RelationalGraphNeuralNetwork:
+    # The DQN's ActionScalarReadout feeds its head cat(action_embedding, SumReadout(objects)),
+    # i.e. it always sees a GLOBAL OBJECT CONTEXT. The IQN historically saw only the action
+    # embedding. That context plausibly encodes problem SCALE, which is what sets how large the
+    # distance can be -- a candidate cause of the IQN's output-range ceiling (-21 vs the DQN's
+    # -171). Requesting it needs a SECOND output, which is why rgnn_readout_fix is required.
+    output_specification = [('action_embedding', rgnn.OutputNodeType.Action, rgnn.OutputValueType.Embeddings)]
+    if use_object_context:
+        output_specification.append(('object_embedding', rgnn.OutputNodeType.Objects, rgnn.OutputValueType.Embeddings))
     if aggregation == 'smax': aggregation_function = rgnn.AggregationFunction.SmoothMaximum
     elif aggregation == 'hmax': aggregation_function = rgnn.AggregationFunction.HardMaximum
     elif aggregation == 'mean': aggregation_function = rgnn.AggregationFunction.Mean
@@ -179,14 +261,14 @@ def _create_base_model(domain: mm.Domain, embedding_size: int, num_layers: int, 
         num_layers=num_layers,
         message_aggregation=aggregation_function,
         input_specification=(rgnn.InputType.State, rgnn.InputType.GroundActions, rgnn.InputType.Goal),
-        output_specification=[('action_embedding', rgnn.OutputNodeType.Action, rgnn.OutputValueType.Embeddings)],
+        output_specification=output_specification,
     )
     return rgnn.RelationalGraphNeuralNetwork(config)
 
 
-def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, num_cosines: int, random_layer_count: bool = False) -> IQNModelWrapper:
-    base_model = _create_base_model(domain, embedding_size, num_layers, aggregation)
-    return IQNModelWrapper(base_model, num_cosines, random_layer_count, embedding_size)
+def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, num_cosines: int, random_layer_count: bool = False, tau_conditioning: str = 'multiply', use_object_context: bool = False) -> IQNModelWrapper:
+    base_model = _create_base_model(domain, embedding_size, num_layers, aggregation, use_object_context)
+    return IQNModelWrapper(base_model, num_cosines, random_layer_count, embedding_size, tau_conditioning, use_object_context)
 
 
 def _create_trajectory_refiner(hindsight: str, train_problems: list[mm.Problem], max_new_trajectories: int) -> rl.TrajectoryRefiner:
@@ -231,6 +313,9 @@ def _save_checkpoint(
             'optimizer': optimizer.state_dict(),
             'iqn_wrapper': {
                 'num_cosines': model.num_cosines,
+                'tau_conditioning': model.tau_conditioning,
+                'embedding_size': model.embedding_size,
+                'use_object_context': model.use_object_context,
                 'state_dict': _get_iqn_head_state(model),
             },
             'policy_wrapper': {
@@ -258,7 +343,13 @@ def _load_model(
     if not isinstance(num_cosines, int) or iqn_state_dict is None:
         raise RuntimeError(f'Checkpoint {path} is missing IQN wrapper metadata.')
 
-    model = IQNModelWrapper(base_model, num_cosines).to(device)
+    # Checkpoints written before the FiLM patch have neither key; they are all the original
+    # multiplicative-ReLU variant at the default embedding size, so default to those and keep
+    # loading them unchanged.
+    tau_conditioning = iqn_wrapper_extras.get('tau_conditioning', 'multiply')
+    embedding_size = iqn_wrapper_extras.get('embedding_size', 32)
+    use_object_context = iqn_wrapper_extras.get('use_object_context', False)
+    model = IQNModelWrapper(base_model, num_cosines, False, embedding_size, tau_conditioning, use_object_context).to(device)
     _load_iqn_head_state(model, iqn_state_dict)
 
     policy_wrapper_extras = extras.get('policy_wrapper', {})
@@ -283,17 +374,34 @@ def _train(
     # pins every target into a short range, which may be why the IQN's output
     # saturates at ~-9.5 while the SAC critic (identical architecture + data, but no
     # clamp in its loss) still responds out to ~-65. --no_use_bounds tests that.
-    loss_function = rl.IQNOptimization(
-        model,
-        optimizer,
-        lr_scheduler,
-        model,
-        args.discount_factor,
-        args.num_quantiles,
-        args.num_target_quantiles,
-        args.num_selection_quantiles,
-        args.use_bounds,
-    )
+    if args.bounds_weight is not None:
+        # Soft bounds: a penalty term like the DQN's, instead of hard-clamping the targets.
+        # The hard clamp is the single largest fixable cause of the IQN's early saturation
+        # (grid d=10-22 slope -0.421 clamped vs -0.683 unclamped vs -0.896 for the DQN).
+        from iqn_soft_bounds import SoftBoundsIQNOptimization
+        loss_function = SoftBoundsIQNOptimization(
+            model,
+            optimizer,
+            lr_scheduler,
+            model,
+            args.discount_factor,
+            args.num_quantiles,
+            args.num_target_quantiles,
+            args.num_selection_quantiles,
+            bounds_weight=args.bounds_weight,
+        )
+    else:
+        loss_function = rl.IQNOptimization(
+            model,
+            optimizer,
+            lr_scheduler,
+            model,
+            args.discount_factor,
+            args.num_quantiles,
+            args.num_target_quantiles,
+            args.num_selection_quantiles,
+            args.use_bounds,
+        )
     reward_function = rl.ConstantRewardFunction(-1)
     replay_buffer = rl.PrioritizedReplayBuffer(args.max_buffer_size)
     trajectory_sampler = rl.BoltzmannTrajectorySampler(policy_model, reward_function, args.bt_initial)
@@ -366,7 +474,7 @@ def _main(args: argparse.Namespace) -> None:
     _, validation_problems = _parse_instances(args.validation)
     print(f'Parsed {len(validation_problems)} validation instances.', flush=True)
     print('Creating model...', flush=True)
-    model = _create_model(domain, args.embedding_size, args.layers, args.aggregation, args.num_cosines, args.random_layer_count).to(device)
+    model = _create_model(domain, args.embedding_size, args.layers, args.aggregation, args.num_cosines, args.random_layer_count, args.tau_conditioning, args.use_object_context).to(device)
     policy_model = RiskSensitivePolicyWrapper(model, args.risk_averseness, args.num_policy_quantiles).to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.lr_initial)
     # lr_steps is in episode units; convert to optimization-step units (the scheduler is stepped
