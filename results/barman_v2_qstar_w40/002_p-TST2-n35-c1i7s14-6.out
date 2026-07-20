@@ -1,0 +1,261 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/barman_v2_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 4.0
+Starting Q* search...
+[f=199.533] Expanded: 3, Generated: 2
+[f=182.245] Expanded: 8, Generated: 7
+[f=173.885] Expanded: 11, Generated: 10
+[f=160.675] Expanded: 17, Generated: 16
+[f=146.943] Expanded: 24, Generated: 23
+[f=148.046] Expanded: 27, Generated: 26
+[f=148.046] Expanded: 29, Generated: 28
+[f=148.046] Expanded: 31, Generated: 30
+[f=148.046] Expanded: 33, Generated: 32
+[f=148.046] Expanded: 35, Generated: 34
+[f=148.046] Expanded: 37, Generated: 36
+[f=148.046] Expanded: 39, Generated: 38
+[f=147.073] Expanded: 40, Generated: 40
+[f=147.073] Expanded: 41, Generated: 42
+[f=147.073] Expanded: 42, Generated: 44
+[f=147.073] Expanded: 43, Generated: 46
+[f=147.073] Expanded: 44, Generated: 48
+[f=147.073] Expanded: 45, Generated: 50
+[f=147.073] Expanded: 46, Generated: 52
+[f=148.046] Expanded: 49, Generated: 55
+[f=148.046] Expanded: 51, Generated: 57
+[f=148.046] Expanded: 53, Generated: 59
+[f=148.046] Expanded: 55, Generated: 61
+[f=148.046] Expanded: 57, Generated: 63
+[f=148.046] Expanded: 59, Generated: 65
+[f=151.911] Expanded: 59, Generated: 66
+[f=147.073] Expanded: 60, Generated: 68
+[f=147.073] Expanded: 61, Generated: 70
+[f=147.073] Expanded: 62, Generated: 72
+[f=147.073] Expanded: 63, Generated: 74
+[f=147.073] Expanded: 64, Generated: 76
+[f=147.073] Expanded: 65, Generated: 78
+[f=148.046] Expanded: 68, Generated: 82
+[f=148.046] Expanded: 70, Generated: 84
+[f=148.046] Expanded: 72, Generated: 86
+[f=148.046] Expanded: 74, Generated: 88
+[f=148.046] Expanded: 76, Generated: 90
+[f=151.911] Expanded: 76, Generated: 91
+[f=147.073] Expanded: 77, Generated: 93
+[f=147.073] Expanded: 78, Generated: 95
+[f=147.073] Expanded: 79, Generated: 97
+[f=147.073] Expanded: 80, Generated: 99
+[f=147.073] Expanded: 81, Generated: 101
+[f=148.046] Expanded: 84, Generated: 106
+[f=148.046] Expanded: 86, Generated: 108
+[f=148.046] Expanded: 88, Generated: 110
+[f=148.046] Expanded: 90, Generated: 112
+[f=151.911] Expanded: 90, Generated: 113
+[f=147.073] Expanded: 91, Generated: 115
+[f=147.073] Expanded: 92, Generated: 117
+[f=147.073] Expanded: 93, Generated: 119
+[f=147.073] Expanded: 94, Generated: 121
+[f=148.046] Expanded: 97, Generated: 126
+[f=148.046] Expanded: 99, Generated: 128
+[f=151.911] Expanded: 99, Generated: 129
+[f=148.046] Expanded: 101, Generated: 132
+[f=147.073] Expanded: 102, Generated: 134
+[f=147.073] Expanded: 103, Generated: 136
+[f=147.073] Expanded: 104, Generated: 138
+[f=148.046] Expanded: 107, Generated: 145
+[f=148.046] Expanded: 109, Generated: 147
+[f=151.911] Expanded: 109, Generated: 148
+[f=147.073] Expanded: 110, Generated: 150
+[f=147.073] Expanded: 111, Generated: 152
+[f=148.046] Expanded: 114, Generated: 160
+[f=151.911] Expanded: 114, Generated: 161
+[f=147.073] Expanded: 115, Generated: 163
+[f=151.911] Expanded: 116, Generated: 171
+[f=152.630] Expanded: 148, Generated: 203
+[f=152.630] Expanded: 243, Generated: 298
+[f=152.630] Expanded: 270, Generated: 325
+[f=152.630] Expanded: 284, Generated: 339
+[f=146.943] Expanded: 287, Generated: 342
+[f=149.379] Expanded: 287, Generated: 343
+[f=148.046] Expanded: 290, Generated: 346
+[f=148.046] Expanded: 292, Generated: 348
+[f=148.046] Expanded: 294, Generated: 350
+[f=148.046] Expanded: 296, Generated: 352
+[f=148.046] Expanded: 298, Generated: 354
+[f=148.046] Expanded: 300, Generated: 356
+[f=148.046] Expanded: 302, Generated: 358
+[f=147.073] Expanded: 303, Generated: 360
+[f=147.073] Expanded: 304, Generated: 362
+[f=147.073] Expanded: 305, Generated: 364
+[f=147.073] Expanded: 306, Generated: 366
+[f=147.073] Expanded: 307, Generated: 368
+[f=147.073] Expanded: 308, Generated: 370
+[f=147.073] Expanded: 309, Generated: 372
+[f=148.046] Expanded: 312, Generated: 375
+[f=148.046] Expanded: 314, Generated: 377
+[f=148.046] Expanded: 316, Generated: 379
+[f=148.046] Expanded: 318, Generated: 381
+[f=148.046] Expanded: 320, Generated: 383
+[f=148.046] Expanded: 322, Generated: 385
+[f=151.911] Expanded: 322, Generated: 386
+[f=147.073] Expanded: 323, Generated: 388
+[f=147.073] Expanded: 324, Generated: 390
+[f=147.073] Expanded: 325, Generated: 392
+[f=147.073] Expanded: 326, Generated: 394
+[f=147.073] Expanded: 327, Generated: 396
+[f=147.073] Expanded: 328, Generated: 398
+[f=151.911] Expanded: 329, Generated: 400
+[f=148.046] Expanded: 331, Generated: 402
+[f=148.046] Expanded: 333, Generated: 404
+[f=148.046] Expanded: 335, Generated: 406
+[f=148.046] Expanded: 337, Generated: 408
+[f=148.046] Expanded: 339, Generated: 410
+[f=151.911] Expanded: 339, Generated: 411
+[f=147.073] Expanded: 340, Generated: 413
+[f=147.073] Expanded: 341, Generated: 415
+[f=147.073] Expanded: 342, Generated: 417
+[f=147.073] Expanded: 343, Generated: 419
+[f=147.073] Expanded: 344, Generated: 421
+[f=148.046] Expanded: 347, Generated: 426
+[f=148.046] Expanded: 349, Generated: 428
+[f=148.046] Expanded: 351, Generated: 430
+[f=148.046] Expanded: 353, Generated: 432
+[f=151.911] Expanded: 353, Generated: 433
+[f=147.073] Expanded: 354, Generated: 435
+[f=147.073] Expanded: 355, Generated: 437
+[f=147.073] Expanded: 356, Generated: 439
+[f=147.073] Expanded: 357, Generated: 441
+[f=148.046] Expanded: 360, Generated: 447
+[f=148.046] Expanded: 362, Generated: 449
+[f=148.046] Expanded: 364, Generated: 451
+[f=151.911] Expanded: 364, Generated: 452
+[f=147.073] Expanded: 365, Generated: 454
+[f=147.073] Expanded: 366, Generated: 456
+[f=147.073] Expanded: 367, Generated: 458
+[f=151.911] Expanded: 368, Generated: 461
+[f=148.046] Expanded: 370, Generated: 464
+[f=148.046] Expanded: 372, Generated: 466
+[f=151.911] Expanded: 372, Generated: 467
+[f=151.911] Expanded: 372, Generated: 468
+[f=147.073] Expanded: 373, Generated: 470
+[f=147.073] Expanded: 374, Generated: 472
+[f=148.046] Expanded: 377, Generated: 479
+[f=151.911] Expanded: 377, Generated: 480
+[f=151.911] Expanded: 377, Generated: 481
+[f=147.073] Expanded: 378, Generated: 483
+[f=151.911] Expanded: 379, Generated: 491
+[f=152.630] Expanded: 380, Generated: 492
+[f=152.630] Expanded: 427, Generated: 539
+[f=152.630] Expanded: 481, Generated: 593
+[f=152.630] Expanded: 539, Generated: 651
+[f=152.630] Expanded: 547, Generated: 659
+[f=151.526] Expanded: 548, Generated: 661
+[f=154.207] Expanded: 551, Generated: 664
+[f=154.207] Expanded: 612, Generated: 725
+[f=154.207] Expanded: 822, Generated: 935
+[f=154.207] Expanded: 884, Generated: 997
+[f=154.701] Expanded: 885, Generated: 999
+[f=150.468] Expanded: 886, Generated: 1001
+[f=154.753] Expanded: 886, Generated: 1002
+[f=151.670] Expanded: 887, Generated: 1004
+[f=134.421] Expanded: 896, Generated: 1013
+[f=128.736] Expanded: 899, Generated: 1016
+[f=126.571] Expanded: 900, Generated: 1018
+[f=128.736] Expanded: 902, Generated: 1020
+[f=126.571] Expanded: 903, Generated: 1022
+[f=128.736] Expanded: 905, Generated: 1024
+[f=126.571] Expanded: 906, Generated: 1026
+[f=128.736] Expanded: 908, Generated: 1028
+[f=126.571] Expanded: 909, Generated: 1030
+[f=128.736] Expanded: 911, Generated: 1032
+[f=126.571] Expanded: 912, Generated: 1034
+[f=132.169] Expanded: 920, Generated: 1042
+[f=132.169] Expanded: 932, Generated: 1054
+[f=131.533] Expanded: 934, Generated: 1056
+[f=133.404] Expanded: 934, Generated: 1057
+[f=131.533] Expanded: 936, Generated: 1059
+[f=133.404] Expanded: 936, Generated: 1060
+[f=131.533] Expanded: 938, Generated: 1062
+[f=133.404] Expanded: 938, Generated: 1063
+[f=131.533] Expanded: 940, Generated: 1065
+[f=133.404] Expanded: 940, Generated: 1066
+[f=131.533] Expanded: 942, Generated: 1068
+[f=133.404] Expanded: 942, Generated: 1069
+[f=131.579] Expanded: 943, Generated: 1071
+[f=127.812] Expanded: 945, Generated: 1073
+[f=119.741] Expanded: 949, Generated: 1077
+[f=118.033] Expanded: 953, Generated: 1081
+[f=112.939] Expanded: 957, Generated: 1086
+[f=96.791] Expanded: 966, Generated: 1095
+[f=89.617] Expanded: 968, Generated: 1098
+[Final] Expanded: 968, Generated: 1098
+Found a solution of length 67!
+   1: (grasp left shot10)
+   2: (fill-shot shot10 ingredient5 left right dispenser5)
+   3: (pour-shot-to-clean-shaker shot10 ingredient5 shaker1 left l0 l1)
+   4: (refill-shot shot10 ingredient5 left right dispenser5)
+   5: (leave left shot10)
+   6: (grasp left shot3)
+   7: (fill-shot shot3 ingredient1 left right dispenser1)
+   8: (leave left shot3)
+   9: (grasp left shot13)
+  10: (fill-shot shot13 ingredient3 left right dispenser3)
+  11: (leave left shot13)
+  12: (grasp left shot4)
+  13: (fill-shot shot4 ingredient6 left right dispenser6)
+  14: (leave left shot4)
+  15: (grasp left shot8)
+  16: (fill-shot shot8 ingredient6 left right dispenser6)
+  17: (leave left shot8)
+  18: (grasp left shot14)
+  19: (fill-shot shot14 ingredient7 left right dispenser7)
+  20: (pour-shot-to-used-shaker shot14 ingredient7 shaker1 left l1 l2)
+  21: (grasp right shaker1)
+  22: (leave left shot14)
+  23: (shake cocktail1 ingredient7 ingredient5 shaker1 right left)
+  24: (pour-shaker-to-shot cocktail1 shot2 right shaker1 l2 l1)
+  25: (pour-shaker-to-shot cocktail1 shot12 right shaker1 l1 l0)
+  26: (empty-shaker right shaker1 cocktail1 l0 l0)
+  27: (clean-shaker right left shaker1)
+  28: (grasp left shot14)
+  29: (leave right shaker1)
+  30: (refill-shot shot14 ingredient7 left right dispenser7)
+  31: (pour-shot-to-clean-shaker shot14 ingredient7 shaker1 left l0 l1)
+  32: (clean-shot shot14 ingredient7 left right)
+  33: (fill-shot shot14 ingredient5 left right dispenser5)
+  34: (grasp right shaker1)
+  35: (pour-shot-to-used-shaker shot14 ingredient5 shaker1 left l1 l2)
+  36: (leave left shot14)
+  37: (shake cocktail1 ingredient7 ingredient5 shaker1 right left)
+  38: (pour-shaker-to-shot cocktail1 shot1 right shaker1 l2 l1)
+  39: (pour-shaker-to-shot cocktail1 shot11 right shaker1 l1 l0)
+  40: (empty-shaker right shaker1 cocktail1 l0 l0)
+  41: (clean-shaker right left shaker1)
+  42: (grasp left shot14)
+  43: (leave right shaker1)
+  44: (refill-shot shot14 ingredient5 left right dispenser5)
+  45: (pour-shot-to-clean-shaker shot14 ingredient5 shaker1 left l0 l1)
+  46: (clean-shot shot14 ingredient5 left right)
+  47: (fill-shot shot14 ingredient7 left right dispenser7)
+  48: (grasp right shaker1)
+  49: (pour-shot-to-used-shaker shot14 ingredient7 shaker1 left l1 l2)
+  50: (leave left shot14)
+  51: (shake cocktail1 ingredient7 ingredient5 shaker1 right left)
+  52: (pour-shaker-to-shot cocktail1 shot5 right shaker1 l2 l1)
+  53: (pour-shaker-to-shot cocktail1 shot6 right shaker1 l1 l0)
+  54: (empty-shaker right shaker1 cocktail1 l0 l0)
+  55: (clean-shaker right left shaker1)
+  56: (grasp left shot14)
+  57: (leave right shaker1)
+  58: (refill-shot shot14 ingredient7 left right dispenser7)
+  59: (pour-shot-to-clean-shaker shot14 ingredient7 shaker1 left l0 l1)
+  60: (clean-shot shot14 ingredient7 left right)
+  61: (fill-shot shot14 ingredient5 left right dispenser5)
+  62: (pour-shot-to-used-shaker shot14 ingredient5 shaker1 left l1 l2)
+  63: (grasp right shaker1)
+  64: (leave left shot14)
+  65: (shake cocktail1 ingredient7 ingredient5 shaker1 right left)
+  66: (pour-shaker-to-shot cocktail1 shot9 right shaker1 l2 l1)
+  67: (pour-shaker-to-shot cocktail1 shot7 right shaker1 l1 l0)

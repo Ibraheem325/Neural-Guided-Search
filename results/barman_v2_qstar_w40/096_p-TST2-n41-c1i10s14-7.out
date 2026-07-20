@@ -1,0 +1,71 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/barman_v2_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 4.0
+Starting Q* search...
+[f=159.638] Expanded: 14, Generated: 13
+[f=159.638] Expanded: 21, Generated: 20
+[f=157.801] Expanded: 23, Generated: 22
+[f=129.268] Expanded: 34, Generated: 33
+[f=122.954] Expanded: 37, Generated: 36
+[f=112.176] Expanded: 43, Generated: 42
+[f=103.412] Expanded: 48, Generated: 48
+[f=89.932] Expanded: 55, Generated: 55
+[f=87.492] Expanded: 57, Generated: 57
+[f=90.580] Expanded: 57, Generated: 58
+[f=80.135] Expanded: 59, Generated: 61
+[Final] Expanded: 59, Generated: 61
+Found a solution of length 51!
+   1: (grasp left shot4)
+   2: (fill-shot shot4 ingredient9 left right dispenser9)
+   3: (leave left shot4)
+   4: (grasp left shot6)
+   5: (fill-shot shot6 ingredient7 left right dispenser7)
+   6: (leave left shot6)
+   7: (grasp left shot10)
+   8: (fill-shot shot10 ingredient4 left right dispenser4)
+   9: (leave left shot10)
+  10: (grasp left shot11)
+  11: (fill-shot shot11 ingredient10 left right dispenser10)
+  12: (leave left shot11)
+  13: (grasp left shot3)
+  14: (fill-shot shot3 ingredient6 left right dispenser6)
+  15: (pour-shot-to-clean-shaker shot3 ingredient6 shaker1 left l0 l1)
+  16: (refill-shot shot3 ingredient6 left right dispenser6)
+  17: (leave left shot3)
+  18: (grasp left shot8)
+  19: (fill-shot shot8 ingredient2 left right dispenser2)
+  20: (leave left shot8)
+  21: (grasp left shot5)
+  22: (fill-shot shot5 ingredient1 left right dispenser1)
+  23: (leave left shot5)
+  24: (grasp left shot2)
+  25: (fill-shot shot2 ingredient2 left right dispenser2)
+  26: (leave left shot2)
+  27: (grasp left shot13)
+  28: (fill-shot shot13 ingredient1 left right dispenser1)
+  29: (leave left shot13)
+  30: (grasp left shot14)
+  31: (fill-shot shot14 ingredient3 left right dispenser3)
+  32: (pour-shot-to-used-shaker shot14 ingredient3 shaker1 left l1 l2)
+  33: (grasp right shaker1)
+  34: (leave left shot14)
+  35: (shake cocktail1 ingredient6 ingredient3 shaker1 right left)
+  36: (pour-shaker-to-shot cocktail1 shot1 right shaker1 l2 l1)
+  37: (pour-shaker-to-shot cocktail1 shot7 right shaker1 l1 l0)
+  38: (empty-shaker right shaker1 cocktail1 l0 l0)
+  39: (clean-shaker right left shaker1)
+  40: (grasp left shot14)
+  41: (leave right shaker1)
+  42: (refill-shot shot14 ingredient3 left right dispenser3)
+  43: (pour-shot-to-clean-shaker shot14 ingredient3 shaker1 left l0 l1)
+  44: (clean-shot shot14 ingredient3 left right)
+  45: (fill-shot shot14 ingredient6 left right dispenser6)
+  46: (pour-shot-to-used-shaker shot14 ingredient6 shaker1 left l1 l2)
+  47: (grasp right shaker1)
+  48: (leave left shot14)
+  49: (shake cocktail1 ingredient6 ingredient3 shaker1 right left)
+  50: (pour-shaker-to-shot cocktail1 shot9 right shaker1 l2 l1)
+  51: (pour-shaker-to-shot cocktail1 shot12 right shaker1 l1 l0)

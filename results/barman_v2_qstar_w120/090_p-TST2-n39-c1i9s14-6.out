@@ -1,0 +1,185 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/barman_v2_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 12.0
+Starting Q* search...
+[f=603.583] Expanded: 3, Generated: 2
+[f=542.086] Expanded: 8, Generated: 7
+[f=511.015] Expanded: 11, Generated: 10
+[f=479.903] Expanded: 14, Generated: 13
+[f=401.277] Expanded: 24, Generated: 23
+[f=394.550] Expanded: 27, Generated: 26
+[f=394.550] Expanded: 29, Generated: 28
+[f=394.550] Expanded: 31, Generated: 30
+[f=394.550] Expanded: 33, Generated: 32
+[f=394.550] Expanded: 35, Generated: 34
+[f=394.550] Expanded: 37, Generated: 36
+[f=394.550] Expanded: 39, Generated: 38
+[f=388.269] Expanded: 40, Generated: 40
+[f=388.269] Expanded: 41, Generated: 42
+[f=388.269] Expanded: 42, Generated: 44
+[f=388.269] Expanded: 43, Generated: 46
+[f=388.269] Expanded: 44, Generated: 48
+[f=388.269] Expanded: 45, Generated: 50
+[f=388.269] Expanded: 46, Generated: 52
+[f=408.037] Expanded: 58, Generated: 64
+[f=408.037] Expanded: 72, Generated: 78
+[f=408.037] Expanded: 82, Generated: 88
+[f=408.037] Expanded: 84, Generated: 90
+[f=408.037] Expanded: 88, Generated: 94
+[f=394.550] Expanded: 91, Generated: 97
+[f=394.550] Expanded: 93, Generated: 99
+[f=394.550] Expanded: 95, Generated: 101
+[f=394.550] Expanded: 97, Generated: 103
+[f=394.550] Expanded: 99, Generated: 105
+[f=394.550] Expanded: 101, Generated: 107
+[f=403.784] Expanded: 101, Generated: 108
+[f=388.269] Expanded: 102, Generated: 110
+[f=388.269] Expanded: 103, Generated: 112
+[f=388.269] Expanded: 104, Generated: 114
+[f=388.269] Expanded: 105, Generated: 116
+[f=388.269] Expanded: 106, Generated: 118
+[f=388.269] Expanded: 107, Generated: 120
+[f=408.037] Expanded: 109, Generated: 122
+[f=408.037] Expanded: 121, Generated: 134
+[f=408.037] Expanded: 131, Generated: 144
+[f=408.037] Expanded: 133, Generated: 146
+[f=408.037] Expanded: 143, Generated: 156
+[f=394.550] Expanded: 146, Generated: 159
+[f=394.550] Expanded: 148, Generated: 162
+[f=394.550] Expanded: 150, Generated: 164
+[f=394.550] Expanded: 152, Generated: 166
+[f=394.550] Expanded: 154, Generated: 168
+[f=403.784] Expanded: 154, Generated: 169
+[f=388.269] Expanded: 155, Generated: 171
+[f=388.269] Expanded: 156, Generated: 173
+[f=388.269] Expanded: 157, Generated: 175
+[f=388.269] Expanded: 158, Generated: 177
+[f=388.269] Expanded: 159, Generated: 179
+[f=408.037] Expanded: 162, Generated: 182
+[f=408.037] Expanded: 170, Generated: 190
+[f=408.037] Expanded: 179, Generated: 199
+[f=408.037] Expanded: 189, Generated: 209
+[f=394.550] Expanded: 192, Generated: 212
+[f=394.550] Expanded: 194, Generated: 216
+[f=394.550] Expanded: 196, Generated: 218
+[f=394.550] Expanded: 198, Generated: 220
+[f=403.784] Expanded: 198, Generated: 221
+[f=388.269] Expanded: 199, Generated: 223
+[f=388.269] Expanded: 200, Generated: 225
+[f=388.269] Expanded: 201, Generated: 227
+[f=388.269] Expanded: 202, Generated: 229
+[f=408.037] Expanded: 218, Generated: 245
+[f=408.037] Expanded: 220, Generated: 247
+[f=408.037] Expanded: 221, Generated: 248
+[f=408.037] Expanded: 226, Generated: 253
+[f=394.550] Expanded: 229, Generated: 256
+[f=394.550] Expanded: 231, Generated: 261
+[f=394.550] Expanded: 233, Generated: 263
+[f=403.784] Expanded: 233, Generated: 264
+[f=388.269] Expanded: 234, Generated: 266
+[f=388.269] Expanded: 235, Generated: 268
+[f=388.269] Expanded: 236, Generated: 270
+[f=408.037] Expanded: 242, Generated: 276
+[f=408.037] Expanded: 244, Generated: 278
+[f=408.037] Expanded: 254, Generated: 288
+[f=394.550] Expanded: 257, Generated: 291
+[f=394.550] Expanded: 259, Generated: 297
+[f=403.784] Expanded: 259, Generated: 298
+[f=388.269] Expanded: 260, Generated: 300
+[f=388.269] Expanded: 261, Generated: 302
+[f=408.037] Expanded: 264, Generated: 305
+[f=408.037] Expanded: 273, Generated: 314
+[f=394.550] Expanded: 276, Generated: 317
+[f=403.784] Expanded: 276, Generated: 323
+[f=388.269] Expanded: 277, Generated: 325
+[f=408.037] Expanded: 279, Generated: 327
+[f=408.037] Expanded: 283, Generated: 331
+[f=403.784] Expanded: 284, Generated: 339
+[f=411.323] Expanded: 285, Generated: 340
+[f=411.323] Expanded: 321, Generated: 376
+[f=411.323] Expanded: 451, Generated: 506
+[f=411.323] Expanded: 452, Generated: 507
+[f=399.886] Expanded: 453, Generated: 509
+[f=361.621] Expanded: 459, Generated: 515
+[f=298.050] Expanded: 467, Generated: 524
+[f=310.699] Expanded: 468, Generated: 526
+[f=295.229] Expanded: 470, Generated: 528
+[f=264.499] Expanded: 474, Generated: 532
+[f=255.212] Expanded: 477, Generated: 535
+[f=247.320] Expanded: 479, Generated: 537
+[f=247.320] Expanded: 481, Generated: 539
+[f=234.103] Expanded: 483, Generated: 542
+[f=170.654] Expanded: 492, Generated: 551
+[f=137.913] Expanded: 494, Generated: 554
+[Final] Expanded: 494, Generated: 554
+Found a solution of length 67!
+   1: (grasp left shot3)
+   2: (fill-shot shot3 ingredient8 left right dispenser8)
+   3: (pour-shot-to-clean-shaker shot3 ingredient8 shaker1 left l0 l1)
+   4: (refill-shot shot3 ingredient8 left right dispenser8)
+   5: (leave left shot3)
+   6: (grasp left shot2)
+   7: (fill-shot shot2 ingredient1 left right dispenser1)
+   8: (leave left shot2)
+   9: (grasp left shot5)
+  10: (fill-shot shot5 ingredient5 left right dispenser5)
+  11: (leave left shot5)
+  12: (grasp left shot8)
+  13: (fill-shot shot8 ingredient9 left right dispenser9)
+  14: (leave left shot8)
+  15: (grasp left shot11)
+  16: (fill-shot shot11 ingredient6 left right dispenser6)
+  17: (leave left shot11)
+  18: (grasp left shot14)
+  19: (fill-shot shot14 ingredient2 left right dispenser2)
+  20: (pour-shot-to-used-shaker shot14 ingredient2 shaker1 left l1 l2)
+  21: (grasp right shaker1)
+  22: (leave left shot14)
+  23: (shake cocktail1 ingredient2 ingredient8 shaker1 right left)
+  24: (pour-shaker-to-shot cocktail1 shot4 right shaker1 l2 l1)
+  25: (pour-shaker-to-shot cocktail1 shot6 right shaker1 l1 l0)
+  26: (empty-shaker right shaker1 cocktail1 l0 l0)
+  27: (clean-shaker right left shaker1)
+  28: (grasp left shot14)
+  29: (leave right shaker1)
+  30: (refill-shot shot14 ingredient2 left right dispenser2)
+  31: (pour-shot-to-clean-shaker shot14 ingredient2 shaker1 left l0 l1)
+  32: (clean-shot shot14 ingredient2 left right)
+  33: (fill-shot shot14 ingredient8 left right dispenser8)
+  34: (pour-shot-to-used-shaker shot14 ingredient8 shaker1 left l1 l2)
+  35: (grasp right shaker1)
+  36: (leave left shot14)
+  37: (shake cocktail1 ingredient2 ingredient8 shaker1 right left)
+  38: (pour-shaker-to-shot cocktail1 shot1 right shaker1 l2 l1)
+  39: (pour-shaker-to-shot cocktail1 shot7 right shaker1 l1 l0)
+  40: (empty-shaker right shaker1 cocktail1 l0 l0)
+  41: (clean-shaker right left shaker1)
+  42: (grasp left shot14)
+  43: (leave right shaker1)
+  44: (refill-shot shot14 ingredient8 left right dispenser8)
+  45: (pour-shot-to-clean-shaker shot14 ingredient8 shaker1 left l0 l1)
+  46: (clean-shot shot14 ingredient8 left right)
+  47: (fill-shot shot14 ingredient2 left right dispenser2)
+  48: (pour-shot-to-used-shaker shot14 ingredient2 shaker1 left l1 l2)
+  49: (grasp right shaker1)
+  50: (leave left shot14)
+  51: (shake cocktail1 ingredient2 ingredient8 shaker1 right left)
+  52: (pour-shaker-to-shot cocktail1 shot9 right shaker1 l2 l1)
+  53: (pour-shaker-to-shot cocktail1 shot10 right shaker1 l1 l0)
+  54: (empty-shaker right shaker1 cocktail1 l0 l0)
+  55: (clean-shaker right left shaker1)
+  56: (grasp left shot14)
+  57: (leave right shaker1)
+  58: (refill-shot shot14 ingredient2 left right dispenser2)
+  59: (pour-shot-to-clean-shaker shot14 ingredient2 shaker1 left l0 l1)
+  60: (clean-shot shot14 ingredient2 left right)
+  61: (fill-shot shot14 ingredient8 left right dispenser8)
+  62: (pour-shot-to-used-shaker shot14 ingredient8 shaker1 left l1 l2)
+  63: (grasp right shaker1)
+  64: (leave left shot14)
+  65: (shake cocktail1 ingredient2 ingredient8 shaker1 right left)
+  66: (pour-shaker-to-shot cocktail1 shot12 right shaker1 l2 l1)
+  67: (pour-shaker-to-shot cocktail1 shot13 right shaker1 l1 l0)
