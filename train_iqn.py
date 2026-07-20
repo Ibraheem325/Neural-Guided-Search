@@ -17,9 +17,9 @@ import rgnn_readout_fix  # noqa: F401
 
 
 class IQNModelWrapper(rl.ActionQuantileModel):
-    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, num_cosines: int = 64, random_layer_count: bool = False, embedding_size: int = 32, tau_conditioning: str = 'multiply', use_object_context: bool = False) -> None:
+    def __init__(self, model: rgnn.RelationalGraphNeuralNetwork, num_cosines: int = 64, random_layer_count: bool = False, embedding_size: int = 32, tau_conditioning: str = 'multiply', use_object_context: bool = False, num_atoms: int = 64) -> None:
         super().__init__()
-        assert tau_conditioning in ('multiply', 'film'), f'Unknown tau_conditioning: {tau_conditioning}.'
+        assert tau_conditioning in ('multiply', 'film', 'qrdqn'), f'Unknown tau_conditioning: {tau_conditioning}.'
         self.model = model
         self.num_cosines = num_cosines
         self.random_layer_count = random_layer_count
@@ -34,7 +34,18 @@ class IQNModelWrapper(rl.ActionQuantileModel):
             # Mirrors the DQN's ActionScalarReadout: aggregate object embeddings per state with
             # a SumReadout, then concatenate onto each action embedding before the head.
             self.object_readout = SumReadout(embedding_size, embedding_size)
-        if tau_conditioning == 'film':
+        self.num_atoms = num_atoms
+        if tau_conditioning == 'qrdqn':
+            # QR-DQN: tau does NOT condition the network at all. The head simply emits
+            # num_atoms quantile values on the FIXED grid tau_i = (i + 0.5)/num_atoms, and
+            # requested taus are served by interpolating that grid.
+            # This DELETES the tau-embedding machinery (cosine basis, projection, ReLU gate)
+            # rather than repairing it, so the path from GNN embedding to output is exactly the
+            # DQN's -- the architecture measured to reach -171 where the IQN ceilings at -21.
+            # The probes only ever query a fixed grid (torch.linspace(0.01, 0.99, 99)), so
+            # nothing downstream needs IQN's arbitrary-tau sampling.
+            self.register_buffer('atom_taus', (torch.arange(num_atoms, dtype=torch.float) + 0.5) / num_atoms)
+        elif tau_conditioning == 'film':
             # FiLM: tau produces a per-channel (scale, shift) applied as
             #   h = a * (1 + gamma) + beta.
             # No ReLU, so no channel is zeroed, and zero-init makes the layer start as the
@@ -53,15 +64,20 @@ class IQNModelWrapper(rl.ActionQuantileModel):
         # pre-activations; mish is smooth and keeps gradient there. Since the DQN drives to
         # -171 through this exact activation and the IQN ceilings at -21, aligning removes a
         # variable. 'relu' is kept so existing multiply-checkpoints reproduce bit-for-bit.
-        activation = torch.nn.Mish() if tau_conditioning == 'film' else torch.nn.ReLU()
+        activation = torch.nn.ReLU() if tau_conditioning == 'multiply' else torch.nn.Mish()
+        # 'qrdqn' emits one value per atom; the tau-conditioned modes emit a single value for
+        # the tau they were conditioned on.
+        head_outputs = num_atoms if tau_conditioning == 'qrdqn' else 1
         self.quantile_head = torch.nn.Sequential(
             torch.nn.Linear(feature_size, feature_size),
             activation,
-            torch.nn.Linear(feature_size, 1),
+            torch.nn.Linear(feature_size, head_outputs),
         )
         self.register_buffer('cosine_basis', torch.arange(num_cosines, dtype=torch.float).view(1, 1, -1) * torch.pi)
 
     def _encode_taus(self, taus: torch.Tensor) -> torch.Tensor:
+        if self.tau_conditioning == 'qrdqn':
+            return taus  # passthrough: tau never enters the network, only the interpolation
         cosines = torch.cos(taus.unsqueeze(-1) * self.cosine_basis)  # type: ignore
         if self.tau_conditioning == 'film':
             return self.film_projection(cosines)  # [B, N, 2E], no ReLU
@@ -73,6 +89,27 @@ class IQNModelWrapper(rl.ActionQuantileModel):
             gamma, beta = tau_embedding.chunk(2, dim=-1)  # each [N, E]
             return action_embeddings.unsqueeze(1) * (1.0 + gamma.unsqueeze(0)) + beta.unsqueeze(0)
         return action_embeddings.unsqueeze(1) * tau_embedding.unsqueeze(0)
+
+    def _interpolate_atoms(self, atoms: torch.Tensor, taus: torch.Tensor) -> torch.Tensor:
+        """[A, num_atoms] values on the fixed grid -> [A, len(taus)] values at the requested taus.
+
+        Linear interpolation between neighbouring atoms; requests outside the grid clamp to the
+        end atoms. Atoms are NOT sorted, matching standard QR-DQN (the quantile loss is what
+        encourages them into order).
+        """
+        n = self.num_atoms
+        pos = taus * n - 0.5                       # continuous index into the atom grid
+        lo = pos.floor().clamp(0, n - 1).long()    # [T]
+        hi = (lo + 1).clamp(0, n - 1)              # [T]
+        w = (pos - lo.to(pos.dtype)).clamp(0.0, 1.0).unsqueeze(0)  # [1, T]
+        return atoms[:, lo] * (1.0 - w) + atoms[:, hi] * w         # [A, T]
+
+    def _quantiles_for_state(self, action_embeddings: torch.Tensor, tau_row: torch.Tensor) -> torch.Tensor:
+        """[A, feature] embeddings + [T] tau features -> [A, T] quantile values."""
+        if self.tau_conditioning == 'qrdqn':
+            atoms = self.quantile_head(action_embeddings)  # [A, num_atoms]
+            return self._interpolate_atoms(atoms, tau_row)
+        return self.quantile_head(self._combine(action_embeddings, tau_row)).squeeze(-1)
 
     def forward(
         self,
@@ -128,7 +165,7 @@ class IQNModelWrapper(rl.ActionQuantileModel):
             if action_embeddings.shape[0] == 0:
                 q_values = torch.empty((0, tau_embedding.shape[0]), device=device)
             else:
-                q_values = self.quantile_head(self._combine(action_embeddings, tau_embedding)).squeeze(-1)
+                q_values = self._quantiles_for_state(action_embeddings, tau_embedding)
             outputs.append((q_values, actions))
         return outputs
 
@@ -200,7 +237,9 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--num_rollouts', default=4, type=int, help='Number of trajectories to compute in parallel')
     parser.add_argument('--train_steps', default=32, type=int, help='Number of training steps per iteration')
     parser.add_argument('--num_cosines', default=64, type=int, help='Number of cosine basis features used for tau embeddings')
-    parser.add_argument('--tau_conditioning', default='multiply', choices=['multiply', 'film'],
+    parser.add_argument('--num_atoms', default=64, type=int,
+                        help="Number of fixed quantile atoms for --tau_conditioning qrdqn.")
+    parser.add_argument('--tau_conditioning', default='multiply', choices=['multiply', 'film', 'qrdqn'],
                         help="How tau conditions the action embedding. 'multiply' (default, original) uses "
                              "h = a * relu(W cos(tau)), whose ReLU zeroes ~half the channels and ceilings the "
                              "output range (IQN bottoms out at ~-21 where the DQN reaches -171). 'film' uses "
@@ -266,9 +305,9 @@ def _create_base_model(domain: mm.Domain, embedding_size: int, num_layers: int, 
     return rgnn.RelationalGraphNeuralNetwork(config)
 
 
-def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, num_cosines: int, random_layer_count: bool = False, tau_conditioning: str = 'multiply', use_object_context: bool = False) -> IQNModelWrapper:
+def _create_model(domain: mm.Domain, embedding_size: int, num_layers: int, aggregation: str, num_cosines: int, random_layer_count: bool = False, tau_conditioning: str = 'multiply', use_object_context: bool = False, num_atoms: int = 64) -> IQNModelWrapper:
     base_model = _create_base_model(domain, embedding_size, num_layers, aggregation, use_object_context)
-    return IQNModelWrapper(base_model, num_cosines, random_layer_count, embedding_size, tau_conditioning, use_object_context)
+    return IQNModelWrapper(base_model, num_cosines, random_layer_count, embedding_size, tau_conditioning, use_object_context, num_atoms)
 
 
 def _create_trajectory_refiner(hindsight: str, train_problems: list[mm.Problem], max_new_trajectories: int) -> rl.TrajectoryRefiner:
@@ -316,6 +355,7 @@ def _save_checkpoint(
                 'tau_conditioning': model.tau_conditioning,
                 'embedding_size': model.embedding_size,
                 'use_object_context': model.use_object_context,
+                'num_atoms': model.num_atoms,
                 'state_dict': _get_iqn_head_state(model),
             },
             'policy_wrapper': {
@@ -349,7 +389,8 @@ def _load_model(
     tau_conditioning = iqn_wrapper_extras.get('tau_conditioning', 'multiply')
     embedding_size = iqn_wrapper_extras.get('embedding_size', 32)
     use_object_context = iqn_wrapper_extras.get('use_object_context', False)
-    model = IQNModelWrapper(base_model, num_cosines, False, embedding_size, tau_conditioning, use_object_context).to(device)
+    num_atoms = iqn_wrapper_extras.get('num_atoms', 64)
+    model = IQNModelWrapper(base_model, num_cosines, False, embedding_size, tau_conditioning, use_object_context, num_atoms).to(device)
     _load_iqn_head_state(model, iqn_state_dict)
 
     policy_wrapper_extras = extras.get('policy_wrapper', {})
@@ -474,7 +515,7 @@ def _main(args: argparse.Namespace) -> None:
     _, validation_problems = _parse_instances(args.validation)
     print(f'Parsed {len(validation_problems)} validation instances.', flush=True)
     print('Creating model...', flush=True)
-    model = _create_model(domain, args.embedding_size, args.layers, args.aggregation, args.num_cosines, args.random_layer_count, args.tau_conditioning, args.use_object_context).to(device)
+    model = _create_model(domain, args.embedding_size, args.layers, args.aggregation, args.num_cosines, args.random_layer_count, args.tau_conditioning, args.use_object_context, args.num_atoms).to(device)
     policy_model = RiskSensitivePolicyWrapper(model, args.risk_averseness, args.num_policy_quantiles).to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.lr_initial)
     # lr_steps is in episode units; convert to optimization-step units (the scheduler is stepped
