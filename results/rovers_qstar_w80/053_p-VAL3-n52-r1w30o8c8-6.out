@@ -1,0 +1,72 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/rovers_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 8.0
+Starting Q* search...
+[f=53.478] Expanded: 5, Generated: 4
+[f=53.916] Expanded: 7, Generated: 6
+[f=54.572] Expanded: 10, Generated: 9
+[f=54.611] Expanded: 11, Generated: 11
+[f=60.779] Expanded: 11, Generated: 12
+[f=60.806] Expanded: 11, Generated: 13
+[f=55.158] Expanded: 14, Generated: 16
+[f=55.250] Expanded: 15, Generated: 17
+[f=55.433] Expanded: 15, Generated: 18
+[f=61.337] Expanded: 15, Generated: 19
+[f=61.537] Expanded: 15, Generated: 20
+[f=54.435] Expanded: 17, Generated: 22
+[f=61.937] Expanded: 17, Generated: 23
+[f=62.280] Expanded: 17, Generated: 24
+[f=53.548] Expanded: 19, Generated: 26
+[f=54.409] Expanded: 21, Generated: 28
+[f=54.782] Expanded: 24, Generated: 31
+[f=54.820] Expanded: 25, Generated: 33
+[f=61.193] Expanded: 25, Generated: 34
+[f=61.222] Expanded: 25, Generated: 35
+[f=55.303] Expanded: 28, Generated: 38
+[f=55.375] Expanded: 29, Generated: 39
+[f=55.631] Expanded: 29, Generated: 40
+[f=61.702] Expanded: 29, Generated: 41
+[f=61.937] Expanded: 29, Generated: 42
+[f=54.498] Expanded: 31, Generated: 44
+[f=61.616] Expanded: 31, Generated: 45
+[f=61.900] Expanded: 31, Generated: 46
+[f=54.407] Expanded: 33, Generated: 48
+[f=53.548] Expanded: 35, Generated: 50
+[f=54.409] Expanded: 37, Generated: 52
+[f=54.782] Expanded: 40, Generated: 55
+[f=54.820] Expanded: 41, Generated: 57
+[f=61.193] Expanded: 41, Generated: 58
+[f=61.222] Expanded: 41, Generated: 59
+[f=55.303] Expanded: 44, Generated: 62
+[f=55.375] Expanded: 45, Generated: 63
+[f=55.631] Expanded: 45, Generated: 64
+[f=61.702] Expanded: 45, Generated: 65
+[f=61.937] Expanded: 45, Generated: 66
+[f=54.498] Expanded: 47, Generated: 68
+[f=61.616] Expanded: 47, Generated: 69
+[f=61.900] Expanded: 47, Generated: 70
+[f=67.217] Expanded: 47, Generated: 71
+[f=67.464] Expanded: 47, Generated: 73
+[f=54.776] Expanded: 49, Generated: 75
+[f=55.218] Expanded: 52, Generated: 78
+[f=55.253] Expanded: 53, Generated: 80
+[f=61.663] Expanded: 53, Generated: 81
+[f=61.699] Expanded: 53, Generated: 82
+[f=53.243] Expanded: 55, Generated: 84
+[f=53.268] Expanded: 56, Generated: 85
+[f=55.217] Expanded: 56, Generated: 86
+[Final] Expanded: 56, Generated: 86
+Found a solution of length 10!
+   1: (navigate rover0 waypoint12 waypoint26)
+   2: (calibrate rover0 camera4 objective2 waypoint26)
+   3: (take_image rover0 waypoint26 objective5 camera4 high_res)
+   4: (calibrate rover0 camera4 objective2 waypoint26)
+   5: (calibrate rover0 camera7 objective1 waypoint26)
+   6: (take_image rover0 waypoint26 objective2 camera7 high_res)
+   7: (communicate_image_data rover0 general objective2 high_res waypoint26 waypoint12)
+   8: (take_image rover0 waypoint26 objective1 camera4 high_res)
+   9: (communicate_image_data rover0 general objective5 high_res waypoint26 waypoint12)
+  10: (communicate_image_data rover0 general objective1 high_res waypoint26 waypoint12)

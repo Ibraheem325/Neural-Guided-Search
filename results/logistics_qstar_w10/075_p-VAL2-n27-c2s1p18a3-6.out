@@ -1,0 +1,148 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/logistics_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 1.0
+Starting Q* search...
+[f=18.183] Expanded: 7, Generated: 6
+[f=18.183] Expanded: 12, Generated: 12
+[f=18.183] Expanded: 16, Generated: 18
+[f=18.183] Expanded: 19, Generated: 24
+[f=18.183] Expanded: 21, Generated: 30
+[f=18.183] Expanded: 22, Generated: 36
+[f=18.224] Expanded: 26, Generated: 40
+[f=18.228] Expanded: 46, Generated: 60
+[f=18.228] Expanded: 50, Generated: 64
+[f=18.348] Expanded: 70, Generated: 120
+[f=18.348] Expanded: 70, Generated: 124
+[f=18.026] Expanded: 77, Generated: 131
+[f=18.026] Expanded: 82, Generated: 137
+[f=18.026] Expanded: 86, Generated: 143
+[f=18.026] Expanded: 89, Generated: 149
+[f=18.026] Expanded: 91, Generated: 155
+[f=18.026] Expanded: 92, Generated: 161
+[f=18.091] Expanded: 112, Generated: 221
+[f=18.131] Expanded: 127, Generated: 281
+[f=18.163] Expanded: 132, Generated: 289
+[f=18.163] Expanded: 133, Generated: 309
+[f=18.163] Expanded: 133, Generated: 311
+[f=17.416] Expanded: 134, Generated: 318
+[f=17.422] Expanded: 136, Generated: 320
+[f=18.200] Expanded: 136, Generated: 321
+[f=18.200] Expanded: 136, Generated: 322
+[f=18.200] Expanded: 136, Generated: 325
+[f=18.026] Expanded: 143, Generated: 333
+[f=18.026] Expanded: 148, Generated: 339
+[f=18.026] Expanded: 152, Generated: 345
+[f=18.026] Expanded: 155, Generated: 351
+[f=18.026] Expanded: 157, Generated: 357
+[f=18.026] Expanded: 158, Generated: 363
+[f=18.091] Expanded: 178, Generated: 423
+[f=18.131] Expanded: 193, Generated: 483
+[f=18.163] Expanded: 197, Generated: 487
+[f=18.163] Expanded: 199, Generated: 511
+[f=18.163] Expanded: 199, Generated: 513
+[f=17.416] Expanded: 200, Generated: 520
+[f=17.422] Expanded: 202, Generated: 522
+[f=18.200] Expanded: 202, Generated: 524
+[f=18.200] Expanded: 202, Generated: 526
+[f=18.200] Expanded: 202, Generated: 527
+[f=18.352] Expanded: 202, Generated: 528
+[f=18.392] Expanded: 202, Generated: 552
+[f=18.394] Expanded: 233, Generated: 583
+[f=18.394] Expanded: 250, Generated: 600
+[f=18.394] Expanded: 262, Generated: 612
+[f=18.401] Expanded: 263, Generated: 613
+[f=18.401] Expanded: 264, Generated: 614
+[f=18.401] Expanded: 264, Generated: 616
+[f=17.973] Expanded: 267, Generated: 619
+[f=18.125] Expanded: 273, Generated: 625
+[f=18.125] Expanded: 277, Generated: 630
+[f=18.125] Expanded: 280, Generated: 635
+[f=18.125] Expanded: 282, Generated: 640
+[f=18.125] Expanded: 283, Generated: 645
+[f=18.161] Expanded: 292, Generated: 660
+[f=18.161] Expanded: 292, Generated: 666
+[f=18.161] Expanded: 293, Generated: 675
+[f=18.192] Expanded: 297, Generated: 680
+[f=18.192] Expanded: 298, Generated: 689
+[f=18.192] Expanded: 298, Generated: 693
+[f=18.192] Expanded: 298, Generated: 695
+[f=18.125] Expanded: 303, Generated: 702
+[f=18.125] Expanded: 306, Generated: 707
+[f=18.125] Expanded: 308, Generated: 712
+[f=18.125] Expanded: 309, Generated: 717
+[f=18.161] Expanded: 313, Generated: 726
+[f=18.161] Expanded: 313, Generated: 732
+[f=18.161] Expanded: 313, Generated: 735
+[f=18.192] Expanded: 314, Generated: 738
+[f=18.192] Expanded: 314, Generated: 741
+[f=18.192] Expanded: 314, Generated: 743
+[f=18.125] Expanded: 318, Generated: 751
+[f=18.125] Expanded: 320, Generated: 756
+[f=18.125] Expanded: 321, Generated: 761
+[f=18.161] Expanded: 322, Generated: 770
+[f=18.192] Expanded: 322, Generated: 772
+[f=18.125] Expanded: 325, Generated: 778
+[f=18.125] Expanded: 326, Generated: 783
+[f=18.147] Expanded: 326, Generated: 786
+[f=18.161] Expanded: 326, Generated: 789
+[f=18.125] Expanded: 328, Generated: 799
+[f=18.147] Expanded: 329, Generated: 805
+[f=18.381] Expanded: 330, Generated: 807
+[f=17.973] Expanded: 333, Generated: 810
+[f=18.125] Expanded: 339, Generated: 816
+[f=18.125] Expanded: 343, Generated: 821
+[f=18.125] Expanded: 346, Generated: 826
+[f=18.125] Expanded: 348, Generated: 831
+[f=18.125] Expanded: 349, Generated: 836
+[f=18.161] Expanded: 359, Generated: 857
+[f=18.161] Expanded: 359, Generated: 863
+[f=18.161] Expanded: 359, Generated: 866
+[f=18.192] Expanded: 363, Generated: 871
+[f=18.192] Expanded: 364, Generated: 882
+[f=18.192] Expanded: 364, Generated: 884
+[f=18.192] Expanded: 364, Generated: 886
+[f=18.125] Expanded: 369, Generated: 893
+[f=18.125] Expanded: 372, Generated: 898
+[f=18.125] Expanded: 374, Generated: 903
+[f=18.125] Expanded: 375, Generated: 908
+[f=18.161] Expanded: 379, Generated: 926
+[f=18.192] Expanded: 380, Generated: 933
+[f=18.192] Expanded: 380, Generated: 934
+[f=18.125] Expanded: 384, Generated: 942
+[f=18.125] Expanded: 386, Generated: 947
+[f=18.125] Expanded: 387, Generated: 952
+[f=18.161] Expanded: 388, Generated: 961
+[f=18.192] Expanded: 388, Generated: 963
+[f=18.125] Expanded: 391, Generated: 972
+[f=18.125] Expanded: 392, Generated: 977
+[f=18.161] Expanded: 392, Generated: 980
+[f=18.147] Expanded: 393, Generated: 984
+[f=18.125] Expanded: 394, Generated: 990
+[f=18.147] Expanded: 395, Generated: 996
+[f=18.381] Expanded: 396, Generated: 998
+[f=18.421] Expanded: 396, Generated: 999
+[f=18.421] Expanded: 396, Generated: 1000
+[f=18.421] Expanded: 396, Generated: 1001
+[Final] Expanded: 396, Generated: 1001
+Found a solution of length 18!
+   1: (load-airplane p8 a1 l1-0)
+   2: (load-airplane p9 a1 l1-0)
+   3: (load-airplane p1 a0 l0-0)
+   4: (load-airplane p15 a0 l0-0)
+   5: (load-airplane p16 a0 l0-0)
+   6: (load-airplane p17 a0 l0-0)
+   7: (load-airplane p10 a0 l0-0)
+   8: (load-airplane p3 a0 l0-0)
+   9: (fly-airplane a1 l1-0 l0-0)
+  10: (unload-airplane p8 a1 l0-0)
+  11: (unload-airplane p9 a1 l0-0)
+  12: (fly-airplane a0 l0-0 l1-0)
+  13: (unload-airplane p1 a0 l1-0)
+  14: (unload-airplane p10 a0 l1-0)
+  15: (unload-airplane p15 a0 l1-0)
+  16: (unload-airplane p17 a0 l1-0)
+  17: (unload-airplane p3 a0 l1-0)
+  18: (unload-airplane p16 a0 l1-0)

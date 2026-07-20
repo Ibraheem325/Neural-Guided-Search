@@ -1,0 +1,29 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/rovers_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 8.0
+Starting Q* search...
+[f=141.872] Expanded: 3, Generated: 2
+[f=66.152] Expanded: 5, Generated: 4
+[f=68.118] Expanded: 7, Generated: 6
+[f=67.760] Expanded: 9, Generated: 8
+[f=67.941] Expanded: 10, Generated: 9
+[f=69.398] Expanded: 10, Generated: 10
+[f=69.497] Expanded: 11, Generated: 11
+[f=68.118] Expanded: 13, Generated: 13
+[f=77.419] Expanded: 13, Generated: 14
+[f=68.470] Expanded: 15, Generated: 16
+[f=67.845] Expanded: 17, Generated: 18
+[f=67.846] Expanded: 18, Generated: 19
+[f=70.247] Expanded: 18, Generated: 20
+[Final] Expanded: 18, Generated: 20
+Found a solution of length 7!
+   1: (calibrate rover0 camera0 objective6 waypoint34)
+   2: (take_image rover0 waypoint34 objective6 camera0 colour)
+   3: (navigate rover0 waypoint34 waypoint10)
+   4: (calibrate rover0 camera11 objective0 waypoint10)
+   5: (take_image rover0 waypoint10 objective0 camera11 low_res)
+   6: (communicate_image_data rover0 general objective6 colour waypoint10 waypoint24)
+   7: (communicate_image_data rover0 general objective0 low_res waypoint10 waypoint24)

@@ -1,0 +1,209 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/satellite_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 8.0
+Starting Q* search...
+[f=136.144] Expanded: 7, Generated: 6
+[f=139.341] Expanded: 9, Generated: 8
+[f=139.333] Expanded: 11, Generated: 10
+[f=137.511] Expanded: 13, Generated: 12
+[f=145.700] Expanded: 15, Generated: 14
+[f=125.507] Expanded: 18, Generated: 17
+[f=125.507] Expanded: 19, Generated: 18
+[f=108.081] Expanded: 23, Generated: 22
+[f=112.406] Expanded: 24, Generated: 24
+[f=113.938] Expanded: 24, Generated: 26
+[f=109.973] Expanded: 25, Generated: 29
+[f=110.651] Expanded: 26, Generated: 31
+[f=111.084] Expanded: 26, Generated: 32
+[f=111.084] Expanded: 26, Generated: 33
+[f=110.000] Expanded: 27, Generated: 36
+[f=109.622] Expanded: 28, Generated: 39
+[f=110.718] Expanded: 29, Generated: 42
+[f=110.774] Expanded: 29, Generated: 43
+[f=109.729] Expanded: 30, Generated: 46
+[f=116.010] Expanded: 31, Generated: 47
+[f=116.041] Expanded: 31, Generated: 48
+[f=116.082] Expanded: 31, Generated: 49
+[f=116.219] Expanded: 31, Generated: 50
+[f=116.256] Expanded: 31, Generated: 51
+[f=116.268] Expanded: 31, Generated: 52
+[f=116.296] Expanded: 31, Generated: 53
+[f=116.360] Expanded: 31, Generated: 54
+[f=116.386] Expanded: 31, Generated: 55
+[f=116.440] Expanded: 31, Generated: 56
+[f=116.467] Expanded: 31, Generated: 57
+[f=116.504] Expanded: 31, Generated: 59
+[f=116.575] Expanded: 31, Generated: 60
+[f=116.599] Expanded: 31, Generated: 61
+[f=113.265] Expanded: 32, Generated: 64
+[f=117.057] Expanded: 32, Generated: 65
+[f=117.189] Expanded: 32, Generated: 66
+[f=117.227] Expanded: 32, Generated: 67
+[f=117.248] Expanded: 32, Generated: 68
+[f=117.290] Expanded: 32, Generated: 69
+[f=117.311] Expanded: 32, Generated: 70
+[f=117.318] Expanded: 32, Generated: 71
+[f=117.347] Expanded: 32, Generated: 72
+[f=117.380] Expanded: 32, Generated: 73
+[f=117.382] Expanded: 32, Generated: 74
+[f=117.405] Expanded: 32, Generated: 75
+[f=117.424] Expanded: 32, Generated: 76
+[f=117.502] Expanded: 32, Generated: 77
+[f=117.510] Expanded: 32, Generated: 78
+[f=117.562] Expanded: 32, Generated: 79
+[f=117.571] Expanded: 32, Generated: 80
+[f=117.599] Expanded: 32, Generated: 81
+[f=117.624] Expanded: 32, Generated: 82
+[f=117.627] Expanded: 32, Generated: 83
+[f=117.642] Expanded: 32, Generated: 84
+[f=117.648] Expanded: 32, Generated: 85
+[f=117.652] Expanded: 32, Generated: 86
+[f=117.671] Expanded: 32, Generated: 87
+[f=117.706] Expanded: 32, Generated: 88
+[f=117.712] Expanded: 32, Generated: 89
+[f=117.737] Expanded: 32, Generated: 90
+[f=117.783] Expanded: 32, Generated: 91
+[f=117.847] Expanded: 32, Generated: 92
+[f=117.899] Expanded: 32, Generated: 93
+[f=108.920] Expanded: 33, Generated: 95
+[f=109.369] Expanded: 35, Generated: 97
+[f=115.386] Expanded: 35, Generated: 98
+[f=115.608] Expanded: 36, Generated: 99
+[f=115.661] Expanded: 37, Generated: 100
+[f=112.041] Expanded: 38, Generated: 103
+[f=112.059] Expanded: 39, Generated: 105
+[f=112.059] Expanded: 39, Generated: 106
+[f=112.527] Expanded: 40, Generated: 108
+[f=112.840] Expanded: 40, Generated: 109
+[f=112.840] Expanded: 40, Generated: 110
+[f=111.653] Expanded: 41, Generated: 113
+[f=111.765] Expanded: 42, Generated: 116
+[f=115.583] Expanded: 43, Generated: 119
+[f=112.645] Expanded: 44, Generated: 121
+[f=113.225] Expanded: 46, Generated: 123
+[f=117.166] Expanded: 46, Generated: 124
+[f=112.657] Expanded: 47, Generated: 126
+[f=113.253] Expanded: 49, Generated: 128
+[f=117.899] Expanded: 49, Generated: 129
+[f=117.945] Expanded: 49, Generated: 130
+[f=117.946] Expanded: 49, Generated: 131
+[f=117.966] Expanded: 49, Generated: 132
+[f=109.990] Expanded: 50, Generated: 134
+[f=110.394] Expanded: 52, Generated: 136
+[f=116.437] Expanded: 52, Generated: 137
+[f=116.660] Expanded: 53, Generated: 138
+[f=116.712] Expanded: 54, Generated: 139
+[f=113.139] Expanded: 55, Generated: 142
+[f=113.145] Expanded: 56, Generated: 145
+[f=113.579] Expanded: 57, Generated: 147
+[f=113.910] Expanded: 57, Generated: 149
+[f=112.717] Expanded: 58, Generated: 152
+[f=112.844] Expanded: 59, Generated: 155
+[f=116.696] Expanded: 60, Generated: 158
+[f=118.038] Expanded: 60, Generated: 159
+[f=109.971] Expanded: 61, Generated: 161
+[f=110.376] Expanded: 63, Generated: 163
+[f=116.419] Expanded: 63, Generated: 164
+[f=116.641] Expanded: 64, Generated: 165
+[f=116.694] Expanded: 65, Generated: 166
+[f=113.123] Expanded: 66, Generated: 168
+[f=113.123] Expanded: 66, Generated: 169
+[f=113.131] Expanded: 67, Generated: 172
+[f=113.557] Expanded: 68, Generated: 174
+[f=113.893] Expanded: 68, Generated: 175
+[f=113.893] Expanded: 68, Generated: 176
+[f=112.699] Expanded: 69, Generated: 179
+[f=112.829] Expanded: 70, Generated: 182
+[f=116.678] Expanded: 71, Generated: 185
+[f=118.054] Expanded: 71, Generated: 186
+[f=113.699] Expanded: 72, Generated: 188
+[f=114.233] Expanded: 74, Generated: 190
+[f=118.077] Expanded: 74, Generated: 191
+[f=113.718] Expanded: 75, Generated: 193
+[f=114.250] Expanded: 77, Generated: 195
+[f=118.109] Expanded: 77, Generated: 196
+[f=118.136] Expanded: 77, Generated: 197
+[f=118.159] Expanded: 77, Generated: 198
+[f=118.167] Expanded: 77, Generated: 199
+[f=113.710] Expanded: 78, Generated: 201
+[f=114.260] Expanded: 79, Generated: 202
+[f=114.260] Expanded: 80, Generated: 203
+[f=118.184] Expanded: 80, Generated: 204
+[f=113.730] Expanded: 81, Generated: 206
+[f=114.278] Expanded: 83, Generated: 208
+[f=118.241] Expanded: 83, Generated: 209
+[f=118.256] Expanded: 83, Generated: 210
+[f=118.268] Expanded: 83, Generated: 211
+[f=118.272] Expanded: 83, Generated: 212
+[f=37.738] Expanded: 90, Generated: 219
+[f=37.383] Expanded: 92, Generated: 221
+[f=37.622] Expanded: 93, Generated: 222
+[f=37.761] Expanded: 94, Generated: 223
+[f=37.771] Expanded: 94, Generated: 224
+[f=37.802] Expanded: 95, Generated: 225
+[f=37.875] Expanded: 96, Generated: 226
+[f=37.945] Expanded: 96, Generated: 227
+[f=37.946] Expanded: 97, Generated: 228
+[f=37.956] Expanded: 97, Generated: 229
+[f=38.046] Expanded: 98, Generated: 230
+[f=38.132] Expanded: 98, Generated: 231
+[f=38.137] Expanded: 99, Generated: 232
+[f=38.211] Expanded: 100, Generated: 233
+[f=38.353] Expanded: 100, Generated: 234
+[f=38.382] Expanded: 101, Generated: 235
+[f=38.390] Expanded: 102, Generated: 236
+[f=38.229] Expanded: 104, Generated: 238
+[f=38.506] Expanded: 104, Generated: 239
+[f=38.608] Expanded: 104, Generated: 240
+[f=38.615] Expanded: 105, Generated: 241
+[f=38.651] Expanded: 105, Generated: 242
+[f=38.652] Expanded: 106, Generated: 243
+[f=38.666] Expanded: 107, Generated: 244
+[f=38.696] Expanded: 107, Generated: 245
+[f=36.726] Expanded: 109, Generated: 247
+[f=36.889] Expanded: 110, Generated: 248
+[f=37.610] Expanded: 111, Generated: 249
+[f=38.309] Expanded: 111, Generated: 250
+[f=38.794] Expanded: 111, Generated: 251
+[f=38.812] Expanded: 112, Generated: 252
+[f=38.819] Expanded: 113, Generated: 253
+[f=38.892] Expanded: 114, Generated: 254
+[f=38.921] Expanded: 114, Generated: 255
+[f=38.976] Expanded: 114, Generated: 256
+[f=38.979] Expanded: 115, Generated: 257
+[f=38.991] Expanded: 116, Generated: 258
+[f=38.997] Expanded: 116, Generated: 259
+[f=39.009] Expanded: 116, Generated: 260
+[f=39.025] Expanded: 116, Generated: 261
+[f=39.027] Expanded: 116, Generated: 262
+[f=39.065] Expanded: 117, Generated: 263
+[f=39.076] Expanded: 118, Generated: 264
+[f=39.163] Expanded: 118, Generated: 265
+[f=39.206] Expanded: 119, Generated: 266
+[f=39.206] Expanded: 120, Generated: 267
+[f=39.225] Expanded: 120, Generated: 268
+[f=39.229] Expanded: 120, Generated: 269
+[Final] Expanded: 120, Generated: 269
+Found a solution of length 19!
+   1: (switch_on instrument8 satellite3)
+   2: (switch_on instrument0 satellite0)
+   3: (switch_on instrument4 satellite2)
+   4: (switch_on instrument1 satellite1)
+   5: (turn_to satellite0 groundstation5 planet11)
+   6: (calibrate satellite0 instrument0 groundstation5)
+   7: (turn_to satellite0 planet11 groundstation5)
+   8: (take_image satellite0 planet11 instrument0 infrared2)
+   9: (turn_to satellite0 phenomenon13 planet11)
+  10: (take_image satellite0 phenomenon13 instrument0 infrared1)
+  11: (turn_to satellite0 groundstation5 phenomenon13)
+  12: (turn_to satellite2 star8 groundstation5)
+  13: (calibrate satellite2 instrument4 star8)
+  14: (turn_to satellite2 planet12 star8)
+  15: (take_image satellite2 planet12 instrument4 thermograph0)
+  16: (turn_to satellite2 star14 planet12)
+  17: (take_image satellite2 star14 instrument4 thermograph0)
+  18: (turn_to satellite1 star2 star8)
+  19: (turn_to satellite2 star8 star14)

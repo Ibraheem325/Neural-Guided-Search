@@ -1,0 +1,53 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/rovers_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 12.0
+Starting Q* search...
+[f=160.342] Expanded: 4, Generated: 3
+[f=160.392] Expanded: 5, Generated: 4
+[f=160.657] Expanded: 6, Generated: 5
+[f=160.707] Expanded: 7, Generated: 6
+[f=160.326] Expanded: 8, Generated: 8
+[f=160.344] Expanded: 8, Generated: 9
+[f=160.697] Expanded: 8, Generated: 10
+[f=160.717] Expanded: 8, Generated: 11
+[f=161.605] Expanded: 10, Generated: 13
+[f=161.607] Expanded: 11, Generated: 14
+[f=161.615] Expanded: 12, Generated: 15
+[f=161.617] Expanded: 13, Generated: 16
+[f=161.650] Expanded: 14, Generated: 17
+[f=161.651] Expanded: 15, Generated: 18
+[f=161.659] Expanded: 16, Generated: 19
+[f=161.661] Expanded: 17, Generated: 20
+[f=168.310] Expanded: 18, Generated: 21
+[f=168.342] Expanded: 18, Generated: 22
+[f=168.679] Expanded: 18, Generated: 23
+[f=168.723] Expanded: 18, Generated: 24
+[f=174.319] Expanded: 19, Generated: 25
+[f=174.363] Expanded: 19, Generated: 26
+[f=174.591] Expanded: 19, Generated: 27
+[f=174.627] Expanded: 19, Generated: 28
+[f=182.490] Expanded: 19, Generated: 29
+[f=183.302] Expanded: 20, Generated: 30
+[f=183.302] Expanded: 21, Generated: 31
+[f=183.334] Expanded: 22, Generated: 32
+[f=183.334] Expanded: 23, Generated: 33
+[f=183.411] Expanded: 24, Generated: 34
+[f=183.411] Expanded: 25, Generated: 35
+[f=183.526] Expanded: 26, Generated: 36
+[f=183.526] Expanded: 27, Generated: 37
+[f=132.538] Expanded: 29, Generated: 39
+[f=132.551] Expanded: 30, Generated: 40
+[f=136.387] Expanded: 30, Generated: 41
+[Final] Expanded: 30, Generated: 41
+Found a solution of length 8!
+   1: (navigate rover0 waypoint40 waypoint14)
+   2: (calibrate rover0 camera8 objective8 waypoint14)
+   3: (calibrate rover0 camera3 objective12 waypoint14)
+   4: (take_image rover0 waypoint14 objective8 camera3 low_res)
+   5: (take_image rover0 waypoint14 objective12 camera8 high_res)
+   6: (navigate rover0 waypoint14 waypoint40)
+   7: (communicate_image_data rover0 general objective12 high_res waypoint40 waypoint42)
+   8: (communicate_image_data rover0 general objective8 low_res waypoint40 waypoint42)

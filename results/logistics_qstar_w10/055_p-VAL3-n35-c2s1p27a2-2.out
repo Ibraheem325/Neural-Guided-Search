@@ -1,0 +1,64 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/logistics_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 1.0
+Starting Q* search...
+[f=35.228] Expanded: 12, Generated: 11
+[f=35.228] Expanded: 22, Generated: 22
+[f=35.228] Expanded: 31, Generated: 33
+[f=35.228] Expanded: 39, Generated: 44
+[f=35.228] Expanded: 46, Generated: 55
+[f=35.228] Expanded: 52, Generated: 66
+[f=35.228] Expanded: 57, Generated: 77
+[f=35.228] Expanded: 61, Generated: 88
+[f=35.228] Expanded: 64, Generated: 99
+[f=35.228] Expanded: 66, Generated: 110
+[f=35.228] Expanded: 77, Generated: 121
+[f=35.228] Expanded: 87, Generated: 132
+[f=35.228] Expanded: 96, Generated: 143
+[f=35.228] Expanded: 102, Generated: 152
+[f=35.228] Expanded: 104, Generated: 154
+[f=35.228] Expanded: 111, Generated: 165
+[f=35.228] Expanded: 117, Generated: 175
+[f=35.228] Expanded: 117, Generated: 176
+[f=35.228] Expanded: 122, Generated: 187
+[f=35.228] Expanded: 126, Generated: 198
+[f=35.228] Expanded: 129, Generated: 209
+[f=35.228] Expanded: 131, Generated: 220
+[f=35.228] Expanded: 132, Generated: 222
+[f=35.228] Expanded: 132, Generated: 231
+[f=35.228] Expanded: 133, Generated: 242
+[f=35.354] Expanded: 152, Generated: 261
+[f=35.354] Expanded: 224, Generated: 345
+[f=35.354] Expanded: 463, Generated: 1232
+[f=35.477] Expanded: 493, Generated: 1262
+[f=35.477] Expanded: 1122, Generated: 3322
+[f=35.477] Expanded: 1123, Generated: 3473
+[f=35.477] Expanded: 1123, Generated: 3872
+[f=35.525] Expanded: 1225, Generated: 4029
+[f=35.525] Expanded: 1233, Generated: 4092
+[f=35.600] Expanded: 2144, Generated: 6999
+[f=35.600] Expanded: 2157, Generated: 8712
+[f=35.622] Expanded: 2175, Generated: 8730
+[f=35.622] Expanded: 2294, Generated: 8856
+[f=35.622] Expanded: 3147, Generated: 10692
+[f=35.632] Expanded: 3154, Generated: 10699
+[f=35.632] Expanded: 3169, Generated: 10714
+[f=35.679] Expanded: 3169, Generated: 10777
+[f=35.679] Expanded: 3169, Generated: 11704
+[f=35.718] Expanded: 4046, Generated: 12732
+[f=35.718] Expanded: 5809, Generated: 19624
+[f=35.719] Expanded: 7129, Generated: 21680
+[f=35.719] Expanded: 7789, Generated: 27207
+[f=35.719] Expanded: 7789, Generated: 27544
+[f=35.730] Expanded: 7860, Generated: 27619
+[f=35.730] Expanded: 8683, Generated: 30186
+[f=35.730] Expanded: 8713, Generated: 33088
+[f=35.783] Expanded: 8716, Generated: 33091
+[f=35.783] Expanded: 8811, Generated: 33186
+[f=35.783] Expanded: 8823, Generated: 33198
+[f=35.813] Expanded: 8924, Generated: 33301
+[Final] Expanded: 11770, Generated: 41578
+Failed to find a solution!

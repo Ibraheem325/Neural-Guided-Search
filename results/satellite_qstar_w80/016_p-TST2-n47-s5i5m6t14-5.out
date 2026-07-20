@@ -1,0 +1,62 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/satellite_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 8.0
+Starting Q* search...
+[f=163.000] Expanded: 5, Generated: 4
+[f=143.036] Expanded: 9, Generated: 8
+[f=144.048] Expanded: 10, Generated: 9
+[f=125.102] Expanded: 13, Generated: 12
+[f=125.175] Expanded: 14, Generated: 13
+[f=125.718] Expanded: 15, Generated: 14
+[f=127.251] Expanded: 16, Generated: 16
+[f=127.335] Expanded: 16, Generated: 17
+[f=127.143] Expanded: 17, Generated: 19
+[f=127.231] Expanded: 17, Generated: 20
+[f=130.280] Expanded: 17, Generated: 21
+[f=127.149] Expanded: 18, Generated: 23
+[f=127.236] Expanded: 18, Generated: 24
+[f=130.418] Expanded: 18, Generated: 25
+[f=127.152] Expanded: 19, Generated: 27
+[f=127.237] Expanded: 19, Generated: 28
+[f=127.225] Expanded: 20, Generated: 30
+[f=127.312] Expanded: 20, Generated: 31
+[f=127.060] Expanded: 21, Generated: 33
+[f=127.145] Expanded: 21, Generated: 34
+[f=126.697] Expanded: 22, Generated: 36
+[f=126.780] Expanded: 22, Generated: 37
+[f=130.483] Expanded: 22, Generated: 38
+[f=126.305] Expanded: 23, Generated: 40
+[f=126.385] Expanded: 23, Generated: 41
+[f=126.193] Expanded: 24, Generated: 43
+[f=126.274] Expanded: 24, Generated: 44
+[f=126.146] Expanded: 25, Generated: 46
+[f=126.226] Expanded: 25, Generated: 47
+[f=130.556] Expanded: 25, Generated: 48
+[f=125.919] Expanded: 26, Generated: 50
+[f=126.000] Expanded: 26, Generated: 51
+[f=111.471] Expanded: 30, Generated: 55
+[f=113.159] Expanded: 31, Generated: 56
+[f=112.946] Expanded: 33, Generated: 58
+[f=78.177] Expanded: 37, Generated: 62
+[f=50.788] Expanded: 39, Generated: 65
+[Final] Expanded: 39, Generated: 65
+Found a solution of length 16!
+   1: (switch_on instrument13 satellite4)
+   2: (switch_on instrument8 satellite2)
+   3: (calibrate satellite2 instrument8 star7)
+   4: (turn_to satellite2 star17 star7)
+   5: (take_image satellite2 star17 instrument8 image0)
+   6: (turn_to satellite2 star16 star17)
+   7: (take_image satellite2 star16 instrument8 infrared1)
+   8: (switch_on instrument7 satellite1)
+   9: (calibrate satellite1 instrument7 groundstation6)
+  10: (turn_to satellite1 phenomenon15 groundstation6)
+  11: (take_image satellite1 phenomenon15 instrument7 infrared3)
+  12: (turn_to satellite1 planet14 phenomenon15)
+  13: (take_image satellite1 planet14 instrument7 infrared3)
+  14: (turn_to satellite2 planet14 star16)
+  15: (take_image satellite2 planet14 instrument8 image0)
+  16: (turn_to satellite3 groundstation12 star16)

@@ -1,0 +1,101 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/satellite_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 4.0
+Starting Q* search...
+[f=54.685] Expanded: 8, Generated: 7
+[f=46.141] Expanded: 14, Generated: 13
+[f=49.193] Expanded: 14, Generated: 15
+[f=49.193] Expanded: 14, Generated: 19
+[f=46.631] Expanded: 15, Generated: 23
+[f=46.781] Expanded: 16, Generated: 27
+[f=48.835] Expanded: 16, Generated: 28
+[f=50.637] Expanded: 16, Generated: 29
+[f=46.737] Expanded: 17, Generated: 33
+[f=50.483] Expanded: 17, Generated: 34
+[f=50.751] Expanded: 17, Generated: 35
+[f=50.759] Expanded: 17, Generated: 36
+[f=50.947] Expanded: 17, Generated: 37
+[f=47.455] Expanded: 18, Generated: 41
+[f=50.320] Expanded: 20, Generated: 43
+[f=50.320] Expanded: 21, Generated: 44
+[f=50.320] Expanded: 24, Generated: 47
+[f=50.320] Expanded: 27, Generated: 50
+[f=50.320] Expanded: 30, Generated: 53
+[f=50.320] Expanded: 32, Generated: 55
+[f=50.320] Expanded: 33, Generated: 56
+[f=50.320] Expanded: 36, Generated: 59
+[f=51.149] Expanded: 36, Generated: 60
+[f=51.170] Expanded: 36, Generated: 61
+[f=51.170] Expanded: 36, Generated: 63
+[f=51.192] Expanded: 36, Generated: 64
+[f=51.373] Expanded: 36, Generated: 65
+[f=46.937] Expanded: 37, Generated: 69
+[f=50.717] Expanded: 37, Generated: 70
+[f=50.722] Expanded: 37, Generated: 71
+[f=46.937] Expanded: 38, Generated: 75
+[f=50.717] Expanded: 38, Generated: 76
+[f=50.722] Expanded: 38, Generated: 77
+[f=46.937] Expanded: 39, Generated: 80
+[f=46.937] Expanded: 39, Generated: 81
+[f=50.717] Expanded: 39, Generated: 82
+[f=50.722] Expanded: 39, Generated: 83
+[f=46.937] Expanded: 40, Generated: 87
+[f=50.717] Expanded: 40, Generated: 88
+[f=50.722] Expanded: 40, Generated: 89
+[f=46.937] Expanded: 41, Generated: 92
+[f=46.937] Expanded: 41, Generated: 93
+[f=50.717] Expanded: 41, Generated: 94
+[f=50.722] Expanded: 41, Generated: 95
+[f=46.937] Expanded: 42, Generated: 97
+[f=46.937] Expanded: 42, Generated: 99
+[f=50.717] Expanded: 42, Generated: 100
+[f=50.722] Expanded: 42, Generated: 101
+[f=46.937] Expanded: 43, Generated: 105
+[f=50.717] Expanded: 43, Generated: 106
+[f=50.722] Expanded: 43, Generated: 107
+[f=46.937] Expanded: 44, Generated: 111
+[f=50.717] Expanded: 44, Generated: 112
+[f=50.722] Expanded: 44, Generated: 113
+[f=46.937] Expanded: 45, Generated: 117
+[f=50.717] Expanded: 45, Generated: 118
+[f=50.722] Expanded: 45, Generated: 119
+[f=46.937] Expanded: 46, Generated: 123
+[f=50.717] Expanded: 46, Generated: 124
+[f=50.722] Expanded: 46, Generated: 125
+[f=51.426] Expanded: 46, Generated: 126
+[f=51.447] Expanded: 46, Generated: 127
+[f=51.453] Expanded: 46, Generated: 128
+[f=51.574] Expanded: 46, Generated: 131
+[f=51.574] Expanded: 46, Generated: 137
+[f=51.574] Expanded: 46, Generated: 138
+[f=51.698] Expanded: 46, Generated: 139
+[f=51.751] Expanded: 46, Generated: 140
+[f=51.751] Expanded: 46, Generated: 145
+[f=51.751] Expanded: 46, Generated: 149
+[f=51.846] Expanded: 46, Generated: 150
+[f=51.889] Expanded: 46, Generated: 151
+[f=41.073] Expanded: 50, Generated: 155
+[f=28.103] Expanded: 55, Generated: 160
+[f=24.100] Expanded: 57, Generated: 162
+[f=26.898] Expanded: 58, Generated: 163
+[f=24.681] Expanded: 59, Generated: 165
+[Final] Expanded: 59, Generated: 165
+Found a solution of length 15!
+   1: (switch_on instrument1 satellite1)
+   2: (switch_on instrument0 satellite0)
+   3: (turn_to satellite0 groundstation9 phenomenon14)
+   4: (calibrate satellite0 instrument0 groundstation9)
+   5: (turn_to satellite0 star15 groundstation9)
+   6: (take_image satellite0 star15 instrument0 image2)
+   7: (take_image satellite0 star15 instrument0 infrared5)
+   8: (turn_to satellite1 groundstation9 groundstation0)
+   9: (calibrate satellite1 instrument1 groundstation9)
+  10: (turn_to satellite1 phenomenon14 groundstation9)
+  11: (take_image satellite1 phenomenon14 instrument1 image4)
+  12: (turn_to satellite1 phenomenon16 phenomenon14)
+  13: (take_image satellite1 phenomenon16 instrument1 image3)
+  14: (turn_to satellite1 planet17 phenomenon16)
+  15: (take_image satellite1 planet17 instrument1 spectrograph0)

@@ -1,0 +1,36 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/satellite_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 12.0
+Starting Q* search...
+[f=80.529] Expanded: 12, Generated: 11
+[f=73.668] Expanded: 15, Generated: 14
+[f=73.912] Expanded: 16, Generated: 15
+[f=73.668] Expanded: 17, Generated: 17
+[f=72.828] Expanded: 18, Generated: 19
+[f=72.828] Expanded: 19, Generated: 21
+[f=72.921] Expanded: 20, Generated: 24
+[f=72.341] Expanded: 23, Generated: 28
+[Final] Expanded: 23, Generated: 28
+Found a solution of length 19!
+   1: (switch_on instrument0 satellite0)
+   2: (turn_to satellite0 star2 star29)
+   3: (calibrate satellite0 instrument0 star2)
+   4: (turn_to satellite0 phenomenon28 star2)
+   5: (take_image satellite0 phenomenon28 instrument0 infrared1)
+   6: (take_image satellite0 phenomenon28 instrument0 spectrograph0)
+   7: (take_image satellite0 phenomenon28 instrument0 thermograph8)
+   8: (turn_to satellite0 planet30 phenomenon28)
+   9: (take_image satellite0 planet30 instrument0 infrared1)
+  10: (take_image satellite0 planet30 instrument0 infrared10)
+  11: (take_image satellite0 planet30 instrument0 image2)
+  12: (turn_to satellite0 star29 planet30)
+  13: (take_image satellite0 star29 instrument0 spectrograph6)
+  14: (take_image satellite0 star29 instrument0 infrared5)
+  15: (take_image satellite0 star29 instrument0 image4)
+  16: (turn_to satellite0 planet31 star29)
+  17: (take_image satellite0 planet31 instrument0 infrared1)
+  18: (take_image satellite0 planet31 instrument0 spectrograph6)
+  19: (take_image satellite0 planet31 instrument0 infrared5)

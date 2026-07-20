@@ -1,0 +1,28 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/logistics_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 12.0
+Starting Q* search...
+[f=31.596] Expanded: 18, Generated: 18
+[Final] Expanded: 18, Generated: 18
+Found a solution of length 18!
+   1: (load-airplane p0 a0 l0-0)
+   2: (load-airplane p2 a0 l0-0)
+   3: (load-airplane p7 a0 l0-0)
+   4: (load-airplane p11 a0 l0-0)
+   5: (fly-airplane a0 l0-0 l1-0)
+   6: (load-airplane p6 a0 l1-0)
+   7: (load-airplane p14 a0 l1-0)
+   8: (load-airplane p17 a0 l1-0)
+   9: (load-airplane p20 a0 l1-0)
+  10: (unload-airplane p0 a0 l1-0)
+  11: (unload-airplane p2 a0 l1-0)
+  12: (unload-airplane p7 a0 l1-0)
+  13: (unload-airplane p11 a0 l1-0)
+  14: (fly-airplane a0 l1-0 l0-0)
+  15: (unload-airplane p6 a0 l0-0)
+  16: (unload-airplane p14 a0 l0-0)
+  17: (unload-airplane p17 a0 l0-0)
+  18: (unload-airplane p20 a0 l0-0)

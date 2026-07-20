@@ -1,0 +1,287 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/rovers_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 4.0
+Starting Q* search...
+[f=200.706] Expanded: 2, Generated: 1
+[f=197.061] Expanded: 4, Generated: 3
+[f=199.598] Expanded: 4, Generated: 4
+[f=201.849] Expanded: 5, Generated: 5
+[f=204.728] Expanded: 6, Generated: 6
+[f=204.742] Expanded: 6, Generated: 7
+[f=196.957] Expanded: 8, Generated: 9
+[f=199.610] Expanded: 9, Generated: 10
+[f=196.026] Expanded: 11, Generated: 12
+[f=198.825] Expanded: 12, Generated: 13
+[f=200.585] Expanded: 13, Generated: 14
+[f=195.760] Expanded: 15, Generated: 16
+[f=198.560] Expanded: 16, Generated: 17
+[f=200.430] Expanded: 17, Generated: 18
+[f=200.800] Expanded: 18, Generated: 19
+[f=195.886] Expanded: 20, Generated: 21
+[f=198.686] Expanded: 21, Generated: 22
+[f=200.605] Expanded: 22, Generated: 23
+[f=200.680] Expanded: 23, Generated: 24
+[f=201.497] Expanded: 24, Generated: 25
+[f=201.686] Expanded: 25, Generated: 26
+[f=202.019] Expanded: 26, Generated: 27
+[f=197.930] Expanded: 28, Generated: 29
+[f=193.369] Expanded: 30, Generated: 31
+[f=195.662] Expanded: 30, Generated: 32
+[f=196.780] Expanded: 31, Generated: 33
+[f=195.415] Expanded: 33, Generated: 35
+[f=186.775] Expanded: 35, Generated: 37
+[f=186.209] Expanded: 37, Generated: 39
+[f=192.395] Expanded: 38, Generated: 40
+[f=186.918] Expanded: 42, Generated: 44
+[f=184.915] Expanded: 45, Generated: 47
+[f=186.317] Expanded: 47, Generated: 49
+[f=183.851] Expanded: 50, Generated: 52
+[f=185.060] Expanded: 52, Generated: 54
+[f=187.156] Expanded: 53, Generated: 55
+[f=182.827] Expanded: 55, Generated: 57
+[f=184.832] Expanded: 57, Generated: 59
+[f=184.829] Expanded: 59, Generated: 61
+[f=180.822] Expanded: 61, Generated: 63
+[f=182.803] Expanded: 63, Generated: 65
+[f=182.806] Expanded: 65, Generated: 67
+[f=182.845] Expanded: 67, Generated: 69
+[f=185.609] Expanded: 67, Generated: 70
+[f=185.820] Expanded: 67, Generated: 71
+[f=186.124] Expanded: 67, Generated: 72
+[f=186.523] Expanded: 67, Generated: 73
+[f=186.718] Expanded: 67, Generated: 74
+[f=186.858] Expanded: 67, Generated: 75
+[f=183.917] Expanded: 69, Generated: 77
+[f=186.882] Expanded: 69, Generated: 78
+[f=186.883] Expanded: 69, Generated: 79
+[f=186.896] Expanded: 69, Generated: 80
+[f=183.706] Expanded: 71, Generated: 82
+[f=175.275] Expanded: 74, Generated: 85
+[f=175.309] Expanded: 75, Generated: 86
+[f=174.344] Expanded: 77, Generated: 88
+[f=177.390] Expanded: 78, Generated: 89
+[f=168.963] Expanded: 80, Generated: 91
+[f=169.247] Expanded: 84, Generated: 95
+[f=171.667] Expanded: 85, Generated: 96
+[f=167.454] Expanded: 87, Generated: 98
+[f=167.709] Expanded: 88, Generated: 99
+[f=153.186] Expanded: 91, Generated: 102
+[f=149.134] Expanded: 94, Generated: 105
+[f=149.548] Expanded: 96, Generated: 107
+[f=149.987] Expanded: 97, Generated: 108
+[f=148.414] Expanded: 99, Generated: 110
+[f=150.601] Expanded: 100, Generated: 111
+[f=150.879] Expanded: 100, Generated: 112
+[f=150.982] Expanded: 101, Generated: 113
+[f=149.931] Expanded: 103, Generated: 115
+[f=150.827] Expanded: 104, Generated: 116
+[f=147.686] Expanded: 107, Generated: 119
+[f=148.336] Expanded: 108, Generated: 120
+[f=147.686] Expanded: 110, Generated: 122
+[f=148.587] Expanded: 111, Generated: 123
+[f=148.967] Expanded: 112, Generated: 124
+[f=149.090] Expanded: 113, Generated: 125
+[f=149.205] Expanded: 114, Generated: 126
+[f=149.368] Expanded: 115, Generated: 127
+[f=146.005] Expanded: 119, Generated: 131
+[f=145.296] Expanded: 121, Generated: 133
+[f=146.198] Expanded: 122, Generated: 134
+[f=146.678] Expanded: 123, Generated: 135
+[f=143.744] Expanded: 125, Generated: 137
+[f=144.654] Expanded: 126, Generated: 138
+[f=145.125] Expanded: 127, Generated: 139
+[f=142.971] Expanded: 129, Generated: 141
+[f=143.883] Expanded: 130, Generated: 142
+[f=144.360] Expanded: 131, Generated: 143
+[f=141.455] Expanded: 133, Generated: 145
+[f=142.365] Expanded: 134, Generated: 146
+[f=142.840] Expanded: 135, Generated: 147
+[f=132.909] Expanded: 137, Generated: 149
+[f=133.713] Expanded: 138, Generated: 150
+[f=116.777] Expanded: 142, Generated: 154
+[f=118.982] Expanded: 143, Generated: 155
+[f=117.919] Expanded: 145, Generated: 157
+[f=117.019] Expanded: 147, Generated: 159
+[f=117.138] Expanded: 149, Generated: 161
+[f=117.613] Expanded: 150, Generated: 162
+[f=118.565] Expanded: 151, Generated: 163
+[f=118.109] Expanded: 153, Generated: 165
+[f=118.155] Expanded: 155, Generated: 167
+[f=118.634] Expanded: 156, Generated: 168
+[f=119.639] Expanded: 157, Generated: 169
+[f=120.259] Expanded: 157, Generated: 170
+[f=120.338] Expanded: 157, Generated: 171
+[f=120.418] Expanded: 157, Generated: 172
+[f=116.123] Expanded: 159, Generated: 174
+[f=116.596] Expanded: 160, Generated: 175
+[f=117.585] Expanded: 161, Generated: 176
+[f=117.120] Expanded: 163, Generated: 178
+[f=117.599] Expanded: 164, Generated: 179
+[f=118.637] Expanded: 165, Generated: 180
+[f=119.367] Expanded: 165, Generated: 181
+[f=119.736] Expanded: 165, Generated: 182
+[f=120.011] Expanded: 165, Generated: 183
+[f=120.108] Expanded: 165, Generated: 184
+[f=120.116] Expanded: 165, Generated: 185
+[f=120.164] Expanded: 165, Generated: 186
+[f=120.165] Expanded: 165, Generated: 187
+[f=120.182] Expanded: 165, Generated: 188
+[f=120.248] Expanded: 165, Generated: 189
+[f=120.284] Expanded: 165, Generated: 190
+[f=120.743] Expanded: 165, Generated: 191
+[f=120.756] Expanded: 165, Generated: 192
+[f=120.806] Expanded: 165, Generated: 193
+[f=117.467] Expanded: 167, Generated: 195
+[f=117.927] Expanded: 168, Generated: 196
+[f=118.895] Expanded: 169, Generated: 197
+[f=118.472] Expanded: 171, Generated: 199
+[f=118.937] Expanded: 172, Generated: 200
+[f=119.956] Expanded: 173, Generated: 201
+[f=120.680] Expanded: 173, Generated: 202
+[f=120.882] Expanded: 173, Generated: 203
+[f=117.513] Expanded: 175, Generated: 205
+[f=117.978] Expanded: 176, Generated: 206
+[f=118.949] Expanded: 177, Generated: 207
+[f=118.517] Expanded: 179, Generated: 209
+[f=118.988] Expanded: 180, Generated: 210
+[f=120.008] Expanded: 181, Generated: 211
+[f=120.730] Expanded: 181, Generated: 212
+[f=121.008] Expanded: 181, Generated: 213
+[f=121.028] Expanded: 181, Generated: 214
+[f=121.032] Expanded: 181, Generated: 215
+[f=121.043] Expanded: 181, Generated: 216
+[f=121.057] Expanded: 181, Generated: 217
+[f=121.074] Expanded: 181, Generated: 218
+[f=121.078] Expanded: 181, Generated: 219
+[f=121.079] Expanded: 181, Generated: 220
+[f=121.080] Expanded: 181, Generated: 221
+[f=121.087] Expanded: 181, Generated: 222
+[f=121.101] Expanded: 181, Generated: 223
+[f=121.136] Expanded: 181, Generated: 224
+[f=121.137] Expanded: 181, Generated: 225
+[f=121.146] Expanded: 181, Generated: 226
+[f=121.154] Expanded: 181, Generated: 227
+[f=121.180] Expanded: 181, Generated: 228
+[f=121.187] Expanded: 181, Generated: 229
+[f=121.188] Expanded: 181, Generated: 230
+[f=121.220] Expanded: 181, Generated: 231
+[f=121.236] Expanded: 181, Generated: 232
+[f=121.237] Expanded: 181, Generated: 233
+[f=121.253] Expanded: 181, Generated: 234
+[f=121.257] Expanded: 181, Generated: 235
+[f=121.273] Expanded: 181, Generated: 236
+[f=118.162] Expanded: 183, Generated: 238
+[f=119.320] Expanded: 185, Generated: 240
+[f=121.298] Expanded: 185, Generated: 241
+[f=121.315] Expanded: 185, Generated: 242
+[f=121.319] Expanded: 185, Generated: 243
+[f=121.323] Expanded: 185, Generated: 244
+[f=118.211] Expanded: 187, Generated: 246
+[f=119.367] Expanded: 189, Generated: 248
+[f=121.343] Expanded: 189, Generated: 249
+[f=121.344] Expanded: 189, Generated: 250
+[f=121.355] Expanded: 189, Generated: 251
+[f=121.356] Expanded: 189, Generated: 252
+[f=118.348] Expanded: 191, Generated: 254
+[f=119.456] Expanded: 193, Generated: 256
+[f=118.525] Expanded: 195, Generated: 258
+[f=118.985] Expanded: 196, Generated: 259
+[f=119.924] Expanded: 197, Generated: 260
+[f=119.547] Expanded: 199, Generated: 262
+[f=120.013] Expanded: 200, Generated: 263
+[f=121.005] Expanded: 201, Generated: 264
+[f=118.413] Expanded: 203, Generated: 266
+[f=119.519] Expanded: 205, Generated: 268
+[f=118.566] Expanded: 207, Generated: 270
+[f=119.031] Expanded: 208, Generated: 271
+[f=119.972] Expanded: 209, Generated: 272
+[f=119.587] Expanded: 211, Generated: 274
+[f=120.059] Expanded: 212, Generated: 275
+[f=121.051] Expanded: 213, Generated: 276
+[f=121.408] Expanded: 213, Generated: 277
+[f=121.409] Expanded: 213, Generated: 278
+[f=121.411] Expanded: 213, Generated: 279
+[f=121.411] Expanded: 213, Generated: 280
+[f=121.418] Expanded: 213, Generated: 281
+[f=116.721] Expanded: 215, Generated: 283
+[f=117.907] Expanded: 217, Generated: 285
+[f=119.220] Expanded: 217, Generated: 286
+[f=117.401] Expanded: 219, Generated: 288
+[f=118.563] Expanded: 221, Generated: 290
+[f=119.967] Expanded: 221, Generated: 291
+[f=91.348] Expanded: 225, Generated: 295
+[f=91.504] Expanded: 226, Generated: 296
+[f=91.538] Expanded: 227, Generated: 297
+[f=79.103] Expanded: 229, Generated: 299
+[f=79.144] Expanded: 230, Generated: 300
+[f=80.307] Expanded: 232, Generated: 302
+[f=80.348] Expanded: 233, Generated: 303
+[f=80.683] Expanded: 233, Generated: 304
+[Final] Expanded: 233, Generated: 304
+Found a solution of length 63!
+   1: (navigate rover0 waypoint28 waypoint25)
+   2: (calibrate rover0 camera3 objective3 waypoint25)
+   3: (navigate rover0 waypoint25 waypoint28)
+   4: (take_image rover0 waypoint28 objective10 camera3 high_res)
+   5: (sample_rock rover0 rover0store waypoint28)
+   6: (navigate rover0 waypoint28 waypoint25)
+   7: (drop rover0 rover0store)
+   8: (communicate_rock_data rover0 general waypoint28 waypoint25 waypoint1)
+   9: (sample_rock rover0 rover0store waypoint25)
+  10: (navigate rover0 waypoint25 waypoint16)
+  11: (communicate_image_data rover0 general objective10 high_res waypoint16 waypoint1)
+  12: (communicate_rock_data rover0 general waypoint25 waypoint16 waypoint1)
+  13: (drop rover0 rover0store)
+  14: (calibrate rover0 camera7 objective7 waypoint16)
+  15: (take_image rover0 waypoint16 objective1 camera7 high_res)
+  16: (calibrate rover0 camera7 objective7 waypoint16)
+  17: (take_image rover0 waypoint16 objective7 camera7 high_res)
+  18: (communicate_image_data rover0 general objective7 high_res waypoint16 waypoint1)
+  19: (communicate_image_data rover0 general objective1 high_res waypoint16 waypoint1)
+  20: (navigate rover0 waypoint16 waypoint25)
+  21: (navigate rover0 waypoint25 waypoint28)
+  22: (navigate rover0 waypoint28 waypoint11)
+  23: (navigate rover0 waypoint11 waypoint13)
+  24: (sample_rock rover0 rover0store waypoint13)
+  25: (communicate_rock_data rover0 general waypoint13 waypoint13 waypoint1)
+  26: (drop rover0 rover0store)
+  27: (calibrate rover0 camera1 objective9 waypoint13)
+  28: (take_image rover0 waypoint13 objective2 camera1 colour)
+  29: (communicate_image_data rover0 general objective2 colour waypoint13 waypoint1)
+  30: (calibrate rover0 camera1 objective9 waypoint13)
+  31: (take_image rover0 waypoint13 objective9 camera1 colour)
+  32: (communicate_image_data rover0 general objective9 colour waypoint13 waypoint1)
+  33: (navigate rover0 waypoint13 waypoint11)
+  34: (navigate rover0 waypoint11 waypoint6)
+  35: (navigate rover0 waypoint6 waypoint3)
+  36: (sample_soil rover0 rover0store waypoint3)
+  37: (drop rover0 rover0store)
+  38: (calibrate rover0 camera1 objective9 waypoint3)
+  39: (take_image rover0 waypoint3 objective4 camera1 colour)
+  40: (calibrate rover0 camera1 objective9 waypoint3)
+  41: (navigate rover0 waypoint3 waypoint6)
+  42: (take_image rover0 waypoint6 objective8 camera1 colour)
+  43: (sample_soil rover0 rover0store waypoint6)
+  44: (communicate_image_data rover0 general objective8 colour waypoint6 waypoint1)
+  45: (communicate_image_data rover0 general objective4 colour waypoint6 waypoint1)
+  46: (drop rover0 rover0store)
+  47: (navigate rover0 waypoint6 waypoint11)
+  48: (navigate rover0 waypoint11 waypoint28)
+  49: (navigate rover0 waypoint28 waypoint19)
+  50: (navigate rover0 waypoint19 waypoint12)
+  51: (sample_rock rover0 rover0store waypoint12)
+  52: (communicate_rock_data rover0 general waypoint12 waypoint12 waypoint1)
+  53: (drop rover0 rover0store)
+  54: (sample_soil rover0 rover0store waypoint12)
+  55: (drop rover0 rover0store)
+  56: (navigate rover0 waypoint12 waypoint19)
+  57: (navigate rover0 waypoint19 waypoint28)
+  58: (navigate rover0 waypoint28 waypoint0)
+  59: (navigate rover0 waypoint0 waypoint26)
+  60: (sample_soil rover0 rover0store waypoint26)
+  61: (navigate rover0 waypoint26 waypoint0)
+  62: (communicate_soil_data rover0 general waypoint26 waypoint0 waypoint1)
+  63: (communicate_soil_data rover0 general waypoint3 waypoint0 waypoint1)

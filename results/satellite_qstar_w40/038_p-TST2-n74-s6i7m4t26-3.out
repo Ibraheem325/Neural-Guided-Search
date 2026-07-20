@@ -1,0 +1,93 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/satellite_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 4.0
+Starting Q* search...
+[f=106.307] Expanded: 9, Generated: 8
+[f=104.932] Expanded: 11, Generated: 10
+[f=104.946] Expanded: 13, Generated: 12
+[f=104.788] Expanded: 15, Generated: 14
+[f=103.399] Expanded: 17, Generated: 16
+[f=103.565] Expanded: 18, Generated: 17
+[f=89.404] Expanded: 22, Generated: 21
+[f=89.404] Expanded: 24, Generated: 23
+[f=80.908] Expanded: 26, Generated: 25
+[f=80.921] Expanded: 27, Generated: 26
+[f=70.329] Expanded: 29, Generated: 29
+[f=47.700] Expanded: 32, Generated: 32
+[f=47.702] Expanded: 33, Generated: 33
+[f=47.730] Expanded: 34, Generated: 34
+[f=47.731] Expanded: 35, Generated: 35
+[f=47.732] Expanded: 36, Generated: 36
+[f=47.733] Expanded: 37, Generated: 37
+[f=47.745] Expanded: 38, Generated: 38
+[f=47.747] Expanded: 39, Generated: 39
+[f=47.748] Expanded: 40, Generated: 40
+[f=47.749] Expanded: 41, Generated: 41
+[f=47.750] Expanded: 42, Generated: 42
+[f=47.751] Expanded: 43, Generated: 43
+[f=47.751] Expanded: 44, Generated: 44
+[f=47.753] Expanded: 45, Generated: 45
+[f=47.757] Expanded: 46, Generated: 46
+[f=47.758] Expanded: 47, Generated: 47
+[f=47.758] Expanded: 48, Generated: 48
+[f=47.759] Expanded: 49, Generated: 49
+[f=47.760] Expanded: 50, Generated: 50
+[f=47.760] Expanded: 51, Generated: 51
+[f=47.768] Expanded: 52, Generated: 52
+[f=47.769] Expanded: 53, Generated: 53
+[f=47.770] Expanded: 54, Generated: 54
+[f=47.770] Expanded: 55, Generated: 55
+[f=47.771] Expanded: 56, Generated: 56
+[f=47.772] Expanded: 57, Generated: 57
+[f=47.774] Expanded: 58, Generated: 58
+[f=47.775] Expanded: 59, Generated: 59
+[f=47.776] Expanded: 60, Generated: 60
+[f=47.776] Expanded: 61, Generated: 61
+[f=47.776] Expanded: 62, Generated: 62
+[f=47.777] Expanded: 63, Generated: 63
+[f=47.778] Expanded: 64, Generated: 64
+[f=47.778] Expanded: 65, Generated: 65
+[f=47.798] Expanded: 66, Generated: 66
+[f=47.798] Expanded: 67, Generated: 67
+[f=47.799] Expanded: 68, Generated: 68
+[f=47.800] Expanded: 69, Generated: 69
+[f=47.801] Expanded: 70, Generated: 70
+[f=47.803] Expanded: 71, Generated: 71
+[f=47.804] Expanded: 72, Generated: 72
+[f=47.805] Expanded: 73, Generated: 73
+[f=47.849] Expanded: 74, Generated: 74
+[f=47.851] Expanded: 75, Generated: 75
+[f=48.053] Expanded: 76, Generated: 76
+[f=48.056] Expanded: 77, Generated: 77
+[f=48.083] Expanded: 78, Generated: 78
+[f=48.086] Expanded: 79, Generated: 79
+[f=48.104] Expanded: 80, Generated: 80
+[f=48.107] Expanded: 81, Generated: 81
+[f=48.188] Expanded: 82, Generated: 82
+[f=48.191] Expanded: 83, Generated: 83
+[f=48.277] Expanded: 83, Generated: 84
+[Final] Expanded: 83, Generated: 84
+Found a solution of length 20!
+   1: (switch_on instrument14 satellite2)
+   2: (switch_on instrument12 satellite1)
+   3: (switch_on instrument6 satellite0)
+   4: (switch_on instrument24 satellite5)
+   5: (switch_on instrument21 satellite4)
+   6: (switch_on instrument17 satellite3)
+   7: (turn_to satellite1 star20 planet29)
+   8: (turn_to satellite5 star3 star27)
+   9: (calibrate satellite5 instrument24 star3)
+  10: (calibrate satellite1 instrument12 star20)
+  11: (turn_to satellite5 planet26 star3)
+  12: (take_image satellite5 planet26 instrument24 spectrograph0)
+  13: (turn_to satellite5 planet28 planet26)
+  14: (take_image satellite5 planet28 instrument24 image3)
+  15: (turn_to satellite5 planet29 planet28)
+  16: (take_image satellite5 planet29 instrument24 image3)
+  17: (turn_to satellite5 star27 planet29)
+  18: (turn_to satellite1 star27 star20)
+  19: (take_image satellite1 star27 instrument12 infrared1)
+  20: (turn_to satellite3 star20 star2)

@@ -1,0 +1,132 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/rovers_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 8.0
+Starting Q* search...
+[f=370.162] Expanded: 5, Generated: 4
+[f=370.186] Expanded: 6, Generated: 5
+[f=373.041] Expanded: 7, Generated: 6
+[f=373.797] Expanded: 8, Generated: 7
+[f=353.625] Expanded: 11, Generated: 10
+[f=353.641] Expanded: 12, Generated: 11
+[f=359.703] Expanded: 13, Generated: 12
+[f=360.071] Expanded: 14, Generated: 13
+[f=346.473] Expanded: 17, Generated: 16
+[f=346.489] Expanded: 18, Generated: 17
+[f=345.249] Expanded: 20, Generated: 19
+[f=341.348] Expanded: 22, Generated: 21
+[f=338.713] Expanded: 24, Generated: 23
+[f=341.783] Expanded: 25, Generated: 24
+[f=299.286] Expanded: 28, Generated: 27
+[f=303.978] Expanded: 30, Generated: 29
+[f=304.471] Expanded: 31, Generated: 30
+[f=304.532] Expanded: 32, Generated: 31
+[f=305.705] Expanded: 33, Generated: 32
+[f=278.101] Expanded: 37, Generated: 36
+[f=276.207] Expanded: 38, Generated: 38
+[f=286.804] Expanded: 38, Generated: 39
+[f=288.087] Expanded: 38, Generated: 40
+[f=288.537] Expanded: 38, Generated: 41
+[f=289.529] Expanded: 38, Generated: 42
+[f=291.237] Expanded: 38, Generated: 43
+[f=274.440] Expanded: 40, Generated: 45
+[f=264.053] Expanded: 42, Generated: 47
+[f=258.790] Expanded: 44, Generated: 49
+[f=268.798] Expanded: 44, Generated: 50
+[f=269.090] Expanded: 44, Generated: 51
+[f=270.475] Expanded: 44, Generated: 52
+[f=273.320] Expanded: 44, Generated: 53
+[f=274.438] Expanded: 44, Generated: 54
+[f=260.756] Expanded: 46, Generated: 56
+[f=270.702] Expanded: 46, Generated: 57
+[f=270.974] Expanded: 46, Generated: 58
+[f=272.579] Expanded: 46, Generated: 59
+[f=273.016] Expanded: 46, Generated: 60
+[f=252.716] Expanded: 48, Generated: 62
+[f=262.362] Expanded: 48, Generated: 63
+[f=262.639] Expanded: 48, Generated: 64
+[f=249.711] Expanded: 50, Generated: 66
+[f=259.325] Expanded: 50, Generated: 67
+[f=259.606] Expanded: 50, Generated: 68
+[f=259.792] Expanded: 50, Generated: 69
+[f=261.221] Expanded: 50, Generated: 70
+[f=263.651] Expanded: 50, Generated: 71
+[f=264.234] Expanded: 50, Generated: 72
+[f=266.683] Expanded: 50, Generated: 73
+[f=242.092] Expanded: 53, Generated: 76
+[f=243.950] Expanded: 54, Generated: 77
+[f=247.041] Expanded: 55, Generated: 78
+[f=251.946] Expanded: 55, Generated: 79
+[f=251.999] Expanded: 55, Generated: 80
+[f=252.452] Expanded: 55, Generated: 81
+[f=253.872] Expanded: 55, Generated: 82
+[f=255.097] Expanded: 55, Generated: 83
+[f=255.105] Expanded: 56, Generated: 84
+[f=244.319] Expanded: 58, Generated: 86
+[f=246.957] Expanded: 59, Generated: 87
+[f=249.341] Expanded: 60, Generated: 88
+[f=237.152] Expanded: 62, Generated: 90
+[f=241.009] Expanded: 63, Generated: 91
+[f=241.968] Expanded: 64, Generated: 92
+[f=233.021] Expanded: 66, Generated: 94
+[f=233.652] Expanded: 67, Generated: 95
+[f=237.882] Expanded: 68, Generated: 96
+[f=242.925] Expanded: 68, Generated: 97
+[f=242.975] Expanded: 68, Generated: 98
+[f=243.230] Expanded: 68, Generated: 99
+[f=243.405] Expanded: 68, Generated: 100
+[f=225.481] Expanded: 70, Generated: 102
+[f=222.893] Expanded: 73, Generated: 105
+[f=231.249] Expanded: 73, Generated: 106
+[f=102.719] Expanded: 78, Generated: 111
+[f=103.313] Expanded: 78, Generated: 112
+[f=104.544] Expanded: 79, Generated: 114
+[f=80.728] Expanded: 81, Generated: 116
+[f=80.730] Expanded: 82, Generated: 117
+[f=82.678] Expanded: 82, Generated: 118
+[Final] Expanded: 82, Generated: 118
+Found a solution of length 42!
+   1: (navigate rover0 waypoint5 waypoint2)
+   2: (sample_rock rover0 rover0store waypoint2)
+   3: (communicate_rock_data rover0 general waypoint2 waypoint2 waypoint17)
+   4: (drop rover0 rover0store)
+   5: (navigate rover0 waypoint2 waypoint5)
+   6: (navigate rover0 waypoint5 waypoint14)
+   7: (navigate rover0 waypoint14 waypoint19)
+   8: (sample_rock rover0 rover0store waypoint19)
+   9: (navigate rover0 waypoint19 waypoint14)
+  10: (drop rover0 rover0store)
+  11: (calibrate rover0 camera5 objective4 waypoint14)
+  12: (take_image rover0 waypoint14 objective3 camera5 high_res)
+  13: (navigate rover0 waypoint14 waypoint23)
+  14: (communicate_rock_data rover0 general waypoint19 waypoint23 waypoint17)
+  15: (calibrate rover0 camera4 objective2 waypoint23)
+  16: (take_image rover0 waypoint23 objective2 camera4 high_res)
+  17: (communicate_image_data rover0 general objective2 high_res waypoint23 waypoint17)
+  18: (calibrate rover0 camera1 objective8 waypoint23)
+  19: (take_image rover0 waypoint23 objective1 camera1 high_res)
+  20: (communicate_image_data rover0 general objective1 high_res waypoint23 waypoint17)
+  21: (calibrate rover0 camera1 objective8 waypoint23)
+  22: (take_image rover0 waypoint23 objective8 camera1 high_res)
+  23: (communicate_image_data rover0 general objective8 high_res waypoint23 waypoint17)
+  24: (navigate rover0 waypoint23 waypoint14)
+  25: (navigate rover0 waypoint14 waypoint5)
+  26: (calibrate rover0 camera5 objective4 waypoint5)
+  27: (take_image rover0 waypoint5 objective4 camera5 high_res)
+  28: (communicate_image_data rover0 general objective4 high_res waypoint5 waypoint17)
+  29: (communicate_image_data rover0 general objective3 high_res waypoint5 waypoint17)
+  30: (navigate rover0 waypoint5 waypoint1)
+  31: (navigate rover0 waypoint1 waypoint18)
+  32: (sample_rock rover0 rover0store waypoint18)
+  33: (navigate rover0 waypoint18 waypoint1)
+  34: (navigate rover0 waypoint1 waypoint10)
+  35: (drop rover0 rover0store)
+  36: (navigate rover0 waypoint10 waypoint6)
+  37: (sample_rock rover0 rover0store waypoint6)
+  38: (navigate rover0 waypoint6 waypoint10)
+  39: (navigate rover0 waypoint10 waypoint1)
+  40: (navigate rover0 waypoint1 waypoint5)
+  41: (communicate_rock_data rover0 general waypoint18 waypoint5 waypoint17)
+  42: (communicate_rock_data rover0 general waypoint6 waypoint5 waypoint17)

@@ -1,0 +1,151 @@
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Torch: 2.12.0+cu130
+Loading model... (models/grid_dqn.pth)
+Using GPU:  NVIDIA L40S
+heuristic_weight = 12.0
+Starting Q* search...
+[f=745.890] Expanded: 2, Generated: 1
+[f=747.762] Expanded: 3, Generated: 3
+[f=764.356] Expanded: 3, Generated: 4
+[f=731.789] Expanded: 5, Generated: 6
+[f=731.322] Expanded: 7, Generated: 8
+[f=739.889] Expanded: 7, Generated: 9
+[f=733.216] Expanded: 8, Generated: 11
+[f=726.472] Expanded: 9, Generated: 13
+[f=732.585] Expanded: 10, Generated: 14
+[f=735.924] Expanded: 10, Generated: 15
+[f=740.292] Expanded: 12, Generated: 17
+[f=558.886] Expanded: 18, Generated: 23
+[f=572.353] Expanded: 19, Generated: 24
+[f=505.472] Expanded: 20, Generated: 26
+[f=489.380] Expanded: 22, Generated: 28
+[f=505.910] Expanded: 23, Generated: 29
+[f=506.300] Expanded: 23, Generated: 30
+[f=506.488] Expanded: 24, Generated: 31
+[f=492.633] Expanded: 25, Generated: 33
+[f=497.589] Expanded: 25, Generated: 34
+[f=495.002] Expanded: 26, Generated: 36
+[f=512.042] Expanded: 27, Generated: 37
+[f=492.968] Expanded: 28, Generated: 39
+[f=509.887] Expanded: 29, Generated: 40
+[f=510.404] Expanded: 29, Generated: 41
+[f=513.162] Expanded: 29, Generated: 42
+[f=513.672] Expanded: 29, Generated: 43
+[f=513.675] Expanded: 30, Generated: 44
+[f=492.567] Expanded: 31, Generated: 46
+[f=486.843] Expanded: 32, Generated: 48
+[f=494.503] Expanded: 33, Generated: 50
+[f=486.415] Expanded: 37, Generated: 54
+[f=499.182] Expanded: 37, Generated: 55
+[f=499.496] Expanded: 38, Generated: 56
+[f=502.731] Expanded: 39, Generated: 57
+[f=503.857] Expanded: 39, Generated: 58
+[f=489.638] Expanded: 41, Generated: 60
+[f=489.662] Expanded: 41, Generated: 61
+[f=501.718] Expanded: 41, Generated: 62
+[f=504.284] Expanded: 42, Generated: 63
+[f=505.633] Expanded: 42, Generated: 64
+[f=492.557] Expanded: 43, Generated: 66
+[f=448.847] Expanded: 45, Generated: 68
+[f=454.116] Expanded: 46, Generated: 69
+[f=433.729] Expanded: 48, Generated: 71
+[f=436.252] Expanded: 49, Generated: 72
+[f=435.863] Expanded: 50, Generated: 74
+[f=355.502] Expanded: 54, Generated: 78
+[f=272.131] Expanded: 60, Generated: 84
+[f=281.556] Expanded: 61, Generated: 85
+[f=270.483] Expanded: 63, Generated: 87
+[f=283.616] Expanded: 64, Generated: 88
+[f=269.483] Expanded: 66, Generated: 90
+[f=282.616] Expanded: 67, Generated: 91
+[f=287.944] Expanded: 67, Generated: 92
+[f=286.352] Expanded: 68, Generated: 94
+[f=292.042] Expanded: 68, Generated: 95
+[f=295.661] Expanded: 69, Generated: 96
+[f=295.902] Expanded: 70, Generated: 97
+[f=295.994] Expanded: 71, Generated: 98
+[f=296.207] Expanded: 72, Generated: 99
+[f=296.879] Expanded: 73, Generated: 100
+[f=297.537] Expanded: 73, Generated: 101
+[f=298.315] Expanded: 74, Generated: 102
+[f=298.326] Expanded: 75, Generated: 103
+[f=281.391] Expanded: 76, Generated: 105
+[f=270.015] Expanded: 78, Generated: 107
+[f=176.477] Expanded: 85, Generated: 114
+[f=171.262] Expanded: 87, Generated: 116
+[f=173.021] Expanded: 88, Generated: 117
+[f=173.954] Expanded: 89, Generated: 118
+[f=150.433] Expanded: 93, Generated: 122
+[f=121.525] Expanded: 95, Generated: 124
+[f=107.378] Expanded: 98, Generated: 127
+[f=107.782] Expanded: 99, Generated: 128
+[f=84.819] Expanded: 102, Generated: 132
+[Final] Expanded: 102, Generated: 132
+Found a solution of length 66!
+   1: (move f4-0f f5-0f)
+   2: (pickup f5-0f key2-0)
+   3: (move f5-0f f4-0f)
+   4: (move f4-0f f4-1f)
+   5: (unlock f4-1f f3-1f key2-0 shape2)
+   6: (move f4-1f f3-1f)
+   7: (move f3-1f f2-1f)
+   8: (unlock f2-1f f2-2f key2-0 shape2)
+   9: (move f2-1f f2-2f)
+  10: (pickup-and-loose f2-2f key1-1 key2-0)
+  11: (unlock f2-2f f3-2f key1-1 shape1)
+  12: (move f2-2f f2-1f)
+  13: (move f2-1f f1-1f)
+  14: (move f1-1f f1-2f)
+  15: (move f1-2f f0-2f)
+  16: (move f0-2f f0-3f)
+  17: (move f0-3f f0-4f)
+  18: (move f0-4f f0-5f)
+  19: (move f0-5f f0-6f)
+  20: (move f0-6f f1-6f)
+  21: (move f1-6f f2-6f)
+  22: (move f2-6f f3-6f)
+  23: (move f3-6f f4-6f)
+  24: (move f4-6f f4-5f)
+  25: (move f4-5f f5-5f)
+  26: (move f5-5f f5-4f)
+  27: (unlock f5-4f f6-4f key1-1 shape1)
+  28: (move f5-4f f5-3f)
+  29: (move f5-3f f6-3f)
+  30: (pickup-and-loose f6-3f key2-1 key1-1)
+  31: (move f6-3f f5-3f)
+  32: (move f5-3f f4-3f)
+  33: (move f4-3f f3-3f)
+  34: (move f3-3f f3-4f)
+  35: (move f3-4f f3-5f)
+  36: (pickup-and-loose f3-5f key3-1 key2-1)
+  37: (move f3-5f f3-4f)
+  38: (move f3-4f f3-3f)
+  39: (move f3-3f f3-2f)
+  40: (pickup-and-loose f3-2f key0-2 key3-1)
+  41: (move f3-2f f2-2f)
+  42: (move f2-2f f2-1f)
+  43: (move f2-1f f1-1f)
+  44: (move f1-1f f0-1f)
+  45: (pickup-and-loose f0-1f key3-2 key0-2)
+  46: (move f0-1f f0-2f)
+  47: (move f0-2f f1-2f)
+  48: (move f1-2f f2-2f)
+  49: (move f2-2f f3-2f)
+  50: (putdown f3-2f key3-2)
+  51: (move f3-2f f2-2f)
+  52: (pickup f2-2f key2-0)
+  53: (move f2-2f f2-3f)
+  54: (move f2-3f f3-3f)
+  55: (move f3-3f f4-3f)
+  56: (move f4-3f f5-3f)
+  57: (move f5-3f f5-4f)
+  58: (move f5-4f f6-4f)
+  59: (putdown f6-4f key2-0)
+  60: (move f6-4f f6-3f)
+  61: (move f6-3f f6-2f)
+  62: (pickup f6-2f key2-2)
+  63: (move f6-2f f6-3f)
+  64: (move f6-3f f5-3f)
+  65: (move f5-3f f4-3f)
+  66: (putdown f4-3f key2-2)
