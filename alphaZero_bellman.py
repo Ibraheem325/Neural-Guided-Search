@@ -129,6 +129,16 @@ class _Signal:
         self.width_beta = 0.0      # 0 = width channel off
         self.cv_hist: list[float] = []
         self.wmult_sum = 0.0; self.wmult_count = 0
+        # normalization for the width confidence:
+        #   'cv'     : confidence from cv=width/|value| vs running-median cv (original;
+        #              the /|value| over-divides and costs ~0.15 AUC).
+        #   'banded' : confidence from raw width vs the running-median width of nodes at a
+        #              SIMILAR value (=distance), preserving the raw-width ranking that
+        #              validated at AUC ~0.79-0.82. This is the better normalization.
+        self.width_norm = 'cv'
+        self.wbin_size = 8.0       # value-magnitude bucket width for 'banded'
+        self.wbin_warmup = 8       # per-bucket samples before modulating
+        self.wbin: dict = {}
         # --- diagnostic: does the width signal fire where the model is UNCERTAIN,
         #     measured on the states SEARCH ACTUALLY VISITS (not sampled states)?
         #     If diag_ens (list of (q1,q2) SAC members) is set, record per expanded
@@ -141,6 +151,13 @@ class _Signal:
         #     channel removes expansions. Needs iqn set even in baseline. ---
         self.log_dist = False
         self.dist_log: list[float] = []
+        # --- signal diagnostic: on a BASELINE search (no modulation), log per expanded
+        #     node (exact_distance, cv, width, ensemble_disagreement) so we can measure
+        #     AUC(signal -> disagreement) by TRUE distance on the search-visited distribution.
+        #     dist_fn(state) -> exact steps-to-goal (or None). Needs iqn + diag_ens set. ---
+        self.signal_diag = False
+        self.dist_fn = None
+        self.sig_records: list[tuple] = []
         # --- OPTION 4: ENSEMBLE-disagreement exploration channel (leaves the prior
         #     untouched). Same modulation as OPTION 3 but the confidence comes from
         #     the DISAGREEMENT of N independently-trained SAC critics instead of the
@@ -193,7 +210,8 @@ class _Signal:
         ai = int(means.argmax())
         curve = qs[ai]                                   # sorted ascending, 99 quantiles
         width = (curve[89] - curve[9]).item()            # q90 - q10 (taus 0.01..0.99)
-        cv = width / (abs(means[ai].item()) + 1.0)
+        value = abs(means[ai].item())
+        cv = width / (value + 1.0)
         if self.diag_ens is not None:
             vs = []
             for q1, q2 in self.diag_ens:
@@ -205,11 +223,24 @@ class _Signal:
             if len(vs) == len(self.diag_ens) and len(vs) > 1:
                 import statistics as _st
                 self.diag_records.append((cv, width, _st.pstdev(vs), -means[ai].item()))
-        self.cv_hist.append(cv)
-        if len(self.cv_hist) < self.warmup:
-            return 1.0
-        med = sorted(self.cv_hist)[len(self.cv_hist) // 2]
-        confidence = max(0.0, 1.0 - cv / max(med, 1e-6))  # 1 when cv<<median
+
+        if self.width_norm == 'banded':
+            # normalize RAW width by the running-median width of nodes at a SIMILAR value
+            # (=distance). Preserves the raw-width ranking (validated AUC ~0.79-0.82); avoids
+            # the /|value| over-division that cost cv ~0.15 AUC.
+            b = int(value / self.wbin_size)
+            hist = self.wbin.setdefault(b, [])
+            hist.append(width)
+            if len(hist) < self.wbin_warmup:
+                return 1.0
+            med = sorted(hist)[len(hist) // 2]
+            confidence = max(0.0, 1.0 - width / max(med, 1e-6))
+        else:  # 'cv'
+            self.cv_hist.append(cv)
+            if len(self.cv_hist) < self.warmup:
+                return 1.0
+            med = sorted(self.cv_hist)[len(self.cv_hist) // 2]
+            confidence = max(0.0, 1.0 - cv / max(med, 1e-6))  # 1 when cv<<median
         mult = 1.0 - self.width_beta * confidence
         self.wmult_sum += mult; self.wmult_count += 1
         return mult
@@ -524,6 +555,26 @@ def _expand(node: Node,
         qd, ad = _iqn_curves(node.state, goal)
         if qd is not None and len(ad) > 0:
             _SIG.dist_log.append(-qd.mean(dim=1).max().item())
+    # Signal diagnostic: log (exact_dist, cv, width, disagreement) per expanded node.
+    if _SIG.signal_diag and _SIG.iqn is not None and _SIG.diag_ens is not None and _SIG.dist_fn is not None:
+        d = _SIG.dist_fn(node.state)
+        if d is not None:
+            qd, ad = _iqn_curves(node.state, goal)
+            if qd is not None and len(ad) > 0:
+                means = qd.mean(dim=1); ai = int(means.argmax()); curve = qd[ai]
+                width = (curve[89] - curve[9]).item()
+                cv = width / (abs(means[ai].item()) + 1.0)
+                vs = []
+                ok = True
+                for q1, q2 in _SIG.diag_ens:
+                    e1, acts = q1.forward([(node.state, goal)])[0]
+                    if len(acts) == 0:
+                        ok = False; break
+                    e2, _ = q2.forward([(node.state, goal)])[0]
+                    vs.append(torch.minimum(e1, e2).max().item())
+                if ok and len(vs) > 1:
+                    import statistics as _st
+                    _SIG.sig_records.append((int(d), cv, width, _st.pstdev(vs)))
 
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
@@ -698,6 +749,10 @@ def _parse_arguments() -> argparse.Namespace:
                              "exploration. confidence in [0,1] from the QR-DQN width's coefficient "
                              "of variation vs the running-median. 0 = off (exact baseline). Try "
                              "0.3-0.8. Requires --iqn_model (point it at the calibrated QR-DQN).")
+    parser.add_argument("--width_norm", default="cv", choices=["cv", "banded"],
+                        help="Width confidence normalization. 'cv' = width/|value| vs median cv "
+                             "(original, over-divides). 'banded' = raw width vs median width of "
+                             "similar-value nodes (preserves the validated raw-width ranking).")
     parser.add_argument("--ens_beta", default=0.0, type=float,
                         help="OPTION 4 (ENSEMBLE-disagreement EXPLORATION channel, leaves prior "
                              "untouched). Like --width_beta but confidence comes from the "
@@ -842,8 +897,10 @@ def _main(args: argparse.Namespace) -> None:
             _SIG.iqn = iqn
             _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
         _SIG.width_beta = args.width_beta
-        print(f"[Width] OPTION3 width_beta={args.width_beta} signal=QR-DQN width "
-              f"(shrinks exploration at confident nodes; prior untouched)", flush=True)
+        _SIG.width_norm = args.width_norm
+        print(f"[Width] OPTION3 width_beta={args.width_beta} norm={args.width_norm} "
+              f"signal=QR-DQN width (shrinks exploration at confident nodes; prior untouched)",
+              flush=True)
 
     # OPTION 4: ensemble-disagreement exploration channel.
     if args.ens_beta > 0.0:

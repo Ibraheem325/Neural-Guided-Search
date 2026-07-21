@@ -58,17 +58,21 @@ print(f"\n{len(rec)} expanded nodes logged across {len(insts)} searches.")
 print("AUC = P(ensemble disagreement higher at HIGH-cv than LOW-cv node); binned by dist_est.")
 print("High => width cv tracks real uncertainty IN SEARCH. ~0.5 => does not transfer.\n")
 bands = [(0,20),(20,40),(40,80),(80,1e9)]
-print(f"{'dist band':>12}{'n':>7}{'AUC(cv->disagree)':>20}")
+print("AUC that the SIGNAL tracks disagreement IN SEARCH, for cv (r[0]) AND raw width (r[1]).")
+print("If raw width AUC survives but cv doesn't -> the 'banded' (raw-width) channel will help.\n")
+print(f"{'dist band':>12}{'n':>7}{'cv AUC':>9}{'width AUC':>11}")
 allc=[r[0] for r in rec]; alld=[r[2] for r in rec]
+def auc_by(g, sidx):
+    # split by SIGNAL sidx terciles, compare disagreement (r[2]) of high vs low signal
+    ss=sorted(r[sidx] for r in g); loq,hiq=ss[len(ss)//3],ss[2*len(ss)//3]
+    hi_d=[r[2] for r in g if r[sidx]>=hiq]; lo_d=[r[2] for r in g if r[sidx]<=loq]
+    return rank_auc(hi_d,lo_d) if len(hi_d)>5 and len(lo_d)>5 else None
 for lo,hi in bands:
     g=[r for r in rec if lo<=r[3]<hi]
     if len(g)<30: continue
-    cs=sorted(r[0] for r in g); loq,hiq=cs[len(cs)//3],cs[2*len(cs)//3]
-    hi_d=[r[2] for r in g if r[0]>=hiq]; lo_d=[r[2] for r in g if r[0]<=loq]
-    a=rank_auc(hi_d,lo_d) if len(hi_d)>5 and len(lo_d)>5 else None
+    ac=auc_by(g,0); aw=auc_by(g,1)
     lab = f"{lo}-{hi}" if hi<1e9 else f"{lo}+"
-    astr = f"{a:.3f}" if a is not None else "-"
-    print(f"{lab:>12}{len(g):>7}{astr:>20}")
+    print(f"{lab:>12}{len(g):>7}{(f'{ac:.3f}' if ac else '-'):>9}{(f'{aw:.3f}' if aw else '-'):>11}")
 # overall spearman cv vs disagreement
 import numpy as np
 cr=np.corrcoef(np.argsort(np.argsort(allc)), np.argsort(np.argsort(alld)))[0,1]
