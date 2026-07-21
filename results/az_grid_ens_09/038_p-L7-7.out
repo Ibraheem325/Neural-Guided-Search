@@ -1,18 +1,14 @@
 Torch: 2.12.0+cu130
 Using GPU:  NVIDIA L40S
 [Bellman] lambda=0 -> baseline (no widening signal)
+[Ens] OPTION4 ens_beta=0.9 members=5 signal=SAC-ensemble disagreement (shrinks exploration at agreeing nodes; prior untouched)
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
-  [sim 500] root visits=500, unique states=1463, generated=1462, iqn_calls=0
-  [sim 1000] root visits=1000, unique states=2871, generated=2870, iqn_calls=0
-  [sim 1500] root visits=1500, unique states=4303, generated=4302, iqn_calls=0
-  [sim 2000] root visits=2000, unique states=5717, generated=5716, iqn_calls=0
-  [sim 2500] root visits=2500, unique states=7144, generated=7143, iqn_calls=0
-  [sim 3000] root visits=3000, unique states=8607, generated=8606, iqn_calls=0
-  [sim 3500] root visits=3500, unique states=10043, generated=10042, iqn_calls=0
-  [sim 4000] root visits=4000, unique states=11430, generated=11429, iqn_calls=0
-[Final] Expanded: 12534, Generated: 12534
-[Cost] IQN forward calls (Bellman signal): 0
+  [sim 500] root visits=500, unique states=1465, generated=1464, iqn_calls=5000
+  [sim 1000] root visits=1000, unique states=2870, generated=2869, iqn_calls=10000
+[Final] Expanded: 2869, Generated: 2869
+[Cost] IQN forward calls (Bellman signal): 10000
 [Widen] nodes widened: 0, mean w: 0.0000
-[search done] simulations=4395, unique states generated=12534
+[Ens] nodes modulated: 969, mean explore_mult: 0.9623 (1.0 = no change; lower = more committed)
+[search done] simulations=1000, unique states generated=2869
 Failed to find a solution!

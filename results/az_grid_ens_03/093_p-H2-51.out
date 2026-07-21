@@ -1,13 +1,16 @@
 Torch: 2.12.0+cu130
 Using GPU:  NVIDIA L40S
 [Bellman] lambda=0 -> baseline (no widening signal)
+[Ens] OPTION4 ens_beta=0.3 members=5 signal=SAC-ensemble disagreement (shrinks exploration at agreeing nodes; prior untouched)
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
-  [sim 428] found goal path of length 137
-[Final] Expanded: 1319, Generated: 1319
-[Cost] IQN forward calls (Bellman signal): 0
+  [sim 500] root visits=500, unique states=1544, generated=1543, iqn_calls=5000
+  [sim 578] found goal path of length 137
+[Final] Expanded: 1783, Generated: 1783
+[Cost] IQN forward calls (Bellman signal): 5780
 [Widen] nodes widened: 0, mean w: 0.0000
-[search done] simulations=428, unique states generated=1319
+[Ens] nodes modulated: 547, mean explore_mult: 0.9855 (1.0 = no change; lower = more committed)
+[search done] simulations=578, unique states generated=1783
 Found a solution of length 137!
    1: (move f6-4f f7-4f)
    2: (pickup f7-4f key2-1)
@@ -39,8 +42,8 @@ Found a solution of length 137!
   28: (move f4-1f f4-2f)
   29: (move f4-2f f3-2f)
   30: (pickup f3-2f key1-2)
-  31: (move f3-2f f2-2f)
-  32: (move f2-2f f2-3f)
+  31: (move f3-2f f3-3f)
+  32: (move f3-3f f2-3f)
   33: (unlock f2-3f f2-4f key1-2 shape1)
   34: (pickup-and-loose f2-3f key1-1 key1-2)
   35: (move f2-3f f2-4f)
