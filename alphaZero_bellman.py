@@ -115,6 +115,43 @@ class _Signal:
         self.verr_hist: list[float] = []
         self.vdist_hist: list[float] = []   # forensic: est. distance-to-goal of scored states
         self.vw_sum = 0.0; self.vw_count = 0   # forensic: actual value-discount applied
+        # --- OPTION 3: width-confidence EXPLORATION channel (leaves the prior
+        #     untouched, unlike widening). The calibrated QR-DQN's distribution
+        #     WIDTH tracks epistemic uncertainty (offline AUC 0.60-0.95 vs ensemble
+        #     disagreement, all distances). Where the model is CONFIDENT (narrow
+        #     width) we shrink the pUCT exploration term c*P*sqrt(N)/(1+n) so search
+        #     COMMITS instead of fanning out over siblings -> fewer expansions;
+        #     where UNCERTAIN (wide) exploration is left at baseline -> coverage kept.
+        #     Distance-invariant: width grows with distance, so we use the
+        #     coefficient of variation cv = width/|value| normalized by the running
+        #     MEDIAN cv of this search ("is this node confident RELATIVE to a
+        #     typical node here?"). explore_mult in [1-beta, 1]; beta=0 == baseline.
+        self.width_beta = 0.0      # 0 = width channel off
+        self.cv_hist: list[float] = []
+        self.wmult_sum = 0.0; self.wmult_count = 0
+
+    def width_explore_mult(self, state, goal) -> float:
+        """Per-node multiplier in [1-width_beta, 1] on the exploration term.
+        <1 at CONFIDENT (narrow-width) nodes so search commits there. One IQN
+        forward pass per call (counted). 1.0 (no-op) while the channel warms up."""
+        if self.width_beta <= 0.0 or self.iqn is None:
+            return 1.0
+        qs, actions = _iqn_curves(state, goal)          # counts one IQN call
+        if qs is None or len(actions) == 0:
+            return 1.0
+        means = qs.mean(dim=1)
+        ai = int(means.argmax())
+        curve = qs[ai]                                   # sorted ascending, 99 quantiles
+        width = (curve[89] - curve[9]).item()            # q90 - q10 (taus 0.01..0.99)
+        cv = width / (abs(means[ai].item()) + 1.0)
+        self.cv_hist.append(cv)
+        if len(self.cv_hist) < self.warmup:
+            return 1.0
+        med = sorted(self.cv_hist)[len(self.cv_hist) // 2]
+        confidence = max(0.0, 1.0 - cv / max(med, 1e-6))  # 1 when cv<<median
+        mult = 1.0 - self.width_beta * confidence
+        self.wmult_sum += mult; self.wmult_count += 1
+        return mult
 
     def scale(self, err: float) -> float:
         """Denominator for w. Adaptive: running median of this search's errors."""
@@ -143,6 +180,10 @@ class _Signal:
     @property
     def value_active(self) -> bool:
         return self.value_lam > 0.0 and self.iqn is not None and self.q1 is not None
+
+    @property
+    def width_active(self) -> bool:
+        return self.width_beta > 0.0 and self.iqn is not None
 
 
 _SIG = _Signal()
@@ -339,7 +380,7 @@ class Node:
         "state", "state_key", "is_goal",
         "expanded", "is_dead_end",
         "children", "prior", "edge_N", "edge_W", "visit_count",
-        "value", "verr",
+        "value", "verr", "explore_mult",
     )
 
     def __init__(self, state: mm.State, state_key, is_goal: bool) -> None:
@@ -354,6 +395,7 @@ class Node:
         self.edge_W: Dict[mm.GroundAction, float] = {}
         self.value = -float("inf")
         self.verr: Dict[mm.GroundAction, float] = {}   # per-action value inconsistency
+        self.explore_mult = 1.0    # width channel: <1 shrinks this node's exploration
         self.visit_count = 0
 
     def q(self, action):
@@ -406,6 +448,9 @@ def _expand(node: Node,
     _widen_prior(node, goal)
     # Option 2: value-distrust (value channel; leaves the prior untouched).
     _compute_value_errs(node, goal)
+    # Option 3: width-confidence exploration modulation (leaves the prior untouched).
+    if _SIG.width_active and len(node.prior) > 1:
+        node.explore_mult = _SIG.width_explore_mult(node.state, goal)
 
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
@@ -426,7 +471,9 @@ def _select(node: Node,
         # Option 2: shrink the value of Bellman-inconsistent actions toward the
         # pessimistic floor. No-op (factor 1.0) when the value channel is off.
         q_norm *= _value_discount(node, action)
-        u = c_puct * node.prior[action] * sqrt_parent / (1 + n)
+        # Option 3: shrink exploration at confident (narrow-width) nodes. The prior
+        # P(action) is untouched; only the c*P*sqrt(N)/(1+n) term is scaled. 1.0 off.
+        u = c_puct * node.explore_mult * node.prior[action] * sqrt_parent / (1 + n)
         score = q_norm + u
         if score > best_score:
             best_score, best_action, best_child = score, action, child
@@ -570,6 +617,14 @@ def _parse_arguments() -> argparse.Namespace:
                              "error. 0 = off. Uses an adaptive (running-median) scale, so "
                              "value_lambda ~0.2-0.8 = discount at the median-error action. Requires "
                              "--iqn_model, --q1_model, --q2_model.")
+    parser.add_argument("--width_beta", default=0.0, type=float,
+                        help="OPTION 3 (width-confidence EXPLORATION channel, leaves prior "
+                             "untouched). At CONFIDENT (narrow-width) nodes, scale the pUCT "
+                             "exploration term by (1 - width_beta*confidence) so search commits "
+                             "and expands fewer siblings; UNCERTAIN nodes keep baseline "
+                             "exploration. confidence in [0,1] from the QR-DQN width's coefficient "
+                             "of variation vs the running-median. 0 = off (exact baseline). Try "
+                             "0.3-0.8. Requires --iqn_model (point it at the calibrated QR-DQN).")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
@@ -599,6 +654,10 @@ def _plan(problem: mm.Problem,
         print(f"[Cost] IQN forward calls (Bellman signal): {_SIG.iqn_calls}", flush=True)
         mean_w = (_SIG.w_sum / _SIG.w_count) if _SIG.w_count else 0.0
         print(f"[Widen] nodes widened: {_SIG.w_count}, mean w: {mean_w:.4f}", flush=True)
+        if _SIG.wmult_count:
+            print(f"[Width] nodes modulated: {_SIG.wmult_count}, mean explore_mult: "
+                  f"{_SIG.wmult_sum/_SIG.wmult_count:.4f} (1.0 = no change; lower = more committed)",
+                  flush=True)
         if _SIG.verr_hist:
             vh = sorted(_SIG.verr_hist)
             print(f"[Value] actions scored: {len(vh)}, median verr: "
@@ -685,6 +744,19 @@ def _main(args: argparse.Namespace) -> None:
         _SIG.err_scale = args.err_scale
         print(f"[Value] OPTION2 value_lambda={args.value_lambda} k={args.bellman_k} "
               f"endpoint=Qcritic w_max={args.w_max} (adaptive median scale)", flush=True)
+
+    # OPTION 3: width-confidence exploration channel. Point --iqn_model at the
+    # calibrated QR-DQN; its distribution width is the uncertainty signal.
+    if args.width_beta > 0.0:
+        assert args.iqn_model is not None, "--width_beta > 0 requires --iqn_model (the QR-DQN)"
+        if _SIG.iqn is None:
+            iqn, _, _ = _load_iqn_model(domain, args.iqn_model, device)
+            iqn.eval()
+            _SIG.iqn = iqn
+            _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
+        _SIG.width_beta = args.width_beta
+        print(f"[Width] OPTION3 width_beta={args.width_beta} signal=QR-DQN width "
+              f"(shrinks exploration at confident nodes; prior untouched)", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, args)
     if solution is None:

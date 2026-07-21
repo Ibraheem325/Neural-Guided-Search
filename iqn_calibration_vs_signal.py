@@ -101,8 +101,10 @@ BANDS = [(1, 10), (11, 22)]
 print("\nDoes better calibration improve the DISTRIBUTIONAL signal?")
 print("AUC = P(signal higher where the model is actually MORE wrong). 0.5 = no signal.\n")
 print(f"{'model':<26}{'signal':<9}{'d 1-10':>9}{'d 11-22':>10}{'mean |err|':>12}")
-for name, path in (("grid_iqn (clamped)", "models/grid_iqn.pth"),
-                   ("grid_iqn_nobounds", "models/grid_iqn_nobounds_best.pth")):
+for name, path in (("grid_iqn (old, saturated)", "models/grid_iqn.pth"),
+                   ("fix_noctx (FiLM)", "models/grid_iqn_fix_noctx_best.pth"),
+                   ("fix_full (FiLM+ctx)", "models/grid_iqn_fix_full_best.pth"),
+                   ("qrdqn (+ctx) WINNER", "models/grid_iqn_qrdqn_best.pth")):
     m, _, _ = _load_iqn(domain, Path(path), dev); m.eval()
     rows = collect(m, taus, domain, files, a)
     me = statistics.mean(r[1] for r in rows)

@@ -57,6 +57,9 @@ ADAPTIVE_FLAG=""
 [ "$ADAPTIVE" = "adaptive" ] && ADAPTIVE_FLAG="--adaptive_scale"
 # arg 15: OPTION 2 value-distrust strength (leaves prior untouched). 0 = off.
 VALUE_LAMBDA=${15:-0.0}
+# arg 16: OPTION 3 width-confidence exploration strength (leaves prior untouched). 0 = off.
+# Point $IQN at the calibrated QR-DQN. width_beta=0 == exact baseline.
+WIDTH_BETA=${16:-0.0}
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -64,5 +67,5 @@ venv/bin/python alphaZero_bellman.py \
     --iqn_model "$IQN" \
     --bellman_lambda "$LAMBDA" --bellman_k "$K" --signal "$SIGNAL" \
     --const_w "$CONST_W" --w_max "$W_MAX" $ADAPTIVE_FLAG \
-    --value_lambda "$VALUE_LAMBDA" \
+    --value_lambda "$VALUE_LAMBDA" --width_beta "$WIDTH_BETA" \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1
