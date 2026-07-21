@@ -129,6 +129,56 @@ class _Signal:
         self.width_beta = 0.0      # 0 = width channel off
         self.cv_hist: list[float] = []
         self.wmult_sum = 0.0; self.wmult_count = 0
+        # --- diagnostic: does the width signal fire where the model is UNCERTAIN,
+        #     measured on the states SEARCH ACTUALLY VISITS (not sampled states)?
+        #     If diag_ens (list of (q1,q2) SAC members) is set, record per expanded
+        #     node (cv, ensemble_disagreement, dist_estimate) so we can check whether
+        #     low-cv (=confident) nodes really are low-disagreement nodes IN SEARCH. ---
+        self.diag_ens = None
+        self.diag_records: list[tuple] = []
+        # --- diagnostic: log the distance (=-QRDQN value) of EVERY expanded node,
+        #     for baseline AND width runs, to see WHERE (near/far goal) the width
+        #     channel removes expansions. Needs iqn set even in baseline. ---
+        self.log_dist = False
+        self.dist_log: list[float] = []
+        # --- OPTION 4: ENSEMBLE-disagreement exploration channel (leaves the prior
+        #     untouched). Same modulation as OPTION 3 but the confidence comes from
+        #     the DISAGREEMENT of N independently-trained SAC critics instead of the
+        #     single-model width. Motivation: ensemble disagreement KEEPS its dynamic
+        #     range far from the goal (CV 0.44) where the width collapses (CV 0.21) --
+        #     independent models diverge OOD, which is what epistemic uncertainty is.
+        #     Cost: 2*N forward passes per node. ens_members = list of (q1,q2). ---
+        self.ens_beta = 0.0
+        self.ens_members = None
+        self.ens_cv_hist: list[float] = []
+        self.ens_sum = 0.0; self.ens_count = 0
+
+    def ensemble_explore_mult(self, state, goal) -> float:
+        """Per-node exploration multiplier in [1-ens_beta, 1] from ensemble disagreement.
+        <1 at LOW-disagreement (confident) nodes so search commits there. 2*N forwards."""
+        if self.ens_beta <= 0.0 or self.ens_members is None:
+            return 1.0
+        vs = []
+        for q1, q2 in self.ens_members:
+            v1, acts = q1.forward([(state, goal)])[0]
+            if len(acts) == 0:
+                return 1.0
+            v2, _ = q2.forward([(state, goal)])[0]
+            vs.append(torch.minimum(v1, v2).max().item())
+        self.iqn_calls += 2 * len(self.ens_members)
+        import statistics as _st
+        disagree = _st.pstdev(vs)
+        # normalize like the width channel: disagreement relative to |value|, then to
+        # the running median (distance-invariant -- both grow with distance).
+        cv = disagree / (abs(_st.mean(vs)) + 1.0)
+        self.ens_cv_hist.append(cv)
+        if len(self.ens_cv_hist) < self.warmup:
+            return 1.0
+        med = sorted(self.ens_cv_hist)[len(self.ens_cv_hist) // 2]
+        confidence = max(0.0, 1.0 - cv / max(med, 1e-6))
+        mult = 1.0 - self.ens_beta * confidence
+        self.ens_sum += mult; self.ens_count += 1
+        return mult
 
     def width_explore_mult(self, state, goal) -> float:
         """Per-node multiplier in [1-width_beta, 1] on the exploration term.
@@ -144,6 +194,17 @@ class _Signal:
         curve = qs[ai]                                   # sorted ascending, 99 quantiles
         width = (curve[89] - curve[9]).item()            # q90 - q10 (taus 0.01..0.99)
         cv = width / (abs(means[ai].item()) + 1.0)
+        if self.diag_ens is not None:
+            vs = []
+            for q1, q2 in self.diag_ens:
+                e1, acts = q1.forward([(state, goal)])[0]
+                if len(acts) == 0:
+                    break
+                e2, _ = q2.forward([(state, goal)])[0]
+                vs.append(torch.minimum(e1, e2).max().item())
+            if len(vs) == len(self.diag_ens) and len(vs) > 1:
+                import statistics as _st
+                self.diag_records.append((cv, width, _st.pstdev(vs), -means[ai].item()))
         self.cv_hist.append(cv)
         if len(self.cv_hist) < self.warmup:
             return 1.0
@@ -184,6 +245,10 @@ class _Signal:
     @property
     def width_active(self) -> bool:
         return self.width_beta > 0.0 and self.iqn is not None
+
+    @property
+    def ens_active(self) -> bool:
+        return self.ens_beta > 0.0 and self.ens_members is not None
 
 
 _SIG = _Signal()
@@ -451,6 +516,14 @@ def _expand(node: Node,
     # Option 3: width-confidence exploration modulation (leaves the prior untouched).
     if _SIG.width_active and len(node.prior) > 1:
         node.explore_mult = _SIG.width_explore_mult(node.state, goal)
+    # Option 4: ensemble-disagreement exploration modulation (leaves the prior untouched).
+    elif _SIG.ens_active and len(node.prior) > 1:
+        node.explore_mult = _SIG.ensemble_explore_mult(node.state, goal)
+    # Diagnostic: record distance (=-QRDQN value) of every expanded node.
+    if _SIG.log_dist and _SIG.iqn is not None:
+        qd, ad = _iqn_curves(node.state, goal)
+        if qd is not None and len(ad) > 0:
+            _SIG.dist_log.append(-qd.mean(dim=1).max().item())
 
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
@@ -625,6 +698,16 @@ def _parse_arguments() -> argparse.Namespace:
                              "exploration. confidence in [0,1] from the QR-DQN width's coefficient "
                              "of variation vs the running-median. 0 = off (exact baseline). Try "
                              "0.3-0.8. Requires --iqn_model (point it at the calibrated QR-DQN).")
+    parser.add_argument("--ens_beta", default=0.0, type=float,
+                        help="OPTION 4 (ENSEMBLE-disagreement EXPLORATION channel, leaves prior "
+                             "untouched). Like --width_beta but confidence comes from the "
+                             "disagreement of N independently-trained SAC critics (survives far "
+                             "from goal where width collapses). 0 = off. Try 0.3-0.9. Requires "
+                             "--ens_prefix + --ens_n.")
+    parser.add_argument("--ens_prefix", default=None, type=str,
+                        help="Prefix for ensemble members; member i loads {prefix}{i}_q1_best.pth "
+                             "and {prefix}{i}_q2_best.pth. E.g. models/grid_sac_ens_")
+    parser.add_argument("--ens_n", default=5, type=int, help="Number of ensemble members.")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
@@ -657,6 +740,10 @@ def _plan(problem: mm.Problem,
         if _SIG.wmult_count:
             print(f"[Width] nodes modulated: {_SIG.wmult_count}, mean explore_mult: "
                   f"{_SIG.wmult_sum/_SIG.wmult_count:.4f} (1.0 = no change; lower = more committed)",
+                  flush=True)
+        if _SIG.ens_count:
+            print(f"[Ens] nodes modulated: {_SIG.ens_count}, mean explore_mult: "
+                  f"{_SIG.ens_sum/_SIG.ens_count:.4f} (1.0 = no change; lower = more committed)",
                   flush=True)
         if _SIG.verr_hist:
             vh = sorted(_SIG.verr_hist)
@@ -757,6 +844,20 @@ def _main(args: argparse.Namespace) -> None:
         _SIG.width_beta = args.width_beta
         print(f"[Width] OPTION3 width_beta={args.width_beta} signal=QR-DQN width "
               f"(shrinks exploration at confident nodes; prior untouched)", flush=True)
+
+    # OPTION 4: ensemble-disagreement exploration channel.
+    if args.ens_beta > 0.0:
+        assert args.ens_prefix is not None, "--ens_beta > 0 requires --ens_prefix"
+        members = []
+        for i in range(1, args.ens_n + 1):
+            m1, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, Path(f"{args.ens_prefix}{i}_q1_best.pth"), device)
+            m2, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, Path(f"{args.ens_prefix}{i}_q2_best.pth"), device)
+            members.append((ModelWrapper(m1, "q"), ModelWrapper(m2, "q")))
+        _SIG.ens_members = members
+        _SIG.ens_beta = args.ens_beta
+        print(f"[Ens] OPTION4 ens_beta={args.ens_beta} members={len(members)} "
+              f"signal=SAC-ensemble disagreement (shrinks exploration at agreeing nodes; "
+              f"prior untouched)", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, args)
     if solution is None:

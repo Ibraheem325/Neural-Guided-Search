@@ -60,6 +60,13 @@ VALUE_LAMBDA=${15:-0.0}
 # arg 16: OPTION 3 width-confidence exploration strength (leaves prior untouched). 0 = off.
 # Point $IQN at the calibrated QR-DQN. width_beta=0 == exact baseline.
 WIDTH_BETA=${16:-0.0}
+# args 17-19: OPTION 4 ENSEMBLE-disagreement exploration strength + member prefix + count.
+# ens_beta=0 == off. Prefix loads {prefix}{i}_q1_best.pth / {prefix}{i}_q2_best.pth.
+ENS_BETA=${17:-0.0}
+ENS_PREFIX=${18:-}
+ENS_N=${19:-5}
+ENS_ARGS=""
+[ -n "$ENS_PREFIX" ] && ENS_ARGS="--ens_prefix $ENS_PREFIX --ens_n $ENS_N"
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -68,4 +75,5 @@ venv/bin/python alphaZero_bellman.py \
     --bellman_lambda "$LAMBDA" --bellman_k "$K" --signal "$SIGNAL" \
     --const_w "$CONST_W" --w_max "$W_MAX" $ADAPTIVE_FLAG \
     --value_lambda "$VALUE_LAMBDA" --width_beta "$WIDTH_BETA" \
+    --ens_beta "$ENS_BETA" $ENS_ARGS \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1
