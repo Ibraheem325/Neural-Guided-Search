@@ -1,0 +1,15 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] OPTION2 value_lambda=0.6 k=4 endpoint=Qcritic w_max=0.95 (adaptive median scale)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+[Final] Expanded: 1268, Generated: 1268
+[Cost] IQN forward calls (Bellman signal): 10233
+[Widen] nodes widened: 0, mean w: 0.0000
+[Value] actions scored: 2036, median verr: 27.2820
+[Forensic] value discount actually applied: mean w = 0.5977 over 120883 selection evals
+[Forensic] est. distance-to-goal of states the signal scored: p10 80  median 90  p90 93  max 95
+[Forensic] fraction INSIDE the validated regime (d<=17): 0.0%  (0/2036)
+[search done] simulations=425, unique states generated=1268
+Failed to find a solution!
