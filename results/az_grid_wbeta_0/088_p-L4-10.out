@@ -5,15 +5,14 @@ Using GPU:  NVIDIA L40S
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
   [sim 500] root visits=500, unique states=1495, generated=1494, iqn_calls=0
   [sim 1000] root visits=1000, unique states=2898, generated=2897, iqn_calls=0
-  [sim 1500] root visits=1500, unique states=3704, generated=3703, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=3702, generated=3701, iqn_calls=0
   [sim 2000] root visits=2000, unique states=4765, generated=4764, iqn_calls=0
-  [sim 2500] root visits=2500, unique states=5782, generated=5781, iqn_calls=0
-  [sim 3000] root visits=3000, unique states=6902, generated=6901, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=5781, generated=5780, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=6903, generated=6902, iqn_calls=0
   [sim 3500] root visits=3500, unique states=7961, generated=7960, iqn_calls=0
-  [sim 4000] root visits=4000, unique states=8908, generated=8907, iqn_calls=0
-  [sim 4500] root visits=4500, unique states=9873, generated=9872, iqn_calls=0
-[Final] Expanded: 9917, Generated: 9917
+  [sim 4000] root visits=4000, unique states=8909, generated=8908, iqn_calls=0
+[Final] Expanded: 9825, Generated: 9825
 [Cost] IQN forward calls (Bellman signal): 0
 [Widen] nodes widened: 0, mean w: 0.0000
-[search done] simulations=4528, unique states generated=9917
+[search done] simulations=4478, unique states generated=9825
 Failed to find a solution!

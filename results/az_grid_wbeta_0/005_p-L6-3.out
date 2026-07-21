@@ -7,12 +7,12 @@ Using GPU:  NVIDIA L40S
   [sim 1000] root visits=1000, unique states=2858, generated=2857, iqn_calls=0
   [sim 1500] root visits=1500, unique states=4168, generated=4167, iqn_calls=0
   [sim 2000] root visits=2000, unique states=5485, generated=5484, iqn_calls=0
-  [sim 2500] root visits=2500, unique states=6872, generated=6871, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=6871, generated=6870, iqn_calls=0
   [sim 3000] root visits=3000, unique states=8248, generated=8247, iqn_calls=0
-  [sim 3500] root visits=3500, unique states=9621, generated=9620, iqn_calls=0
-  [sim 4000] root visits=4000, unique states=10959, generated=10958, iqn_calls=0
-[Final] Expanded: 10959, Generated: 10959
+  [sim 3500] root visits=3500, unique states=9620, generated=9619, iqn_calls=0
+  [sim 4000] root visits=4000, unique states=10960, generated=10959, iqn_calls=0
+[Final] Expanded: 11050, Generated: 11050
 [Cost] IQN forward calls (Bellman signal): 0
 [Widen] nodes widened: 0, mean w: 0.0000
-[search done] simulations=4001, unique states generated=10959
+[search done] simulations=4031, unique states generated=11050
 Failed to find a solution!

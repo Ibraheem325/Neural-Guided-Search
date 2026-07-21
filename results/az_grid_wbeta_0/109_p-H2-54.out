@@ -6,10 +6,10 @@ Using GPU:  NVIDIA L40S
   [sim 500] root visits=500, unique states=1484, generated=1483, iqn_calls=0
   [sim 1000] root visits=1000, unique states=2865, generated=2864, iqn_calls=0
   [sim 1391] found goal path of length 276
-[Final] Expanded: 3875, Generated: 3875
+[Final] Expanded: 3873, Generated: 3873
 [Cost] IQN forward calls (Bellman signal): 0
 [Widen] nodes widened: 0, mean w: 0.0000
-[search done] simulations=1391, unique states generated=3875
+[search done] simulations=1391, unique states generated=3873
 Found a solution of length 276!
    1: (move f4-6f f4-5f)
    2: (move f4-5f f5-5f)

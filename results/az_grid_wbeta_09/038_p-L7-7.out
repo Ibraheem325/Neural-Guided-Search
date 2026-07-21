@@ -1,18 +1,18 @@
 Torch: 2.12.0+cu130
 Using GPU:  NVIDIA L40S
 [Bellman] lambda=0 -> baseline (no widening signal)
+[Width] OPTION3 width_beta=0.9 signal=QR-DQN width (shrinks exploration at confident nodes; prior untouched)
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
-  [sim 500] root visits=500, unique states=1462, generated=1461, iqn_calls=0
-  [sim 1000] root visits=1000, unique states=2873, generated=2872, iqn_calls=0
-  [sim 1500] root visits=1500, unique states=4303, generated=4302, iqn_calls=0
-  [sim 2000] root visits=2000, unique states=5722, generated=5721, iqn_calls=0
-  [sim 2500] root visits=2500, unique states=7155, generated=7154, iqn_calls=0
-  [sim 3000] root visits=3000, unique states=8622, generated=8621, iqn_calls=0
-  [sim 3500] root visits=3500, unique states=10055, generated=10054, iqn_calls=0
-  [sim 4000] root visits=4000, unique states=11465, generated=11464, iqn_calls=0
-[Final] Expanded: 12713, Generated: 12713
-[Cost] IQN forward calls (Bellman signal): 0
+  [sim 500] root visits=500, unique states=1462, generated=1461, iqn_calls=500
+  [sim 1000] root visits=1000, unique states=2886, generated=2885, iqn_calls=1000
+  [sim 1500] root visits=1500, unique states=4311, generated=4310, iqn_calls=1500
+  [sim 2000] root visits=2000, unique states=5730, generated=5729, iqn_calls=2000
+  [sim 2500] root visits=2500, unique states=7145, generated=7144, iqn_calls=2500
+  [sim 3000] root visits=3000, unique states=8600, generated=8599, iqn_calls=3000
+[Final] Expanded: 9624, Generated: 9624
+[Cost] IQN forward calls (Bellman signal): 3368
 [Widen] nodes widened: 0, mean w: 0.0000
-[search done] simulations=4448, unique states generated=12713
+[Width] nodes modulated: 3337, mean explore_mult: 0.9921 (1.0 = no change; lower = more committed)
+[search done] simulations=3368, unique states generated=9624
 Failed to find a solution!
