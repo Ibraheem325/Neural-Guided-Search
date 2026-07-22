@@ -1,0 +1,17 @@
+usage: alphaZero_bellman.py [-h] --domain DOMAIN --problem PROBLEM
+                            --policy_model POLICY_MODEL --q1_model Q1_MODEL
+                            [--q2_model Q2_MODEL] [--iqn_model IQN_MODEL]
+                            [--bellman_lambda BELLMAN_LAMBDA]
+                            [--bellman_k BELLMAN_K] [--err_scale ERR_SCALE]
+                            [--adaptive_scale] [--w_max W_MAX]
+                            [--signal {bellman,outcome,constant}]
+                            [--const_w CONST_W] [--value_lambda VALUE_LAMBDA]
+                            [--width_beta WIDTH_BETA]
+                            [--width_norm {cv,banded}] [--ens_beta ENS_BETA]
+                            [--ens_prefix ENS_PREFIX] [--ens_n ENS_N]
+                            [--sib_beta SIB_BETA]
+                            [--max_simulations MAX_SIMULATIONS]
+                            [--max_time MAX_TIME] [--c_puct C_PUCT]
+                            [--dead_end_value DEAD_END_VALUE]
+                            [--keep_searching]
+alphaZero_bellman.py: error: argument --bellman_k: invalid int value: '0.0'
