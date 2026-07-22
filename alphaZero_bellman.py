@@ -169,6 +169,20 @@ class _Signal:
         self.ens_members = None
         self.ens_cv_hist: list[float] = []
         self.ens_sum = 0.0; self.ens_count = 0
+        # --- OPTION 5: SIBLING raw-width exploration channel (leaves the prior
+        #     untouched). RAW width tracks uncertainty strongly (AUC 0.82-1.00) but only
+        #     AMONG SAME-DISTANCE states; any cross-distance normalization (cv) corrupts it
+        #     because width and value co-vary. A node's CHILDREN are all one step away =
+        #     same distance, so we compare their RAW widths directly (no normalization,
+        #     nothing to cancel, compression-proof) and BOOST exploration toward the wider
+        #     (more-uncertain) children. mult(a) = 1 + sib_beta*(width(a)/mean_sib_width - 1).
+        #     sib_beta=0 == baseline. One QR-DQN forward per node (Z(s,a) for all actions). ---
+        self.sib_beta = 0.0
+        self.sib_sum = 0.0; self.sib_count = 0
+
+    @property
+    def sib_active(self) -> bool:
+        return self.sib_beta > 0.0 and self.iqn is not None
 
     def ensemble_explore_mult(self, state, goal) -> float:
         """Per-node exploration multiplier in [1-ens_beta, 1] from ensemble disagreement.
@@ -424,6 +438,35 @@ def _value_discount(node: "Node", action) -> float:
     return 1.0 - w
 
 
+def _compute_sib_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
+    """Per-child exploration multiplier from RAW width, compared AMONG SIBLINGS (same
+    distance). Wider child => more uncertain => boost its exploration. No cross-distance
+    normalization (that corrupts the signal); the children are all one step away so their
+    raw widths are directly comparable. One QR-DQN forward for the whole node."""
+    if not _SIG.sib_active or len(node.prior) <= 1:
+        return
+    qs, actions = _iqn_curves(node.state, goal)          # Z(s,a) for all actions, one pass
+    if qs is None:
+        return
+    amap = {_canon(str(a)): i for i, a in enumerate(actions)}
+    widths = {}
+    for a in node.children:
+        ai = amap.get(_canon(str(a)))
+        if ai is None:
+            continue
+        widths[a] = (qs[ai][89] - qs[ai][9]).item()       # q90 - q10 raw width
+    if len(widths) < 2:
+        return
+    mean_w = sum(widths.values()) / len(widths)
+    if mean_w <= 1e-9:
+        return
+    for a, w in widths.items():
+        rel = w / mean_w                                  # >1 = wider than siblings
+        mult = max(0.1, 1.0 + _SIG.sib_beta * (rel - 1.0))
+        node.sib_mult[a] = mult
+        _SIG.sib_sum += mult; _SIG.sib_count += 1
+
+
 def _widen_prior(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
     """Flatten node.prior toward uniform in proportion to the Bellman
     inconsistency of the node's top action. No-op if the signal is off."""
@@ -476,7 +519,7 @@ class Node:
         "state", "state_key", "is_goal",
         "expanded", "is_dead_end",
         "children", "prior", "edge_N", "edge_W", "visit_count",
-        "value", "verr", "explore_mult",
+        "value", "verr", "explore_mult", "sib_mult",
     )
 
     def __init__(self, state: mm.State, state_key, is_goal: bool) -> None:
@@ -492,6 +535,7 @@ class Node:
         self.value = -float("inf")
         self.verr: Dict[mm.GroundAction, float] = {}   # per-action value inconsistency
         self.explore_mult = 1.0    # width channel: <1 shrinks this node's exploration
+        self.sib_mult: Dict[mm.GroundAction, float] = {}   # per-child sibling-width mult
         self.visit_count = 0
 
     def q(self, action):
@@ -550,6 +594,9 @@ def _expand(node: Node,
     # Option 4: ensemble-disagreement exploration modulation (leaves the prior untouched).
     elif _SIG.ens_active and len(node.prior) > 1:
         node.explore_mult = _SIG.ensemble_explore_mult(node.state, goal)
+    # Option 5: sibling raw-width exploration modulation (per-child; leaves prior untouched).
+    if _SIG.sib_active and len(node.prior) > 1:
+        _compute_sib_mult(node, goal)
     # Diagnostic: record distance (=-QRDQN value) of every expanded node.
     if _SIG.log_dist and _SIG.iqn is not None:
         qd, ad = _iqn_curves(node.state, goal)
@@ -597,7 +644,9 @@ def _select(node: Node,
         q_norm *= _value_discount(node, action)
         # Option 3: shrink exploration at confident (narrow-width) nodes. The prior
         # P(action) is untouched; only the c*P*sqrt(N)/(1+n) term is scaled. 1.0 off.
-        u = c_puct * node.explore_mult * node.prior[action] * sqrt_parent / (1 + n)
+        # Option 5: sib_mult boosts exploration toward wider (uncertain) sibling children.
+        u = c_puct * node.explore_mult * node.sib_mult.get(action, 1.0) \
+            * node.prior[action] * sqrt_parent / (1 + n)
         score = q_norm + u
         if score > best_score:
             best_score, best_action, best_child = score, action, child
@@ -763,6 +812,13 @@ def _parse_arguments() -> argparse.Namespace:
                         help="Prefix for ensemble members; member i loads {prefix}{i}_q1_best.pth "
                              "and {prefix}{i}_q2_best.pth. E.g. models/grid_sac_ens_")
     parser.add_argument("--ens_n", default=5, type=int, help="Number of ensemble members.")
+    parser.add_argument("--sib_beta", default=0.0, type=float,
+                        help="OPTION 5 (SIBLING raw-width EXPLORATION channel, leaves prior "
+                             "untouched). Boost exploration toward a node's wider (more-uncertain) "
+                             "children: exploration term *= max(0.1, 1 + sib_beta*(width(a)/"
+                             "mean_sibling_width - 1)). Raw width compared among same-distance "
+                             "siblings, no value normalization. 0 = off. Try 0.5-2.0. Requires "
+                             "--iqn_model (the QR-DQN).")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
@@ -799,6 +855,10 @@ def _plan(problem: mm.Problem,
         if _SIG.ens_count:
             print(f"[Ens] nodes modulated: {_SIG.ens_count}, mean explore_mult: "
                   f"{_SIG.ens_sum/_SIG.ens_count:.4f} (1.0 = no change; lower = more committed)",
+                  flush=True)
+        if _SIG.sib_count:
+            print(f"[Sib] child-edges modulated: {_SIG.sib_count}, mean mult: "
+                  f"{_SIG.sib_sum/_SIG.sib_count:.4f} (1.0 = no change; >1 = boosted toward wide)",
                   flush=True)
         if _SIG.verr_hist:
             vh = sorted(_SIG.verr_hist)
@@ -915,6 +975,18 @@ def _main(args: argparse.Namespace) -> None:
         print(f"[Ens] OPTION4 ens_beta={args.ens_beta} members={len(members)} "
               f"signal=SAC-ensemble disagreement (shrinks exploration at agreeing nodes; "
               f"prior untouched)", flush=True)
+
+    # OPTION 5: sibling raw-width exploration channel. Point --iqn_model at the QR-DQN.
+    if args.sib_beta > 0.0:
+        assert args.iqn_model is not None, "--sib_beta > 0 requires --iqn_model (the QR-DQN)"
+        if _SIG.iqn is None:
+            iqn, _, _ = _load_iqn_model(domain, args.iqn_model, device)
+            iqn.eval()
+            _SIG.iqn = iqn
+            _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
+        _SIG.sib_beta = args.sib_beta
+        print(f"[Sib] OPTION5 sib_beta={args.sib_beta} signal=QR-DQN raw width vs SIBLINGS "
+              f"(boosts exploration toward wider/uncertain children; prior untouched)", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, args)
     if solution is None:

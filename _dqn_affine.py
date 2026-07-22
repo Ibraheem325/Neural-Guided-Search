@@ -17,7 +17,7 @@ print(f"{'instance':<15} {'N':>3} | {'DQN R^2':>8} {'w':>6} {'med|err|':>9} | {'
 print("-"*76)
 RD=[];RS=[];ED=[];ES=[]
 for f in sorted(glob.glob("results/az_grid_v1val0_1800/*.out")):
-    if len(RD)>=10: break
+    if len(RD)>=25: break
     t=open(f).read()
     if "Found a solution of length" not in t: continue
     name=f.split("/")[-1][:-4]
