@@ -100,6 +100,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument('--num_rollouts', default=4, type=int, help='Number of trajectories to compute in parallel')
     parser.add_argument('--train_steps', default=32, type=int, help='Number of training steps per iteration')
     parser.add_argument('--seed', default=42, type=int, help='Random seed for reproducibility')
+    parser.add_argument('--warm_start', default=None, type=Path, help='Path to a pre-trained (e.g. supervised value) model. Its relational message-passing body (all parameters with matching name+shape) is copied into the policy and both critics; the action-specific MLPs and readout heads are left randomly initialised. Injects the domain distance structure the supervised model learned so early rollouts are less random.')
     parser.add_argument('--cpu', action='store_true', help='Force CPU to be used')
     parser.add_argument('--output_prefix', default='', type=str, help='Prefix for output model files (e.g., "grid_sac_1_")')
     args = parser.parse_args()
@@ -157,6 +158,26 @@ def _create_trajectory_refiner(hindsight: str, train_problems: list[mm.Problem],
     if hindsight == 'state_fluent':
         return rl.PartialStateHindsightTrajectoryRefiner(max_new_trajectories)
     raise RuntimeError(f'Unknown hindsight mode: {hindsight}.')
+
+
+def _warm_start_from_model(targets: list[rgnn.RelationalGraphNeuralNetwork],
+                           domain: mm.Domain,
+                           source_path: Path,
+                           device: torch.device) -> None:
+    # Copy every parameter that exists in the source model with a matching name and shape
+    # into each target model (policy, q1, q2). This transfers the shared relational
+    # message-passing body (object embeddings + per-predicate relation MLPs). The
+    # action-specific MLPs and the readout head are absent from a (State, Goal) value
+    # model, so they stay as freshly initialised in the targets (strict=False).
+    source_model, _ = rgnn.RelationalGraphNeuralNetwork.load(domain, source_path, device)
+    source_state = source_model.state_dict()
+    for target_model in targets:
+        target_state = target_model.state_dict()
+        transfer = {k: v for k, v in source_state.items()
+                    if k in target_state and target_state[k].shape == v.shape}
+        target_model.load_state_dict(transfer, strict=False)
+        print(f'Warm-start: transferred {len(transfer)}/{len(target_state)} parameters '
+              f'from {source_path}.', flush=True)
 
 
 def _save_checkpoints(policy_model: rgnn.RelationalGraphNeuralNetwork,
@@ -280,6 +301,9 @@ def _main(args: argparse.Namespace) -> None:
     policy_model = _create_rgnn(domain, args.embedding_size, args.layers, args.aggregation, 'policy')
     q1_model = _create_rgnn(domain, args.embedding_size, args.layers, args.aggregation, 'q')
     q2_model = _create_rgnn(domain, args.embedding_size, args.layers, args.aggregation, 'q')
+    if args.warm_start is not None:
+        print(f'Warm-starting from {args.warm_start}...', flush=True)
+        _warm_start_from_model([policy_model, q1_model, q2_model], domain, args.warm_start, device)
     policy_optimizer = optim.Adam(policy_model.parameters(), lr=args.lr_initial)
     q1_optimizer = optim.Adam(q1_model.parameters(), lr=args.lr_initial)
     q2_optimizer = optim.Adam(q2_model.parameters(), lr=args.lr_initial)
