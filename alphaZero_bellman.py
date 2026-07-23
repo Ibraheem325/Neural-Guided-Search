@@ -179,6 +179,16 @@ class _Signal:
         #     sib_beta=0 == baseline. One QR-DQN forward per node (Z(s,a) for all actions). ---
         self.sib_beta = 0.0
         self.sib_sum = 0.0; self.sib_count = 0
+        # CONTROL: shuffle widths among siblings (same multiplier multiset, width-BLIND
+        # placement). If savings persist under shuffle, the effect is generic exploration
+        # redistribution, NOT the width signal. Deterministic per node (seeded by state key).
+        self.sib_shuffle = False
+        # ROOM GATE: only apply the sibling channel once the search has expanded >= sib_gate
+        # unique states (len(tt)). Low-room probes solve before the gate opens (baseline
+        # behaviour, no over-widening); high-room probes get the channel once they show
+        # struggle. 0 = no gate (channel active from the start). n_expanded = live tt size.
+        self.sib_gate = 0
+        self.n_expanded = 0
 
     @property
     def sib_active(self) -> bool:
@@ -445,6 +455,8 @@ def _compute_sib_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None
     raw widths are directly comparable. One QR-DQN forward for the whole node."""
     if not _SIG.sib_active or len(node.prior) <= 1:
         return
+    if _SIG.sib_gate > 0 and _SIG.n_expanded < _SIG.sib_gate:
+        return                                            # room gate not open yet -> baseline
     qs, actions = _iqn_curves(node.state, goal)          # Z(s,a) for all actions, one pass
     if qs is None:
         return
@@ -457,6 +469,15 @@ def _compute_sib_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None
         widths[a] = (qs[ai][89] - qs[ai][9]).item()       # q90 - q10 raw width
     if len(widths) < 2:
         return
+    if _SIG.sib_shuffle:
+        # width-BLIND control: permute the SAME widths onto different children.
+        # Seeded by state key so it is deterministic and independent of visit order.
+        import random as _random
+        rng = _random.Random(hash(node.state_key) & 0x7fffffff)
+        keys = list(widths.keys())
+        vals = list(widths.values())
+        rng.shuffle(vals)
+        widths = {k: v for k, v in zip(keys, vals)}
     mean_w = sum(widths.values()) / len(widths)
     if mean_w <= 1e-9:
         return
@@ -596,6 +617,7 @@ def _expand(node: Node,
         node.explore_mult = _SIG.ensemble_explore_mult(node.state, goal)
     # Option 5: sibling raw-width exploration modulation (per-child; leaves prior untouched).
     if _SIG.sib_active and len(node.prior) > 1:
+        _SIG.n_expanded = len(tt)          # room proxy for the gate
         _compute_sib_mult(node, goal)
     # Diagnostic: record distance (=-QRDQN value) of every expanded node.
     if _SIG.log_dist and _SIG.iqn is not None:
@@ -819,6 +841,16 @@ def _parse_arguments() -> argparse.Namespace:
                              "mean_sibling_width - 1)). Raw width compared among same-distance "
                              "siblings, no value normalization. 0 = off. Try 0.5-2.0. Requires "
                              "--iqn_model (the QR-DQN).")
+    parser.add_argument("--sib_gate", default=0, type=int,
+                        help="ROOM GATE for OPTION 5: activate the sibling channel only after "
+                             "the search has expanded >= this many unique states (len(tt)). "
+                             "Low-room probes solve before the gate opens (baseline, no "
+                             "over-widening); high-room probes get the channel once they show "
+                             "struggle. 0 = no gate. Try ~80-150.")
+    parser.add_argument("--sib_shuffle", action="store_true",
+                        help="CONTROL for OPTION 5: shuffle widths among siblings (same "
+                             "multiplier multiset, width-BLIND placement). If savings survive, "
+                             "the effect is generic exploration redistribution, not the signal.")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
@@ -985,8 +1017,12 @@ def _main(args: argparse.Namespace) -> None:
             _SIG.iqn = iqn
             _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
         _SIG.sib_beta = args.sib_beta
+        _SIG.sib_shuffle = args.sib_shuffle
+        _SIG.sib_gate = args.sib_gate
+        tag = " [SHUFFLE CONTROL: width-blind placement]" if args.sib_shuffle else ""
+        gate = f" [ROOM GATE: active after {args.sib_gate} expansions]" if args.sib_gate > 0 else ""
         print(f"[Sib] OPTION5 sib_beta={args.sib_beta} signal=QR-DQN raw width vs SIBLINGS "
-              f"(boosts exploration toward wider/uncertain children; prior untouched)", flush=True)
+              f"(boosts exploration toward wider/uncertain children; prior untouched){tag}{gate}", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, args)
     if solution is None:

@@ -69,6 +69,9 @@ ENS_ARGS=""
 [ -n "$ENS_PREFIX" ] && ENS_ARGS="--ens_prefix $ENS_PREFIX --ens_n $ENS_N"
 # arg 20: OPTION 5 sibling raw-width exploration strength (leaves prior untouched). 0 = off.
 SIB_BETA=${20:-0.0}
+# arg 21: OPTION 5 ROOM GATE -- activate the sibling channel only after this many expansions.
+# 0 = no gate (channel active from the start). Try ~80-150.
+SIB_GATE=${21:-0}
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -77,5 +80,5 @@ venv/bin/python alphaZero_bellman.py \
     --bellman_lambda "$LAMBDA" --bellman_k "$K" --signal "$SIGNAL" \
     --const_w "$CONST_W" --w_max "$W_MAX" $ADAPTIVE_FLAG \
     --value_lambda "$VALUE_LAMBDA" --width_beta "$WIDTH_BETA" \
-    --ens_beta "$ENS_BETA" $ENS_ARGS --sib_beta "$SIB_BETA" \
+    --ens_beta "$ENS_BETA" $ENS_ARGS --sib_beta "$SIB_BETA" --sib_gate "$SIB_GATE" \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1
