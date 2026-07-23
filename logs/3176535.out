@@ -1,0 +1,133 @@
+--------------------- Slurm Task Prolog ------------------------
+Job ID: 3176535
+Job name: bc
+Host: cn-406
+Date: Thu Jul 23 13:14:09 CEST 2026
+User: ibrahim.eisawy
+Slurm account: rleap
+Slurm partition: rleap_gpu_24gb
+Work dir: 
+------------------
+Node usage:
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+3176535 rleap_gpu       bc ibrahim.  R       0:00      1 cn-406
+3175929 rleap_gpu obstruct furkan.c  R   13:38:23      1 cn-406
+3175927 rleap_gpu plant_wa furkan.c  R   13:39:05      1 cn-406
+3175928 rleap_gpu plant_wa furkan.c  R   13:39:05      1 cn-406
+------------------
+Show launch script with:
+sacct -B -j 
+------------------
+--------------------- Slurm Task Prolog ------------------------
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA A10
+225 train instances, 113 test instances.
+Built BC dataset: 43416 states from 109 instances.
+[100/8000] bc_loss=0.5621
+[200/8000] bc_loss=0.2617
+[300/8000] bc_loss=0.5840
+[400/8000] bc_loss=0.1970
+[500/8000] bc_loss=0.2010
+[500/8000] greedy coverage: 45/113 = 39.8%
+[500/8000] saved new best (45/113).
+[600/8000] bc_loss=0.3462
+[700/8000] bc_loss=0.1680
+[800/8000] bc_loss=0.0226
+[900/8000] bc_loss=0.0671
+[1000/8000] bc_loss=0.0464
+[1000/8000] greedy coverage: 99/113 = 87.6%
+[1000/8000] saved new best (99/113).
+[1100/8000] bc_loss=0.0599
+[1200/8000] bc_loss=0.1702
+[1300/8000] bc_loss=0.0041
+[1400/8000] bc_loss=0.0188
+[1500/8000] bc_loss=0.1630
+[1500/8000] greedy coverage: 85/113 = 75.2%
+[1600/8000] bc_loss=0.6151
+[1700/8000] bc_loss=0.0489
+[1800/8000] bc_loss=0.0129
+[1900/8000] bc_loss=0.2227
+[2000/8000] bc_loss=0.0865
+[2000/8000] greedy coverage: 76/113 = 67.3%
+[2100/8000] bc_loss=0.0608
+[2200/8000] bc_loss=0.0654
+[2300/8000] bc_loss=0.0032
+[2400/8000] bc_loss=0.0394
+[2500/8000] bc_loss=0.0251
+[2500/8000] greedy coverage: 88/113 = 77.9%
+[2600/8000] bc_loss=0.0408
+[2700/8000] bc_loss=0.2866
+[2800/8000] bc_loss=0.0028
+[2900/8000] bc_loss=0.0080
+[3000/8000] bc_loss=0.0750
+[3000/8000] greedy coverage: 104/113 = 92.0%
+[3000/8000] saved new best (104/113).
+[3100/8000] bc_loss=0.0107
+[3200/8000] bc_loss=0.0235
+[3300/8000] bc_loss=0.1655
+[3400/8000] bc_loss=0.1186
+[3500/8000] bc_loss=0.0087
+[3500/8000] greedy coverage: 104/113 = 92.0%
+[3600/8000] bc_loss=0.0028
+[3700/8000] bc_loss=0.0403
+[3800/8000] bc_loss=0.0016
+[3900/8000] bc_loss=0.0671
+[4000/8000] bc_loss=0.0048
+[4000/8000] greedy coverage: 111/113 = 98.2%
+[4000/8000] saved new best (111/113).
+[4100/8000] bc_loss=0.0852
+[4200/8000] bc_loss=0.0024
+[4300/8000] bc_loss=0.2445
+[4400/8000] bc_loss=0.0018
+[4500/8000] bc_loss=0.0717
+[4500/8000] greedy coverage: 105/113 = 92.9%
+[4600/8000] bc_loss=0.2705
+[4700/8000] bc_loss=0.0224
+[4800/8000] bc_loss=0.0291
+[4900/8000] bc_loss=0.0264
+[5000/8000] bc_loss=0.0546
+[5000/8000] greedy coverage: 100/113 = 88.5%
+[5100/8000] bc_loss=0.0481
+[5200/8000] bc_loss=0.0167
+[5300/8000] bc_loss=0.0030
+[5400/8000] bc_loss=0.0221
+[5500/8000] bc_loss=0.1447
+[5500/8000] greedy coverage: 103/113 = 91.2%
+[5600/8000] bc_loss=0.0095
+[5700/8000] bc_loss=0.0236
+[5800/8000] bc_loss=0.0021
+[5900/8000] bc_loss=0.3375
+[6000/8000] bc_loss=0.0090
+[6000/8000] greedy coverage: 107/113 = 94.7%
+[6100/8000] bc_loss=0.0040
+[6200/8000] bc_loss=0.1888
+[6300/8000] bc_loss=0.0365
+[6400/8000] bc_loss=0.0715
+[6500/8000] bc_loss=0.0152
+[6500/8000] greedy coverage: 97/113 = 85.8%
+[6600/8000] bc_loss=0.0849
+[6700/8000] bc_loss=0.0131
+[6800/8000] bc_loss=0.0837
+[6900/8000] bc_loss=0.0345
+[7000/8000] bc_loss=0.1062
+[7000/8000] greedy coverage: 81/113 = 71.7%
+[7100/8000] bc_loss=0.0027
+[7200/8000] bc_loss=0.0691
+[7300/8000] bc_loss=0.0108
+[7400/8000] bc_loss=0.0149
+[7500/8000] bc_loss=0.0431
+[7500/8000] greedy coverage: 107/113 = 94.7%
+[7600/8000] bc_loss=0.0062
+[7700/8000] bc_loss=0.0333
+[7800/8000] bc_loss=0.0010
+[7900/8000] bc_loss=0.0005
+[8000/8000] bc_loss=0.0003
+[8000/8000] greedy coverage: 103/113 = 91.2%
+--------------------- Slurm Task Epilog ------------------------
+Job ID: 3176535
+Time: Thu Jul 23 15:16:22 CEST 2026
+Elapsed Time: 02:02:13
+Billing per second for TRES: billing=133,cpu=4,gres/shard=1,mem=16G,node=1
+Show resource usage with e.g.:
+sacct -j 3176535 -o Elapsed,TotalCPU,UserCPU,SystemCPU,MaxRSS,ReqTRES%60,MaxDiskRead,MaxDiskWrite
+--------------------- Slurm Task Epilog ------------------------
