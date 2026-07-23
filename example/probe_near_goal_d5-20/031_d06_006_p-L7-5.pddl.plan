@@ -1,0 +1,7 @@
+(move f4-7f f3-7f)
+(move f3-7f f3-8f)
+(move f3-8f f2-8f)
+(move f2-8f f2-9f)
+(move f2-9f f1-9f)
+(putdown f1-9f key0-3)
+; cost = 6 (unit cost)
