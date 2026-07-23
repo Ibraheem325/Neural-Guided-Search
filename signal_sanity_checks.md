@@ -186,7 +186,7 @@ with `open(path, newline="").read().replace("\r","")`.)*
   the savings might come from generically redistributing exploration by these magnitudes,
   independent of *where* width points. If a width-blind assignment of the same multipliers
   reproduces the savings, the signal is doing nothing — this is the sibling-width analogue of
-  the constant-w control that killed the Bellman line (§3.1).
+  the constant-w control that killed the Bellman line (§4.1).
 - **Method.** Added `--sib_shuffle` (`alphaZero_bellman.py`): at each node, compute the same
   per-child widths, then **permute them among the children** (seeded by the integer state
   index → deterministic, width-blind) before forming the multipliers. Identical multiplier
@@ -266,7 +266,92 @@ with `open(path, newline="").read().replace("\r","")`.)*
 
 ---
 
-## 2. Single-model distributional width (raw vs normalized)  *(offline signal-quality checks)*
+## 2. QR-DQN sibling Bellman-inconsistency exploration channel  *(current signal, parallel to §1)*
+
+**Naming.** This channel is called **"Bellman inconsistency"**, not "W1", to avoid confusion
+with the older raw parent–child W1 prior channel (§6). It *uses* the 1-Wasserstein (W1) metric,
+but what it *measures* is Bellman self-inconsistency. Code: `alphaZero_bellman.py`, OPTION 6,
+`--binc_beta`.
+
+**The signal.** For each child action *a* at parent state *s*, with *s′ = a.apply(s)*, the
+per-child signal is the 1-step min-W1 Bellman inconsistency between the parent's distribution
+for *a* and the Bellman target built from the best successor:
+
+```
+Binc(a) = min_{b in B_good(s')}  (1/99) Σ_τ | Z_τ(s,a) − (r + γ·Z_τ(s',b)) |      r = −1, γ = 0.999
+```
+
+(mean-abs-difference of the 99 sorted quantiles = the 1-Wasserstein distance; B_good = best
+successor action(s) by mean value, eps=0; if *s′* is the goal the target is the constant *r*).
+Binc ≈ 0 when the model is self-consistent at *a*, large when the parent's prediction
+contradicts its own successor. This is the same quantity as the Bellman-widening line's
+`err(s,a)` (§4), but done at 1 step and used **per child**, not on the top action only.
+
+**Integration (identical to §1, only the per-child quantity changes).** Prior and Q untouched;
+only the exploration term is scaled, boosting exploration toward *more-inconsistent* siblings:
+
+```
+mult(a) = max(0.1, 1 + β·(Binc(a) / mean_sibling_Binc − 1))
+u(a)    = c_puct · mult(a) · P(a) · √N_parent / (1 + n_a)
+```
+
+**Cost.** One QR-DQN forward for the parent + **one per child** (to read each successor's
+distribution) — heavier than the width channel's single forward per node. Same probe test set
+as §1. Motivation for testing it despite §6: it is the natural *consistency* counterpart to
+width's *spread*, run through the same clean (prior-untouched, sibling-relative) integration —
+a fair head-to-head. **Caveat going in:** `w1_qrdqn_uncertainty.py` found W1/Bellman-style
+signals are **at chance near the goal on the QR-DQN** (AUC ≈ 0.52/0.49 at d1–10/d11–22), and the
+probes are d5–20 — squarely that regime. So the prior expectation is that this channel may
+behave like random redistribution (the §2.2 shuffle control is therefore decisive, not
+optional).
+
+### 2.1 Case study — Binc vs width vs baseline (n=2)
+
+- **Purpose.** Same two instances as §1.4, to compare the Bellman-inconsistency channel's
+  behaviour against the width channel head-to-head on a clear win and a clear loss.
+- **Method.** Binc at β ∈ {1.0, 2.0} on the win (`280_d14`) and loss (`403_d18`); compare to
+  baseline and width sib2.0.
+- **Result.**
+
+  | instance | baseline | width sib2.0 | Binc β1.0 | Binc β2.0 |
+  |----------|----------|--------------|-----------|-----------|
+  | win 280_d14  | 770 | 234 | **244** | 276 |
+  | loss 403_d18 | 106 | **279** | **97** | 101 |
+
+- **Takeaway (n=2 only).** On these two, Binc *looks* better-behaved than width: it wins on the
+  win (244 ≈ width's 234) **and does not derail the loss** (97–101 vs width's 279). That would
+  be notable if it holds — width's failure mode was over-committing on low-room instances, and
+  Binc appears not to. But n=2, and the §2.2 control shows this is not yet trustworthy.
+
+### 2.2 Shuffle control — signal-blind placement (n=2, INCONCLUSIVE)
+
+- **Purpose.** The decisive check (artifact #2), and doubly important here because Binc is
+  expected to be near-chance near the goal (see caveat above). If shuffling the Binc values
+  among siblings reproduces the effect, the channel is generic exploration redistribution, not
+  the Bellman signal. Reuses `--sib_shuffle` (now applies to OPTION 6 as well): same per-child
+  Binc multiset, permuted onto the wrong children (seeded by state index → deterministic).
+- **Method.** Binc + `--sib_shuffle` at β ∈ {1.0, 2.0} on the win and loss.
+- **Result.**
+
+  | instance | Binc β1.0 | Binc-shuffle β1.0 | Binc β2.0 | Binc-shuffle β2.0 |
+  |----------|-----------|-------------------|-----------|-------------------|
+  | win 280_d14  | 244 | **957** | 276 | **246** |
+  | loss 403_d18 | 97  | 104     | 101 | 91  |
+
+- **Takeaway — INCONCLUSIVE at n=2.** The shuffle is **erratic**: at β=1.0 the real signal
+  (244) crushes its shuffle (957, worse than baseline), which would say "real signal"; but at
+  β=2.0 the shuffle (246) *matches* the real signal (276), which would say "generic". The same
+  instance's shuffle swings 957→246 between adjacent β. So — unlike the width channel, whose
+  n=2 shuffle was cleanly and consistently worse than the real signal (§1.5) — the
+  Bellman-inconsistency n=2 does **not** support a conclusion either way. **The aggregate
+  480-probe Binc sweep + a matched 480-probe Binc-shuffle sweep are required to decide.** Given
+  the near-goal-chance prior, the honest expectation is that Binc will not robustly beat its
+  shuffle at scale; the sweep will confirm or overturn that. **[PENDING — fill in the 480-probe
+  Binc net vs Binc-shuffle net when the cluster runs return.]**
+
+---
+
+## 3. Single-model distributional width (raw vs normalized)  *(offline signal-quality checks)*
 
 ### 2.1 cv-normalization corruption
 
@@ -301,7 +386,7 @@ with `open(path, newline="").read().replace("\r","")`.)*
 
 ---
 
-## 3. Bellman consistency / residual  *(closed by controls)*
+## 4. Bellman consistency / residual  *(closed by controls)*
 
 ### 3.1 Constant-w control (widening channel)
 
@@ -329,7 +414,7 @@ with `open(path, newline="").read().replace("\r","")`.)*
   holds by definition for optimal and suboptimal actions alike.
 - **Takeaway.** The single-model 1-step residual measures **self-consistency, which is
   action-independent by construction** — there is no action-quality signal to extract. All
-  W1/width variants of it inherit this. (Scope: same-model; cross-model differs, §3.4.)
+  W1/width variants of it inherit this. (Scope: same-model; cross-model differs, §4.4.)
 
 ### 3.3 Affine-correction control
 
@@ -345,7 +430,7 @@ with `open(path, newline="").read().replace("\r","")`.)*
 
 ### 3.4 Cross-model independence
 
-- **Purpose.** Same-model residual is definitionally null (§3.2); does reading the endpoint
+- **Purpose.** Same-model residual is definitionally null (§4.2); does reading the endpoint
   with a *differently-trained* model recover signal?
 - **Method.** Parent = IQN, endpoint = SAC Q-critic (error-corr 0.093 with IQN); vs seed-diverse
   IQN ensemble (too correlated). Far-from-goal (d ≥ 11) transition AUC.
@@ -359,7 +444,7 @@ with `open(path, newline="").read().replace("\r","")`.)*
 
 ---
 
-## 4. Ensemble vote  *(the one signal that survived — with an ablation)*
+## 5. Ensemble vote  *(the one signal that survived — with an ablation)*
 
 ### 4.1 Single-model vs six-model ablation
 
@@ -377,7 +462,7 @@ with `open(path, newline="").read().replace("\r","")`.)*
 
 ---
 
-## 5. W1 (parent–child distribution shift)  *(closed by control)*
+## 6. W1 (parent–child distribution shift)  *(closed by control)*
 
 ### 5.1 Uniform-floor control
 
@@ -394,7 +479,7 @@ with `open(path, newline="").read().replace("\r","")`.)*
 
 ---
 
-## 6. The prior-flattening law  *(cross-cutting control result)*
+## 7. The prior-flattening law  *(cross-cutting control result)*
 
 - **Purpose.** Establish the baseline against which every prior-touching signal must be judged
   (artifact #1), by measuring what *content-free* prior flattening alone does.

@@ -189,10 +189,24 @@ class _Signal:
         # struggle. 0 = no gate (channel active from the start). n_expanded = live tt size.
         self.sib_gate = 0
         self.n_expanded = 0
+        # --- OPTION 6: SIBLING BELLMAN-INCONSISTENCY exploration channel (leaves the prior
+        #     untouched). Same clean integration as OPTION 5, but the per-child signal is the
+        #     1-step min-W1 Bellman inconsistency W1(Z(s,a), reward + gamma*Z(s',b*)) -- how
+        #     far the parent's per-action distribution is from what the Bellman equation says
+        #     (its own discounted successor). ~0 when self-consistent, large when inconsistent.
+        #     High => boost that child's exploration (among siblings). Named "Bellman
+        #     inconsistency" (NOT "W1") to avoid confusion with the old raw parent-child W1
+        #     prior channel. Costs one QR-DQN forward per child (parent + each successor). ---
+        self.binc_beta = 0.0
+        self.binc_sum = 0.0; self.binc_count = 0
 
     @property
     def sib_active(self) -> bool:
         return self.sib_beta > 0.0 and self.iqn is not None
+
+    @property
+    def binc_active(self) -> bool:
+        return self.binc_beta > 0.0 and self.iqn is not None
 
     def ensemble_explore_mult(self, state, goal) -> float:
         """Per-node exploration multiplier in [1-ens_beta, 1] from ensemble disagreement.
@@ -488,6 +502,58 @@ def _compute_sib_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None
         _SIG.sib_sum += mult; _SIG.sib_count += 1
 
 
+def _compute_binc_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
+    """OPTION 6. Per-child exploration multiplier from the 1-step min-W1 Bellman
+    inconsistency, compared AMONG SIBLINGS. W1(a) = min_{b in B_good(s')} W1(Z(s,a),
+    reward + gamma*Z(s',b)), s'=a.apply(s) -- how far the parent's per-action distribution
+    is from its own successor's (a self-consistency/'wrongness' signal, distinct from
+    width's within-state spread). High W1 => inconsistent/uncertain => boost exploration.
+    One QR-DQN forward for the parent + one per child. Writes node.sib_mult (shared with
+    OPTION 5; the two channels are mutually exclusive)."""
+    if not _SIG.binc_active or len(node.prior) <= 1:
+        return
+    if _SIG.sib_gate > 0 and _SIG.n_expanded < _SIG.sib_gate:
+        return
+    qs, actions = _iqn_curves(node.state, goal)
+    if qs is None:
+        return
+    amap = {_canon(str(a)): i for i, a in enumerate(actions)}
+    w1s = {}
+    for a in node.children:
+        ai = amap.get(_canon(str(a)))
+        if ai is None:
+            continue
+        z_sa = qs[ai]
+        cur = a.apply(node.state)
+        if goal.holds(cur):                               # grounded target = constant reward
+            w1s[a] = (z_sa - torch.full_like(z_sa, _SIG.reward)).abs().mean().item()
+            continue
+        cqs, _ = _iqn_curves(cur, goal)
+        if cqs is None:                                   # dead-end child: no comparison
+            continue
+        targets = _SIG.reward + _SIG.gamma * cqs          # [A_child, 99] Bellman targets
+        scores = cqs.mean(dim=1)
+        w1 = (z_sa.unsqueeze(0) - targets).abs().mean(dim=1)
+        w1s[a] = w1[scores >= scores.max()].min().item()  # eps=0 B_good (best successor)
+    if len(w1s) < 2:
+        return
+    if _SIG.sib_shuffle:
+        # width-BLIND control (same for the Bellman-inconsistency channel): permute the
+        # SAME inconsistency values onto different children. Seeded by state key.
+        import random as _random
+        rng = _random.Random(hash(node.state_key) & 0x7fffffff)
+        keys = list(w1s.keys()); vals = list(w1s.values()); rng.shuffle(vals)
+        w1s = {k: v for k, v in zip(keys, vals)}
+    mean_w1 = sum(w1s.values()) / len(w1s)
+    if mean_w1 <= 1e-9:
+        return
+    for a, w in w1s.items():
+        rel = w / mean_w1                                 # >1 = more inconsistent than siblings
+        mult = max(0.1, 1.0 + _SIG.binc_beta * (rel - 1.0))
+        node.sib_mult[a] = mult
+        _SIG.binc_sum += mult; _SIG.binc_count += 1
+
+
 def _widen_prior(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
     """Flatten node.prior toward uniform in proportion to the Bellman
     inconsistency of the node's top action. No-op if the signal is off."""
@@ -619,6 +685,10 @@ def _expand(node: Node,
     if _SIG.sib_active and len(node.prior) > 1:
         _SIG.n_expanded = len(tt)          # room proxy for the gate
         _compute_sib_mult(node, goal)
+    # Option 6: sibling W1 (parent-vs-child) exploration modulation (leaves prior untouched).
+    elif _SIG.binc_active and len(node.prior) > 1:
+        _SIG.n_expanded = len(tt)
+        _compute_binc_mult(node, goal)
     # Diagnostic: record distance (=-QRDQN value) of every expanded node.
     if _SIG.log_dist and _SIG.iqn is not None:
         qd, ad = _iqn_curves(node.state, goal)
@@ -848,9 +918,17 @@ def _parse_arguments() -> argparse.Namespace:
                              "over-widening); high-room probes get the channel once they show "
                              "struggle. 0 = no gate. Try ~80-150.")
     parser.add_argument("--sib_shuffle", action="store_true",
-                        help="CONTROL for OPTION 5: shuffle widths among siblings (same "
-                             "multiplier multiset, width-BLIND placement). If savings survive, "
-                             "the effect is generic exploration redistribution, not the signal.")
+                        help="CONTROL for OPTION 5/6: shuffle the per-child signal among siblings "
+                             "(same multiplier multiset, signal-BLIND placement). If savings "
+                             "survive, the effect is generic exploration redistribution, not the "
+                             "signal. Applies to whichever of --sib_beta / --binc_beta is active.")
+    parser.add_argument("--binc_beta", default=0.0, type=float,
+                        help="OPTION 6 (SIBLING BELLMAN-INCONSISTENCY EXPLORATION channel, leaves "
+                             "prior untouched). Like --sib_beta but the per-child signal is the "
+                             "1-step min-W1 parent-vs-child Bellman inconsistency instead of raw "
+                             "width. Boost exploration toward more-inconsistent siblings. 0 = off. "
+                             "Try 0.5-2.0. Requires --iqn_model (the QR-DQN). Respects --sib_gate "
+                             "and --sib_shuffle.")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
@@ -892,6 +970,10 @@ def _plan(problem: mm.Problem,
             print(f"[Sib] child-edges modulated: {_SIG.sib_count}, mean mult: "
                   f"{_SIG.sib_sum/_SIG.sib_count:.4f} (1.0 = no change; >1 = boosted toward wide)",
                   flush=True)
+        if _SIG.binc_count:
+            print(f"[Binc] child-edges modulated: {_SIG.binc_count}, mean mult: "
+                  f"{_SIG.binc_sum/_SIG.binc_count:.4f} (1.0 = no change; >1 = boosted toward "
+                  f"inconsistent)", flush=True)
         if _SIG.verr_hist:
             vh = sorted(_SIG.verr_hist)
             print(f"[Value] actions scored: {len(vh)}, median verr: "
@@ -1023,6 +1105,25 @@ def _main(args: argparse.Namespace) -> None:
         gate = f" [ROOM GATE: active after {args.sib_gate} expansions]" if args.sib_gate > 0 else ""
         print(f"[Sib] OPTION5 sib_beta={args.sib_beta} signal=QR-DQN raw width vs SIBLINGS "
               f"(boosts exploration toward wider/uncertain children; prior untouched){tag}{gate}", flush=True)
+
+    # OPTION 6: sibling BELLMAN-INCONSISTENCY exploration channel (measured via the W1
+    # metric between parent and Bellman-target successor). Point --iqn_model at the QR-DQN.
+    if args.binc_beta > 0.0:
+        assert args.iqn_model is not None, "--binc_beta > 0 requires --iqn_model (the QR-DQN)"
+        assert args.sib_beta == 0.0, "OPTION 5 and OPTION 6 both write sib_mult; run one at a time"
+        if _SIG.iqn is None:
+            iqn, _, _ = _load_iqn_model(domain, args.iqn_model, device)
+            iqn.eval()
+            _SIG.iqn = iqn
+            _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
+        _SIG.binc_beta = args.binc_beta
+        _SIG.sib_gate = args.sib_gate
+        _SIG.sib_shuffle = args.sib_shuffle
+        tag = " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else ""
+        gate = f" [ROOM GATE: active after {args.sib_gate} expansions]" if args.sib_gate > 0 else ""
+        print(f"[Binc] OPTION6 binc_beta={args.binc_beta} signal=BELLMAN INCONSISTENCY "
+              f"(1-step min-W1 parent-vs-child) vs SIBLINGS (boosts exploration toward "
+              f"inconsistent children; prior untouched){tag}{gate}", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, args)
     if solution is None:

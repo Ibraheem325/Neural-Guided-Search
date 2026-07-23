@@ -72,6 +72,13 @@ SIB_BETA=${20:-0.0}
 # arg 21: OPTION 5 ROOM GATE -- activate the sibling channel only after this many expansions.
 # 0 = no gate (channel active from the start). Try ~80-150.
 SIB_GATE=${21:-0}
+# arg 22: OPTION 6 SIBLING BELLMAN-INCONSISTENCY exploration strength (1-step min-W1
+# parent-vs-child). 0 = off. Point $IQN at the QR-DQN. Mutually exclusive with SIB_BETA.
+BINC_BETA=${22:-0.0}
+# arg 23: SHUFFLE CONTROL (0/1) for OPTION 5/6 -- signal-blind sibling placement. 1 = shuffle.
+SHUFFLE=${23:-0}
+SHUFFLE_FLAG=""
+[ "$SHUFFLE" = "1" ] && SHUFFLE_FLAG="--sib_shuffle"
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -81,4 +88,5 @@ venv/bin/python alphaZero_bellman.py \
     --const_w "$CONST_W" --w_max "$W_MAX" $ADAPTIVE_FLAG \
     --value_lambda "$VALUE_LAMBDA" --width_beta "$WIDTH_BETA" \
     --ens_beta "$ENS_BETA" $ENS_ARGS --sib_beta "$SIB_BETA" --sib_gate "$SIB_GATE" \
+    --binc_beta "$BINC_BETA" $SHUFFLE_FLAG \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1
