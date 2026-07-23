@@ -199,6 +199,14 @@ class _Signal:
         #     prior channel. Costs one QR-DQN forward per child (parent + each successor). ---
         self.binc_beta = 0.0
         self.binc_sum = 0.0; self.binc_count = 0
+        # --- OPTION 7: SIBLING RAW EDGE-W1 exploration channel (leaves the prior untouched).
+        #     Same clean integration as OPTION 5/6, but the per-child signal is the RAW
+        #     parent-vs-child distribution shift W1(Z_best(s), Z_best(s'_a)) -- NO reward, NO
+        #     discount (exactly the alphaZero_w1.py "validation form" edge-W1). Differs from
+        #     OPTION 6 by the ~1-per-step Bellman baseline that binc subtracts off. Boost
+        #     exploration toward children with a larger distribution shift. ---
+        self.w1raw_beta = 0.0
+        self.w1raw_sum = 0.0; self.w1raw_count = 0
 
     @property
     def sib_active(self) -> bool:
@@ -207,6 +215,10 @@ class _Signal:
     @property
     def binc_active(self) -> bool:
         return self.binc_beta > 0.0 and self.iqn is not None
+
+    @property
+    def w1raw_active(self) -> bool:
+        return self.w1raw_beta > 0.0 and self.iqn is not None
 
     def ensemble_explore_mult(self, state, goal) -> float:
         """Per-node exploration multiplier in [1-ens_beta, 1] from ensemble disagreement.
@@ -554,6 +566,50 @@ def _compute_binc_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> Non
         _SIG.binc_sum += mult; _SIG.binc_count += 1
 
 
+def _best_curve(state: mm.State, goal: mm.GroundConjunctiveCondition):
+    """Sorted quantile curve of the BEST action (highest mean) at `state`, or None."""
+    qs, _ = _iqn_curves(state, goal)
+    if qs is None:
+        return None
+    return qs[int(qs.mean(dim=1).argmax())]
+
+
+def _compute_w1raw_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
+    """OPTION 7. Per-child exploration multiplier from the RAW edge-W1 between the parent's
+    best-action curve and each child's best-action curve -- the alphaZero_w1.py definition:
+        edge_W1(a) = mean_tau | sorted Z_best(s) - sorted Z_best(s'_a) |     (no reward, no gamma)
+    Compared AMONG SIBLINGS. Larger shift => boost that child's exploration. Writes
+    node.sib_mult (shared with OPTION 5/6; the three channels are mutually exclusive)."""
+    if not _SIG.w1raw_active or len(node.prior) <= 1:
+        return
+    if _SIG.sib_gate > 0 and _SIG.n_expanded < _SIG.sib_gate:
+        return
+    parent_curve = _best_curve(node.state, goal)
+    if parent_curve is None:
+        return
+    w1s = {}
+    for a in node.children:
+        child_curve = _best_curve(a.apply(node.state), goal)
+        if child_curve is None:                           # dead-end child: no comparison
+            continue
+        w1s[a] = (parent_curve - child_curve).abs().mean().item()
+    if len(w1s) < 2:
+        return
+    if _SIG.sib_shuffle:
+        import random as _random
+        rng = _random.Random(hash(node.state_key) & 0x7fffffff)
+        keys = list(w1s.keys()); vals = list(w1s.values()); rng.shuffle(vals)
+        w1s = {k: v for k, v in zip(keys, vals)}
+    mean_w1 = sum(w1s.values()) / len(w1s)
+    if mean_w1 <= 1e-9:
+        return
+    for a, w in w1s.items():
+        rel = w / mean_w1                                 # >1 = bigger shift than siblings
+        mult = max(0.1, 1.0 + _SIG.w1raw_beta * (rel - 1.0))
+        node.sib_mult[a] = mult
+        _SIG.w1raw_sum += mult; _SIG.w1raw_count += 1
+
+
 def _widen_prior(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
     """Flatten node.prior toward uniform in proportion to the Bellman
     inconsistency of the node's top action. No-op if the signal is off."""
@@ -685,10 +741,14 @@ def _expand(node: Node,
     if _SIG.sib_active and len(node.prior) > 1:
         _SIG.n_expanded = len(tt)          # room proxy for the gate
         _compute_sib_mult(node, goal)
-    # Option 6: sibling W1 (parent-vs-child) exploration modulation (leaves prior untouched).
+    # Option 6: sibling Bellman-inconsistency exploration modulation (leaves prior untouched).
     elif _SIG.binc_active and len(node.prior) > 1:
         _SIG.n_expanded = len(tt)
         _compute_binc_mult(node, goal)
+    # Option 7: sibling RAW edge-W1 exploration modulation (leaves prior untouched).
+    elif _SIG.w1raw_active and len(node.prior) > 1:
+        _SIG.n_expanded = len(tt)
+        _compute_w1raw_mult(node, goal)
     # Diagnostic: record distance (=-QRDQN value) of every expanded node.
     if _SIG.log_dist and _SIG.iqn is not None:
         qd, ad = _iqn_curves(node.state, goal)
@@ -929,6 +989,12 @@ def _parse_arguments() -> argparse.Namespace:
                              "width. Boost exploration toward more-inconsistent siblings. 0 = off. "
                              "Try 0.5-2.0. Requires --iqn_model (the QR-DQN). Respects --sib_gate "
                              "and --sib_shuffle.")
+    parser.add_argument("--w1raw_beta", default=0.0, type=float,
+                        help="OPTION 7 (SIBLING RAW EDGE-W1 EXPLORATION channel, leaves prior "
+                             "untouched). Per-child signal = W1(Z_best(s), Z_best(s'_a)) with NO "
+                             "reward and NO discount (the alphaZero_w1.py edge-W1 form). Boost "
+                             "exploration toward children with a larger distribution shift. "
+                             "0 = off. Requires --iqn_model. Respects --sib_gate/--sib_shuffle.")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
@@ -974,6 +1040,10 @@ def _plan(problem: mm.Problem,
             print(f"[Binc] child-edges modulated: {_SIG.binc_count}, mean mult: "
                   f"{_SIG.binc_sum/_SIG.binc_count:.4f} (1.0 = no change; >1 = boosted toward "
                   f"inconsistent)", flush=True)
+        if _SIG.w1raw_count:
+            print(f"[W1raw] child-edges modulated: {_SIG.w1raw_count}, mean mult: "
+                  f"{_SIG.w1raw_sum/_SIG.w1raw_count:.4f} (1.0 = no change; >1 = boosted toward "
+                  f"larger shift)", flush=True)
         if _SIG.verr_hist:
             vh = sorted(_SIG.verr_hist)
             print(f"[Value] actions scored: {len(vh)}, median verr: "
@@ -1124,6 +1194,25 @@ def _main(args: argparse.Namespace) -> None:
         print(f"[Binc] OPTION6 binc_beta={args.binc_beta} signal=BELLMAN INCONSISTENCY "
               f"(1-step min-W1 parent-vs-child) vs SIBLINGS (boosts exploration toward "
               f"inconsistent children; prior untouched){tag}{gate}", flush=True)
+
+    # OPTION 7: sibling RAW edge-W1 exploration channel. Point --iqn_model at the QR-DQN.
+    if args.w1raw_beta > 0.0:
+        assert args.iqn_model is not None, "--w1raw_beta > 0 requires --iqn_model (the QR-DQN)"
+        assert args.sib_beta == 0.0 and args.binc_beta == 0.0, \
+            "OPTIONS 5/6/7 all write sib_mult; run one at a time"
+        if _SIG.iqn is None:
+            iqn, _, _ = _load_iqn_model(domain, args.iqn_model, device)
+            iqn.eval()
+            _SIG.iqn = iqn
+            _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
+        _SIG.w1raw_beta = args.w1raw_beta
+        _SIG.sib_gate = args.sib_gate
+        _SIG.sib_shuffle = args.sib_shuffle
+        tag = " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else ""
+        gate = f" [ROOM GATE: active after {args.sib_gate} expansions]" if args.sib_gate > 0 else ""
+        print(f"[W1raw] OPTION7 w1raw_beta={args.w1raw_beta} signal=RAW edge-W1 "
+              f"(parent-best vs child-best, no reward/discount) vs SIBLINGS (boosts exploration "
+              f"toward larger-shift children; prior untouched){tag}{gate}", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, args)
     if solution is None:

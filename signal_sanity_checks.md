@@ -85,6 +85,12 @@ never provided. Zero training overlap (content-hash checked). `labels.csv` gives
 distance and object count per probe. *(Infra note: `labels.csv` uses CRLF line endings; parse
 with `open(path, newline="").read().replace("\r","")`.)*
 
+> ⚠️ **READ §1.5 FIRST.** The expansion savings reported in §1.2–§1.4 are **real but not caused
+> by the width signal**: a width-*blind* shuffle control reproduces and *exceeds* them
+> (+11.0% vs +4.1% net). Treat §1.2–§1.4 as characterising *"sibling exploration redistribution
+> of this magnitude"*, not *"the width signal"*. The n=2 case study in §1.4 pointed the opposite
+> way and was misleading — the aggregate control (§1.5) is the verdict.
+
 ### 1.1 Room check — does the test set even permit savings?
 
 - **Purpose.** Guard against artifact #6 in reverse: if baseline AlphaZero already solves
@@ -192,22 +198,45 @@ with `open(path, newline="").read().replace("\r","")`.)*
   index → deterministic, width-blind) before forming the multipliers. Identical multiplier
   multiset and identical nodes touched; only the width→child mapping is randomized. Run at
   β=2.0.
-- **Result (per-instance, n=2 so far).**
+- **Result — the n=2 case study and the 480-probe aggregate DISAGREE, and the aggregate wins.**
 
-  | instance | baseline | real width (sib2.0) | **width-blind shuffle** |
-  |----------|----------|---------------------|-------------------------|
-  | **win** 280_d14 | 770 | **234** (−70%) | **621** (−19%) |
-  | **loss** 403_d18 | 106 | **279** (+163%) | **181** (+71%), plan 22 (not 48) |
+  *(a) Per-instance (n=2) — suggestive but MISLEADING:*
 
-  Full 480-probe aggregate shuffle control at β=2.0: **[RUNNING — fill in net saved/lost vs
-  the +5,702 real-width net; compare per §1.3].**
-- **Takeaway (from n=2; aggregate pending).** The shuffle does **not** reproduce the real-width
-  result in *either* direction: on the win, real width (234) far beats the width-blind shuffle
-  (621) — generic redistribution gets only partway; on the loss, real width (279) is *worse*
-  than shuffle (181), which even preserved the near-optimal plan. So width carries **real
-  directional information** — it is *not* the W1/prior-flattening artifact. It *amplifies* in
-  the direction it points (helps more than random on high-room, hurts more than random on
-  low-room). The full aggregate below is the decisive confirmation.
+  | instance | baseline | real width (sib2.0) | width-blind shuffle |
+  |----------|----------|---------------------|---------------------|
+  | **win** 280_d14 | 770 | **234** (−70%) | 621 (−19%) |
+  | **loss** 403_d18 | 106 | 279 (+163%) | 181 (+71%), plan 22 (not 48) |
+
+  Read alone, this says width's placement does the work. **It does not survive the aggregate.**
+
+  *(b) Full 480-probe aggregate, strict matched set (solved by baseline AND real AND shuffle,
+  n=464, baseline total 95,670 expansions):*
+
+  | arm | total | **NET** | net % | saved | lost | median ratio |
+  |-----|-------|---------|-------|-------|------|--------------|
+  | REAL width sib2.0 | 91,706 | **+3,964** | +4.1% | 7,869 | 3,905 | 1.000 |
+  | **SHUFFLE (width-blind)** | 85,179 | **+10,491** | **+11.0%** | 17,147 | 6,656 | 1.000 |
+
+  Head-to-head: shuffle cheaper on **167** probes, real cheaper on 137, tie 160. High-room
+  subset (baseExp ≥ 300, n=84): real mean ratio 0.937 vs **shuffle 0.896**. Coverage: baseline
+  476/480, real 474, shuffle 469.
+- **Takeaway — DECISIVE NEGATIVE. The width signal contributes nothing; the savings are generic
+  exploration redistribution.** The width-**blind** shuffle saves **2.6× more** than the real
+  width signal (+10,491 vs +3,964), beats it head-to-head on more probes, and is better on the
+  high-room subset where width was supposed to shine. Randomly permuting the widths onto the
+  wrong children is *at least as good as, and here better than,* using them correctly — so
+  there is no usable information in the width→child mapping. This is the **third instance of the
+  same artifact family**: W1-on-Grid matched by a uniform floor (§6.1), Bellman-widening-on-Rovers
+  matched by constant-w (§4.1), and now sibling-width matched (exceeded) by a shuffle.
+  **Methodological lesson for the thesis: the n=2 case study pointed the opposite way.** A
+  hand-picked win/loss pair is not evidence about a signal — the aggregate control is. Every
+  earlier positive framing of the sibling-width channel in §1.2–§1.4 must be read as
+  *"exploration redistribution of this magnitude helps on bushy near-goal instances"*, **not**
+  *"the width signal helps"*.
+  **Separately, a real (signal-free) finding:** perturbing/diversifying the exploration split
+  among siblings is worth ~**11%** fewer expansions on this probe set at zero model cost — the
+  sibling analogue of the prior-flattening law (§7). That is a legitimate result; it simply has
+  nothing to do with uncertainty.
 
 ### 1.6 Root-node mechanism — where the channel acts (safety property)
 
