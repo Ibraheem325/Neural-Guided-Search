@@ -1,0 +1,21 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 12] found goal path of length 10
+[Final] Expanded: 42, Generated: 42
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 0, mean w: 0.0000
+[search done] simulations=12, unique states generated=42
+Found a solution of length 10!
+   1: (move f6-3f f6-2f)
+   2: (move f6-2f f6-1f)
+   3: (move f6-1f f5-1f)
+   4: (move f5-1f f4-1f)
+   5: (move f4-1f f3-1f)
+   6: (move f3-1f f2-1f)
+   7: (move f2-1f f2-2f)
+   8: (move f2-2f f1-2f)
+   9: (move f1-2f f1-3f)
+  10: (pickup-and-loose f1-3f key1-2 key2-1)
