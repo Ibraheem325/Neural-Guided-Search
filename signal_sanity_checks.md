@@ -134,10 +134,29 @@ with `open(path, newline="").read().replace("\r","")`.)*
 
   Coverage is flat (−2 to −4, within noise). **Median ratio = 1.000 in every arm and every
   branching tier** — the typical probe is untouched. The aggregate falls monotonically with
-  β (1.006 → 0.980 → 0.944).
+  β over 0.5→2.0 (1.006 → 0.980 → 0.944).
+- **Extended β sweep — the effect peaks at β=2.0 and then collapses** (net expansions vs
+  baseline on the common-solved set; net% = fraction of the baseline total saved):
+
+  | β | coverage | net | net % | saved | lost |
+  |---|----------|-----|-------|-------|------|
+  | 0.5 | 473/480 | −606 | −0.6% | 2,382 | 2,988 |
+  | 1.0 | 472/480 | +2,005 | +2.0% | 5,626 | 3,621 |
+  | **2.0** | 474/480 | **+5,702** | **+5.6%** | 9,629 | 3,927 |
+  | 3.0 | 474/480 | +2,432 | +2.4% | 12,297 | 9,865 |
+  | 4.0 | 474/480 | −50 | −0.0% | 14,603 | 14,653 |
+  | 6.0 | 461/480 | −25,350 | −26.9% | 6,570 | 31,920 |
+
+  β=2.0 is the ceiling; β=3 halves the gain, β=4 is break-even, β=6 is catastrophic (and
+  coverage finally drops, 476→461). Crucially, **both `saved` and `lost` grow monotonically
+  with β** (β=6: saved 6,570 but lost 31,920) — stronger widening simply moves more probes in
+  *both* directions, with losses overtaking gains past β=2. That is the fingerprint of a
+  **magnitude knob on a redistribution**, not a signal sharpening — fully consistent with §1.5.
 - **Takeaway.** Coverage preserved (the "prior untouched" design holds — cf. §1.6). The effect
-  is **not on the median probe**; it is a heavy-tailed, dose-dependent aggregate shift that
-  needs the accounting in §1.3 to interpret honestly.
+  is **not on the median probe** (median ratio 1.000 at every β); it is a heavy-tailed,
+  dose-dependent aggregate shift that peaks at β=2.0 — and §1.5 shows even that peak is
+  reproduced by a signal-blind shuffle, so the β curve maps the strength of *redistribution*,
+  not of *the width signal*.
 
 ### 1.3 Expansion accounting — net decomposition
 
@@ -328,11 +347,9 @@ u(a)    = c_puct · mult(a) · P(a) · √N_parent / (1 + n_a)
 distribution) — heavier than the width channel's single forward per node. Same probe test set
 as §1. Motivation for testing it despite §6: it is the natural *consistency* counterpart to
 width's *spread*, run through the same clean (prior-untouched, sibling-relative) integration —
-a fair head-to-head. **Caveat going in:** `w1_qrdqn_uncertainty.py` found W1/Bellman-style
-signals are **at chance near the goal on the QR-DQN** (AUC ≈ 0.52/0.49 at d1–10/d11–22), and the
-probes are d5–20 — squarely that regime. So the prior expectation is that this channel may
-behave like random redistribution (the §2.2 shuffle control is therefore decisive, not
-optional).
+a fair head-to-head. It is judged **only** by this chat's experiments — its own in-search sweep
+against its own shuffle control — not by any offline AUC (§3.2 shows offline AUC does not
+predict search value). The shuffle control (§2.2) is therefore decisive, not optional.
 
 ### 2.1 Case study — Binc vs width vs baseline (n=2)
 
@@ -347,42 +364,122 @@ optional).
   | win 280_d14  | 770 | 234 | **244** | 276 |
   | loss 403_d18 | 106 | **279** | **97** | 101 |
 
-- **Takeaway (n=2 only).** On these two, Binc *looks* better-behaved than width: it wins on the
-  win (244 ≈ width's 234) **and does not derail the loss** (97–101 vs width's 279). That would
-  be notable if it holds — width's failure mode was over-committing on low-room instances, and
-  Binc appears not to. But n=2, and the §2.2 control shows this is not yet trustworthy.
+- **Takeaway (n=2 only — NOT trustworthy).** On these two, Binc *looks* better-behaved than
+  width (wins on the win, does not derail the loss). **The 480-probe shuffle control (§2.2)
+  refutes this** — like the width case study, the hand-picked pair pointed the wrong way. Kept
+  here only to document that the case study again misled; the aggregate is the verdict.
 
-### 2.2 Shuffle control — signal-blind placement (n=2, INCONCLUSIVE)
+### 2.2 Shuffle control — signal-blind placement (DECISIVE NEGATIVE at 480 probes)
 
-- **Purpose.** The decisive check (artifact #2), and doubly important here because Binc is
-  expected to be near-chance near the goal (see caveat above). If shuffling the Binc values
-  among siblings reproduces the effect, the channel is generic exploration redistribution, not
-  the Bellman signal. Reuses `--sib_shuffle` (now applies to OPTION 6 as well): same per-child
-  Binc multiset, permuted onto the wrong children (seeded by state index → deterministic).
-- **Method.** Binc + `--sib_shuffle` at β ∈ {1.0, 2.0} on the win and loss.
+- **Purpose.** The decisive check (artifact #2). If shuffling the Binc values among siblings
+  reproduces the effect, the channel is generic exploration redistribution, not the Bellman
+  signal. Reuses `--sib_shuffle` (applies to OPTION 6 too): same per-child Binc multiset,
+  permuted onto the wrong children (seeded by state index → deterministic).
+- **Method.** 480-probe cluster sweep: real Binc at β ∈ {0.5, 1.0, 2.0} and matched Binc-shuffle
+  at β ∈ {1.0, 2.0}. Metric: net expansions vs baseline on the common-solved set, and real-vs-
+  shuffle on the strict matched set (solved by baseline AND real AND shuffle). *(A misleading
+  n=2 case study preceded this — it was erratic, e.g. the win's shuffle swinging 957→246 between
+  β=1.0 and 2.0 — and is omitted here in favour of the aggregate, per the §1.5 lesson that case
+  studies do not settle signal questions.)*
 - **Result.**
 
-  | instance | Binc β1.0 | Binc-shuffle β1.0 | Binc β2.0 | Binc-shuffle β2.0 |
-  |----------|-----------|-------------------|-----------|-------------------|
-  | win 280_d14  | 244 | **957** | 276 | **246** |
-  | loss 403_d18 | 97  | 104     | 101 | 91  |
+  *vs baseline (own common-solved set):*
 
-- **Takeaway — INCONCLUSIVE at n=2.** The shuffle is **erratic**: at β=1.0 the real signal
-  (244) crushes its shuffle (957, worse than baseline), which would say "real signal"; but at
-  β=2.0 the shuffle (246) *matches* the real signal (276), which would say "generic". The same
-  instance's shuffle swings 957→246 between adjacent β. So — unlike the width channel, whose
-  n=2 shuffle was cleanly and consistently worse than the real signal (§1.5) — the
-  Bellman-inconsistency n=2 does **not** support a conclusion either way. **The aggregate
-  480-probe Binc sweep + a matched 480-probe Binc-shuffle sweep are required to decide.** Given
-  the near-goal-chance prior, the honest expectation is that Binc will not robustly beat its
-  shuffle at scale; the sweep will confirm or overturn that. **[PENDING — fill in the 480-probe
-  Binc net vs Binc-shuffle net when the cluster runs return.]**
+  | arm | coverage | net | net % |
+  |-----|----------|-----|-------|
+  | binc β0.5 | 456/480 | +4,912 | +5.8% |
+  | binc β1.0 | 454/480 | +6,252 | +7.4% |
+  | binc β2.0 | 465/480 | +14,798 | **+14.9%** |
+  | binc-shuffle β1.0 | 463/480 | +22,726 | **+24.1%** |
+  | binc-shuffle β2.0 | 466/480 | +17,223 | +17.6% |
+
+  *real vs shuffle, strict matched set:*
+
+  | β | matched n | REAL net | SHUFFLE net | head-to-head (real / shuffle) |
+  |---|-----------|----------|-------------|-------------------------------|
+  | 1.0 | 448 | +3.7% | **+15.9%** | 182 / 165 |
+  | 2.0 | 455 | +12.4% | **+14.8%** | 186 / **196** |
+
+- **Takeaway — DECISIVE NEGATIVE. Bellman inconsistency carries no usable placement information
+  in search.** At both β the signal-blind shuffle is *at least as good* as real Binc — much
+  better at β=1.0 (+15.9% vs +3.7%), and slightly better at β=2.0 on both net (+14.8% vs +12.4%)
+  and head-to-head probe count (shuffle 196 vs real 186). So binc β2.0's headline **+14.9% vs
+  baseline — the largest single-arm saving seen on this dataset — is redistribution, not
+  signal.** This is the same result as the width channel (§1.5): the fourth instance of the
+  artifact family (width-shuffle, Binc-shuffle, W1-uniform-floor §6.1, Bellman-widening-constant-w
+  §4.1). Two honest notes: (1) Binc's raw magnitude exceeds width's (real +12.4% vs width's +5.6%
+  at β=2), but that is a *stronger redistribution* (Binc floors more children at 0.1×), not more
+  signal — its shuffle scales up in lockstep. (2) Binc's coverage is lower (454–465 vs width's
+  472–474) because it costs one forward *per child* → more speed timeouts; the matched-set
+  comparison controls for this, so it does not affect the verdict. **This verdict rests entirely
+  on this chat's in-search sweep vs the shuffle control — no offline AUC was used to reach it.**
+
+### 2.3 Raw edge-W1 channel (OPTION 7) vs its shuffle — DECISIVE NEGATIVE
+
+- **Purpose.** Test the *raw* parent–child W1 (the `alphaZero_w1.py` "validation form"
+  `edge_W1(a) = W1(Z_best(s), Z_best(s'_a))`, **no reward, no discount**) as a per-child
+  exploration signal, through the same clean sibling integration (OPTION 7, `--w1raw_beta`).
+  Motivation: an offline argument predicted raw-W1 would be near-constant/inert, but the
+  three-way offline measurement (§3.3) refuted that — its dynamic range is *larger* than
+  width's (CV 0.80 vs 0.61) — and a local n=2 smoke test looked the *strongest* of all three
+  (win 280_d14: 770→156). So it earned an in-search test decided by its own shuffle.
+- **Method.** 480-probe sweep, real raw-W1 at β ∈ {0.5, 1.0, 2.0} and matched shuffle at
+  β ∈ {1.0, 2.0}; net expansions vs baseline, and real-vs-shuffle on the strict matched set.
+- **Result.**
+
+  *vs baseline (own common-solved set) — note the erratic β-dependence of the real arms:*
+
+  | arm | coverage | net | net % |
+  |-----|----------|-----|-------|
+  | w1raw β0.5 | 459/480 | +12,799 | +14.0% |
+  | w1raw β1.0 | 454/480 | −9,653 | **−12.1%** |
+  | w1raw β2.0 | 453/480 | +14,124 | +15.2% |
+  | w1raw-shuffle β1.0 | 467/480 | +16,773 | +17.4% |
+  | w1raw-shuffle β2.0 | 464/480 | +16,438 | +16.7% |
+
+  *real vs shuffle, strict matched set:*
+
+  | β | matched n | REAL net | SHUFFLE net | head-to-head (real / shuffle) |
+  |---|-----------|----------|-------------|-------------------------------|
+  | 1.0 | 449 | **−13.8%** | +7.6% | 175 / 178 |
+  | 2.0 | 448 | +14.5% | +14.9% | 186 / **194** |
+
+- **Takeaway — DECISIVE NEGATIVE, the starkest of the three.** Raw edge-W1 does not beat its
+  shuffle: at β=1.0 the real signal is **actively worse than random** (−13.8% vs +7.6% — using
+  the W1 values to place exploration *hurts*), and at β=2.0 they are tied (14.5% vs 14.9%, shuffle
+  marginally ahead and winning more probes). The real arms swing wildly with β (+14.0 / −12.1 /
+  +15.2) while the shuffle is stable (+17.4 / +16.7) — the fingerprint of a **noise-dominated**
+  quantity whose placement sometimes steers wrong. The n=2 smoke test (770→156) misled for the
+  third time (cf. width §1.5, Binc §2.2). Note the offline picture would have *mis-ranked* these
+  three (width highest AUC §3.3, raw-W1 lowest) — yet all three land at the same in-search
+  verdict, which only the shuffle control revealed.
+
+**Combined verdict on the three sibling channels (all judged by their own in-search shuffle,
+no offline AUC used):**
+
+All numbers on the **strict matched set** (solved by baseline AND that signal's real arm AND
+*that same signal's own* β=2 shuffle — never a shuffle from a different signal's run), net
+expansions vs baseline:
+
+| signal | real net (β=2) | its own shuffle net (β=2) | matched n | beats shuffle? |
+|--------|----------------|---------------------------|-----------|----------------|
+| width (§1.5) | +4.1% | **+11.0%** | 464 | **no** |
+| Bellman inconsistency (§2.2) | +12.4% | **+14.8%** | 455 | **no** |
+| raw edge-W1 (§2.3) | +14.5% | **+14.9%** | 448 | **no** |
+
+*(Each row uses only its own signal's shuffle: width vs width-shuffle, Binc vs Binc-shuffle,
+raw-W1 vs raw-W1-shuffle. Width's shuffle was run only at β=2.0, so the comparison exists only
+there.)* **The finding: sibling exploration *redistribution* is worth ~10–15% fewer expansions
+on these bushy near-goal probes for free, but none of the three uncertainty/consistency *values*
+beat shuffling their own values — in every case the shuffle is ≥ the real signal. The information
+is in *that you diversify the sibling exploration split*, not in *which children the signal points
+to*.** This is the sibling-exploration analogue of the prior-flattening law (§7).
 
 ---
 
 ## 3. Single-model distributional width (raw vs normalized)  *(offline signal-quality checks)*
 
-### 2.1 cv-normalization corruption
+### 3.1 cv-normalization corruption
 
 - **Purpose.** The AlphaZero width channel originally divided width by |value| (`cv`) for
   distance-invariance. Check whether that normalization preserves the signal (artifact #5).
@@ -400,7 +497,7 @@ optional).
   among same-distance states* — i.e. a node's siblings (§1), because they need no cross-distance
   normalization at all.
 
-### 2.2 Offline vs search-visited distribution (transfer check)
+### 3.2 Offline vs search-visited distribution (transfer check)
 
 - **Purpose.** Guard against artifact #3: does an offline width AUC predict search behaviour?
 - **Method.** Measure width→uncertainty AUC on optimal-plan / sampled states, then re-measure
@@ -413,11 +510,54 @@ optional).
   probe dataset (§1) exists — it puts search in-distribution (d ≤ 20) with room, the only
   regime where the signal is both clean and actionable.
 
+### 3.3 Three-way offline comparison on probe states (width vs raw-W1 vs Bellman-W1)
+
+- **Purpose.** Settle two disputes on data rather than argument: (a) whether raw edge-W1 is
+  "near-constant / no dynamic range" (a claim made against it), and (b) how the three candidate
+  signals compare as uncertainty detectors on the *same* states with exact labels — feeding the
+  decision of which to test in search (§1, §2.2, §2.3). Code: `probe_signal_auc.py`.
+- **Method.** On the deepest probe per source problem (30 distinct optimal trajectories → 30
+  distinct states per exact distance; the nested-trajectory dataset property below made this
+  necessary), compute per state: `width` = q90−q10 of the best-action curve; `edge_W1` =
+  W1(Z_best(s), Z_best(s′)) (raw, no reward/discount); `bellman_W1` = W1(Z_best(s),
+  −1+γ·Z_best(s′)). Label = SAC-ensemble disagreement. AUC = P(signal higher at high-disagreement)
+  via tercile split, computed **within each exact distance** (distance cannot confound). Also
+  report each signal's coefficient of variation within a fixed distance.
+- **Result.** Banded AUC (120 states/band) and dynamic range (CV, median over distances):
+
+  | band | width | edge_W1 | bellman_W1 |
+  |------|-------|---------|------------|
+  | d1–4 | 0.634 | 0.591 | 0.619 |
+  | d5–8 | 0.629 | 0.468 | 0.592 |
+  | d9–12 | 0.481 | 0.236 | 0.594 |
+  | d13–16 | 0.348 | 0.418 | 0.646 |
+  | d17–20 | 0.131 | 0.325 | 0.350 |
+  | **CV** | **0.605** | **0.802** | **0.888** |
+
+- **Takeaway.** (1) **"Raw edge-W1 has no dynamic range" is false** — its CV (0.80) exceeds
+  width's (0.61). It is weak (band mean ~0.41) *because its variation doesn't track uncertainty*,
+  not because it is constant. (2) **Width is far weaker on optimal-path states** (0.63 near goal,
+  inverting to 0.13 at d17–20) than the 0.82–1.00 measured on search-visited states — artifact #3
+  again; do not read one distribution's AUC as the other's. (3) **bellman_W1 is the steadiest**
+  (mean ~0.56, above chance d1–16). **But none of this selected the search test** — per §1.5,
+  offline AUC *rules out* (chance can't help) and does *not* select (width scored highest offline
+  and still lost to its shuffle in search). Caveats: optimal-path (not search-visited) states;
+  n=30/distance → SE ≈ 0.12, so trust the banded rows, not individual cells. **NOTE:** the earlier
+  attribution of the AUC "0.52/0.49" to raw edge-W1 was an error — that number is the *Bellman*
+  form's, and raw edge-W1 had never been measured until this experiment.
+
+**Dataset property (important, reusable).** Probes carved from the *same source problem* are
+nested on ONE optimal trajectory — the d=5 probe's initial state *is* the state 5 steps from
+goal on the d=20 probe's path. So walking all 480 plan tails re-walks each path ~16× and yields
+duplicated states with zero within-distance variance (this produced a spurious CV=0 / AUC=0.5 on
+the first attempt). Any per-state analysis on this dataset must take the **deepest probe per
+source** (30 trajectories) or otherwise de-duplicate.
+
 ---
 
 ## 4. Bellman consistency / residual  *(closed by controls)*
 
-### 3.1 Constant-w control (widening channel)
+### 4.1 Constant-w control (widening channel)
 
 - **Purpose.** The Bellman-widening arm (flatten prior by w ∝ Bellman inconsistency) improved
   Rovers coverage. Test artifact #1: is it the *signal*, or just prior-flattening?
@@ -433,7 +573,7 @@ optional).
   because a fixed err_scale saturated w at the cap, so the grid negative was withdrawn and
   re-run with an adaptive scale.
 
-### 3.2 Definitional null (single-model 1-step residual)
+### 4.2 Definitional null (single-model 1-step residual)
 
 - **Purpose.** Ask whether the 1-step Bellman residual can rank action quality *even in
   principle*.
@@ -445,7 +585,7 @@ optional).
   action-independent by construction** — there is no action-quality signal to extract. All
   W1/width variants of it inherit this. (Scope: same-model; cross-model differs, §4.4.)
 
-### 3.3 Affine-correction control
+### 4.3 Affine-correction control
 
 - **Purpose.** The supervisor proposed per-instance affine recalibration `w·V + b`. Test
   whether it rescues the residual.
@@ -457,7 +597,7 @@ optional).
 - **Takeaway.** Affine correction **recovers distance (a good A\* heuristic) but not the
   Bellman uncertainty signal** on any model. The two ideas want different homes.
 
-### 3.4 Cross-model independence
+### 4.4 Cross-model independence
 
 - **Purpose.** Same-model residual is definitionally null (§4.2); does reading the endpoint
   with a *differently-trained* model recover signal?
@@ -475,7 +615,7 @@ optional).
 
 ## 5. Ensemble vote  *(the one signal that survived — with an ablation)*
 
-### 4.1 Single-model vs six-model ablation
+### 5.1 Single-model vs six-model ablation
 
 - **Purpose.** The ensemble vote (each of N seed-diverse value models votes its top child;
   boost = vote share) was the only Grid signal to beat chance in both directions. Confirm the
@@ -493,7 +633,7 @@ optional).
 
 ## 6. W1 (parent–child distribution shift)  *(closed by control)*
 
-### 5.1 Uniform-floor control
+### 6.1 Uniform-floor control
 
 - **Purpose.** W1-multiplicative gave a real Grid expansion reduction (10.6% overall / 17.8%
   hard). Test whether W1's *ordering* of siblings carries it, or just the escape-hatch
