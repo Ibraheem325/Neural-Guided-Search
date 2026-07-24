@@ -1,0 +1,47 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[W1raw] OPTION7 w1raw_beta=0.5 signal=RAW edge-W1 (parent-best vs child-best, no reward/discount) vs SIBLINGS (boosts exploration toward larger-shift children; prior untouched)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 118] found goal path of length 34
+[Final] Expanded: 321, Generated: 321
+[Cost] IQN forward calls (Bellman signal): 635
+[Widen] nodes widened: 0, mean w: 0.0000
+[W1raw] child-edges modulated: 517, mean mult: 1.0000 (1.0 = no change; >1 = boosted toward larger shift)
+[search done] simulations=118, unique states generated=321
+Found a solution of length 34!
+   1: (move f5-5f f5-4f)
+   2: (move f5-4f f6-4f)
+   3: (move f6-4f f7-4f)
+   4: (pickup f7-4f key0-2)
+   5: (move f7-4f f7-5f)
+   6: (unlock f7-5f f8-5f key0-2 shape0)
+   7: (move f7-5f f7-4f)
+   8: (move f7-4f f8-4f)
+   9: (move f8-4f f8-3f)
+  10: (move f8-3f f8-2f)
+  11: (move f8-2f f7-2f)
+  12: (move f7-2f f6-2f)
+  13: (move f6-2f f5-2f)
+  14: (move f5-2f f5-1f)
+  15: (move f5-1f f6-1f)
+  16: (move f6-1f f6-0f)
+  17: (move f6-0f f5-0f)
+  18: (move f5-0f f4-0f)
+  19: (move f4-0f f4-1f)
+  20: (move f4-1f f4-2f)
+  21: (move f4-2f f3-2f)
+  22: (move f3-2f f3-1f)
+  23: (move f3-1f f3-0f)
+  24: (move f3-0f f2-0f)
+  25: (move f2-0f f2-1f)
+  26: (move f2-1f f1-1f)
+  27: (move f1-1f f0-1f)
+  28: (move f0-1f f0-2f)
+  29: (move f0-2f f0-3f)
+  30: (move f0-3f f0-4f)
+  31: (move f0-4f f0-5f)
+  32: (move f0-5f f0-6f)
+  33: (move f0-6f f0-7f)
+  34: (putdown f0-7f key0-2)
