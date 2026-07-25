@@ -1,0 +1,18 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Sib] OPTION5 sib_beta=2.0 signal=QR-DQN raw width vs SIBLINGS (boosts exploration toward wider/uncertain children; prior untouched) [SHUFFLE CONTROL: width-blind placement]
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 9] found goal path of length 5
+[Final] Expanded: 32, Generated: 32
+[Cost] IQN forward calls (Bellman signal): 9
+[Widen] nodes widened: 0, mean w: 0.0000
+[Sib] child-edges modulated: 45, mean mult: 1.0065 (1.0 = no change; >1 = boosted toward wide)
+[search done] simulations=9, unique states generated=32
+Found a solution of length 5!
+   1: (move f9-7f f9-8f)
+   2: (move f9-8f f9-9f)
+   3: (move f9-9f f10-9f)
+   4: (move f10-9f f10-10f)
+   5: (pickup-and-loose f10-10f key3-2 key3-3)
