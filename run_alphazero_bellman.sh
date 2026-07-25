@@ -85,6 +85,11 @@ W1RAW_BETA=${24:-0.0}
 # arg 25: c_puct (pUCT exploration constant). Baseline default = 1.5. Lower => more
 # commitment (signal-free "commitment" control: does over-exploration explain the shuffle gains).
 C_PUCT=${25:-1.5}
+# arg 26: SELF-CONSISTENT VALUE (0/1) -- use the QR-DQN as the leaf value (not SAC critics),
+# so the width/Binc uncertainty signal matches the value function driving search. 1 = on.
+QRDQN_VALUE=${26:-0}
+QRDQN_VALUE_FLAG=""
+[ "$QRDQN_VALUE" = "1" ] && QRDQN_VALUE_FLAG="--qrdqn_value"
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -95,5 +100,5 @@ venv/bin/python alphaZero_bellman.py \
     --value_lambda "$VALUE_LAMBDA" --width_beta "$WIDTH_BETA" \
     --ens_beta "$ENS_BETA" $ENS_ARGS --sib_beta "$SIB_BETA" --sib_gate "$SIB_GATE" \
     --binc_beta "$BINC_BETA" --w1raw_beta "$W1RAW_BETA" $SHUFFLE_FLAG \
-    --c_puct "$C_PUCT" \
+    --c_puct "$C_PUCT" $QRDQN_VALUE_FLAG \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1

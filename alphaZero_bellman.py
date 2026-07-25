@@ -207,6 +207,9 @@ class _Signal:
         #     exploration toward children with a larger distribution shift. ---
         self.w1raw_beta = 0.0
         self.w1raw_sum = 0.0; self.w1raw_count = 0
+        # SELF-CONSISTENT VALUE: use the QR-DQN mean as the leaf value (instead of the SAC
+        # twin critics), so the uncertainty signal matches the value function driving search.
+        self.qrdqn_value = False
 
     @property
     def sib_active(self) -> bool:
@@ -690,6 +693,13 @@ def _leaf_value(state: mm.State,
                 goal: mm.GroundConjunctiveCondition,
                 q1_model: ModelWrapper,
                 q2_model: Optional[ModelWrapper]) -> float:
+    # SELF-CONSISTENT MODE: use the QR-DQN (the same model as the width/Binc signal) as the
+    # leaf value = max_a mean Z(s,a), so the uncertainty we widen at matches the value in use.
+    if _SIG.qrdqn_value and _SIG.iqn is not None:
+        q, _ = _SIG.iqn.forward([(state, goal)], taus=_SIG.taus)[0]
+        if q.shape[0] == 0:
+            return 0.0
+        return q.mean(dim=1).max().item()
     q1_vals, _ = q1_model.forward([(state, goal)])[0]
     if q2_model is not None:
         q2_vals, _ = q2_model.forward([(state, goal)])[0]
@@ -989,6 +999,11 @@ def _parse_arguments() -> argparse.Namespace:
                              "width. Boost exploration toward more-inconsistent siblings. 0 = off. "
                              "Try 0.5-2.0. Requires --iqn_model (the QR-DQN). Respects --sib_gate "
                              "and --sib_shuffle.")
+    parser.add_argument("--qrdqn_value", action="store_true",
+                        help="SELF-CONSISTENT MODE: use the QR-DQN (--iqn_model) as the leaf "
+                             "value (max_a mean Z(s,a)) instead of the SAC twin critics, so the "
+                             "width/Binc uncertainty signal is about the SAME model whose value "
+                             "drives search. Requires --iqn_model.")
     parser.add_argument("--w1raw_beta", default=0.0, type=float,
                         help="OPTION 7 (SIBLING RAW EDGE-W1 EXPLORATION channel, leaves prior "
                              "untouched). Per-child signal = W1(Z_best(s), Z_best(s'_a)) with NO "
@@ -1213,6 +1228,18 @@ def _main(args: argparse.Namespace) -> None:
         print(f"[W1raw] OPTION7 w1raw_beta={args.w1raw_beta} signal=RAW edge-W1 "
               f"(parent-best vs child-best, no reward/discount) vs SIBLINGS (boosts exploration "
               f"toward larger-shift children; prior untouched){tag}{gate}", flush=True)
+
+    # SELF-CONSISTENT VALUE: route the leaf value through the QR-DQN (same model as the signal).
+    if args.qrdqn_value:
+        assert args.iqn_model is not None, "--qrdqn_value requires --iqn_model (the QR-DQN)"
+        if _SIG.iqn is None:
+            iqn, _, _ = _load_iqn_model(domain, args.iqn_model, device)
+            iqn.eval()
+            _SIG.iqn = iqn
+            _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
+        _SIG.qrdqn_value = True
+        print("[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) "
+              "(SAC critics bypassed; prior still SAC policy)", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, args)
     if solution is None:
