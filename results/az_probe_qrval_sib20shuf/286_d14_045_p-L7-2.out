@@ -2,23 +2,24 @@ Torch: 2.12.0+cu130
 Using GPU:  NVIDIA L40S
 [Bellman] lambda=0 -> baseline (no widening signal)
 [Sib] OPTION5 sib_beta=2.0 signal=QR-DQN raw width vs SIBLINGS (boosts exploration toward wider/uncertain children; prior untouched) [SHUFFLE CONTROL: width-blind placement]
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
-  [sim 93] found goal path of length 31
-[Final] Expanded: 242, Generated: 242
-[Cost] IQN forward calls (Bellman signal): 93
+  [sim 241] found goal path of length 31
+[Final] Expanded: 642, Generated: 642
+[Cost] IQN forward calls (Bellman signal): 238
 [Widen] nodes widened: 0, mean w: 0.0000
-[Sib] child-edges modulated: 397, mean mult: 1.0020 (1.0 = no change; >1 = boosted toward wide)
-[search done] simulations=93, unique states generated=242
+[Sib] child-edges modulated: 1035, mean mult: 1.0008 (1.0 = no change; >1 = boosted toward wide)
+[search done] simulations=241, unique states generated=642
 Found a solution of length 31!
-   1: (move f6-5f f6-4f)
-   2: (move f6-4f f7-4f)
+   1: (move f6-5f f7-5f)
+   2: (move f7-5f f7-4f)
    3: (pickup f7-4f key0-2)
    4: (move f7-4f f8-4f)
    5: (unlock f8-4f f8-5f key0-2 shape0)
-   6: (move f8-4f f8-3f)
-   7: (move f8-3f f8-2f)
-   8: (move f8-2f f7-2f)
+   6: (move f8-4f f7-4f)
+   7: (move f7-4f f7-3f)
+   8: (move f7-3f f7-2f)
    9: (move f7-2f f6-2f)
   10: (move f6-2f f5-2f)
   11: (move f5-2f f5-1f)
@@ -32,8 +33,8 @@ Found a solution of length 31!
   19: (move f3-2f f3-1f)
   20: (move f3-1f f3-0f)
   21: (move f3-0f f2-0f)
-  22: (move f2-0f f1-0f)
-  23: (move f1-0f f1-1f)
+  22: (move f2-0f f2-1f)
+  23: (move f2-1f f1-1f)
   24: (move f1-1f f0-1f)
   25: (move f0-1f f0-2f)
   26: (move f0-2f f0-3f)

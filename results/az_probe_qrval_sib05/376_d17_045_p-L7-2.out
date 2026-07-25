@@ -2,14 +2,19 @@ Torch: 2.12.0+cu130
 Using GPU:  NVIDIA L40S
 [Bellman] lambda=0 -> baseline (no widening signal)
 [Sib] OPTION5 sib_beta=0.5 signal=QR-DQN raw width vs SIBLINGS (boosts exploration toward wider/uncertain children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
-  [sim 500] root visits=500, unique states=1172, generated=1171, iqn_calls=417
-  [sim 1000] root visits=1000, unique states=2027, generated=2026, iqn_calls=744
-  [sim 1500] root visits=1500, unique states=2950, generated=2949, iqn_calls=1075
-[Final] Expanded: 3021, Generated: 3021
-[Cost] IQN forward calls (Bellman signal): 1102
+  [sim 500] root visits=500, unique states=1082, generated=1081, iqn_calls=396
+  [sim 1000] root visits=1000, unique states=1853, generated=1852, iqn_calls=681
+  [sim 1500] root visits=1500, unique states=1974, generated=1973, iqn_calls=723
+  [sim 2000] root visits=2000, unique states=2073, generated=2072, iqn_calls=763
+  [sim 2500] root visits=2500, unique states=2638, generated=2637, iqn_calls=967
+  [sim 3000] root visits=3000, unique states=3485, generated=3484, iqn_calls=1255
+  [sim 3500] root visits=3500, unique states=4488, generated=4487, iqn_calls=1624
+[Final] Expanded: 4670, Generated: 4670
+[Cost] IQN forward calls (Bellman signal): 1689
 [Widen] nodes widened: 0, mean w: 0.0000
-[Sib] child-edges modulated: 4926, mean mult: 1.0000 (1.0 = no change; >1 = boosted toward wide)
-[search done] simulations=1547, unique states generated=3021
+[Sib] child-edges modulated: 7587, mean mult: 1.0000 (1.0 = no change; >1 = boosted toward wide)
+[search done] simulations=3620, unique states generated=4670
 Failed to find a solution!

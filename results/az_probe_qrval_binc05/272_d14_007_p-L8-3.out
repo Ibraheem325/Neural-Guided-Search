@@ -2,6 +2,7 @@ Torch: 2.12.0+cu130
 Using GPU:  NVIDIA L40S
 [Bellman] lambda=0 -> baseline (no widening signal)
 [Binc] OPTION6 binc_beta=0.5 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
   [sim 19] found goal path of length 16
@@ -11,8 +12,8 @@ Using GPU:  NVIDIA L40S
 [Binc] child-edges modulated: 83, mean mult: 1.0000 (1.0 = no change; >1 = boosted toward inconsistent)
 [search done] simulations=19, unique states generated=57
 Found a solution of length 16!
-   1: (move f8-2f f8-1f)
-   2: (move f8-1f f9-1f)
+   1: (move f8-2f f9-2f)
+   2: (move f9-2f f9-1f)
    3: (pickup f9-1f key1-3)
    4: (move f9-1f f8-1f)
    5: (move f8-1f f7-1f)

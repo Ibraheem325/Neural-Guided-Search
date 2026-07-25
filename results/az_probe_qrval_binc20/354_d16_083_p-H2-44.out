@@ -2,14 +2,15 @@ Torch: 2.12.0+cu130
 Using GPU:  NVIDIA L40S
 [Bellman] lambda=0 -> baseline (no widening signal)
 [Binc] OPTION6 binc_beta=2.0 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
-  [sim 107] found goal path of length 51
-[Final] Expanded: 299, Generated: 299
-[Cost] IQN forward calls (Bellman signal): 606
+  [sim 71] found goal path of length 51
+[Final] Expanded: 208, Generated: 208
+[Cost] IQN forward calls (Bellman signal): 401
 [Widen] nodes widened: 0, mean w: 0.0000
-[Binc] child-edges modulated: 500, mean mult: 1.0988 (1.0 = no change; >1 = boosted toward inconsistent)
-[search done] simulations=107, unique states generated=299
+[Binc] child-edges modulated: 331, mean mult: 1.0912 (1.0 = no change; >1 = boosted toward inconsistent)
+[search done] simulations=71, unique states generated=208
 Found a solution of length 51!
    1: (putdown f2-2f key2-0)
    2: (move f2-2f f1-2f)
@@ -19,8 +20,8 @@ Found a solution of length 51!
    6: (move f1-3f f2-3f)
    7: (move f2-3f f3-3f)
    8: (move f3-3f f4-3f)
-   9: (move f4-3f f4-4f)
-  10: (move f4-4f f5-4f)
+   9: (move f4-3f f5-3f)
+  10: (move f5-3f f5-4f)
   11: (move f5-4f f5-5f)
   12: (move f5-5f f5-6f)
   13: (move f5-6f f6-6f)

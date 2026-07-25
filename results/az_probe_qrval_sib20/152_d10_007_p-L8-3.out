@@ -2,14 +2,15 @@ Torch: 2.12.0+cu130
 Using GPU:  NVIDIA L40S
 [Bellman] lambda=0 -> baseline (no widening signal)
 [Sib] OPTION5 sib_beta=2.0 signal=QR-DQN raw width vs SIBLINGS (boosts exploration toward wider/uncertain children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
-  [sim 19] found goal path of length 12
-[Final] Expanded: 60, Generated: 60
-[Cost] IQN forward calls (Bellman signal): 19
+  [sim 16] found goal path of length 12
+[Final] Expanded: 52, Generated: 52
+[Cost] IQN forward calls (Bellman signal): 16
 [Widen] nodes widened: 0, mean w: 0.0000
-[Sib] child-edges modulated: 88, mean mult: 1.0131 (1.0 = no change; >1 = boosted toward wide)
-[search done] simulations=19, unique states generated=60
+[Sib] child-edges modulated: 73, mean mult: 1.0158 (1.0 = no change; >1 = boosted toward wide)
+[search done] simulations=16, unique states generated=52
 Found a solution of length 12!
    1: (move f8-1f f7-1f)
    2: (move f7-1f f7-0f)

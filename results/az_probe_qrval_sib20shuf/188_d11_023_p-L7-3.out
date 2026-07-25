@@ -2,6 +2,7 @@ Torch: 2.12.0+cu130
 Using GPU:  NVIDIA L40S
 [Bellman] lambda=0 -> baseline (no widening signal)
 [Sib] OPTION5 sib_beta=2.0 signal=QR-DQN raw width vs SIBLINGS (boosts exploration toward wider/uncertain children; prior untouched) [SHUFFLE CONTROL: width-blind placement]
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
 /u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
   exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
   [sim 17] found goal path of length 15
@@ -19,8 +20,8 @@ Found a solution of length 15!
    6: (move f6-6f f6-7f)
    7: (move f6-7f f6-8f)
    8: (move f6-8f f7-8f)
-   9: (move f7-8f f8-8f)
-  10: (move f8-8f f8-9f)
+   9: (move f7-8f f7-9f)
+  10: (move f7-9f f8-9f)
   11: (move f8-9f f9-9f)
   12: (pickup f9-9f key0-4)
   13: (move f9-9f f8-9f)
