@@ -1,0 +1,6 @@
+(move f8-7f f7-7f)
+(move f7-7f f7-8f)
+(detonate-bomb f7-8f f7-9f)
+(move f7-8f f7-9f)
+(pick-gold f7-9f)
+; cost = 5 (unit cost)
