@@ -199,6 +199,11 @@ class _Signal:
         #     prior channel. Costs one QR-DQN forward per child (parent + each successor). ---
         self.binc_beta = 0.0
         self.binc_sum = 0.0; self.binc_count = 0
+        # OPTION 6 B_good width: a successor b counts as "good" if its mean value is within
+        # binc_eps of the best successor's. binc = min-W1 over B_good (benefit of the doubt:
+        # only flag inconsistency if the parent disagrees with EVERY near-optimal successor).
+        # 0.0 = hard best neighbor (original); ~0.5-1.0 forgives near-tied successors.
+        self.binc_eps = 0.0
         # --- OPTION 7: SIBLING RAW EDGE-W1 exploration channel (leaves the prior untouched).
         #     Same clean integration as OPTION 5/6, but the per-child signal is the RAW
         #     parent-vs-child distribution shift W1(Z_best(s), Z_best(s'_a)) -- NO reward, NO
@@ -549,7 +554,7 @@ def _compute_binc_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> Non
         targets = _SIG.reward + _SIG.gamma * cqs          # [A_child, 99] Bellman targets
         scores = cqs.mean(dim=1)
         w1 = (z_sa.unsqueeze(0) - targets).abs().mean(dim=1)
-        w1s[a] = w1[scores >= scores.max()].min().item()  # eps=0 B_good (best successor)
+        w1s[a] = w1[scores >= scores.max() - _SIG.binc_eps].min().item()  # B_good = within eps of best
     if len(w1s) < 2:
         return
     if _SIG.sib_shuffle:
@@ -999,6 +1004,11 @@ def _parse_arguments() -> argparse.Namespace:
                              "width. Boost exploration toward more-inconsistent siblings. 0 = off. "
                              "Try 0.5-2.0. Requires --iqn_model (the QR-DQN). Respects --sib_gate "
                              "and --sib_shuffle.")
+    parser.add_argument("--binc_eps", default=0.0, type=float,
+                        help="OPTION 6 B_good width (value units): a successor counts as 'good' "
+                             "if its mean value is within binc_eps of the best. binc = min-W1 over "
+                             "B_good. 0 = hard best (original); ~0.5-1.0 forgives near-tied "
+                             "successors (fewer false-inconsistency alarms).")
     parser.add_argument("--qrdqn_value", action="store_true",
                         help="SELF-CONSISTENT MODE: use the QR-DQN (--iqn_model) as the leaf "
                              "value (max_a mean Z(s,a)) instead of the SAC twin critics, so the "
@@ -1202,13 +1212,15 @@ def _main(args: argparse.Namespace) -> None:
             _SIG.iqn = iqn
             _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
         _SIG.binc_beta = args.binc_beta
+        _SIG.binc_eps = args.binc_eps
         _SIG.sib_gate = args.sib_gate
         _SIG.sib_shuffle = args.sib_shuffle
         tag = " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else ""
         gate = f" [ROOM GATE: active after {args.sib_gate} expansions]" if args.sib_gate > 0 else ""
-        print(f"[Binc] OPTION6 binc_beta={args.binc_beta} signal=BELLMAN INCONSISTENCY "
-              f"(1-step min-W1 parent-vs-child) vs SIBLINGS (boosts exploration toward "
-              f"inconsistent children; prior untouched){tag}{gate}", flush=True)
+        print(f"[Binc] OPTION6 binc_beta={args.binc_beta} binc_eps={args.binc_eps} "
+              f"signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child, B_good within eps) "
+              f"vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched)"
+              f"{tag}{gate}", flush=True)
 
     # OPTION 7: sibling RAW edge-W1 exploration channel. Point --iqn_model at the QR-DQN.
     if args.w1raw_beta > 0.0:

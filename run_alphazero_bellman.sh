@@ -90,6 +90,8 @@ C_PUCT=${25:-1.5}
 QRDQN_VALUE=${26:-0}
 QRDQN_VALUE_FLAG=""
 [ "$QRDQN_VALUE" = "1" ] && QRDQN_VALUE_FLAG="--qrdqn_value"
+# arg 27: OPTION 6 B_good width (value units). 0 = hard best; ~0.5-1.0 forgives near-tied successors.
+BINC_EPS=${27:-0.0}
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -100,5 +102,5 @@ venv/bin/python alphaZero_bellman.py \
     --value_lambda "$VALUE_LAMBDA" --width_beta "$WIDTH_BETA" \
     --ens_beta "$ENS_BETA" $ENS_ARGS --sib_beta "$SIB_BETA" --sib_gate "$SIB_GATE" \
     --binc_beta "$BINC_BETA" --w1raw_beta "$W1RAW_BETA" $SHUFFLE_FLAG \
-    --c_puct "$C_PUCT" $QRDQN_VALUE_FLAG \
+    --c_puct "$C_PUCT" $QRDQN_VALUE_FLAG --binc_eps "$BINC_EPS" \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1
