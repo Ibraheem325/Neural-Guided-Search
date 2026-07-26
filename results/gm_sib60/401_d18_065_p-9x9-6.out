@@ -1,0 +1,90 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Sib] OPTION5 sib_beta=6.0 signal=QR-DQN raw width vs SIBLINGS (boosts exploration toward wider/uncertain children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=830, generated=829, iqn_calls=265
+  [sim 1000] root visits=1000, unique states=1270, generated=1269, iqn_calls=413
+  [sim 1500] root visits=1500, unique states=1539, generated=1538, iqn_calls=515
+  [sim 2000] root visits=2000, unique states=1738, generated=1737, iqn_calls=590
+  [sim 2500] root visits=2500, unique states=1945, generated=1944, iqn_calls=663
+  [sim 3000] root visits=3000, unique states=2048, generated=2047, iqn_calls=698
+  [sim 3500] root visits=3500, unique states=2186, generated=2185, iqn_calls=744
+  [sim 4000] root visits=4000, unique states=2337, generated=2336, iqn_calls=792
+  [sim 4500] root visits=4500, unique states=2580, generated=2579, iqn_calls=868
+  [sim 5000] root visits=5000, unique states=2792, generated=2791, iqn_calls=950
+  [sim 5500] root visits=5500, unique states=2877, generated=2876, iqn_calls=990
+  [sim 6000] root visits=6000, unique states=2992, generated=2991, iqn_calls=1033
+  [sim 6500] root visits=6500, unique states=3098, generated=3097, iqn_calls=1067
+  [sim 7000] root visits=7000, unique states=3268, generated=3267, iqn_calls=1125
+  [sim 7500] root visits=7500, unique states=3369, generated=3368, iqn_calls=1160
+  [sim 8000] root visits=8000, unique states=3491, generated=3490, iqn_calls=1199
+  [sim 8500] root visits=8500, unique states=3738, generated=3737, iqn_calls=1291
+  [sim 9000] root visits=9000, unique states=3902, generated=3901, iqn_calls=1358
+  [sim 9500] root visits=9500, unique states=4046, generated=4045, iqn_calls=1409
+  [sim 9997] found goal path of length 57
+[Final] Expanded: 4232, Generated: 4232
+[Cost] IQN forward calls (Bellman signal): 1473
+[Widen] nodes widened: 0, mean w: 0.0000
+[Sib] child-edges modulated: 8257, mean mult: 1.0008 (1.0 = no change; >1 = boosted toward wide)
+[search done] simulations=9997, unique states generated=4232
+Found a solution of length 57!
+   1: (move f6-0f f7-0f)
+   2: (pickup-laser f7-0f)
+   3: (fire-laser f7-0f f7-1f)
+   4: (move f7-0f f8-0f)
+   5: (fire-laser f8-0f f8-1f)
+   6: (move f8-0f f7-0f)
+   7: (move f7-0f f7-1f)
+   8: (move f7-1f f7-2f)
+   9: (fire-laser f7-2f f7-3f)
+  10: (move f7-2f f7-3f)
+  11: (fire-laser f7-3f f8-3f)
+  12: (move f7-3f f7-2f)
+  13: (move f7-2f f6-2f)
+  14: (move f6-2f f6-1f)
+  15: (move f6-1f f7-1f)
+  16: (move f7-1f f8-1f)
+  17: (move f8-1f f8-2f)
+  18: (move f8-2f f8-3f)
+  19: (fire-laser f8-3f f8-4f)
+  20: (move f8-3f f7-3f)
+  21: (move f7-3f f7-2f)
+  22: (move f7-2f f6-2f)
+  23: (move f6-2f f6-1f)
+  24: (move f6-1f f7-1f)
+  25: (move f7-1f f7-0f)
+  26: (move f7-0f f8-0f)
+  27: (move f8-0f f8-1f)
+  28: (move f8-1f f8-2f)
+  29: (putdown-laser f8-2f)
+  30: (move f8-2f f8-3f)
+  31: (move f8-3f f7-3f)
+  32: (move f7-3f f7-2f)
+  33: (move f7-2f f7-1f)
+  34: (move f7-1f f8-1f)
+  35: (move f8-1f f8-0f)
+  36: (move f8-0f f7-0f)
+  37: (pickup-bomb f7-0f)
+  38: (move f7-0f f7-1f)
+  39: (move f7-1f f8-1f)
+  40: (move f8-1f f8-2f)
+  41: (move f8-2f f8-3f)
+  42: (move f8-3f f7-3f)
+  43: (move f7-3f f7-2f)
+  44: (move f7-2f f6-2f)
+  45: (move f6-2f f6-3f)
+  46: (move f6-3f f6-4f)
+  47: (move f6-4f f5-4f)
+  48: (move f5-4f f4-4f)
+  49: (move f4-4f f3-4f)
+  50: (move f3-4f f2-4f)
+  51: (move f2-4f f2-5f)
+  52: (move f2-5f f2-6f)
+  53: (move f2-6f f3-6f)
+  54: (move f3-6f f3-7f)
+  55: (detonate-bomb f3-7f f3-8f)
+  56: (move f3-7f f3-8f)
+  57: (pick-gold f3-8f)

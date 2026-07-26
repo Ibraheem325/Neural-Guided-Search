@@ -1,0 +1,25 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Binc] OPTION6 binc_beta=6.0 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 13] found goal path of length 11
+[Final] Expanded: 23, Generated: 23
+[Cost] IQN forward calls (Bellman signal): 48
+[Widen] nodes widened: 0, mean w: 0.0000
+[Binc] child-edges modulated: 36, mean mult: 2.2497 (1.0 = no change; >1 = boosted toward inconsistent)
+[search done] simulations=13, unique states generated=23
+Found a solution of length 11!
+   1: (move f5-5f f5-6f)
+   2: (move f5-6f f4-6f)
+   3: (move f4-6f f4-7f)
+   4: (move f4-7f f3-7f)
+   5: (move f3-7f f2-7f)
+   6: (move f2-7f f1-7f)
+   7: (move f1-7f f0-7f)
+   8: (move f0-7f f0-8f)
+   9: (detonate-bomb f0-8f f0-9f)
+  10: (move f0-8f f0-9f)
+  11: (pick-gold f0-9f)

@@ -1,0 +1,27 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Sib] OPTION5 sib_beta=2.0 signal=QR-DQN raw width vs SIBLINGS (boosts exploration toward wider/uncertain children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1269, generated=1268, iqn_calls=431
+  [sim 1000] root visits=1000, unique states=2475, generated=2474, iqn_calls=794
+  [sim 1500] root visits=1500, unique states=3570, generated=3569, iqn_calls=1179
+  [sim 2000] root visits=2000, unique states=4585, generated=4584, iqn_calls=1509
+  [sim 2500] root visits=2500, unique states=5396, generated=5395, iqn_calls=1805
+  [sim 3000] root visits=3000, unique states=5902, generated=5901, iqn_calls=2015
+  [sim 3500] root visits=3500, unique states=6599, generated=6598, iqn_calls=2278
+  [sim 4000] root visits=4000, unique states=7364, generated=7363, iqn_calls=2551
+  [sim 4500] root visits=4500, unique states=8155, generated=8154, iqn_calls=2821
+  [sim 5000] root visits=5000, unique states=8940, generated=8939, iqn_calls=3083
+  [sim 5500] root visits=5500, unique states=9588, generated=9587, iqn_calls=3328
+  [sim 6000] root visits=6000, unique states=10184, generated=10183, iqn_calls=3559
+  [sim 6500] root visits=6500, unique states=10896, generated=10895, iqn_calls=3809
+  [sim 7000] root visits=7000, unique states=11575, generated=11574, iqn_calls=4057
+[Final] Expanded: 12129, Generated: 12129
+[Cost] IQN forward calls (Bellman signal): 4273
+[Widen] nodes widened: 0, mean w: 0.0000
+[Sib] child-edges modulated: 22763, mean mult: 1.0000 (1.0 = no change; >1 = boosted toward wide)
+[search done] simulations=7462, unique states generated=12129
+Failed to find a solution!

@@ -1,0 +1,41 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Binc] OPTION6 binc_beta=4.0 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=45, generated=44, iqn_calls=111
+  [sim 1000] root visits=1000, unique states=79, generated=78, iqn_calls=186
+  [sim 1500] root visits=1500, unique states=114, generated=113, iqn_calls=264
+  [sim 2000] root visits=2000, unique states=155, generated=154, iqn_calls=347
+  [sim 2500] root visits=2500, unique states=190, generated=189, iqn_calls=428
+  [sim 3000] root visits=3000, unique states=223, generated=222, iqn_calls=496
+  [sim 3500] root visits=3500, unique states=254, generated=253, iqn_calls=574
+  [sim 4000] root visits=4000, unique states=287, generated=286, iqn_calls=652
+  [sim 4500] root visits=4500, unique states=322, generated=321, iqn_calls=734
+  [sim 5000] root visits=5000, unique states=351, generated=350, iqn_calls=811
+  [sim 5500] root visits=5500, unique states=383, generated=382, iqn_calls=888
+  [sim 6000] root visits=6000, unique states=416, generated=415, iqn_calls=963
+  [sim 6500] root visits=6500, unique states=461, generated=460, iqn_calls=1067
+  [sim 6705] found goal path of length 14
+[Final] Expanded: 482, Generated: 482
+[Cost] IQN forward calls (Bellman signal): 1115
+[Widen] nodes widened: 0, mean w: 0.0000
+[Binc] child-edges modulated: 949, mean mult: 1.6215 (1.0 = no change; >1 = boosted toward inconsistent)
+[search done] simulations=6705, unique states generated=482
+Found a solution of length 14!
+   1: (move f5-3f f6-3f)
+   2: (move f6-3f f7-3f)
+   3: (move f7-3f f8-3f)
+   4: (move f8-3f f9-3f)
+   5: (move f9-3f f9-4f)
+   6: (move f9-4f f9-5f)
+   7: (move f9-5f f9-6f)
+   8: (move f9-6f f9-7f)
+   9: (move f9-7f f8-7f)
+  10: (move f8-7f f8-8f)
+  11: (move f8-8f f8-9f)
+  12: (detonate-bomb f8-9f f9-9f)
+  13: (move f8-9f f9-9f)
+  14: (pick-gold f9-9f)

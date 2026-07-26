@@ -1,0 +1,18 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Binc] OPTION6 binc_beta=2.0 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1155, generated=1154, iqn_calls=2708
+  [sim 1000] root visits=1000, unique states=1744, generated=1743, iqn_calls=4228
+  [sim 1500] root visits=1500, unique states=2704, generated=2703, iqn_calls=6719
+  [sim 2000] root visits=2000, unique states=3368, generated=3367, iqn_calls=8364
+  [sim 2500] root visits=2500, unique states=4264, generated=4263, iqn_calls=10584
+[Final] Expanded: 4583, Generated: 4583
+[Cost] IQN forward calls (Bellman signal): 11356
+[Widen] nodes widened: 0, mean w: 0.0000
+[Binc] child-edges modulated: 9881, mean mult: 1.1287 (1.0 = no change; >1 = boosted toward inconsistent)
+[search done] simulations=2669, unique states generated=4583
+Failed to find a solution!

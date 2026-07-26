@@ -1,0 +1,91 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=132, generated=131, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=338, generated=337, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=467, generated=466, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=559, generated=558, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=580, generated=579, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=580, generated=579, iqn_calls=0
+  [sim 3500] root visits=3500, unique states=584, generated=583, iqn_calls=0
+  [sim 4000] root visits=4000, unique states=616, generated=615, iqn_calls=0
+  [sim 4500] root visits=4500, unique states=689, generated=688, iqn_calls=0
+  [sim 5000] root visits=5000, unique states=744, generated=743, iqn_calls=0
+  [sim 5500] root visits=5500, unique states=791, generated=790, iqn_calls=0
+  [sim 6000] root visits=6000, unique states=844, generated=843, iqn_calls=0
+  [sim 6500] root visits=6500, unique states=904, generated=903, iqn_calls=0
+  [sim 7000] root visits=7000, unique states=965, generated=964, iqn_calls=0
+  [sim 7500] root visits=7500, unique states=1033, generated=1032, iqn_calls=0
+  [sim 8000] root visits=8000, unique states=1100, generated=1099, iqn_calls=0
+  [sim 8500] root visits=8500, unique states=1186, generated=1185, iqn_calls=0
+  [sim 9000] root visits=9000, unique states=1255, generated=1254, iqn_calls=0
+  [sim 9500] root visits=9500, unique states=1319, generated=1318, iqn_calls=0
+  [sim 10000] root visits=10000, unique states=1381, generated=1380, iqn_calls=0
+  [sim 10500] root visits=10500, unique states=1452, generated=1451, iqn_calls=0
+  [sim 11000] root visits=11000, unique states=1514, generated=1513, iqn_calls=0
+  [sim 11123] found goal path of length 57
+[Final] Expanded: 1532, Generated: 1532
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 0, mean w: 0.0000
+[search done] simulations=11123, unique states generated=1532
+Found a solution of length 57!
+   1: (detonate-bomb f1-5f f0-5f)
+   2: (move f1-5f f0-5f)
+   3: (move f0-5f f0-4f)
+   4: (move f0-4f f1-4f)
+   5: (move f1-4f f1-3f)
+   6: (move f1-3f f2-3f)
+   7: (move f2-3f f3-3f)
+   8: (move f3-3f f4-3f)
+   9: (move f4-3f f5-3f)
+  10: (move f5-3f f5-2f)
+  11: (move f5-2f f5-1f)
+  12: (move f5-1f f5-0f)
+  13: (move f5-0f f6-0f)
+  14: (move f6-0f f7-0f)
+  15: (pickup-laser f7-0f)
+  16: (fire-laser f7-0f f7-1f)
+  17: (move f7-0f f8-0f)
+  18: (move f8-0f f9-0f)
+  19: (fire-laser f9-0f f9-1f)
+  20: (move f9-0f f9-1f)
+  21: (fire-laser f9-1f f9-2f)
+  22: (move f9-1f f9-2f)
+  23: (fire-laser f9-2f f9-3f)
+  24: (move f9-2f f9-3f)
+  25: (fire-laser f9-3f f9-4f)
+  26: (move f9-3f f9-4f)
+  27: (fire-laser f9-4f f9-5f)
+  28: (move f9-4f f9-5f)
+  29: (fire-laser f9-5f f9-6f)
+  30: (move f9-5f f9-6f)
+  31: (move f9-6f f9-7f)
+  32: (move f9-7f f9-8f)
+  33: (putdown-laser f9-8f)
+  34: (move f9-8f f9-7f)
+  35: (move f9-7f f9-6f)
+  36: (move f9-6f f9-5f)
+  37: (move f9-5f f9-4f)
+  38: (move f9-4f f9-3f)
+  39: (move f9-3f f9-2f)
+  40: (move f9-2f f9-1f)
+  41: (move f9-1f f9-0f)
+  42: (move f9-0f f8-0f)
+  43: (move f8-0f f7-0f)
+  44: (pickup-bomb f7-0f)
+  45: (move f7-0f f7-1f)
+  46: (move f7-1f f8-1f)
+  47: (move f8-1f f9-1f)
+  48: (move f9-1f f9-2f)
+  49: (move f9-2f f9-3f)
+  50: (move f9-3f f9-4f)
+  51: (move f9-4f f9-5f)
+  52: (move f9-5f f9-6f)
+  53: (move f9-6f f9-7f)
+  54: (move f9-7f f9-8f)
+  55: (detonate-bomb f9-8f f9-9f)
+  56: (move f9-8f f9-9f)
+  57: (pick-gold f9-9f)

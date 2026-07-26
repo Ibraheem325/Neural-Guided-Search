@@ -1,0 +1,91 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Sib] OPTION5 sib_beta=8.0 signal=QR-DQN raw width vs SIBLINGS (boosts exploration toward wider/uncertain children; prior untouched) [SHUFFLE CONTROL: width-blind placement]
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=255, generated=254, iqn_calls=119
+  [sim 1000] root visits=1000, unique states=474, generated=473, iqn_calls=193
+  [sim 1500] root visits=1500, unique states=684, generated=683, iqn_calls=263
+  [sim 2000] root visits=2000, unique states=861, generated=860, iqn_calls=316
+  [sim 2500] root visits=2500, unique states=1046, generated=1045, iqn_calls=375
+  [sim 3000] root visits=3000, unique states=1110, generated=1109, iqn_calls=400
+  [sim 3500] root visits=3500, unique states=1313, generated=1312, iqn_calls=469
+  [sim 4000] root visits=4000, unique states=1564, generated=1563, iqn_calls=556
+  [sim 4500] root visits=4500, unique states=1737, generated=1736, iqn_calls=625
+  [sim 5000] root visits=5000, unique states=1925, generated=1924, iqn_calls=702
+  [sim 5500] root visits=5500, unique states=2069, generated=2068, iqn_calls=763
+  [sim 6000] root visits=6000, unique states=2141, generated=2140, iqn_calls=791
+  [sim 6239] found goal path of length 65
+[Final] Expanded: 2207, Generated: 2207
+[Cost] IQN forward calls (Bellman signal): 812
+[Widen] nodes widened: 0, mean w: 0.0000
+[Sib] child-edges modulated: 4293, mean mult: 1.0046 (1.0 = no change; >1 = boosted toward wide)
+[search done] simulations=6239, unique states generated=2207
+Found a solution of length 65!
+   1: (move f4-3f f5-3f)
+   2: (detonate-bomb f5-3f f5-4f)
+   3: (move f5-3f f5-4f)
+   4: (move f5-4f f4-4f)
+   5: (move f4-4f f4-3f)
+   6: (move f4-3f f3-3f)
+   7: (move f3-3f f3-2f)
+   8: (move f3-2f f3-1f)
+   9: (move f3-1f f3-0f)
+  10: (move f3-0f f4-0f)
+  11: (move f4-0f f5-0f)
+  12: (move f5-0f f6-0f)
+  13: (move f6-0f f7-0f)
+  14: (move f7-0f f8-0f)
+  15: (pickup-laser f8-0f)
+  16: (move f8-0f f9-0f)
+  17: (fire-laser f9-0f f9-1f)
+  18: (move f9-0f f9-1f)
+  19: (fire-laser f9-1f f9-2f)
+  20: (move f9-1f f8-1f)
+  21: (fire-laser f8-1f f8-2f)
+  22: (move f8-1f f8-2f)
+  23: (move f8-2f f8-3f)
+  24: (fire-laser f8-3f f8-4f)
+  25: (move f8-3f f8-4f)
+  26: (fire-laser f8-4f f8-5f)
+  27: (move f8-4f f8-5f)
+  28: (fire-laser f8-5f f8-6f)
+  29: (move f8-5f f8-6f)
+  30: (move f8-6f f8-7f)
+  31: (move f8-7f f8-8f)
+  32: (move f8-8f f8-9f)
+  33: (putdown-laser f8-9f)
+  34: (move f8-9f f8-8f)
+  35: (move f8-8f f8-7f)
+  36: (move f8-7f f9-7f)
+  37: (move f9-7f f9-6f)
+  38: (move f9-6f f8-6f)
+  39: (move f8-6f f8-5f)
+  40: (move f8-5f f9-5f)
+  41: (move f9-5f f9-4f)
+  42: (move f9-4f f8-4f)
+  43: (move f8-4f f8-3f)
+  44: (move f8-3f f9-3f)
+  45: (move f9-3f f9-2f)
+  46: (move f9-2f f8-2f)
+  47: (move f8-2f f8-1f)
+  48: (move f8-1f f9-1f)
+  49: (move f9-1f f9-0f)
+  50: (move f9-0f f8-0f)
+  51: (pickup-bomb f8-0f)
+  52: (move f8-0f f9-0f)
+  53: (move f9-0f f9-1f)
+  54: (move f9-1f f8-1f)
+  55: (move f8-1f f8-2f)
+  56: (move f8-2f f8-3f)
+  57: (move f8-3f f8-4f)
+  58: (move f8-4f f8-5f)
+  59: (move f8-5f f8-6f)
+  60: (move f8-6f f8-7f)
+  61: (move f8-7f f8-8f)
+  62: (move f8-8f f8-9f)
+  63: (detonate-bomb f8-9f f9-9f)
+  64: (move f8-9f f9-9f)
+  65: (pick-gold f9-9f)

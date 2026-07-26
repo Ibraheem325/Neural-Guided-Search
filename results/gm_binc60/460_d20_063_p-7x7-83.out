@@ -1,0 +1,27 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Binc] OPTION6 binc_beta=6.0 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=781, generated=780, iqn_calls=2002
+  [sim 1000] root visits=1000, unique states=1065, generated=1064, iqn_calls=2776
+  [sim 1500] root visits=1500, unique states=1282, generated=1281, iqn_calls=3383
+  [sim 2000] root visits=2000, unique states=1464, generated=1463, iqn_calls=3874
+  [sim 2500] root visits=2500, unique states=1617, generated=1616, iqn_calls=4297
+  [sim 3000] root visits=3000, unique states=1988, generated=1987, iqn_calls=5273
+  [sim 3500] root visits=3500, unique states=2121, generated=2120, iqn_calls=5637
+  [sim 4000] root visits=4000, unique states=2259, generated=2258, iqn_calls=6014
+  [sim 4500] root visits=4500, unique states=2393, generated=2392, iqn_calls=6348
+  [sim 5000] root visits=5000, unique states=2519, generated=2518, iqn_calls=6691
+  [sim 5500] root visits=5500, unique states=2645, generated=2644, iqn_calls=7014
+  [sim 6000] root visits=6000, unique states=2757, generated=2756, iqn_calls=7318
+  [sim 6500] root visits=6500, unique states=2844, generated=2843, iqn_calls=7588
+  [sim 7000] root visits=7000, unique states=2946, generated=2945, iqn_calls=7865
+[Final] Expanded: 3011, Generated: 3011
+[Cost] IQN forward calls (Bellman signal): 8048
+[Widen] nodes widened: 0, mean w: 0.0000
+[Binc] child-edges modulated: 7018, mean mult: 2.0766 (1.0 = no change; >1 = boosted toward inconsistent)
+[search done] simulations=7340, unique states generated=3011
+Failed to find a solution!

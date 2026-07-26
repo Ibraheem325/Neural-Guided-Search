@@ -1,0 +1,91 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Sib] OPTION5 sib_beta=8.0 signal=QR-DQN raw width vs SIBLINGS (boosts exploration toward wider/uncertain children; prior untouched) [SHUFFLE CONTROL: width-blind placement]
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=983, generated=982, iqn_calls=333
+  [sim 1000] root visits=1000, unique states=1453, generated=1452, iqn_calls=505
+  [sim 1500] root visits=1500, unique states=1945, generated=1944, iqn_calls=687
+  [sim 2000] root visits=2000, unique states=2394, generated=2393, iqn_calls=843
+  [sim 2500] root visits=2500, unique states=2828, generated=2827, iqn_calls=997
+  [sim 3000] root visits=3000, unique states=3164, generated=3163, iqn_calls=1118
+  [sim 3500] root visits=3500, unique states=3442, generated=3441, iqn_calls=1225
+  [sim 4000] root visits=4000, unique states=3775, generated=3774, iqn_calls=1362
+  [sim 4500] root visits=4500, unique states=4192, generated=4191, iqn_calls=1515
+  [sim 5000] root visits=5000, unique states=4498, generated=4497, iqn_calls=1632
+  [sim 5500] root visits=5500, unique states=4778, generated=4777, iqn_calls=1754
+  [sim 6000] root visits=6000, unique states=5062, generated=5061, iqn_calls=1859
+  [sim 6500] root visits=6500, unique states=5375, generated=5374, iqn_calls=1974
+  [sim 7000] root visits=7000, unique states=5654, generated=5653, iqn_calls=2071
+  [sim 7500] root visits=7500, unique states=5864, generated=5863, iqn_calls=2164
+  [sim 8000] root visits=8000, unique states=6128, generated=6127, iqn_calls=2260
+  [sim 8500] root visits=8500, unique states=6381, generated=6380, iqn_calls=2353
+  [sim 8559] found goal path of length 60
+[Final] Expanded: 6409, Generated: 6409
+[Cost] IQN forward calls (Bellman signal): 2367
+[Widen] nodes widened: 0, mean w: 0.0000
+[Sib] child-edges modulated: 12913, mean mult: 1.0030 (1.0 = no change; >1 = boosted toward wide)
+[search done] simulations=8559, unique states generated=6409
+Found a solution of length 60!
+   1: (pickup-laser f3-0f)
+   2: (move f3-0f f3-1f)
+   3: (fire-laser f3-1f f2-1f)
+   4: (fire-laser f3-1f f4-1f)
+   5: (move f3-1f f2-1f)
+   6: (fire-laser f2-1f f1-1f)
+   7: (move f2-1f f2-2f)
+   8: (move f2-2f f2-3f)
+   9: (fire-laser f2-3f f2-4f)
+  10: (move f2-3f f2-4f)
+  11: (move f2-4f f3-4f)
+  12: (fire-laser f3-4f f4-4f)
+  13: (move f3-4f f4-4f)
+  14: (move f4-4f f5-4f)
+  15: (move f5-4f f5-5f)
+  16: (move f5-5f f5-6f)
+  17: (move f5-6f f5-7f)
+  18: (move f5-7f f6-7f)
+  19: (move f6-7f f6-8f)
+  20: (putdown-laser f6-8f)
+  21: (move f6-8f f6-7f)
+  22: (move f6-7f f5-7f)
+  23: (move f5-7f f5-6f)
+  24: (move f5-6f f5-5f)
+  25: (move f5-5f f6-5f)
+  26: (move f6-5f f7-5f)
+  27: (move f7-5f f7-4f)
+  28: (move f7-4f f7-3f)
+  29: (move f7-3f f6-3f)
+  30: (move f6-3f f5-3f)
+  31: (move f5-3f f5-4f)
+  32: (move f5-4f f4-4f)
+  33: (move f4-4f f3-4f)
+  34: (move f3-4f f3-3f)
+  35: (move f3-3f f4-3f)
+  36: (move f4-3f f4-2f)
+  37: (move f4-2f f4-1f)
+  38: (move f4-1f f3-1f)
+  39: (move f3-1f f3-0f)
+  40: (pickup-bomb f3-0f)
+  41: (move f3-0f f4-0f)
+  42: (move f4-0f f5-0f)
+  43: (move f5-0f f6-0f)
+  44: (move f6-0f f6-1f)
+  45: (move f6-1f f5-1f)
+  46: (move f5-1f f4-1f)
+  47: (move f4-1f f3-1f)
+  48: (move f3-1f f3-2f)
+  49: (move f3-2f f4-2f)
+  50: (move f4-2f f4-3f)
+  51: (move f4-3f f4-4f)
+  52: (move f4-4f f5-4f)
+  53: (move f5-4f f5-5f)
+  54: (move f5-5f f5-6f)
+  55: (move f5-6f f5-7f)
+  56: (move f5-7f f6-7f)
+  57: (move f6-7f f6-8f)
+  58: (detonate-bomb f6-8f f6-9f)
+  59: (move f6-8f f6-9f)
+  60: (pick-gold f6-9f)
