@@ -215,18 +215,36 @@ class _Signal:
         # SELF-CONSISTENT VALUE: use the QR-DQN mean as the leaf value (instead of the SAC
         # twin critics), so the uncertainty signal matches the value function driving search.
         self.qrdqn_value = False
+        # --- OPTION 8: ADDITIVE signal bonus (prior-INDEPENDENT) -------------------------
+        #   u(a) = [ c_puct * P(a)^prior_gamma  +  add_beta * min(cap, max(0, rel-1)) ]
+        #          * sqrt(N)/(1+n)
+        # The bonus is NOT multiplied by P(a), so it can promote children the multiplicative
+        # channel structurally cannot (35% of grid sibling edges have P == 0.0 exactly).
+        # max(0,.) => only ever ADDS exploration, never penalises the policy's own pick.
+        # The sqrt(N)/(1+n) decay keeps it a nudge, not a permanent hijack.
+        # NOTE: prior_gamma < 1 SOFTENS the P-gate (sqrt(P) lifts numerically-dead tiny-P
+        # children) while keeping P==0 -> 0, i.e. actions the policy truly rejected stay
+        # rejected. That gate is what protected coverage in every multiplicative arm.
+        self.add_beta = 0.0
+        self.add_src = "binc"      # which signal feeds the additive bonus: width|binc|w1raw
+        self.add_cap = 2.0         # cap on (rel-1) so one huge sibling cannot dominate
+        self.prior_gamma = 1.0     # exponent on P(a); 1.0 = standard, 0.5 = sqrt softening
+        self.add_sum = 0.0; self.add_count = 0
 
     @property
     def sib_active(self) -> bool:
-        return self.sib_beta > 0.0 and self.iqn is not None
+        return (self.sib_beta > 0.0
+                or (self.add_beta > 0.0 and self.add_src == "width")) and self.iqn is not None
 
     @property
     def binc_active(self) -> bool:
-        return self.binc_beta > 0.0 and self.iqn is not None
+        return (self.binc_beta > 0.0
+                or (self.add_beta > 0.0 and self.add_src == "binc")) and self.iqn is not None
 
     @property
     def w1raw_active(self) -> bool:
-        return self.w1raw_beta > 0.0 and self.iqn is not None
+        return (self.w1raw_beta > 0.0
+                or (self.add_beta > 0.0 and self.add_src == "w1raw")) and self.iqn is not None
 
     def ensemble_explore_mult(self, state, goal) -> float:
         """Per-node exploration multiplier in [1-ens_beta, 1] from ensemble disagreement.
@@ -517,9 +535,11 @@ def _compute_sib_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None
         return
     for a, w in widths.items():
         rel = w / mean_w                                  # >1 = wider than siblings
-        mult = max(0.1, 1.0 + _SIG.sib_beta * (rel - 1.0))
-        node.sib_mult[a] = mult
-        _SIG.sib_sum += mult; _SIG.sib_count += 1
+        node.sib_rel[a] = rel                             # raw rel (used by OPTION 8 additive)
+        if _SIG.sib_beta > 0.0:
+            mult = max(0.1, 1.0 + _SIG.sib_beta * (rel - 1.0))
+            node.sib_mult[a] = mult
+            _SIG.sib_sum += mult; _SIG.sib_count += 1
 
 
 def _compute_binc_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
@@ -569,9 +589,11 @@ def _compute_binc_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> Non
         return
     for a, w in w1s.items():
         rel = w / mean_w1                                 # >1 = more inconsistent than siblings
-        mult = max(0.1, 1.0 + _SIG.binc_beta * (rel - 1.0))
-        node.sib_mult[a] = mult
-        _SIG.binc_sum += mult; _SIG.binc_count += 1
+        node.sib_rel[a] = rel                             # raw rel (used by OPTION 8 additive)
+        if _SIG.binc_beta > 0.0:
+            mult = max(0.1, 1.0 + _SIG.binc_beta * (rel - 1.0))
+            node.sib_mult[a] = mult
+            _SIG.binc_sum += mult; _SIG.binc_count += 1
 
 
 def _best_curve(state: mm.State, goal: mm.GroundConjunctiveCondition):
@@ -613,9 +635,11 @@ def _compute_w1raw_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> No
         return
     for a, w in w1s.items():
         rel = w / mean_w1                                 # >1 = bigger shift than siblings
-        mult = max(0.1, 1.0 + _SIG.w1raw_beta * (rel - 1.0))
-        node.sib_mult[a] = mult
-        _SIG.w1raw_sum += mult; _SIG.w1raw_count += 1
+        node.sib_rel[a] = rel                             # raw rel (used by OPTION 8 additive)
+        if _SIG.w1raw_beta > 0.0:
+            mult = max(0.1, 1.0 + _SIG.w1raw_beta * (rel - 1.0))
+            node.sib_mult[a] = mult
+            _SIG.w1raw_sum += mult; _SIG.w1raw_count += 1
 
 
 def _widen_prior(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
@@ -670,7 +694,7 @@ class Node:
         "state", "state_key", "is_goal",
         "expanded", "is_dead_end",
         "children", "prior", "edge_N", "edge_W", "visit_count",
-        "value", "verr", "explore_mult", "sib_mult",
+        "value", "verr", "explore_mult", "sib_mult", "sib_rel",
     )
 
     def __init__(self, state: mm.State, state_key, is_goal: bool) -> None:
@@ -687,6 +711,7 @@ class Node:
         self.verr: Dict[mm.GroundAction, float] = {}   # per-action value inconsistency
         self.explore_mult = 1.0    # width channel: <1 shrinks this node's exploration
         self.sib_mult: Dict[mm.GroundAction, float] = {}   # per-child sibling-width mult
+        self.sib_rel: Dict[mm.GroundAction, float] = {}    # raw rel = signal/mean_sib (additive)
         self.visit_count = 0
 
     def q(self, action):
@@ -812,8 +837,22 @@ def _select(node: Node,
         # Option 3: shrink exploration at confident (narrow-width) nodes. The prior
         # P(action) is untouched; only the c*P*sqrt(N)/(1+n) term is scaled. 1.0 off.
         # Option 5: sib_mult boosts exploration toward wider (uncertain) sibling children.
+        # prior_gamma < 1 SOFTENS the P-gate (P**0.5 lifts numerically-dead tiny-P children)
+        # while keeping P==0 -> 0, so actions the policy truly rejected stay rejected.
+        p_eff = node.prior[action]
+        if _SIG.prior_gamma != 1.0 and p_eff > 0.0:
+            p_eff = p_eff ** _SIG.prior_gamma
         u = c_puct * node.explore_mult * node.sib_mult.get(action, 1.0) \
-            * node.prior[action] * sqrt_parent / (1 + n)
+            * p_eff * sqrt_parent / (1 + n)
+        # Option 8: ADDITIVE signal bonus -- NOT multiplied by P(a), so it can reach children
+        # the multiplicative channel cannot. Same sqrt(N)/(1+n) decay => a nudge, not a hijack.
+        if _SIG.add_beta > 0.0:
+            rel = node.sib_rel.get(action)
+            if rel is not None:
+                bonus = min(_SIG.add_cap, max(0.0, rel - 1.0))
+                if bonus > 0.0:
+                    u += _SIG.add_beta * bonus * sqrt_parent / (1 + n)
+                    _SIG.add_sum += bonus; _SIG.add_count += 1
         score = q_norm + u
         if score > best_score:
             best_score, best_action, best_child = score, action, child
@@ -1020,6 +1059,19 @@ def _parse_arguments() -> argparse.Namespace:
                              "reward and NO discount (the alphaZero_w1.py edge-W1 form). Boost "
                              "exploration toward children with a larger distribution shift. "
                              "0 = off. Requires --iqn_model. Respects --sib_gate/--sib_shuffle.")
+    parser.add_argument("--add_beta", default=0.0, type=float,
+                        help="OPTION 8 (ADDITIVE signal bonus, prior-INDEPENDENT). "
+                             "u(a) += add_beta*min(add_cap,max(0,rel-1))*sqrt(N)/(1+n). Unlike "
+                             "the multiplicative channels this is NOT gated by P(a), so it can "
+                             "promote children with P==0. 0 = off. Requires --iqn_model.")
+    parser.add_argument("--add_src", default="binc", choices=["width", "binc", "w1raw"],
+                        help="Which signal feeds the OPTION 8 additive bonus.")
+    parser.add_argument("--add_cap", default=2.0, type=float,
+                        help="Cap on (rel-1) in the additive bonus (safety against one huge sibling).")
+    parser.add_argument("--prior_gamma", default=1.0, type=float,
+                        help="Exponent on P(a) in the exploration term: u ~ c*P(a)**prior_gamma. "
+                             "1.0 = standard. 0.5 (sqrt) SOFTENS the P-gate so numerically-dead "
+                             "tiny-P children can compete, while P==0 still stays 0.")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
@@ -1065,6 +1117,9 @@ def _plan(problem: mm.Problem,
             print(f"[Binc] child-edges modulated: {_SIG.binc_count}, mean mult: "
                   f"{_SIG.binc_sum/_SIG.binc_count:.4f} (1.0 = no change; >1 = boosted toward "
                   f"inconsistent)", flush=True)
+        if _SIG.add_count:
+            print(f"[Add] child-edges given an additive bonus: {_SIG.add_count}, mean (rel-1): "
+                  f"{_SIG.add_sum/_SIG.add_count:.4f}", flush=True)
         if _SIG.w1raw_count:
             print(f"[W1raw] child-edges modulated: {_SIG.w1raw_count}, mean mult: "
                   f"{_SIG.w1raw_sum/_SIG.w1raw_count:.4f} (1.0 = no change; >1 = boosted toward "
@@ -1252,6 +1307,26 @@ def _main(args: argparse.Namespace) -> None:
         _SIG.qrdqn_value = True
         print("[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) "
               "(SAC critics bypassed; prior still SAC policy)", flush=True)
+
+    # OPTION 8: additive (prior-independent) signal bonus and/or P-gate softening.
+    _SIG.prior_gamma = args.prior_gamma
+    if args.add_beta > 0.0:
+        assert args.iqn_model is not None, "--add_beta > 0 requires --iqn_model (the QR-DQN)"
+        if _SIG.iqn is None:
+            iqn, _, _ = _load_iqn_model(domain, args.iqn_model, device)
+            iqn.eval()
+            _SIG.iqn = iqn
+            _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
+        _SIG.add_beta = args.add_beta
+        _SIG.add_src = args.add_src
+        _SIG.add_cap = args.add_cap
+        _SIG.sib_shuffle = args.sib_shuffle
+        tag = " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else ""
+        print(f"[Add] OPTION8 add_beta={args.add_beta} src={args.add_src} cap={args.add_cap} "
+              f"(ADDITIVE bonus, NOT gated by P(a); prior untouched){tag}", flush=True)
+    if args.prior_gamma != 1.0:
+        print(f"[Gate] prior_gamma={args.prior_gamma} (P-gate softened: u ~ c*P**gamma; "
+              f"P==0 still stays 0)", flush=True)
 
     solution = _plan(problem, policy_model, q1_model, q2_model, args)
     if solution is None:

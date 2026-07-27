@@ -44,6 +44,21 @@ else
     W_MAX=${13:-0.95}
 fi
 
+# --- CUDA MPS -----------------------------------------------------------------
+# These jobs issue MANY TINY kernels (batch-of-1 GNN forwards). With GPU sharding but
+# no MPS the driver TIME-SLICES the processes: nvidia-smi reads ~100% "utilisation"
+# (a kernel is always resident) while real throughput is poor, because every process
+# pays a context switch and its kernels never fill the device. MPS funnels all of this
+# user's processes through ONE shared CUDA context so their kernels run CONCURRENTLY.
+# The daemon is per-user and per-NODE, so keep the pipe dir node-local (/tmp), and never
+# exit on failure: another array task (or another job) may have started it already, and
+# a job that cannot start MPS must still run normally.
+export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps-$USER
+export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-mps-log-$USER
+mkdir -p "$CUDA_MPS_PIPE_DIRECTORY" "$CUDA_MPS_LOG_DIRECTORY" 2>/dev/null
+nvidia-cuda-mps-control -d >/dev/null 2>&1 || true   # ok if already running / unavailable
+# NOTE: deliberately NO daemon shutdown at exit -- other running jobs share it.
+
 FILES=($(ls ${TEST_DIR}/*.pddl | grep -v domain | sort))
 IDX=$((SLURM_ARRAY_TASK_ID - 1))
 PROB=${FILES[$IDX]}
@@ -92,6 +107,15 @@ QRDQN_VALUE_FLAG=""
 [ "$QRDQN_VALUE" = "1" ] && QRDQN_VALUE_FLAG="--qrdqn_value"
 # arg 27: OPTION 6 B_good width (value units). 0 = hard best; ~0.5-1.0 forgives near-tied successors.
 BINC_EPS=${27:-0.0}
+# args 28-31: OPTION 8 ADDITIVE bonus (prior-independent) + P-gate softening.
+#   28 ADD_BETA   : additive strength (0 = off)
+#   29 ADD_SRC    : which signal feeds it (width|binc|w1raw)
+#   30 ADD_CAP    : cap on (rel-1)
+#   31 PRIOR_GAMMA: exponent on P(a) in the exploration term (1.0 = standard, 0.5 = sqrt softening)
+ADD_BETA=${28:-0.0}
+ADD_SRC=${29:-binc}
+ADD_CAP=${30:-2.0}
+PRIOR_GAMMA=${31:-1.0}
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -103,4 +127,5 @@ venv/bin/python alphaZero_bellman.py \
     --ens_beta "$ENS_BETA" $ENS_ARGS --sib_beta "$SIB_BETA" --sib_gate "$SIB_GATE" \
     --binc_beta "$BINC_BETA" --w1raw_beta "$W1RAW_BETA" $SHUFFLE_FLAG \
     --c_puct "$C_PUCT" $QRDQN_VALUE_FLAG --binc_eps "$BINC_EPS" \
+    --add_beta "$ADD_BETA" --add_src "$ADD_SRC" --add_cap "$ADD_CAP" --prior_gamma "$PRIOR_GAMMA" \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1
