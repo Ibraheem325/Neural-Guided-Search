@@ -1,0 +1,25 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Binc] OPTION6 binc_beta=12.0 binc_eps=1.0 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child, B_good within eps) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=14, generated=13, iqn_calls=34
+  [sim 1000] root visits=1000, unique states=14, generated=13, iqn_calls=34
+  [sim 1500] root visits=1500, unique states=247, generated=246, iqn_calls=586
+  [sim 2000] root visits=2000, unique states=952, generated=951, iqn_calls=2335
+  [sim 2500] root visits=2500, unique states=1276, generated=1275, iqn_calls=3115
+  [sim 3000] root visits=3000, unique states=1600, generated=1599, iqn_calls=3892
+  [sim 3500] root visits=3500, unique states=1927, generated=1926, iqn_calls=4672
+  [sim 4000] root visits=4000, unique states=2240, generated=2239, iqn_calls=5451
+  [sim 4500] root visits=4500, unique states=2532, generated=2531, iqn_calls=6177
+  [sim 5000] root visits=5000, unique states=2839, generated=2838, iqn_calls=6912
+  [sim 5500] root visits=5500, unique states=3099, generated=3098, iqn_calls=7578
+  [sim 6000] root visits=6000, unique states=3362, generated=3361, iqn_calls=8234
+[Final] Expanded: 3457, Generated: 3457
+[Cost] IQN forward calls (Bellman signal): 8472
+[Widen] nodes widened: 0, mean w: 0.0000
+[Binc] child-edges modulated: 7326, mean mult: 4.6793 (1.0 = no change; >1 = boosted toward inconsistent)
+[search done] simulations=6199, unique states generated=3457
+Failed to find a solution!

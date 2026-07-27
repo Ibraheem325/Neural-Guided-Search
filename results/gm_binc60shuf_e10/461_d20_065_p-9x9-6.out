@@ -1,0 +1,40 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Binc] OPTION6 binc_beta=6.0 binc_eps=1.0 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child, B_good within eps) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched) [SHUFFLE CONTROL: signal-blind placement]
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=179, generated=178, iqn_calls=424
+  [sim 1000] root visits=1000, unique states=186, generated=185, iqn_calls=447
+  [sim 1500] root visits=1500, unique states=262, generated=261, iqn_calls=616
+  [sim 2000] root visits=2000, unique states=396, generated=395, iqn_calls=956
+  [sim 2500] root visits=2500, unique states=453, generated=452, iqn_calls=1110
+  [sim 3000] root visits=3000, unique states=467, generated=466, iqn_calls=1145
+  [sim 3500] root visits=3500, unique states=601, generated=600, iqn_calls=1459
+  [sim 4000] root visits=4000, unique states=645, generated=644, iqn_calls=1569
+  [sim 4500] root visits=4500, unique states=649, generated=648, iqn_calls=1581
+  [sim 5000] root visits=5000, unique states=655, generated=654, iqn_calls=1601
+  [sim 5500] root visits=5500, unique states=658, generated=657, iqn_calls=1611
+  [sim 6000] root visits=6000, unique states=667, generated=666, iqn_calls=1627
+  [sim 6500] root visits=6500, unique states=667, generated=666, iqn_calls=1627
+  [sim 7000] root visits=7000, unique states=676, generated=675, iqn_calls=1645
+  [sim 7500] root visits=7500, unique states=685, generated=684, iqn_calls=1663
+  [sim 8000] root visits=8000, unique states=689, generated=688, iqn_calls=1672
+  [sim 8500] root visits=8500, unique states=692, generated=691, iqn_calls=1681
+  [sim 9000] root visits=9000, unique states=702, generated=701, iqn_calls=1699
+  [sim 9500] root visits=9500, unique states=713, generated=712, iqn_calls=1724
+  [sim 10000] root visits=10000, unique states=717, generated=716, iqn_calls=1733
+  [sim 10500] root visits=10500, unique states=761, generated=760, iqn_calls=1832
+  [sim 11000] root visits=11000, unique states=771, generated=770, iqn_calls=1858
+  [sim 11500] root visits=11500, unique states=775, generated=774, iqn_calls=1867
+  [sim 12000] root visits=12000, unique states=787, generated=786, iqn_calls=1893
+  [sim 12500] root visits=12500, unique states=787, generated=786, iqn_calls=1893
+  [sim 13000] root visits=13000, unique states=805, generated=804, iqn_calls=1930
+  [sim 13500] root visits=13500, unique states=810, generated=809, iqn_calls=1947
+[Final] Expanded: 809, Generated: 809
+[Cost] IQN forward calls (Bellman signal): 1947
+[Widen] nodes widened: 0, mean w: 0.0000
+[Binc] child-edges modulated: 1641, mean mult: 2.3467 (1.0 = no change; >1 = boosted toward inconsistent)
+[search done] simulations=13513, unique states generated=809
+Failed to find a solution!

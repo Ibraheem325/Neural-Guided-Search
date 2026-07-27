@@ -1,0 +1,50 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Binc] OPTION6 binc_beta=12.0 binc_eps=1.0 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child, B_good within eps) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched) [SHUFFLE CONTROL: signal-blind placement]
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 67] found goal path of length 36
+[Final] Expanded: 193, Generated: 193
+[Cost] IQN forward calls (Bellman signal): 378
+[Widen] nodes widened: 0, mean w: 0.0000
+[Binc] child-edges modulated: 312, mean mult: 3.2839 (1.0 = no change; >1 = boosted toward inconsistent)
+[search done] simulations=67, unique states generated=193
+Found a solution of length 36!
+   1: (move f9-6f f9-7f)
+   2: (pickup f9-7f key0-2)
+   3: (move f9-7f f9-6f)
+   4: (move f9-6f f8-6f)
+   5: (move f8-6f f8-5f)
+   6: (move f8-5f f8-4f)
+   7: (move f8-4f f7-4f)
+   8: (unlock f7-4f f6-4f key0-2 shape0)
+   9: (unlock f7-4f f7-3f key0-2 shape0)
+  10: (move f7-4f f6-4f)
+  11: (move f6-4f f6-5f)
+  12: (move f6-5f f7-5f)
+  13: (move f7-5f f8-5f)
+  14: (move f8-5f f8-4f)
+  15: (move f8-4f f9-4f)
+  16: (move f9-4f f9-5f)
+  17: (move f9-5f f9-6f)
+  18: (move f9-6f f9-7f)
+  19: (move f9-7f f8-7f)
+  20: (move f8-7f f8-6f)
+  21: (move f8-6f f7-6f)
+  22: (move f7-6f f6-6f)
+  23: (move f6-6f f5-6f)
+  24: (move f5-6f f5-5f)
+  25: (move f5-5f f4-5f)
+  26: (move f4-5f f3-5f)
+  27: (move f3-5f f3-6f)
+  28: (move f3-6f f2-6f)
+  29: (move f2-6f f2-5f)
+  30: (move f2-5f f2-4f)
+  31: (move f2-4f f2-3f)
+  32: (unlock f2-3f f1-3f key0-2 shape0)
+  33: (move f2-3f f1-3f)
+  34: (move f1-3f f1-2f)
+  35: (move f1-2f f1-1f)
+  36: (putdown f1-1f key0-2)

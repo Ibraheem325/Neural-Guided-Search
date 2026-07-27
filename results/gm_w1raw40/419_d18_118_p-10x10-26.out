@@ -1,0 +1,19 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[W1raw] OPTION7 w1raw_beta=4.0 signal=RAW edge-W1 (parent-best vs child-best, no reward/discount) vs SIBLINGS (boosts exploration toward larger-shift children; prior untouched)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=1098, generated=1097, iqn_calls=2752
+  [sim 1000] root visits=1000, unique states=1824, generated=1823, iqn_calls=4650
+  [sim 1500] root visits=1500, unique states=2486, generated=2485, iqn_calls=6368
+  [sim 2000] root visits=2000, unique states=2981, generated=2980, iqn_calls=7709
+  [sim 2500] root visits=2500, unique states=3454, generated=3453, iqn_calls=8951
+  [sim 3000] root visits=3000, unique states=3936, generated=3935, iqn_calls=10202
+[Final] Expanded: 4181, Generated: 4181
+[Cost] IQN forward calls (Bellman signal): 10857
+[Widen] nodes widened: 0, mean w: 0.0000
+[W1raw] child-edges modulated: 9507, mean mult: 2.3897 (1.0 = no change; >1 = boosted toward larger shift)
+[search done] simulations=3264, unique states generated=4181
+Failed to find a solution!

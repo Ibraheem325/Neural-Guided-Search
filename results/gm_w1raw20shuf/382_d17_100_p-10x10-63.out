@@ -1,0 +1,27 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[W1raw] OPTION7 w1raw_beta=2.0 signal=RAW edge-W1 (parent-best vs child-best, no reward/discount) vs SIBLINGS (boosts exploration toward larger-shift children; prior untouched) [SHUFFLE CONTROL: signal-blind placement]
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=615, generated=614, iqn_calls=1385
+  [sim 1000] root visits=1000, unique states=917, generated=916, iqn_calls=2118
+  [sim 1500] root visits=1500, unique states=1254, generated=1253, iqn_calls=2941
+  [sim 2000] root visits=2000, unique states=1494, generated=1493, iqn_calls=3533
+  [sim 2500] root visits=2500, unique states=1874, generated=1873, iqn_calls=4454
+  [sim 3000] root visits=3000, unique states=2131, generated=2130, iqn_calls=5133
+  [sim 3500] root visits=3500, unique states=2242, generated=2241, iqn_calls=5401
+  [sim 4000] root visits=4000, unique states=2326, generated=2325, iqn_calls=5625
+  [sim 4500] root visits=4500, unique states=2493, generated=2492, iqn_calls=6015
+  [sim 5000] root visits=5000, unique states=2656, generated=2655, iqn_calls=6389
+  [sim 5500] root visits=5500, unique states=2762, generated=2761, iqn_calls=6645
+  [sim 6000] root visits=6000, unique states=2872, generated=2871, iqn_calls=6937
+  [sim 6500] root visits=6500, unique states=2977, generated=2976, iqn_calls=7196
+  [sim 7000] root visits=7000, unique states=3086, generated=3085, iqn_calls=7463
+[Final] Expanded: 3204, Generated: 3204
+[Cost] IQN forward calls (Bellman signal): 7767
+[Widen] nodes widened: 0, mean w: 0.0000
+[W1raw] child-edges modulated: 6723, mean mult: 1.4618 (1.0 = no change; >1 = boosted toward larger shift)
+[search done] simulations=7425, unique states generated=3204
+Failed to find a solution!

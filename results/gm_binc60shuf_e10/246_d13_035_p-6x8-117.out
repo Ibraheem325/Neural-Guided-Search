@@ -1,0 +1,78 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Binc] OPTION6 binc_beta=6.0 binc_eps=1.0 signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child, B_good within eps) vs SIBLINGS (boosts exploration toward inconsistent children; prior untouched) [SHUFFLE CONTROL: signal-blind placement]
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=898, generated=897, iqn_calls=1904
+  [sim 1000] root visits=1000, unique states=1269, generated=1268, iqn_calls=2717
+  [sim 1500] root visits=1500, unique states=1847, generated=1846, iqn_calls=3970
+  [sim 2000] root visits=2000, unique states=2198, generated=2197, iqn_calls=4702
+  [sim 2500] root visits=2500, unique states=2513, generated=2512, iqn_calls=5373
+  [sim 3000] root visits=3000, unique states=3244, generated=3243, iqn_calls=7037
+  [sim 3463] found goal path of length 58
+[Final] Expanded: 4268, Generated: 4268
+[Cost] IQN forward calls (Bellman signal): 9317
+[Widen] nodes widened: 0, mean w: 0.0000
+[Binc] child-edges modulated: 8013, mean mult: 2.4284 (1.0 = no change; >1 = boosted toward inconsistent)
+[search done] simulations=3463, unique states generated=4268
+Found a solution of length 58!
+   1: (move f0-2f f0-3f)
+   2: (move f0-3f f1-3f)
+   3: (detonate-bomb f1-3f f1-2f)
+   4: (move f1-3f f1-2f)
+   5: (move f1-2f f0-2f)
+   6: (move f0-2f f0-1f)
+   7: (move f0-1f f0-0f)
+   8: (move f0-0f f1-0f)
+   9: (pickup-laser f1-0f)
+  10: (fire-laser f1-0f f1-1f)
+  11: (move f1-0f f0-0f)
+  12: (fire-laser f0-0f f0-1f)
+  13: (move f0-0f f1-0f)
+  14: (move f1-0f f1-1f)
+  15: (move f1-1f f1-2f)
+  16: (move f1-2f f0-2f)
+  17: (fire-laser f0-2f f0-3f)
+  18: (move f0-2f f0-3f)
+  19: (move f0-3f f0-4f)
+  20: (fire-laser f0-4f f0-5f)
+  21: (move f0-4f f0-5f)
+  22: (move f0-5f f0-6f)
+  23: (move f0-6f f1-6f)
+  24: (move f1-6f f2-6f)
+  25: (move f2-6f f3-6f)
+  26: (fire-laser f3-6f f4-6f)
+  27: (move f3-6f f4-6f)
+  28: (fire-laser f4-6f f4-7f)
+  29: (move f4-6f f4-7f)
+  30: (putdown-laser f4-7f)
+  31: (move f4-7f f4-6f)
+  32: (move f4-6f f3-6f)
+  33: (move f3-6f f2-6f)
+  34: (move f2-6f f1-6f)
+  35: (move f1-6f f0-6f)
+  36: (move f0-6f f0-5f)
+  37: (move f0-5f f0-4f)
+  38: (move f0-4f f0-3f)
+  39: (move f0-3f f0-2f)
+  40: (move f0-2f f0-1f)
+  41: (move f0-1f f1-1f)
+  42: (move f1-1f f1-0f)
+  43: (pickup-bomb f1-0f)
+  44: (move f1-0f f0-0f)
+  45: (move f0-0f f0-1f)
+  46: (move f0-1f f1-1f)
+  47: (move f1-1f f1-2f)
+  48: (move f1-2f f1-3f)
+  49: (move f1-3f f2-3f)
+  50: (move f2-3f f3-3f)
+  51: (move f3-3f f3-4f)
+  52: (move f3-4f f3-5f)
+  53: (move f3-5f f3-6f)
+  54: (move f3-6f f4-6f)
+  55: (move f4-6f f4-7f)
+  56: (detonate-bomb f4-7f f5-7f)
+  57: (move f4-7f f5-7f)
+  58: (pick-gold f5-7f)

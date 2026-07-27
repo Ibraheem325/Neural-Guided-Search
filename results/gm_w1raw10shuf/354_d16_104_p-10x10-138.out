@@ -1,0 +1,94 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[W1raw] OPTION7 w1raw_beta=1.0 signal=RAW edge-W1 (parent-best vs child-best, no reward/discount) vs SIBLINGS (boosts exploration toward larger-shift children; prior untouched) [SHUFFLE CONTROL: signal-blind placement]
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=60, generated=59, iqn_calls=167
+  [sim 1000] root visits=1000, unique states=76, generated=75, iqn_calls=204
+  [sim 1500] root visits=1500, unique states=91, generated=90, iqn_calls=237
+  [sim 2000] root visits=2000, unique states=112, generated=111, iqn_calls=293
+  [sim 2500] root visits=2500, unique states=124, generated=123, iqn_calls=329
+  [sim 3000] root visits=3000, unique states=139, generated=138, iqn_calls=362
+  [sim 3500] root visits=3500, unique states=155, generated=154, iqn_calls=404
+  [sim 4000] root visits=4000, unique states=190, generated=189, iqn_calls=470
+  [sim 4500] root visits=4500, unique states=207, generated=206, iqn_calls=510
+  [sim 5000] root visits=5000, unique states=464, generated=463, iqn_calls=1160
+  [sim 5500] root visits=5500, unique states=954, generated=953, iqn_calls=2391
+  [sim 6000] root visits=6000, unique states=1222, generated=1221, iqn_calls=2980
+  [sim 6500] root visits=6500, unique states=1444, generated=1443, iqn_calls=3528
+  [sim 6578] found goal path of length 67
+[Final] Expanded: 1485, Generated: 1485
+[Cost] IQN forward calls (Bellman signal): 3621
+[Widen] nodes widened: 0, mean w: 0.0000
+[W1raw] child-edges modulated: 3081, mean mult: 1.0325 (1.0 = no change; >1 = boosted toward larger shift)
+[search done] simulations=6578, unique states generated=1485
+Found a solution of length 67!
+   1: (move f1-3f f0-3f)
+   2: (move f0-3f f0-4f)
+   3: (detonate-bomb f0-4f f0-5f)
+   4: (move f0-4f f0-3f)
+   5: (move f0-3f f1-3f)
+   6: (move f1-3f f2-3f)
+   7: (move f2-3f f3-3f)
+   8: (move f3-3f f4-3f)
+   9: (move f4-3f f4-2f)
+  10: (move f4-2f f4-1f)
+  11: (move f4-1f f5-1f)
+  12: (move f5-1f f5-0f)
+  13: (move f5-0f f6-0f)
+  14: (move f6-0f f7-0f)
+  15: (pickup-laser f7-0f)
+  16: (move f7-0f f6-0f)
+  17: (fire-laser f6-0f f6-1f)
+  18: (move f6-0f f5-0f)
+  19: (move f5-0f f5-1f)
+  20: (move f5-1f f5-2f)
+  21: (move f5-2f f6-2f)
+  22: (move f6-2f f7-2f)
+  23: (fire-laser f7-2f f7-3f)
+  24: (move f7-2f f7-3f)
+  25: (fire-laser f7-3f f7-4f)
+  26: (move f7-3f f7-4f)
+  27: (fire-laser f7-4f f7-5f)
+  28: (move f7-4f f7-5f)
+  29: (fire-laser f7-5f f7-6f)
+  30: (move f7-5f f7-6f)
+  31: (move f7-6f f7-7f)
+  32: (move f7-7f f8-7f)
+  33: (move f8-7f f9-7f)
+  34: (move f9-7f f9-8f)
+  35: (putdown-laser f9-8f)
+  36: (move f9-8f f9-7f)
+  37: (move f9-7f f8-7f)
+  38: (move f8-7f f7-7f)
+  39: (move f7-7f f7-6f)
+  40: (move f7-6f f7-5f)
+  41: (move f7-5f f7-4f)
+  42: (move f7-4f f7-3f)
+  43: (move f7-3f f6-3f)
+  44: (move f6-3f f6-2f)
+  45: (move f6-2f f6-1f)
+  46: (move f6-1f f5-1f)
+  47: (move f5-1f f5-0f)
+  48: (move f5-0f f6-0f)
+  49: (move f6-0f f7-0f)
+  50: (pickup-bomb f7-0f)
+  51: (move f7-0f f6-0f)
+  52: (move f6-0f f5-0f)
+  53: (move f5-0f f5-1f)
+  54: (move f5-1f f5-2f)
+  55: (move f5-2f f6-2f)
+  56: (move f6-2f f7-2f)
+  57: (move f7-2f f7-3f)
+  58: (move f7-3f f7-4f)
+  59: (move f7-4f f7-5f)
+  60: (move f7-5f f7-6f)
+  61: (move f7-6f f7-7f)
+  62: (move f7-7f f8-7f)
+  63: (move f8-7f f9-7f)
+  64: (move f9-7f f9-8f)
+  65: (detonate-bomb f9-8f f9-9f)
+  66: (move f9-8f f9-9f)
+  67: (pick-gold f9-9f)
