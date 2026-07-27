@@ -1,0 +1,6 @@
+(load-truck p6 t0 l0-0)
+(load-truck p4 t0 l0-0)
+(drive-truck t0 l0-0 l0-3 c0)
+(unload-truck p6 t0 l0-3)
+(unload-truck p4 t0 l0-3)
+; cost = 5 (unit cost)
