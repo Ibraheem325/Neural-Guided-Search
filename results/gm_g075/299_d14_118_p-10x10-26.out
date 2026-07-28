@@ -1,0 +1,62 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+[Gate] prior_gamma=0.75 (P-gate softened: u ~ c*P**gamma; P==0 still stays 0)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=181, generated=180, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=478, generated=477, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=889, generated=888, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=1246, generated=1245, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=1346, generated=1345, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=1346, generated=1345, iqn_calls=0
+  [sim 3500] root visits=3500, unique states=1346, generated=1345, iqn_calls=0
+  [sim 4000] root visits=4000, unique states=1346, generated=1345, iqn_calls=0
+  [sim 4500] root visits=4500, unique states=1346, generated=1345, iqn_calls=0
+  [sim 5000] root visits=5000, unique states=1346, generated=1345, iqn_calls=0
+  [sim 5500] root visits=5500, unique states=1360, generated=1359, iqn_calls=0
+  [sim 6000] root visits=6000, unique states=1426, generated=1425, iqn_calls=0
+  [sim 6500] root visits=6500, unique states=1514, generated=1513, iqn_calls=0
+  [sim 7000] root visits=7000, unique states=1606, generated=1605, iqn_calls=0
+  [sim 7500] root visits=7500, unique states=1681, generated=1680, iqn_calls=0
+  [sim 8000] root visits=8000, unique states=1785, generated=1784, iqn_calls=0
+  [sim 8500] root visits=8500, unique states=1879, generated=1878, iqn_calls=0
+  [sim 9000] root visits=9000, unique states=1961, generated=1960, iqn_calls=0
+  [sim 9500] root visits=9500, unique states=2055, generated=2054, iqn_calls=0
+  [sim 10000] root visits=10000, unique states=2123, generated=2122, iqn_calls=0
+  [sim 10500] root visits=10500, unique states=2229, generated=2228, iqn_calls=0
+  [sim 11000] root visits=11000, unique states=2298, generated=2297, iqn_calls=0
+  [sim 11500] root visits=11500, unique states=2376, generated=2375, iqn_calls=0
+  [sim 12000] root visits=12000, unique states=2443, generated=2442, iqn_calls=0
+  [sim 12500] root visits=12500, unique states=2512, generated=2511, iqn_calls=0
+  [sim 13000] root visits=13000, unique states=2584, generated=2583, iqn_calls=0
+  [sim 13500] root visits=13500, unique states=2669, generated=2668, iqn_calls=0
+  [sim 14000] root visits=14000, unique states=2759, generated=2758, iqn_calls=0
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1341, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1331, in _main
+    solution = _plan(problem, policy_model, q1_model, q2_model, args)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1094, in _plan
+    plan, sims, generated = _search(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 940, in _search
+    goal_plan, generated = _simulate(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 908, in _simulate
+    value, generated = _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 749, in _expand
+    logits, actions = policy_model.forward([(node.state, goal)])[0]
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 70, in forward
+    values_list = self.model.forward(input_list).readout(self.readout_name)  # type: ignore
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/rgnn_readout_fix.py", line 54, in _patched_forward
+    input = encode_input(x, self._config.input_specification, self.get_device())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/encodings.py", line 163, in encode_input
+    result.flattened_relations = relations_to_tensors(result.flattened_relations, device)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/utils.py", line 36, in relations_to_tensors
+    result[key] = torch.tensor(value, dtype=torch.int, device=device, requires_grad=False)
+torch.AcceleratorError: CUDA error: the remote procedural call between the MPS server and the MPS client failed
+Search for `cudaErrorMpsRpcFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

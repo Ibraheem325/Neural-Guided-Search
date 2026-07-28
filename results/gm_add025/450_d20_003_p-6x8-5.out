@@ -1,0 +1,60 @@
+Torch: 2.12.0+cu130
+Using CPU.
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+[Add] OPTION8 add_beta=0.25 src=binc cap=2.0 (ADDITIVE bonus, NOT gated by P(a); prior untouched)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/TensorAdvancedIndexing.cpp:1514.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=272, generated=271, iqn_calls=638
+  [sim 1000] root visits=1000, unique states=449, generated=448, iqn_calls=1050
+  [sim 1500] root visits=1500, unique states=554, generated=553, iqn_calls=1304
+  [sim 2000] root visits=2000, unique states=660, generated=659, iqn_calls=1570
+  [sim 2500] root visits=2500, unique states=735, generated=734, iqn_calls=1762
+  [sim 3000] root visits=3000, unique states=855, generated=854, iqn_calls=2075
+  [sim 3340] found goal path of length 40
+[Final] Expanded: 914, Generated: 914
+[Cost] IQN forward calls (Bellman signal): 2216
+[Widen] nodes widened: 0, mean w: 0.0000
+[Add] child-edges given an additive bonus: 42523, mean (rel-1): 0.5505
+[search done] simulations=3340, unique states generated=914
+Found a solution of length 40!
+   1: (move f3-0f f4-0f)
+   2: (move f4-0f f5-0f)
+   3: (pickup-laser f5-0f)
+   4: (move f5-0f f5-1f)
+   5: (move f5-1f f5-2f)
+   6: (fire-laser f5-2f f5-3f)
+   7: (move f5-2f f5-1f)
+   8: (move f5-1f f4-1f)
+   9: (fire-laser f4-1f f4-2f)
+  10: (move f4-1f f4-2f)
+  11: (move f4-2f f4-3f)
+  12: (move f4-3f f4-4f)
+  13: (fire-laser f4-4f f4-5f)
+  14: (move f4-4f f4-5f)
+  15: (fire-laser f4-5f f4-6f)
+  16: (move f4-5f f4-6f)
+  17: (move f4-6f f4-7f)
+  18: (putdown-laser f4-7f)
+  19: (move f4-7f f4-6f)
+  20: (move f4-6f f4-5f)
+  21: (move f4-5f f4-4f)
+  22: (move f4-4f f4-3f)
+  23: (move f4-3f f5-3f)
+  24: (move f5-3f f5-2f)
+  25: (move f5-2f f4-2f)
+  26: (move f4-2f f4-1f)
+  27: (move f4-1f f5-1f)
+  28: (move f5-1f f5-0f)
+  29: (pickup-bomb f5-0f)
+  30: (move f5-0f f5-1f)
+  31: (move f5-1f f5-2f)
+  32: (move f5-2f f5-3f)
+  33: (move f5-3f f4-3f)
+  34: (move f4-3f f4-4f)
+  35: (move f4-4f f4-5f)
+  36: (move f4-5f f4-6f)
+  37: (move f4-6f f4-7f)
+  38: (detonate-bomb f4-7f f5-7f)
+  39: (move f4-7f f5-7f)
+  40: (pick-gold f5-7f)

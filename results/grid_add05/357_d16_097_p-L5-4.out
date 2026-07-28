@@ -1,0 +1,44 @@
+Torch: 2.12.0+cu130
+Using CPU.
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+[Add] OPTION8 add_beta=0.5 src=binc cap=2.0 (ADDITIVE bonus, NOT gated by P(a); prior untouched)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/TensorAdvancedIndexing.cpp:1514.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 327] found goal path of length 30
+[Final] Expanded: 831, Generated: 831
+[Cost] IQN forward calls (Bellman signal): 1652
+[Widen] nodes widened: 0, mean w: 0.0000
+[Add] child-edges given an additive bonus: 9348, mean (rel-1): 0.4476
+[search done] simulations=327, unique states generated=831
+Found a solution of length 30!
+   1: (move f3-5f f3-4f)
+   2: (move f3-4f f2-4f)
+   3: (move f2-4f f2-3f)
+   4: (move f2-3f f3-3f)
+   5: (move f3-3f f3-2f)
+   6: (move f3-2f f4-2f)
+   7: (move f4-2f f4-3f)
+   8: (move f4-3f f4-4f)
+   9: (move f4-4f f5-4f)
+  10: (move f5-4f f5-5f)
+  11: (move f5-5f f5-6f)
+  12: (move f5-6f f5-7f)
+  13: (pickup f5-7f key3-0)
+  14: (move f5-7f f4-7f)
+  15: (move f4-7f f3-7f)
+  16: (move f3-7f f3-6f)
+  17: (move f3-6f f4-6f)
+  18: (move f4-6f f5-6f)
+  19: (move f5-6f f6-6f)
+  20: (move f6-6f f6-5f)
+  21: (move f6-5f f5-5f)
+  22: (move f5-5f f4-5f)
+  23: (move f4-5f f4-4f)
+  24: (move f4-4f f3-4f)
+  25: (move f3-4f f2-4f)
+  26: (move f2-4f f2-3f)
+  27: (move f2-3f f2-2f)
+  28: (move f2-2f f2-1f)
+  29: (move f2-1f f2-0f)
+  30: (putdown f2-0f key3-0)

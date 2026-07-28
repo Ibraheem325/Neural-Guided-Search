@@ -1,0 +1,49 @@
+Torch: 2.12.0+cu130
+Using CPU.
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+[Add] OPTION8 add_beta=0.25 src=binc cap=2.0 (ADDITIVE bonus, NOT gated by P(a); prior untouched)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/TensorAdvancedIndexing.cpp:1514.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=11, generated=10, iqn_calls=23
+  [sim 1000] root visits=1000, unique states=11, generated=10, iqn_calls=23
+  [sim 1500] root visits=1500, unique states=73, generated=72, iqn_calls=158
+  [sim 2000] root visits=2000, unique states=289, generated=288, iqn_calls=674
+  [sim 2500] root visits=2500, unique states=471, generated=470, iqn_calls=1109
+  [sim 3000] root visits=3000, unique states=1035, generated=1034, iqn_calls=2473
+  [sim 3500] root visits=3500, unique states=1097, generated=1096, iqn_calls=2641
+  [sim 4000] root visits=4000, unique states=1097, generated=1096, iqn_calls=2641
+  [sim 4500] root visits=4500, unique states=1270, generated=1269, iqn_calls=3043
+  [sim 5000] root visits=5000, unique states=1484, generated=1483, iqn_calls=3549
+  [sim 5500] root visits=5500, unique states=1630, generated=1629, iqn_calls=3918
+  [sim 6000] root visits=6000, unique states=1737, generated=1736, iqn_calls=4217
+  [sim 6500] root visits=6500, unique states=1862, generated=1861, iqn_calls=4514
+  [sim 7000] root visits=7000, unique states=2001, generated=2000, iqn_calls=4858
+  [sim 7500] root visits=7500, unique states=2140, generated=2139, iqn_calls=5206
+  [sim 8000] root visits=8000, unique states=2284, generated=2283, iqn_calls=5563
+  [sim 8500] root visits=8500, unique states=2416, generated=2415, iqn_calls=5920
+  [sim 9000] root visits=9000, unique states=2531, generated=2530, iqn_calls=6216
+  [sim 9500] root visits=9500, unique states=2656, generated=2655, iqn_calls=6510
+  [sim 10000] root visits=10000, unique states=2797, generated=2796, iqn_calls=6847
+  [sim 10339] found goal path of length 15
+[Final] Expanded: 2889, Generated: 2889
+[Cost] IQN forward calls (Bellman signal): 7058
+[Widen] nodes widened: 0, mean w: 0.0000
+[Add] child-edges given an additive bonus: 91662, mean (rel-1): 0.4012
+[search done] simulations=10339, unique states generated=2889
+Found a solution of length 15!
+   1: (move f6-0f f6-1f)
+   2: (move f6-1f f6-2f)
+   3: (move f6-2f f6-3f)
+   4: (move f6-3f f6-4f)
+   5: (move f6-4f f5-4f)
+   6: (move f5-4f f4-4f)
+   7: (move f4-4f f3-4f)
+   8: (move f3-4f f2-4f)
+   9: (move f2-4f f2-5f)
+  10: (move f2-5f f2-6f)
+  11: (move f2-6f f2-7f)
+  12: (move f2-7f f2-8f)
+  13: (detonate-bomb f2-8f f1-8f)
+  14: (move f2-8f f1-8f)
+  15: (pick-gold f1-8f)

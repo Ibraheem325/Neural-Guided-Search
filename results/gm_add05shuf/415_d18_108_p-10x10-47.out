@@ -1,0 +1,26 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+[Add] OPTION8 add_beta=0.5 src=binc cap=2.0 (ADDITIVE bonus, NOT gated by P(a); prior untouched) [SHUFFLE CONTROL: signal-blind placement]
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1341, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1331, in _main
+    solution = _plan(problem, policy_model, q1_model, q2_model, args)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1094, in _plan
+    plan, sims, generated = _search(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 940, in _search
+    goal_plan, generated = _simulate(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 891, in _simulate
+    value = _leaf_value(node.state, goal, q1_model, q2_model)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 732, in _leaf_value
+    return q.mean(dim=1).max().item()
+torch.AcceleratorError: CUDA error: the remote procedural call between the MPS server and the MPS client failed
+Search for `cudaErrorMpsRpcFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

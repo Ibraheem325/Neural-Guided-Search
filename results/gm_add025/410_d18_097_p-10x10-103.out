@@ -1,0 +1,71 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+[Add] OPTION8 add_beta=0.25 src=binc cap=2.0 (ADDITIVE bonus, NOT gated by P(a); prior untouched)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=21, generated=20, iqn_calls=61
+  [sim 1000] root visits=1000, unique states=131, generated=130, iqn_calls=344
+  [sim 1500] root visits=1500, unique states=180, generated=179, iqn_calls=478
+  [sim 2000] root visits=2000, unique states=180, generated=179, iqn_calls=478
+  [sim 2500] root visits=2500, unique states=180, generated=179, iqn_calls=478
+  [sim 3000] root visits=3000, unique states=208, generated=207, iqn_calls=562
+  [sim 3500] root visits=3500, unique states=254, generated=253, iqn_calls=665
+  [sim 4000] root visits=4000, unique states=294, generated=293, iqn_calls=766
+  [sim 4500] root visits=4500, unique states=332, generated=331, iqn_calls=869
+  [sim 5000] root visits=5000, unique states=369, generated=368, iqn_calls=966
+  [sim 5500] root visits=5500, unique states=405, generated=404, iqn_calls=1066
+  [sim 6000] root visits=6000, unique states=444, generated=443, iqn_calls=1166
+  [sim 6500] root visits=6500, unique states=474, generated=473, iqn_calls=1253
+  [sim 7000] root visits=7000, unique states=510, generated=509, iqn_calls=1351
+  [sim 7500] root visits=7500, unique states=548, generated=547, iqn_calls=1446
+  [sim 8000] root visits=8000, unique states=587, generated=586, iqn_calls=1547
+  [sim 8500] root visits=8500, unique states=617, generated=616, iqn_calls=1631
+  [sim 9000] root visits=9000, unique states=659, generated=658, iqn_calls=1738
+  [sim 9500] root visits=9500, unique states=679, generated=678, iqn_calls=1800
+  [sim 10000] root visits=10000, unique states=693, generated=692, iqn_calls=1834
+  [sim 10500] root visits=10500, unique states=737, generated=736, iqn_calls=1942
+  [sim 11000] root visits=11000, unique states=778, generated=777, iqn_calls=2038
+  [sim 11500] root visits=11500, unique states=814, generated=813, iqn_calls=2131
+  [sim 12000] root visits=12000, unique states=845, generated=844, iqn_calls=2217
+  [sim 12500] root visits=12500, unique states=873, generated=872, iqn_calls=2297
+  [sim 13000] root visits=13000, unique states=914, generated=913, iqn_calls=2402
+  [sim 13500] root visits=13500, unique states=947, generated=946, iqn_calls=2490
+  [sim 14000] root visits=14000, unique states=976, generated=975, iqn_calls=2584
+  [sim 14500] root visits=14500, unique states=1023, generated=1022, iqn_calls=2697
+  [sim 15000] root visits=15000, unique states=1054, generated=1053, iqn_calls=2790
+  [sim 15500] root visits=15500, unique states=1085, generated=1084, iqn_calls=2872
+  [sim 16000] root visits=16000, unique states=1123, generated=1122, iqn_calls=2972
+  [sim 16500] root visits=16500, unique states=1148, generated=1147, iqn_calls=3049
+  [sim 17000] root visits=17000, unique states=1185, generated=1184, iqn_calls=3146
+  [sim 17500] root visits=17500, unique states=1217, generated=1216, iqn_calls=3245
+  [sim 18000] root visits=18000, unique states=1245, generated=1244, iqn_calls=3328
+  [sim 18500] root visits=18500, unique states=1282, generated=1281, iqn_calls=3416
+  [sim 19000] root visits=19000, unique states=1320, generated=1319, iqn_calls=3515
+  [sim 19500] root visits=19500, unique states=1344, generated=1343, iqn_calls=3584
+  [sim 20000] root visits=20000, unique states=1375, generated=1374, iqn_calls=3679
+  [sim 20500] root visits=20500, unique states=1404, generated=1403, iqn_calls=3759
+  [sim 21000] root visits=21000, unique states=1437, generated=1436, iqn_calls=3848
+  [sim 21500] root visits=21500, unique states=1468, generated=1467, iqn_calls=3935
+  [sim 22000] root visits=22000, unique states=1502, generated=1501, iqn_calls=4018
+  [sim 22500] root visits=22500, unique states=1537, generated=1536, iqn_calls=4107
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1341, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1331, in _main
+    solution = _plan(problem, policy_model, q1_model, q2_model, args)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1094, in _plan
+    plan, sims, generated = _search(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 940, in _search
+    goal_plan, generated = _simulate(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 891, in _simulate
+    value = _leaf_value(node.state, goal, q1_model, q2_model)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 732, in _leaf_value
+    return q.mean(dim=1).max().item()
+torch.AcceleratorError: CUDA error: the remote procedural call between the MPS server and the MPS client failed
+Search for `cudaErrorMpsRpcFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

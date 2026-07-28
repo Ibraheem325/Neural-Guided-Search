@@ -1,0 +1,76 @@
+Torch: 2.12.0+cu130
+Using CPU.
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+[Add] OPTION8 add_beta=0.25 src=binc cap=2.0 (ADDITIVE bonus, NOT gated by P(a); prior untouched) [SHUFFLE CONTROL: signal-blind placement]
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/TensorAdvancedIndexing.cpp:1514.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=368, generated=367, iqn_calls=830
+  [sim 1000] root visits=1000, unique states=790, generated=789, iqn_calls=1808
+  [sim 1500] root visits=1500, unique states=1044, generated=1043, iqn_calls=2386
+  [sim 2000] root visits=2000, unique states=1160, generated=1159, iqn_calls=2656
+  [sim 2500] root visits=2500, unique states=1363, generated=1362, iqn_calls=3137
+  [sim 3000] root visits=3000, unique states=1483, generated=1482, iqn_calls=3416
+  [sim 3500] root visits=3500, unique states=1483, generated=1482, iqn_calls=3419
+  [sim 4000] root visits=4000, unique states=1483, generated=1482, iqn_calls=3419
+  [sim 4500] root visits=4500, unique states=1614, generated=1613, iqn_calls=3720
+  [sim 5000] root visits=5000, unique states=1718, generated=1717, iqn_calls=3980
+  [sim 5500] root visits=5500, unique states=1857, generated=1856, iqn_calls=4296
+  [sim 6000] root visits=6000, unique states=1980, generated=1979, iqn_calls=4590
+  [sim 6500] root visits=6500, unique states=2102, generated=2101, iqn_calls=4886
+  [sim 7000] root visits=7000, unique states=2227, generated=2226, iqn_calls=5197
+  [sim 7500] root visits=7500, unique states=2350, generated=2349, iqn_calls=5486
+  [sim 7876] found goal path of length 47
+[Final] Expanded: 2458, Generated: 2458
+[Cost] IQN forward calls (Bellman signal): 5756
+[Widen] nodes widened: 0, mean w: 0.0000
+[Add] child-edges given an additive bonus: 79236, mean (rel-1): 0.3078
+[search done] simulations=7876, unique states generated=2458
+Found a solution of length 47!
+   1: (move f3-3f f2-3f)
+   2: (detonate-bomb f2-3f f1-3f)
+   3: (move f2-3f f3-3f)
+   4: (move f3-3f f3-2f)
+   5: (move f3-2f f3-1f)
+   6: (move f3-1f f3-0f)
+   7: (move f3-0f f4-0f)
+   8: (move f4-0f f5-0f)
+   9: (move f5-0f f6-0f)
+  10: (move f6-0f f7-0f)
+  11: (move f7-0f f8-0f)
+  12: (pickup-laser f8-0f)
+  13: (move f8-0f f7-0f)
+  14: (fire-laser f7-0f f7-1f)
+  15: (putdown-laser f7-0f)
+  16: (move f7-0f f6-0f)
+  17: (move f6-0f f5-0f)
+  18: (move f5-0f f5-1f)
+  19: (move f5-1f f6-1f)
+  20: (move f6-1f f7-1f)
+  21: (move f7-1f f8-1f)
+  22: (move f8-1f f8-0f)
+  23: (pickup-bomb f8-0f)
+  24: (move f8-0f f7-0f)
+  25: (move f7-0f f6-0f)
+  26: (move f6-0f f5-0f)
+  27: (move f5-0f f4-0f)
+  28: (move f4-0f f3-0f)
+  29: (move f3-0f f3-1f)
+  30: (move f3-1f f3-2f)
+  31: (move f3-2f f3-3f)
+  32: (move f3-3f f4-3f)
+  33: (move f4-3f f5-3f)
+  34: (move f5-3f f6-3f)
+  35: (move f6-3f f7-3f)
+  36: (move f7-3f f8-3f)
+  37: (move f8-3f f9-3f)
+  38: (move f9-3f f9-4f)
+  39: (move f9-4f f9-5f)
+  40: (move f9-5f f9-6f)
+  41: (move f9-6f f9-7f)
+  42: (move f9-7f f8-7f)
+  43: (move f8-7f f8-8f)
+  44: (move f8-8f f8-9f)
+  45: (detonate-bomb f8-9f f9-9f)
+  46: (move f8-9f f9-9f)
+  47: (pick-gold f9-9f)
