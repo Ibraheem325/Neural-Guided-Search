@@ -56,8 +56,18 @@ fi
 export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps-$USER
 export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-mps-log-$USER
 mkdir -p "$CUDA_MPS_PIPE_DIRECTORY" "$CUDA_MPS_LOG_DIRECTORY" 2>/dev/null
-nvidia-cuda-mps-control -d >/dev/null 2>&1 || true   # ok if already running / unavailable
+if command -v nvidia-cuda-mps-control >/dev/null 2>&1; then
+    nvidia-cuda-mps-control -d >/dev/null 2>&1   # no-op if a daemon is already up
+    if [ -e "$CUDA_MPS_PIPE_DIRECTORY/control" ]; then
+        echo "[MPS] ACTIVE on $(hostname) (pipe=$CUDA_MPS_PIPE_DIRECTORY)"
+    else
+        echo "[MPS] control binary found but NO daemon pipe -- running WITHOUT MPS"
+    fi
+else
+    echo "[MPS] nvidia-cuda-mps-control NOT FOUND -- running WITHOUT MPS"
+fi
 # NOTE: deliberately NO daemon shutdown at exit -- other running jobs share it.
+# The job ALWAYS continues regardless of MPS status (per cluster admin's instruction).
 
 FILES=($(ls ${TEST_DIR}/*.pddl | grep -v domain | sort))
 IDX=$((SLURM_ARRAY_TASK_ID - 1))
