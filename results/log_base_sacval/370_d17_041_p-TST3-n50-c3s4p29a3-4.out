@@ -1,0 +1,20 @@
+Torch: 2.12.0+cu130
+Using CPU.
+[Bellman] lambda=0 -> baseline (no widening signal)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/TensorAdvancedIndexing.cpp:1514.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=12735, generated=12734, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=24728, generated=24727, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=36464, generated=36463, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=48116, generated=48115, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=59556, generated=59555, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=70813, generated=70812, iqn_calls=0
+  [sim 3500] root visits=3500, unique states=81821, generated=81820, iqn_calls=0
+  [sim 4000] root visits=4000, unique states=92638, generated=92637, iqn_calls=0
+  [sim 4500] root visits=4500, unique states=103743, generated=103742, iqn_calls=0
+  [sim 5000] root visits=5000, unique states=113959, generated=113958, iqn_calls=0
+  [sim 5500] root visits=5500, unique states=124064, generated=124063, iqn_calls=0
+  [sim 6000] root visits=6000, unique states=134456, generated=134455, iqn_calls=0
+  [sim 6500] root visits=6500, unique states=144397, generated=144396, iqn_calls=0
+  [sim 7000] root visits=7000, unique states=154090, generated=154089, iqn_calls=0
+  [sim 7500] root visits=7500, unique states=163852, generated=163851, iqn_calls=0

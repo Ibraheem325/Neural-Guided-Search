@@ -1,0 +1,25 @@
+Torch: 2.12.0+cu130
+Using CPU.
+[Bellman] lambda=0 -> baseline (no widening signal)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/TensorAdvancedIndexing.cpp:1514.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=16706, generated=16705, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=33025, generated=33024, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=49464, generated=49463, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=65555, generated=65554, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=81602, generated=81601, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=97625, generated=97624, iqn_calls=0
+  [sim 3500] root visits=3500, unique states=113525, generated=113524, iqn_calls=0
+  [sim 4000] root visits=4000, unique states=129381, generated=129380, iqn_calls=0
+  [sim 4500] root visits=4500, unique states=145163, generated=145162, iqn_calls=0
+  [sim 5000] root visits=5000, unique states=160978, generated=160977, iqn_calls=0
+  [sim 5500] root visits=5500, unique states=176634, generated=176633, iqn_calls=0
+  [sim 6000] root visits=6000, unique states=192320, generated=192319, iqn_calls=0
+  [sim 6500] root visits=6500, unique states=207908, generated=207907, iqn_calls=0
+  [sim 7000] root visits=7000, unique states=223589, generated=223588, iqn_calls=0
+  [sim 7500] root visits=7500, unique states=239195, generated=239194, iqn_calls=0
+  [sim 8000] root visits=8000, unique states=254799, generated=254798, iqn_calls=0
+  [sim 8500] root visits=8500, unique states=270343, generated=270342, iqn_calls=0
+  [sim 9000] root visits=9000, unique states=285839, generated=285838, iqn_calls=0
+  [sim 9500] root visits=9500, unique states=301267, generated=301266, iqn_calls=0
+  [sim 10000] root visits=10000, unique states=316898, generated=316897, iqn_calls=0

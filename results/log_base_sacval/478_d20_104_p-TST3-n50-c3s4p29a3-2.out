@@ -1,0 +1,29 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=14509, generated=14508, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=27790, generated=27789, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=40589, generated=40588, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=52912, generated=52911, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=65058, generated=65057, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=77351, generated=77350, iqn_calls=0
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1341, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1331, in _main
+    solution = _plan(problem, policy_model, q1_model, q2_model, args)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1094, in _plan
+    plan, sims, generated = _search(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 940, in _search
+    goal_plan, generated = _simulate(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 908, in _simulate
+    value, generated = _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 818, in _expand
+    return _leaf_value(node.state, goal, q1_model, q2_model), generated
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 733, in _leaf_value
+    q1_vals, _ = q1_model.forward([(state, goal)])[0]
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 70, in forward
+    values_list = self.model.forward(input_list).readout(self.readout_name)  # type: ignore
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 88, in readout

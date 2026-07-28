@@ -1,0 +1,12 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=14524, generated=14523, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=28136, generated=28135, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=40650, generated=40649, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=52918, generated=52917, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=65409, generated=65408, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=78085, generated=78084, iqn_calls=0
+  [sim 3500] root visits=3500, unique states=90743, generated=90742, iqn_calls=0
