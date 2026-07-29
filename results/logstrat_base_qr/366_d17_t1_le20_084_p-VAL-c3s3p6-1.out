@@ -1,0 +1,41 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=5480, generated=5479, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=10441, generated=10440, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=15373, generated=15372, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=20198, generated=20197, iqn_calls=0
+Traceback (most recent call last):
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1341, in <module>
+    _main(_parse_arguments())
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1331, in _main
+    solution = _plan(problem, policy_model, q1_model, q2_model, args)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 1094, in _plan
+    plan, sims, generated = _search(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 940, in _search
+    goal_plan, generated = _simulate(
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 908, in _simulate
+    value, generated = _expand(node, tt, policy_model, q1_model, q2_model, goal, dead_end_value)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 749, in _expand
+    logits, actions = policy_model.forward([(node.state, goal)])[0]
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/alphaZero_bellman.py", line 70, in forward
+    values_list = self.model.forward(input_list).readout(self.readout_name)  # type: ignore
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 88, in readout
+    return self._readouts[name]()
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/rgnn_readout_fix.py", line 68, in <lambda>
+    name: (lambda r=readout: r(node_embeddings, input))
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py", line 249, in forward
+    object_aggregation = object_aggregation.repeat_interleave(input.action_sizes, dim=0)
+torch.AcceleratorError: CUDA error: the remote procedural call between the MPS server and the MPS client failed
+Search for `cudaErrorMpsRpcFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
