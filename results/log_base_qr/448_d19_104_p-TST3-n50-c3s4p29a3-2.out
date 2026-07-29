@@ -1,0 +1,50 @@
+Torch: 2.12.0+cu130
+Using GPU:  NVIDIA L40S
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=15683, generated=15682, iqn_calls=0
+  [sim 1000] root visits=1000, unique states=28938, generated=28937, iqn_calls=0
+  [sim 1500] root visits=1500, unique states=41921, generated=41920, iqn_calls=0
+  [sim 2000] root visits=2000, unique states=54221, generated=54220, iqn_calls=0
+  [sim 2500] root visits=2500, unique states=66386, generated=66385, iqn_calls=0
+  [sim 3000] root visits=3000, unique states=78572, generated=78571, iqn_calls=0
+  [sim 3500] root visits=3500, unique states=90546, generated=90545, iqn_calls=0
+  [sim 4000] root visits=4000, unique states=103311, generated=103310, iqn_calls=0
+  [sim 4500] root visits=4500, unique states=115345, generated=115344, iqn_calls=0
+  [sim 5000] root visits=5000, unique states=127283, generated=127282, iqn_calls=0
+  [sim 5500] root visits=5500, unique states=139193, generated=139192, iqn_calls=0
+  [sim 6000] root visits=6000, unique states=151014, generated=151013, iqn_calls=0
+  [sim 6500] root visits=6500, unique states=162895, generated=162894, iqn_calls=0
+  [sim 7000] root visits=7000, unique states=174834, generated=174833, iqn_calls=0
+  [sim 7500] root visits=7500, unique states=186643, generated=186642, iqn_calls=0
+  [sim 8000] root visits=8000, unique states=198499, generated=198498, iqn_calls=0
+  [sim 8500] root visits=8500, unique states=210258, generated=210257, iqn_calls=0
+  [sim 9000] root visits=9000, unique states=221975, generated=221974, iqn_calls=0
+  [sim 9500] root visits=9500, unique states=233628, generated=233627, iqn_calls=0
+  [sim 10000] root visits=10000, unique states=245342, generated=245341, iqn_calls=0
+  [sim 10500] root visits=10500, unique states=257294, generated=257293, iqn_calls=0
+  [sim 11000] root visits=11000, unique states=269219, generated=269218, iqn_calls=0
+  [sim 11500] root visits=11500, unique states=281075, generated=281074, iqn_calls=0
+  [sim 12000] root visits=12000, unique states=292860, generated=292859, iqn_calls=0
+  [sim 12500] root visits=12500, unique states=304771, generated=304770, iqn_calls=0
+  [sim 13000] root visits=13000, unique states=316549, generated=316548, iqn_calls=0
+  [sim 13500] root visits=13500, unique states=328250, generated=328249, iqn_calls=0
+  [sim 14000] root visits=14000, unique states=339967, generated=339966, iqn_calls=0
+  [sim 14500] root visits=14500, unique states=351632, generated=351631, iqn_calls=0
+  [sim 15000] root visits=15000, unique states=363193, generated=363192, iqn_calls=0
+  [sim 15500] root visits=15500, unique states=374827, generated=374826, iqn_calls=0
+  [sim 16000] root visits=16000, unique states=386257, generated=386256, iqn_calls=0
+  [sim 16500] root visits=16500, unique states=397774, generated=397773, iqn_calls=0
+  [sim 17000] root visits=17000, unique states=409256, generated=409255, iqn_calls=0
+  [sim 17500] root visits=17500, unique states=420743, generated=420742, iqn_calls=0
+  [sim 18000] root visits=18000, unique states=432305, generated=432304, iqn_calls=0
+  [sim 18500] root visits=18500, unique states=443778, generated=443777, iqn_calls=0
+  [sim 19000] root visits=19000, unique states=455143, generated=455142, iqn_calls=0
+  [sim 19500] root visits=19500, unique states=466536, generated=466535, iqn_calls=0
+[Final] Expanded: 473610, Generated: 473610
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 0, mean w: 0.0000
+[search done] simulations=19813, unique states generated=473610
+Failed to find a solution!
