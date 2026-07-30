@@ -1,0 +1,8 @@
+(fly-airplane a2 l1-0 l0-0)
+(load-airplane p2 a2 l0-0)
+(fly-airplane a2 l0-0 l3-0)
+(load-airplane p3 a2 l3-0)
+(fly-airplane a2 l3-0 l1-0)
+(unload-airplane p3 a2 l1-0)
+(unload-airplane p2 a2 l1-0)
+; cost = 7 (unit cost)
