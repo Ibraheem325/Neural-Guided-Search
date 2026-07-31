@@ -1,0 +1,22 @@
+usage: alphaZero_bellman.py [-h] --domain DOMAIN --problem PROBLEM
+                            --policy_model POLICY_MODEL --q1_model Q1_MODEL
+                            [--q2_model Q2_MODEL] [--iqn_model IQN_MODEL]
+                            [--bellman_lambda BELLMAN_LAMBDA]
+                            [--bellman_k BELLMAN_K] [--err_scale ERR_SCALE]
+                            [--adaptive_scale] [--w_max W_MAX]
+                            [--signal {bellman,outcome,constant}]
+                            [--const_w CONST_W] [--value_lambda VALUE_LAMBDA]
+                            [--width_beta WIDTH_BETA]
+                            [--width_norm {cv,banded}] [--ens_beta ENS_BETA]
+                            [--ens_prefix ENS_PREFIX] [--ens_n ENS_N]
+                            [--sib_beta SIB_BETA] [--sib_gate SIB_GATE]
+                            [--sib_shuffle] [--binc_beta BINC_BETA]
+                            [--binc_eps BINC_EPS] [--qrdqn_value]
+                            [--w1raw_beta W1RAW_BETA] [--add_beta ADD_BETA]
+                            [--add_src {width,binc,w1raw}] [--add_cap ADD_CAP]
+                            [--prior_gamma PRIOR_GAMMA]
+                            [--max_simulations MAX_SIMULATIONS]
+                            [--max_time MAX_TIME] [--c_puct C_PUCT]
+                            [--dead_end_value DEAD_END_VALUE]
+                            [--keep_searching]
+alphaZero_bellman.py: error: argument --add_beta: invalid float value: 'binc'
