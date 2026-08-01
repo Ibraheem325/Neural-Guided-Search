@@ -1,8 +1,0 @@
-Torch: 2.12.0+cu130
-Using GPU:  NVIDIA L40S
-[config] ensemble vote: M=6 members, v_lambda=0.0 v_beta=0.25 v_n0=256 c_puct=1.5
-/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
-  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
-[Final] Expanded: 1387, Generated: 1387
-[search done] simulations=474, unique states generated=1387
-Failed to find a solution!

@@ -1,9 +1,0 @@
-Torch: 2.12.0+cu130
-Using GPU:  NVIDIA L40S
-[oracle] IQN loaded: models/logistics_iqn.pth (metric=w1, mix_alpha=0.1)
-/u/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/Indexing.cu:1541.)
-  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
-  [sim 500] root visits=500, unique states=17375, generated=17374
-[Final] Expanded: 31515, Generated: 31515
-[search done] simulations=937, unique states generated=31515
-Failed to find a solution!
