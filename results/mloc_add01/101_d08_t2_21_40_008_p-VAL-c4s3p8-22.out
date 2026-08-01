@@ -1,22 +1,16 @@
-usage: alphaZero_bellman.py [-h] --domain DOMAIN --problem PROBLEM
-                            --policy_model POLICY_MODEL --q1_model Q1_MODEL
-                            [--q2_model Q2_MODEL] [--iqn_model IQN_MODEL]
-                            [--bellman_lambda BELLMAN_LAMBDA]
-                            [--bellman_k BELLMAN_K] [--err_scale ERR_SCALE]
-                            [--adaptive_scale] [--w_max W_MAX]
-                            [--signal {bellman,outcome,constant}]
-                            [--const_w CONST_W] [--value_lambda VALUE_LAMBDA]
-                            [--width_beta WIDTH_BETA]
-                            [--width_norm {cv,banded}] [--ens_beta ENS_BETA]
-                            [--ens_prefix ENS_PREFIX] [--ens_n ENS_N]
-                            [--sib_beta SIB_BETA] [--sib_gate SIB_GATE]
-                            [--sib_shuffle] [--binc_beta BINC_BETA]
-                            [--binc_eps BINC_EPS] [--qrdqn_value]
-                            [--w1raw_beta W1RAW_BETA] [--add_beta ADD_BETA]
-                            [--add_src {width,binc,w1raw}] [--add_cap ADD_CAP]
-                            [--prior_gamma PRIOR_GAMMA]
-                            [--max_simulations MAX_SIMULATIONS]
-                            [--max_time MAX_TIME] [--c_puct C_PUCT]
-                            [--dead_end_value DEAD_END_VALUE]
-                            [--keep_searching]
-alphaZero_bellman.py: error: argument --add_beta: invalid float value: 'binc'
+Torch: 2.12.0+cu130
+Using CPU.
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+[Add] OPTION8 add_beta=0.1 src=binc cap=2.0 (ADDITIVE bonus, NOT gated by P(a); prior untouched)
+/work/rleap1/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/TensorAdvancedIndexing.cpp:1514.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 500] root visits=500, unique states=6964, generated=6963, iqn_calls=13824
+  [sim 1000] root visits=1000, unique states=13183, generated=13182, iqn_calls=27613
+  [sim 1500] root visits=1500, unique states=19105, generated=19104, iqn_calls=41273
+[Final] Expanded: 22552, Generated: 22552
+[Cost] IQN forward calls (Bellman signal): 49274
+[Widen] nodes widened: 0, mean w: 0.0000
+[Add] child-edges given an additive bonus: 287804, mean (rel-1): 0.9143
+[search done] simulations=1791, unique states generated=22552
+Failed to find a solution!

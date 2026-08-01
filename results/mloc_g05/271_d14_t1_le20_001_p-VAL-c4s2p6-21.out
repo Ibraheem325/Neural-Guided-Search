@@ -1,22 +1,62 @@
-usage: alphaZero_bellman.py [-h] --domain DOMAIN --problem PROBLEM
-                            --policy_model POLICY_MODEL --q1_model Q1_MODEL
-                            [--q2_model Q2_MODEL] [--iqn_model IQN_MODEL]
-                            [--bellman_lambda BELLMAN_LAMBDA]
-                            [--bellman_k BELLMAN_K] [--err_scale ERR_SCALE]
-                            [--adaptive_scale] [--w_max W_MAX]
-                            [--signal {bellman,outcome,constant}]
-                            [--const_w CONST_W] [--value_lambda VALUE_LAMBDA]
-                            [--width_beta WIDTH_BETA]
-                            [--width_norm {cv,banded}] [--ens_beta ENS_BETA]
-                            [--ens_prefix ENS_PREFIX] [--ens_n ENS_N]
-                            [--sib_beta SIB_BETA] [--sib_gate SIB_GATE]
-                            [--sib_shuffle] [--binc_beta BINC_BETA]
-                            [--binc_eps BINC_EPS] [--qrdqn_value]
-                            [--w1raw_beta W1RAW_BETA] [--add_beta ADD_BETA]
-                            [--add_src {width,binc,w1raw}] [--add_cap ADD_CAP]
-                            [--prior_gamma PRIOR_GAMMA]
-                            [--max_simulations MAX_SIMULATIONS]
-                            [--max_time MAX_TIME] [--c_puct C_PUCT]
-                            [--dead_end_value DEAD_END_VALUE]
-                            [--keep_searching]
-alphaZero_bellman.py: error: argument --add_beta: invalid float value: 'binc'
+Torch: 2.12.0+cu130
+Using CPU.
+[Bellman] lambda=0 -> baseline (no widening signal)
+[Value] SELF-CONSISTENT: leaf value = QR-DQN max_a mean Z(s,a) (SAC critics bypassed; prior still SAC policy)
+[Gate] prior_gamma=0.5 (P-gate softened: u ~ c*P**gamma; P==0 still stays 0)
+/work/rleap1/ibrahim.eisawy/Neural-Guided-Search/venv/lib/python3.10/site-packages/pymimir_rgnn/model.py:162: UserWarning: index_reduce() is in beta and the API may change at any time. (Triggered internally at /pytorch/aten/src/ATen/native/TensorAdvancedIndexing.cpp:1514.)
+  exps_max.index_reduce_(0, output_indices, output_messages, reduce="amax", include_self=False)
+  [sim 221] found goal path of length 49
+[Final] Expanded: 1826, Generated: 1826
+[Cost] IQN forward calls (Bellman signal): 0
+[Widen] nodes widened: 0, mean w: 0.0000
+[search done] simulations=221, unique states generated=1826
+Found a solution of length 49!
+   1: (unload-truck p0 t0 l0-0)
+   2: (unload-airplane p1 a0 l3-0)
+   3: (drive-truck t3 l3-0 l3-1 c3)
+   4: (load-airplane p1 a0 l3-0)
+   5: (fly-airplane a0 l3-0 l0-0)
+   6: (load-airplane p5 a0 l0-0)
+   7: (load-airplane p0 a0 l0-0)
+   8: (load-airplane p3 a0 l0-0)
+   9: (fly-airplane a0 l0-0 l3-0)
+  10: (unload-airplane p3 a0 l3-0)
+  11: (fly-airplane a0 l3-0 l2-0)
+  12: (unload-airplane p0 a0 l2-0)
+  13: (unload-airplane p5 a0 l2-0)
+  14: (fly-airplane a0 l2-0 l3-0)
+  15: (fly-airplane a0 l3-0 l1-0)
+  16: (fly-airplane a0 l1-0 l0-0)
+  17: (unload-airplane p1 a0 l0-0)
+  18: (fly-airplane a0 l0-0 l3-0)
+  19: (fly-airplane a0 l3-0 l1-0)
+  20: (fly-airplane a0 l1-0 l2-0)
+  21: (load-truck p1 t0 l0-0)
+  22: (fly-airplane a0 l2-0 l0-0)
+  23: (drive-truck t0 l0-0 l0-1 c0)
+  24: (unload-truck p1 t0 l0-1)
+  25: (fly-airplane a0 l0-0 l3-0)
+  26: (fly-airplane a0 l3-0 l1-0)
+  27: (fly-airplane a0 l1-0 l2-0)
+  28: (drive-truck t2 l2-0 l2-1 c2)
+  29: (fly-airplane a0 l2-0 l1-0)
+  30: (fly-airplane a0 l1-0 l3-0)
+  31: (fly-airplane a0 l3-0 l0-0)
+  32: (load-truck p1 t0 l0-1)
+  33: (drive-truck t0 l0-1 l0-0 c0)
+  34: (unload-truck p1 t0 l0-0)
+  35: (load-airplane p1 a0 l0-0)
+  36: (fly-airplane a0 l0-0 l3-0)
+  37: (fly-airplane a0 l3-0 l1-0)
+  38: (fly-airplane a0 l1-0 l2-0)
+  39: (unload-airplane p1 a0 l2-0)
+  40: (fly-airplane a0 l2-0 l3-0)
+  41: (fly-airplane a0 l3-0 l1-0)
+  42: (fly-airplane a0 l1-0 l0-0)
+  43: (drive-truck t2 l2-1 l2-0 c2)
+  44: (fly-airplane a0 l0-0 l2-0)
+  45: (fly-airplane a0 l2-0 l3-0)
+  46: (fly-airplane a0 l3-0 l1-0)
+  47: (load-truck p1 t2 l2-0)
+  48: (drive-truck t2 l2-0 l2-1 c2)
+  49: (unload-truck p1 t2 l2-1)
