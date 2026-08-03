@@ -17,7 +17,8 @@ SAMPLE = int(opt("--sample", "0"))
 TIMEOUT = int(opt("--timeout", "60"))
 WRITE = "--write-plans" in sys.argv
 
-dom = os.path.join(DS, "domain.pddl")
+# absolute: FD runs with cwd=tmp, so relative dataset paths would not resolve
+dom = os.path.abspath(os.path.join(DS, "domain.pddl"))
 fs = sorted(f for f in glob.glob(os.path.join(DS, SPLIT, "*.pddl"))
             if "domain" not in os.path.basename(f))
 if SAMPLE and SAMPLE < len(fs):
@@ -25,6 +26,7 @@ if SAMPLE and SAMPLE < len(fs):
 
 lens, solved, unsolv, timeout, err = [], 0, 0, 0, 0
 by_rov = collections.defaultdict(list)
+fs = [os.path.abspath(f) for f in fs]
 for i, pf in enumerate(fs, 1):
     tmp = tempfile.mkdtemp()
     plan = os.path.join(tmp, "sas_plan")
@@ -47,6 +49,9 @@ for i, pf in enumerate(fs, 1):
             unsolv += 1
         else:
             err += 1
+            if err == 1:
+                print("  first error, FD stderr/stdout tail:")
+                print("   ", (p.stderr or p.stdout or "").strip().splitlines()[-3:])
     except subprocess.TimeoutExpired:
         timeout += 1
     finally:
