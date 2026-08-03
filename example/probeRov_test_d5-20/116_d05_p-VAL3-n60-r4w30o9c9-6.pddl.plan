@@ -1,5 +1,0 @@
-(drop rover3 rover3store)
-(navigate rover3 waypoint18 waypoint3)
-(sample_rock rover3 rover3store waypoint3)
-(navigate rover3 waypoint3 waypoint6)
-(communicate_rock_data rover3 general waypoint3 waypoint6 waypoint12)
