@@ -1,0 +1,7 @@
+(navigate rover0 waypoint7 waypoint19)
+(navigate rover0 waypoint19 waypoint14)
+(navigate rover0 waypoint14 waypoint15)
+(sample_rock rover0 rover0store waypoint15)
+(navigate rover0 waypoint15 waypoint14)
+(navigate rover0 waypoint14 waypoint1)
+(communicate_rock_data rover0 general waypoint15 waypoint1 waypoint10)

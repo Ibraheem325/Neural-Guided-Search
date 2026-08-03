@@ -1,0 +1,8 @@
+(drop rover0 rover0store)
+(navigate rover0 waypoint19 waypoint28)
+(navigate rover0 waypoint28 waypoint11)
+(navigate rover0 waypoint11 waypoint24)
+(sample_soil rover0 rover0store waypoint24)
+(navigate rover0 waypoint24 waypoint11)
+(navigate rover0 waypoint11 waypoint6)
+(communicate_soil_data rover0 general waypoint24 waypoint6 waypoint1)
