@@ -183,6 +183,11 @@ class _Signal:
         # placement). If savings persist under shuffle, the effect is generic exploration
         # redistribution, NOT the width signal. Deterministic per node (seeded by state key).
         self.sib_shuffle = False
+        # RANDOM control (stronger than shuffle): discard the signal values entirely and
+        # draw a fresh weight per child. Shuffle keeps the multiset -- same dispersion,
+        # only the placement is scrambled. Random keeps nothing but the mean-1
+        # normalisation, so it also strips the signal's spread. "" = off.
+        self.sib_random = ""       # "" | "uniform" | "exp"
         # ROOM GATE: only apply the sibling channel once the search has expanded >= sib_gate
         # unique states (len(tt)). Low-room probes solve before the gate opens (baseline
         # behaviour, no over-widening); high-room probes get the channel once they show
@@ -521,7 +526,9 @@ def _compute_sib_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None
         widths[a] = (qs[ai][89] - qs[ai][9]).item()       # q90 - q10 raw width
     if len(widths) < 2:
         return
-    if _SIG.sib_shuffle:
+    if _SIG.sib_random:
+        widths = _randomise_signal(widths, node.state_key)
+    elif _SIG.sib_shuffle:
         # width-BLIND control: permute the SAME widths onto different children.
         # Seeded by state key so it is deterministic and independent of visit order.
         import random as _random
@@ -540,6 +547,22 @@ def _compute_sib_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None
             mult = max(0.1, 1.0 + _SIG.sib_beta * (rel - 1.0))
             node.sib_mult[a] = mult
             _SIG.sib_sum += mult; _SIG.sib_count += 1
+
+
+def _randomise_signal(vals: dict, state_key) -> dict:
+    """RANDOM control. Replace every child's signal value with an independent draw,
+    keeping only the dict's keys. Unlike --sib_shuffle (which permutes the real values
+    and so preserves their spread exactly), this destroys the spread as well: after the
+    caller's mean-1 normalisation, rel carries no information about the signal at all.
+    Seeded by state key, so it stays deterministic and independent of visit order.
+
+    uniform  U(0,1)  -- CV of the resulting rel ~0.54-0.58 (closest to grid 0.66 / goldminer 0.61)
+    exp      Exp(1)  -- CV ~0.71-0.95 (closer to logistics multi-loc, 1.26)
+    """
+    import random as _random
+    rng = _random.Random((hash(state_key) & 0x7fffffff) ^ 0x5eed)
+    draw = rng.random if _SIG.sib_random != "exp" else (lambda: rng.expovariate(1.0))
+    return {k: draw() for k in vals}
 
 
 def _compute_binc_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
@@ -577,7 +600,9 @@ def _compute_binc_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> Non
         w1s[a] = w1[scores >= scores.max() - _SIG.binc_eps].min().item()  # B_good = within eps of best
     if len(w1s) < 2:
         return
-    if _SIG.sib_shuffle:
+    if _SIG.sib_random:
+        w1s = _randomise_signal(w1s, node.state_key)
+    elif _SIG.sib_shuffle:
         # width-BLIND control (same for the Bellman-inconsistency channel): permute the
         # SAME inconsistency values onto different children. Seeded by state key.
         import random as _random
@@ -625,7 +650,9 @@ def _compute_w1raw_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> No
         w1s[a] = (parent_curve - child_curve).abs().mean().item()
     if len(w1s) < 2:
         return
-    if _SIG.sib_shuffle:
+    if _SIG.sib_random:
+        w1s = _randomise_signal(w1s, node.state_key)
+    elif _SIG.sib_shuffle:
         import random as _random
         rng = _random.Random(hash(node.state_key) & 0x7fffffff)
         keys = list(w1s.keys()); vals = list(w1s.values()); rng.shuffle(vals)
@@ -1031,6 +1058,12 @@ def _parse_arguments() -> argparse.Namespace:
                              "Low-room probes solve before the gate opens (baseline, no "
                              "over-widening); high-room probes get the channel once they show "
                              "struggle. 0 = no gate. Try ~80-150.")
+    parser.add_argument("--sib_random", default="", choices=["", "uniform", "exp"],
+                        help="RANDOM control, stronger than --sib_shuffle. Discards the signal "
+                             "values entirely and draws an independent weight per child "
+                             "(uniform U(0,1) or exp Exp(1)) before the mean-1 normalisation. "
+                             "Shuffle preserves the signal's spread and only scrambles placement; "
+                             "random strips the spread too. Takes precedence over --sib_shuffle.")
     parser.add_argument("--sib_shuffle", action="store_true",
                         help="CONTROL for OPTION 5/6: shuffle the per-child signal among siblings "
                              "(same multiplier multiset, signal-BLIND placement). If savings "
@@ -1250,8 +1283,10 @@ def _main(args: argparse.Namespace) -> None:
             _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
         _SIG.sib_beta = args.sib_beta
         _SIG.sib_shuffle = args.sib_shuffle
+        _SIG.sib_random = args.sib_random
         _SIG.sib_gate = args.sib_gate
-        tag = " [SHUFFLE CONTROL: width-blind placement]" if args.sib_shuffle else ""
+        tag = (f" [RANDOM CONTROL: {args.sib_random} weights, signal discarded]" if args.sib_random
+               else " [SHUFFLE CONTROL: width-blind placement]" if args.sib_shuffle else "")
         gate = f" [ROOM GATE: active after {args.sib_gate} expansions]" if args.sib_gate > 0 else ""
         print(f"[Sib] OPTION5 sib_beta={args.sib_beta} signal=QR-DQN raw width vs SIBLINGS "
               f"(boosts exploration toward wider/uncertain children; prior untouched){tag}{gate}", flush=True)
@@ -1270,7 +1305,9 @@ def _main(args: argparse.Namespace) -> None:
         _SIG.binc_eps = args.binc_eps
         _SIG.sib_gate = args.sib_gate
         _SIG.sib_shuffle = args.sib_shuffle
-        tag = " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else ""
+        _SIG.sib_random = args.sib_random
+        tag = (f" [RANDOM CONTROL: {args.sib_random} weights, signal discarded]" if args.sib_random
+               else " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else "")
         gate = f" [ROOM GATE: active after {args.sib_gate} expansions]" if args.sib_gate > 0 else ""
         print(f"[Binc] OPTION6 binc_beta={args.binc_beta} binc_eps={args.binc_eps} "
               f"signal=BELLMAN INCONSISTENCY (1-step min-W1 parent-vs-child, B_good within eps) "
@@ -1290,7 +1327,9 @@ def _main(args: argparse.Namespace) -> None:
         _SIG.w1raw_beta = args.w1raw_beta
         _SIG.sib_gate = args.sib_gate
         _SIG.sib_shuffle = args.sib_shuffle
-        tag = " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else ""
+        _SIG.sib_random = args.sib_random
+        tag = (f" [RANDOM CONTROL: {args.sib_random} weights, signal discarded]" if args.sib_random
+               else " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else "")
         gate = f" [ROOM GATE: active after {args.sib_gate} expansions]" if args.sib_gate > 0 else ""
         print(f"[W1raw] OPTION7 w1raw_beta={args.w1raw_beta} signal=RAW edge-W1 "
               f"(parent-best vs child-best, no reward/discount) vs SIBLINGS (boosts exploration "
@@ -1321,7 +1360,9 @@ def _main(args: argparse.Namespace) -> None:
         _SIG.add_src = args.add_src
         _SIG.add_cap = args.add_cap
         _SIG.sib_shuffle = args.sib_shuffle
-        tag = " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else ""
+        _SIG.sib_random = args.sib_random
+        tag = (f" [RANDOM CONTROL: {args.sib_random} weights, signal discarded]" if args.sib_random
+               else " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else "")
         print(f"[Add] OPTION8 add_beta={args.add_beta} src={args.add_src} cap={args.add_cap} "
               f"(ADDITIVE bonus, NOT gated by P(a); prior untouched){tag}", flush=True)
     if args.prior_gamma != 1.0:

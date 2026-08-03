@@ -126,6 +126,13 @@ ADD_BETA=${28:-0.0}
 ADD_SRC=${29:-binc}
 ADD_CAP=${30:-2.0}
 PRIOR_GAMMA=${31:-1.0}
+# arg 32: RANDOM control -- "" (off) | uniform | exp. Stronger than arg 23 (shuffle):
+# shuffle permutes the REAL signal values among siblings, so the spread is preserved and
+# only the placement is scrambled; random throws the values away and draws fresh weights,
+# so the spread is destroyed too. Takes precedence over SHUFFLE when both are set.
+SIB_RANDOM=${32:-}
+RANDOM_ARGS=""
+[ -n "$SIB_RANDOM" ] && RANDOM_ARGS="--sib_random $SIB_RANDOM"
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -135,7 +142,7 @@ venv/bin/python alphaZero_bellman.py \
     --const_w "$CONST_W" --w_max "$W_MAX" $ADAPTIVE_FLAG \
     --value_lambda "$VALUE_LAMBDA" --width_beta "$WIDTH_BETA" \
     --ens_beta "$ENS_BETA" $ENS_ARGS --sib_beta "$SIB_BETA" --sib_gate "$SIB_GATE" \
-    --binc_beta "$BINC_BETA" --w1raw_beta "$W1RAW_BETA" $SHUFFLE_FLAG \
+    --binc_beta "$BINC_BETA" --w1raw_beta "$W1RAW_BETA" $SHUFFLE_FLAG $RANDOM_ARGS \
     --c_puct "$C_PUCT" $QRDQN_VALUE_FLAG --binc_eps "$BINC_EPS" \
     --add_beta "$ADD_BETA" --add_src "$ADD_SRC" --add_cap "$ADD_CAP" --prior_gamma "$PRIOR_GAMMA" \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1
