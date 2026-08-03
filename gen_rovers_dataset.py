@@ -74,14 +74,18 @@ def main():
             goals = rng.randint(1, max(1, min(o + 2, 3 + o)))
             name = f"{made:03d}_p-{tag}-n{n}-r{r}w{w}o{o}c{c}-{seed}.pddl"
             path = os.path.join(d, name)
-            res = subprocess.run([ROVGEN, "-f", path, str(seed), str(r), str(w),
+            # NOTE: rovgen's -f flag mis-parses its arguments and just prints usage.
+            # It writes the instance to stdout instead, so capture that.
+            res = subprocess.run([ROVGEN, str(seed), str(r), str(w),
                                   str(o), str(c), str(goals)],
                                  capture_output=True, text=True)
-            if res.returncode != 0 or not os.path.exists(path):
+            txt = res.stdout
+            i = txt.find("(define")
+            if i < 0 or "(:goal" not in txt or "(:init" not in txt:
                 continue
-            txt = open(path).read()
-            if "(:goal" not in txt or "(:init" not in txt:
-                os.remove(path); continue
+            txt = txt[i:]
+            with open(path, "w") as fh:
+                fh.write(txt)
             made += 1; rovhist[r] += 1; nhist.append(n); seen.add(key)
         print(f"{split}: {made} instances  objects {min(nhist)}-{max(nhist)} "
               f"(median {sorted(nhist)[len(nhist)//2]})  distinct (r,w,o,c) {len(seen)}")
