@@ -72,10 +72,15 @@ def main():
             key = (r, w, o, c)
             seed = rng.randint(1, 10 ** 6)
             goals = rng.randint(1, max(1, min(o + 2, 3 + o)))
-            name = f"{made:03d}_p-{tag}-n{n}-r{r}w{w}o{o}c{c}-{seed}.pddl"
-            path = os.path.join(d, name)
             # NOTE: rovgen's -f flag mis-parses its arguments and just prints usage.
             # It writes the instance to stdout instead, so capture that.
+            #
+            # NOTE 2: rovgen does NOT honour #cameras exactly -- it adds extra cameras
+            # (observed +1..+6) so that every goal image has a supporting camera on a
+            # reachable rover. Rovers/waypoints/objectives ARE exact. So never predict
+            # the object count from a formula: generate, then COUNT what came out and
+            # name the file from that. Keeps filenames truthful and the split's object
+            # range exact.
             res = subprocess.run([ROVGEN, str(seed), str(r), str(w),
                                   str(o), str(c), str(goals)],
                                  capture_output=True, text=True)
@@ -84,8 +89,24 @@ def main():
             if i < 0 or "(:goal" not in txt or "(:init" not in txt:
                 continue
             txt = txt[i:]
+            mo = re.search(r"\(:objects(.*?)\n\s*\)", txt, re.S)
+            if not mo:
+                continue
+            toks = [t for t in re.split(r"[\s]+", mo.group(1)) if t and t != "-"]
+            names = [t for t in toks if not t.lower() in
+                     ("lander", "mode", "rover", "store", "waypoint", "camera", "objective")]
+            a_n = len(names)
+            a_r = sum(1 for x in names if re.fullmatch(r"rover\d+", x, re.I))
+            a_w = sum(1 for x in names if re.fullmatch(r"waypoint\d+", x, re.I))
+            a_o = sum(1 for x in names if re.fullmatch(r"objective\d+", x, re.I))
+            a_c = sum(1 for x in names if re.fullmatch(r"camera\d+", x, re.I))
+            if not (n_lo <= a_n <= n_hi):      # excess cameras pushed it out of range
+                continue
+            name = f"{made:03d}_p-{tag}-n{a_n}-r{a_r}w{a_w}o{a_o}c{a_c}-{seed}.pddl"
+            path = os.path.join(d, name)
             with open(path, "w") as fh:
                 fh.write(txt)
+            r, n = a_r, a_n
             made += 1; rovhist[r] += 1; nhist.append(n); seen.add(key)
         print(f"{split}: {made} instances  objects {min(nhist)}-{max(nhist)} "
               f"(median {sorted(nhist)[len(nhist)//2]})  distinct (r,w,o,c) {len(seen)}")
