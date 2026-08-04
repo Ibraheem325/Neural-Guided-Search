@@ -1,5 +1,9 @@
 """REAL vs SHUFFLE vs RANDOM on grid and goldminer.
 
+Usage: venv/bin/python analyze_three_way.py [rand|rndm]
+  rand = uniform draws  (CV ~0.55 -- UNDER-disperses vs the real signal)
+  rndm = lognormal, per-domain sigma (CV matched to the real signal exactly)
+
   real     signal values, real placement
   shuffle  signal values, permuted        -> same spread, placement scrambled
   random   fresh U(0,1) draws per child   -> spread destroyed too
@@ -38,7 +42,9 @@ for name, base, pat in DOMS:
     print(hdr); print("-" * len(hdr))
     for t, b in BETAS:
         arms = {}
-        for tag, suf in [("real", ""), ("shuf", "shuf"), ("rand", "rand")]:
+        import sys as _s
+        SUF = _s.argv[1] if len(_s.argv) > 1 else "rand"   # "rand" (uniform) or "rndm" (matched CV)
+        for tag, suf in [("real", ""), ("shuf", "shuf"), ("rand", SUF)]:
             arms[tag] = load(pat % (t, suf))
         if not all(arms.values()): continue
         R, S, N = arms["real"], arms["shuf"], arms["rand"]
