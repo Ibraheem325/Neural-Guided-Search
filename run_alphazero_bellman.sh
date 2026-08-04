@@ -144,6 +144,12 @@ ABS_SIGNAL=${33:-off}
 TAU_STEP=${34:-1.0}
 ABS_BETA=${35:-1.0}
 ABS_KAPPA=${36:-1.0}
+# arg 37: OPTION 9 prior floor. P0 = (1-eps_p)*P + eps_p/K, applied BEFORE the tilt.
+# At the doc's 0.001 the multiplicative variant is a measured no-op (median TV 0.0003)
+# because SAC saturates. Setting eps_p equal to a flattening arm's w makes P0 IDENTICAL
+# to that arm's prior, so the only remaining difference is the multiplicative tilt --
+# which turns an existing flat run into an exactly matched control.
+EPS_P=${37:-0.001}
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -157,5 +163,5 @@ venv/bin/python alphaZero_bellman.py \
     --c_puct "$C_PUCT" $QRDQN_VALUE_FLAG --binc_eps "$BINC_EPS" \
     --add_beta "$ADD_BETA" --add_src "$ADD_SRC" --add_cap "$ADD_CAP" --prior_gamma "$PRIOR_GAMMA" \
     --abs_signal "$ABS_SIGNAL" --tau_step "$TAU_STEP" --abs_beta "$ABS_BETA" \
-    --abs_kappa "$ABS_KAPPA" \
+    --abs_kappa "$ABS_KAPPA" --eps_p "$EPS_P" \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1
