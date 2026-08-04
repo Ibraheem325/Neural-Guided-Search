@@ -592,8 +592,18 @@ def _randomise_signal(vals: dict, state_key) -> dict:
         # "the signal carries information". lognormal(0, sigma) lets us match CV exactly.
         # Calibrated sigma by median sibling count: goldminer n=3 -> 0.88 (CV 0.610),
         # grid n=5 -> 0.78 (CV 0.663), logistics n=17 -> 1.16 (CV 1.256).
-        sigma = float(spec.split(":", 1)[1]) if ":" in spec else 0.85
-        draw = lambda: rng.lognormvariate(0.0, sigma)
+        #
+        # 3-part form "lognormal:<sigma>:<mu>" for OPTION 9. There the values are consumed
+        # as RAW residuals (x_a = e_a/(e_a+tau)), not passed through a mean-1 normalisation,
+        # so the control has to reproduce the MARGINAL of e itself, not just its dispersion:
+        # mu=0 would put the median residual at 1.0 instead of ~0.55 and inflate g_s.
+        # Fitted to new_signal_data.json: goldminer mu=-0.585 sigma=1.003, grid mu=-0.680
+        # sigma=1.073. These reproduce mean g_s to within 0.001 while destroying the
+        # state-to-state structure (g_s sd 0.124 drawn vs 0.134 real on goldminer).
+        parts = spec.split(":")
+        sigma = float(parts[1]) if len(parts) > 1 else 0.85
+        mu = float(parts[2]) if len(parts) > 2 else 0.0
+        draw = lambda: rng.lognormvariate(mu, sigma)
     elif spec == "exp":
         draw = lambda: rng.expovariate(1.0)
     else:

@@ -25,6 +25,11 @@ ARMS = [("t1 b1 k1   (doc default)", f"{PRE}/gm_abs_t1b1k1"),
         ("t1 b1 k1   SHUFFLE ctrl",  f"{PRE}/gm_abs_t1b1k1_shuf"),
         # Signal-free: flatten every prior by a fixed w, no IQN. Matches the injected
         # mass of the beta=1 / beta=2 arms (w = beta*g_s/(1+beta*g_s)).
+        # RANDOM rung: e_a redrawn from the fitted marginal, so g_s keeps its average
+        # level but loses its state-to-state structure.
+        ("t1 b1 k1   RANDOM ctrl",   f"{PRE}/gm_abs_t1b1k1_rndm"),
+        ("t1 b1 k0   RANDOM ctrl",   f"{PRE}/gm_abs_t1b1k0_rndm"),
+        # FLAT rung: no signal at all, fixed flattening weight.
         ("w=0.28     FLATTEN ctrl",  f"{PRE}/gm_flat028"),
         ("w=0.42     FLATTEN ctrl",  f"{PRE}/gm_flat042")]
 
