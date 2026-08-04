@@ -559,9 +559,22 @@ def _randomise_signal(vals: dict, state_key) -> dict:
     uniform  U(0,1)  -- CV of the resulting rel ~0.54-0.58 (closest to grid 0.66 / goldminer 0.61)
     exp      Exp(1)  -- CV ~0.71-0.95 (closer to logistics multi-loc, 1.26)
     """
-    import random as _random
+    import math as _math, random as _random
     rng = _random.Random((hash(state_key) & 0x7fffffff) ^ 0x5eed)
-    draw = rng.random if _SIG.sib_random != "exp" else (lambda: rng.expovariate(1.0))
+    spec = _SIG.sib_random
+    if spec.startswith("lognormal"):
+        # MAGNITUDE-MATCHED control. uniform/exp draws do not reproduce the real signal's
+        # dispersion (uniform gives CV~0.55 vs the real 0.61-0.66), so a uniform "random"
+        # arm perturbs ~15-20% less hard and its smaller effect can be mistaken for
+        # "the signal carries information". lognormal(0, sigma) lets us match CV exactly.
+        # Calibrated sigma by median sibling count: goldminer n=3 -> 0.88 (CV 0.610),
+        # grid n=5 -> 0.78 (CV 0.663), logistics n=17 -> 1.16 (CV 1.256).
+        sigma = float(spec.split(":", 1)[1]) if ":" in spec else 0.85
+        draw = lambda: rng.lognormvariate(0.0, sigma)
+    elif spec == "exp":
+        draw = lambda: rng.expovariate(1.0)
+    else:
+        draw = rng.random
     return {k: draw() for k in vals}
 
 
@@ -1058,10 +1071,12 @@ def _parse_arguments() -> argparse.Namespace:
                              "Low-room probes solve before the gate opens (baseline, no "
                              "over-widening); high-room probes get the channel once they show "
                              "struggle. 0 = no gate. Try ~80-150.")
-    parser.add_argument("--sib_random", default="", choices=["", "uniform", "exp"],
+    parser.add_argument("--sib_random", default="",
                         help="RANDOM control, stronger than --sib_shuffle. Discards the signal "
                              "values entirely and draws an independent weight per child "
-                             "(uniform U(0,1) or exp Exp(1)) before the mean-1 normalisation. "
+                             "before the mean-1 normalisation. One of: uniform | exp | "
+                             "lognormal:<sigma> (magnitude-matched -- pick sigma so the induced "
+                             "CV of rel matches the real signal: 0.88 goldminer, 0.78 grid, 1.16 logistics). "
                              "Shuffle preserves the signal's spread and only scrambles placement; "
                              "random strips the spread too. Takes precedence over --sib_shuffle.")
     parser.add_argument("--sib_shuffle", action="store_true",
