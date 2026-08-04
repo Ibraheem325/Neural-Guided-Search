@@ -1,0 +1,155 @@
+(define (problem strips-sat-x-1)
+(:domain satellite)
+(:objects
+	satellite0 - satellite
+	instrument0 - instrument
+	satellite1 - satellite
+	instrument1 - instrument
+	satellite2 - satellite
+	instrument2 - instrument
+	satellite3 - satellite
+	instrument3 - instrument
+	satellite4 - satellite
+	instrument4 - instrument
+	thermograph0 - mode
+	GroundStation2 - direction
+	GroundStation3 - direction
+	GroundStation5 - direction
+	GroundStation6 - direction
+	Star7 - direction
+	Star9 - direction
+	Star10 - direction
+	GroundStation12 - direction
+	GroundStation15 - direction
+	Star17 - direction
+	Star18 - direction
+	GroundStation20 - direction
+	Star23 - direction
+	Star25 - direction
+	Star28 - direction
+	GroundStation30 - direction
+	Star32 - direction
+	GroundStation33 - direction
+	GroundStation35 - direction
+	Star37 - direction
+	GroundStation41 - direction
+	GroundStation42 - direction
+	GroundStation44 - direction
+	GroundStation45 - direction
+	GroundStation22 - direction
+	Star36 - direction
+	GroundStation21 - direction
+	GroundStation0 - direction
+	Star24 - direction
+	GroundStation4 - direction
+	GroundStation43 - direction
+	Star38 - direction
+	Star13 - direction
+	GroundStation40 - direction
+	Star11 - direction
+	Star16 - direction
+	Star26 - direction
+	Star1 - direction
+	Star8 - direction
+	GroundStation14 - direction
+	GroundStation34 - direction
+	GroundStation31 - direction
+	GroundStation27 - direction
+	GroundStation39 - direction
+	Star19 - direction
+	Star29 - direction
+	Star46 - direction
+	Phenomenon47 - direction
+	Planet48 - direction
+	Planet49 - direction
+	Star50 - direction
+	Star51 - direction
+	Planet52 - direction
+	Planet53 - direction
+	Star54 - direction
+	Phenomenon55 - direction
+	Planet56 - direction
+	Planet57 - direction
+	Star58 - direction
+	Phenomenon59 - direction
+	Planet60 - direction
+	Star61 - direction
+	Planet62 - direction
+	Star63 - direction
+	Planet64 - direction
+)
+(:init
+	(supports instrument0 thermograph0)
+	(calibration_target instrument0 Star8)
+	(calibration_target instrument0 GroundStation4)
+	(calibration_target instrument0 Star1)
+	(calibration_target instrument0 GroundStation34)
+	(calibration_target instrument0 GroundStation40)
+	(calibration_target instrument0 Star24)
+	(calibration_target instrument0 GroundStation0)
+	(calibration_target instrument0 Star16)
+	(calibration_target instrument0 GroundStation21)
+	(calibration_target instrument0 Star36)
+	(calibration_target instrument0 GroundStation22)
+	(on_board instrument0 satellite0)
+	(power_avail satellite0)
+	(pointing satellite0 Star46)
+	(supports instrument1 thermograph0)
+	(calibration_target instrument1 Star8)
+	(calibration_target instrument1 Star1)
+	(calibration_target instrument1 Star26)
+	(calibration_target instrument1 Star16)
+	(calibration_target instrument1 Star29)
+	(calibration_target instrument1 GroundStation27)
+	(calibration_target instrument1 Star11)
+	(calibration_target instrument1 GroundStation40)
+	(calibration_target instrument1 Star13)
+	(calibration_target instrument1 Star38)
+	(calibration_target instrument1 GroundStation43)
+	(on_board instrument1 satellite1)
+	(power_avail satellite1)
+	(pointing satellite1 GroundStation5)
+	(supports instrument2 thermograph0)
+	(calibration_target instrument2 GroundStation14)
+	(on_board instrument2 satellite2)
+	(power_avail satellite2)
+	(pointing satellite2 GroundStation6)
+	(supports instrument3 thermograph0)
+	(calibration_target instrument3 GroundStation31)
+	(calibration_target instrument3 GroundStation34)
+	(on_board instrument3 satellite3)
+	(power_avail satellite3)
+	(pointing satellite3 Star58)
+	(supports instrument4 thermograph0)
+	(calibration_target instrument4 Star29)
+	(calibration_target instrument4 Star19)
+	(calibration_target instrument4 GroundStation39)
+	(calibration_target instrument4 GroundStation27)
+	(on_board instrument4 satellite4)
+	(power_avail satellite4)
+	(pointing satellite4 Star25)
+)
+(:goal (and
+	(pointing satellite2 Planet49)
+	(have_image Star46 thermograph0)
+	(have_image Phenomenon47 thermograph0)
+	(have_image Planet48 thermograph0)
+	(have_image Planet49 thermograph0)
+	(have_image Star50 thermograph0)
+	(have_image Star51 thermograph0)
+	(have_image Planet52 thermograph0)
+	(have_image Planet53 thermograph0)
+	(have_image Star54 thermograph0)
+	(have_image Phenomenon55 thermograph0)
+	(have_image Planet56 thermograph0)
+	(have_image Planet57 thermograph0)
+	(have_image Star58 thermograph0)
+	(have_image Phenomenon59 thermograph0)
+	(have_image Planet60 thermograph0)
+	(have_image Star61 thermograph0)
+	(have_image Planet62 thermograph0)
+	(have_image Star63 thermograph0)
+	(have_image Planet64 thermograph0)
+))
+
+)

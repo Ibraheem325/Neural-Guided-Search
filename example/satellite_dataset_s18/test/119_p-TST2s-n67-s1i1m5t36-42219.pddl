@@ -1,0 +1,110 @@
+(define (problem strips-sat-x-1)
+(:domain satellite)
+(:objects
+	satellite0 - satellite
+	instrument0 - instrument
+	infrared1 - mode
+	image2 - mode
+	image0 - mode
+	spectrograph3 - mode
+	spectrograph4 - mode
+	Star0 - direction
+	GroundStation1 - direction
+	Star2 - direction
+	GroundStation3 - direction
+	GroundStation4 - direction
+	GroundStation5 - direction
+	GroundStation6 - direction
+	Star7 - direction
+	GroundStation8 - direction
+	GroundStation9 - direction
+	Star10 - direction
+	GroundStation11 - direction
+	GroundStation12 - direction
+	Star13 - direction
+	Star14 - direction
+	Star15 - direction
+	GroundStation16 - direction
+	Star17 - direction
+	Star18 - direction
+	GroundStation19 - direction
+	GroundStation21 - direction
+	Star22 - direction
+	GroundStation23 - direction
+	Star24 - direction
+	GroundStation25 - direction
+	Star26 - direction
+	Star27 - direction
+	Star28 - direction
+	GroundStation29 - direction
+	Star30 - direction
+	Star31 - direction
+	GroundStation32 - direction
+	GroundStation33 - direction
+	Star34 - direction
+	GroundStation35 - direction
+	GroundStation20 - direction
+	Star36 - direction
+	Planet37 - direction
+	Phenomenon38 - direction
+	Phenomenon39 - direction
+	Phenomenon40 - direction
+	Star41 - direction
+	Planet42 - direction
+	Phenomenon43 - direction
+	Planet44 - direction
+	Star45 - direction
+	Star46 - direction
+	Phenomenon47 - direction
+	Phenomenon48 - direction
+	Star49 - direction
+	Star50 - direction
+	Star51 - direction
+	Planet52 - direction
+	Planet53 - direction
+	Phenomenon54 - direction
+	Star55 - direction
+	Planet56 - direction
+	Star57 - direction
+	Star58 - direction
+	Star59 - direction
+)
+(:init
+	(supports instrument0 image0)
+	(supports instrument0 spectrograph3)
+	(supports instrument0 image2)
+	(supports instrument0 spectrograph4)
+	(supports instrument0 infrared1)
+	(calibration_target instrument0 GroundStation20)
+	(on_board instrument0 satellite0)
+	(power_avail satellite0)
+	(pointing satellite0 Planet52)
+)
+(:goal (and
+	(have_image Star36 infrared1)
+	(have_image Planet37 infrared1)
+	(have_image Phenomenon38 image0)
+	(have_image Phenomenon39 image0)
+	(have_image Phenomenon40 spectrograph4)
+	(have_image Star41 image0)
+	(have_image Planet42 spectrograph3)
+	(have_image Phenomenon43 spectrograph4)
+	(have_image Planet44 image2)
+	(have_image Star45 spectrograph3)
+	(have_image Star46 spectrograph4)
+	(have_image Phenomenon47 spectrograph4)
+	(have_image Phenomenon48 image2)
+	(have_image Star49 spectrograph4)
+	(have_image Star50 spectrograph3)
+	(have_image Star51 image2)
+	(have_image Planet52 image2)
+	(have_image Planet53 image2)
+	(have_image Phenomenon54 spectrograph4)
+	(have_image Star55 image0)
+	(have_image Planet56 infrared1)
+	(have_image Star57 image0)
+	(have_image Star58 infrared1)
+	(have_image Star59 spectrograph4)
+))
+
+)
