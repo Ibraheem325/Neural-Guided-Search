@@ -48,7 +48,7 @@ common = sorted(common)
 print(f"\nbaseline {base}: {len(bs)}/{len(B)} solved")
 print(f"MATCHED set: {len(common)} instances solved by the baseline and all "
       f"{len(args)} arms\n")
-hdr = (f"{'arm':<26}{'solved':>8}{'cov%':>8}{'mean':>8}{'median':>8}"
+hdr = (f"{'arm':<26}{'solved':>8}{'cov%':>8}{'net%':>9}{'mean':>8}{'median':>8}"
        f"{'improved':>10}{'regressed':>11}{'dropped':>9}")
 print(hdr); print("-" * len(hdr))
 for d in args:
@@ -57,10 +57,17 @@ for d in args:
     imp = sum(1 for x in common if v[x][0] < B[x][0])
     reg = sum(1 for x in common if v[x][0] > B[x][0])
     drop = len(bs - solved[d])          # baseline-solved instances this arm lost
+    # net% = total expansions saved over the matched set. Dominated by the largest
+    # instances, so it can disagree in SIGN with the median; report both, trust neither
+    # alone.
+    tb = sum(B[x][0] for x in common); ta = sum(v[x][0] for x in common)
     print(f"{d:<26}{len(solved[d]):>8}{100*len(solved[d])/len(B):>7.1f}%"
-          f"{st.mean(r):>8.3f}{st.median(r):>8.3f}{imp:>10}{reg:>11}{drop:>9}")
+          f"{100*(tb-ta)/tb:>+8.1f}%{st.mean(r):>8.3f}{st.median(r):>8.3f}"
+          f"{imp:>10}{reg:>11}{drop:>9}")
 print("\ndropped = instances the baseline solved and this arm did NOT. They are excluded"
-      "\nfrom the ratio columns, so an arm with a large 'dropped' has an optimistic mean.")
+      "\nfrom the ratio columns, so an arm with a large 'dropped' has an optimistic mean."
+      "\nnet%    = total expansions saved across the matched set (+ = fewer). Dominated by"
+      "\n          the biggest instances, so it can disagree in sign with the median.")
 if len(args) > 1:
     print("\nhead-to-head on the matched set:")
     for i in range(len(args)):
