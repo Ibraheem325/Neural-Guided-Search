@@ -22,7 +22,11 @@ ARMS = [("t1 b1 k1   (doc default)", f"{PRE}/gm_abs_t1b1k1"),
         ("t1 b1 k0   (prior only)",  f"{PRE}/gm_abs_t1b1k0"),
         ("t1 b0 k1   (c(s) only)",   f"{PRE}/gm_abs_t1b0k1"),
         ("t1 b2 k1   (beta sweep)",  f"{PRE}/gm_abs_t1b2k1"),
-        ("t1 b1 k1   SHUFFLE ctrl",  f"{PRE}/gm_abs_t1b1k1_shuf")]
+        ("t1 b1 k1   SHUFFLE ctrl",  f"{PRE}/gm_abs_t1b1k1_shuf"),
+        # Signal-free: flatten every prior by a fixed w, no IQN. Matches the injected
+        # mass of the beta=1 / beta=2 arms (w = beta*g_s/(1+beta*g_s)).
+        ("w=0.28     FLATTEN ctrl",  f"{PRE}/gm_flat028"),
+        ("w=0.42     FLATTEN ctrl",  f"{PRE}/gm_flat042")]
 
 
 def load(d):
