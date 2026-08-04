@@ -133,6 +133,17 @@ PRIOR_GAMMA=${31:-1.0}
 SIB_RANDOM=${32:-}
 RANDOM_ARGS=""
 [ -n "$SIB_RANDOM" ] && RANDOM_ARGS="--sib_random $SIB_RANDOM"
+# args 33-36: OPTION 9 ABSOLUTE-SCALE signal (supervisor's reformulation; no sibling division).
+#   33 ABS_SIGNAL: off | add | mul   (add = prior-independent P_+, the only one that can lift a
+#                                     P~0 arm; mul is a near no-op at eps_p=0.001)
+#   34 TAU_STEP  : squash knee in reward units (1 action = 1.0). Sweep {0.5, 1, 2}.
+#   35 ABS_BETA  : prior-tilt strength
+#   36 ABS_KAPPA : exploration widening c(s)=c_puct*(1+kappa*g_s); 0 = prior channel only
+# Mutually exclusive with args 16/17/20/22/24/28 (asserted in alphaZero_bellman.py).
+ABS_SIGNAL=${33:-off}
+TAU_STEP=${34:-1.0}
+ABS_BETA=${35:-1.0}
+ABS_KAPPA=${36:-1.0}
 
 venv/bin/python alphaZero_bellman.py \
     --domain "$DOMAIN_FILE" --problem "$PROB" \
@@ -145,4 +156,6 @@ venv/bin/python alphaZero_bellman.py \
     --binc_beta "$BINC_BETA" --w1raw_beta "$W1RAW_BETA" $SHUFFLE_FLAG $RANDOM_ARGS \
     --c_puct "$C_PUCT" $QRDQN_VALUE_FLAG --binc_eps "$BINC_EPS" \
     --add_beta "$ADD_BETA" --add_src "$ADD_SRC" --add_cap "$ADD_CAP" --prior_gamma "$PRIOR_GAMMA" \
+    --abs_signal "$ABS_SIGNAL" --tau_step "$TAU_STEP" --abs_beta "$ABS_BETA" \
+    --abs_kappa "$ABS_KAPPA" \
     --max_time "$MAXTIME" > "${OUTDIR}/${NAME}.out" 2>&1

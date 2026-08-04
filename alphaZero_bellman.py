@@ -235,6 +235,29 @@ class _Signal:
         self.add_cap = 2.0         # cap on (rel-1) so one huge sibling cannot dominate
         self.prior_gamma = 1.0     # exponent on P(a); 1.0 = standard, 0.5 = sqrt softening
         self.add_sum = 0.0; self.add_count = 0
+        # --- OPTION 9: ABSOLUTE-SCALE signal (supervisor's reformulation) -----------------
+        # Drops the sibling division entirely. The per-action Bellman residual e_a is kept in
+        # decoded reward units (1.0 = one action) and squashed on its own:
+        #     x_a  = e_a / (e_a + tau_step)              in [0,1), no denominator over siblings
+        #     g_s  = (1/K) sum_a x_a                     state-level inconsistency
+        #     c(s) = c_puct (1 + kappa g_s)              exploration-constant channel (explore_mult)
+        #     P0   = (1-eps_p) P + eps_p/K               prior floor, so a P~0 arm is reachable
+        #   mul:  P_x(a) = P0(a)(1+beta x_a) / sum_b P0(b)(1+beta x_b)
+        #   add:  P_+(a) = (P0(a) + beta x_a/K) / (1 + beta g_s)   [exact: sum_a x_a/K = g_s]
+        # The 1/K stops the injected mass from growing with the branching factor.
+        # Unlike rel = e_a/mean_b(e_b), x_a is scale-AWARE: a state whose residuals are all
+        # small now gets a near-no-op instead of a full-strength boost (see new_signal_report.py:
+        # old max-boost was flat/inverted across scale quartiles, new is monotone).
+        self.abs_mode = "off"      # off | add | mul
+        self.tau_step = 1.0
+        self.abs_beta = 1.0
+        self.abs_kappa = 1.0
+        self.eps_p = 0.001
+        self.abs_g_sum = 0.0; self.abs_g_count = 0; self.abs_tv_sum = 0.0
+
+    @property
+    def abs_active(self) -> bool:
+        return self.abs_mode != "off" and self.iqn is not None
 
     @property
     def sib_active(self) -> bool:
@@ -634,6 +657,76 @@ def _compute_binc_mult(node: "Node", goal: mm.GroundConjunctiveCondition) -> Non
             _SIG.binc_sum += mult; _SIG.binc_count += 1
 
 
+def _bellman_residuals(node: "Node", goal: mm.GroundConjunctiveCondition) -> Dict:
+    """RAW per-action Bellman residual e_a = W1(Z(s,a), r + gamma*Z(s',b*)) in decoded
+    reward units (1.0 = one action), b* = argmax_b E[Z(s',b)] with a deterministic
+    tie-break. A goal successor grounds the target at the step reward (a Dirac), so
+    e_a = mean|z - r|. Same quantity OPTION 6 computes, WITHOUT the sibling division."""
+    qs, actions = _iqn_curves(node.state, goal)
+    if qs is None:
+        return {}
+    amap = {_canon(str(a)): i for i, a in enumerate(actions)}
+    es = {}
+    for a in node.children:
+        ai = amap.get(_canon(str(a)))
+        if ai is None:
+            continue
+        z_sa = qs[ai]
+        cur = a.apply(node.state)
+        if goal.holds(cur):
+            es[a] = (z_sa - torch.full_like(z_sa, _SIG.reward)).abs().mean().item()
+            continue
+        cqs, _ = _iqn_curves(cur, goal)
+        if cqs is None:                                   # dead-end child: no comparison
+            continue
+        targets = _SIG.reward + _SIG.gamma * cqs
+        scores = cqs.mean(dim=1)
+        w1 = (z_sa.unsqueeze(0) - targets).abs().mean(dim=1)
+        es[a] = w1[scores >= scores.max()].min().item()   # b* = argmax mean, det. tie-break
+    return es
+
+
+def _compute_abs_signal(node: "Node", goal: mm.GroundConjunctiveCondition) -> None:
+    """OPTION 9. Rewrites node.prior to P_+ (add) or P_x (mul) and sets node.explore_mult
+    to c(s)/c_puct = 1 + kappa*g_s. Nothing downstream in _select needs to change: the
+    formulation is entirely a prior transform plus an exploration-constant scale."""
+    if not _SIG.abs_active or len(node.prior) <= 1:
+        return
+    if _SIG.sib_gate > 0 and _SIG.n_expanded < _SIG.sib_gate:
+        return
+    es = _bellman_residuals(node, goal)
+    if len(es) < 2:
+        return
+    if _SIG.sib_random:
+        es = _randomise_signal(es, node.state_key)
+    elif _SIG.sib_shuffle:
+        import random as _random
+        rng = _random.Random(hash(node.state_key) & 0x7fffffff)
+        keys = list(es.keys()); vals = list(es.values()); rng.shuffle(vals)
+        es = {k: v for k, v in zip(keys, vals)}
+
+    tau = _SIG.tau_step
+    x = {a: e / (e + tau) for a, e in es.items()}
+    # Actions with no residual (dead-end child) keep x=0: never boosted, never penalised.
+    K = len(node.prior)
+    g = sum(x.values()) / K
+    beta, eps = _SIG.abs_beta, _SIG.eps_p
+
+    p0 = {a: (1.0 - eps) * p + eps / K for a, p in node.prior.items()}
+    if _SIG.abs_mode == "mul":
+        z = {a: p0[a] * (1.0 + beta * x.get(a, 0.0)) for a in p0}
+        s = sum(z.values())
+        new = {a: v / s for a, v in z.items()} if s > 0 else p0
+    else:                                                 # "add"
+        # sum_a (p0 + beta*x_a/K) = 1 + beta*g exactly, so this is already normalised.
+        new = {a: (p0[a] + beta * x.get(a, 0.0) / K) / (1.0 + beta * g) for a in p0}
+
+    _SIG.abs_tv_sum += 0.5 * sum(abs(new[a] - node.prior[a]) for a in node.prior)
+    node.prior = new
+    node.explore_mult = 1.0 + _SIG.abs_kappa * g          # c(s) = c_puct * (1 + kappa g_s)
+    _SIG.abs_g_sum += g; _SIG.abs_g_count += 1
+
+
 def _best_curve(state: mm.State, goal: mm.GroundConjunctiveCondition):
     """Sorted quantile curve of the BEST action (highest mean) at `state`, or None."""
     qs, _ = _iqn_curves(state, goal)
@@ -829,6 +922,10 @@ def _expand(node: Node,
     elif _SIG.w1raw_active and len(node.prior) > 1:
         _SIG.n_expanded = len(tt)
         _compute_w1raw_mult(node, goal)
+    # Option 9: absolute-scale signal -- rewrites the prior (P_+ / P_x) and sets c(s).
+    elif _SIG.abs_active and len(node.prior) > 1:
+        _SIG.n_expanded = len(tt)
+        _compute_abs_signal(node, goal)
     # Diagnostic: record distance (=-QRDQN value) of every expanded node.
     if _SIG.log_dist and _SIG.iqn is not None:
         qd, ad = _iqn_curves(node.state, goal)
@@ -1120,6 +1217,25 @@ def _parse_arguments() -> argparse.Namespace:
                         help="Exponent on P(a) in the exploration term: u ~ c*P(a)**prior_gamma. "
                              "1.0 = standard. 0.5 (sqrt) SOFTENS the P-gate so numerically-dead "
                              "tiny-P children can compete, while P==0 still stays 0.")
+    parser.add_argument("--abs_signal", default="off", choices=["off", "add", "mul"],
+                        help="OPTION 9 (ABSOLUTE-SCALE signal; supervisor's reformulation). "
+                             "No sibling division: x_a = e_a/(e_a+tau_step) from the RAW Bellman "
+                             "residual, g_s = mean_a x_a. 'add' = prior-independent P_+(a) = "
+                             "(P0+beta*x_a/K)/(1+beta*g_s) -- the only variant that can lift an "
+                             "arm the policy gave ~0 prior. 'mul' = P_x(a) ~ P0(a)(1+beta*x_a) "
+                             "-- near no-op at eps_p=0.001 because SAC saturates. Both also set "
+                             "c(s)=c_puct*(1+kappa*g_s). Requires --iqn_model. Respects "
+                             "--sib_gate/--sib_shuffle/--sib_random.")
+    parser.add_argument("--tau_step", default=1.0, type=float,
+                        help="OPTION 9 squash knee, in reward units (1 action = 1.0). e_a=tau "
+                             "gives x_a=0.5. Sweep {0.5, 1, 2}.")
+    parser.add_argument("--abs_beta", default=1.0, type=float,
+                        help="OPTION 9 prior-tilt strength.")
+    parser.add_argument("--abs_kappa", default=1.0, type=float,
+                        help="OPTION 9 exploration-widening strength: c(s)=c_puct*(1+kappa*g_s). "
+                             "0 = leave c_puct alone (prior channel only).")
+    parser.add_argument("--eps_p", default=0.001, type=float,
+                        help="OPTION 9 prior floor: P0=(1-eps_p)P+eps_p/K.")
     parser.add_argument("--max_simulations", default=100000000, type=int)
     parser.add_argument("--max_time", default=None, type=float)
     parser.add_argument("--c_puct", default=1.5, type=float)
@@ -1168,6 +1284,12 @@ def _plan(problem: mm.Problem,
         if _SIG.add_count:
             print(f"[Add] child-edges given an additive bonus: {_SIG.add_count}, mean (rel-1): "
                   f"{_SIG.add_sum/_SIG.add_count:.4f}", flush=True)
+        if _SIG.abs_g_count:
+            print(f"[Abs] nodes modulated: {_SIG.abs_g_count}, mean g_s: "
+                  f"{_SIG.abs_g_sum/_SIG.abs_g_count:.4f} "
+                  f"(=> mean c(s)/c_puct {1 + _SIG.abs_kappa*_SIG.abs_g_sum/_SIG.abs_g_count:.3f}), "
+                  f"mean prior mass moved: {_SIG.abs_tv_sum/_SIG.abs_g_count:.4f} "
+                  f"(0 = prior untouched)", flush=True)
         if _SIG.w1raw_count:
             print(f"[W1raw] child-edges modulated: {_SIG.w1raw_count}, mean mult: "
                   f"{_SIG.w1raw_sum/_SIG.w1raw_count:.4f} (1.0 = no change; >1 = boosted toward "
@@ -1349,6 +1471,33 @@ def _main(args: argparse.Namespace) -> None:
         print(f"[W1raw] OPTION7 w1raw_beta={args.w1raw_beta} signal=RAW edge-W1 "
               f"(parent-best vs child-best, no reward/discount) vs SIBLINGS (boosts exploration "
               f"toward larger-shift children; prior untouched){tag}{gate}", flush=True)
+
+    # OPTION 9: absolute-scale signal (supervisor's reformulation). Rewrites the prior and c(s).
+    if args.abs_signal != "off":
+        assert args.iqn_model is not None, "--abs_signal requires --iqn_model (the QR-DQN)"
+        assert args.sib_beta == 0.0 and args.binc_beta == 0.0 and args.w1raw_beta == 0.0 \
+            and args.add_beta == 0.0 and args.width_beta == 0.0 and args.ens_beta == 0.0, \
+            "OPTION 9 replaces the prior and explore_mult; run it alone"
+        if _SIG.iqn is None:
+            iqn, _, _ = _load_iqn_model(domain, args.iqn_model, device)
+            iqn.eval()
+            _SIG.iqn = iqn
+            _SIG.taus = torch.linspace(0.01, 0.99, 99, device=device).unsqueeze(0)
+        _SIG.abs_mode = args.abs_signal
+        _SIG.tau_step = args.tau_step
+        _SIG.abs_beta = args.abs_beta
+        _SIG.abs_kappa = args.abs_kappa
+        _SIG.eps_p = args.eps_p
+        _SIG.sib_gate = args.sib_gate
+        _SIG.sib_shuffle = args.sib_shuffle
+        _SIG.sib_random = args.sib_random
+        tag = (f" [RANDOM CONTROL: {args.sib_random} weights, signal discarded]" if args.sib_random
+               else " [SHUFFLE CONTROL: signal-blind placement]" if args.sib_shuffle else "")
+        print(f"[Abs] OPTION9 mode={args.abs_signal} tau_step={args.tau_step} "
+              f"beta={args.abs_beta} kappa={args.abs_kappa} eps_p={args.eps_p} "
+              f"(x_a=e_a/(e_a+tau), NO sibling division; prior -> "
+              f"{'P_+' if args.abs_signal == 'add' else 'P_x'}, c(s)=c_puct*(1+kappa*g_s)){tag}",
+              flush=True)
 
     # SELF-CONSISTENT VALUE: route the leaf value through the QR-DQN (same model as the signal).
     if args.qrdqn_value:
