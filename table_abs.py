@@ -50,12 +50,22 @@ A_ = ap.parse_args()
 
 BASE = f"{A_.prefix}/gm_base"
 # (label, dir). Rows are the arms we have; beta is the sweep axis where it exists.
-ARMS = [("1.0",  f"{A_.prefix}/gm_abs_t1b1k1"),
-        ("2.0",  f"{A_.prefix}/gm_abs_t1b2k1"),
-        ("4.0",  f"{A_.prefix}/gm_abs_t1b4k1"),
-        ("6.0",  f"{A_.prefix}/gm_abs_t1b6k1"),
-        ("8.0",  f"{A_.prefix}/gm_abs_t1b8k1"),
-        ("12.0", f"{A_.prefix}/gm_abs_t1b12k1")]
+# MATCHED axis: each row perturbs the selection weights as hard as the binc arm of the
+# same beta_old (median TV over the 905 goldminer states). kappa=0, since binc had no
+# exploration-constant channel. Label is beta_old so the two tables line up row by row.
+ARMS = [("1.0 (=0.005)",  f"{A_.prefix}/gm_abs_eqb1"),
+        ("2.0 (=0.035)",  f"{A_.prefix}/gm_abs_eqb2"),
+        ("4.0 (=0.065)",  f"{A_.prefix}/gm_abs_eqb4"),
+        ("6.0 (=0.085)",  f"{A_.prefix}/gm_abs_eqb6"),
+        ("8.0 (=0.110)",  f"{A_.prefix}/gm_abs_eqb8"),
+        ("12.0 (=0.150)", f"{A_.prefix}/gm_abs_eqb12")]
+# The regime binc cannot reach at any beta, because mult(a)*P(a) stays gated by P.
+BEYOND = [("1.0",  f"{A_.prefix}/gm_abs_t1b1k1"),
+          ("2.0",  f"{A_.prefix}/gm_abs_t1b2k1"),
+          ("4.0",  f"{A_.prefix}/gm_abs_t1b4k1"),
+          ("6.0",  f"{A_.prefix}/gm_abs_t1b6k1"),
+          ("8.0",  f"{A_.prefix}/gm_abs_t1b8k1"),
+          ("12.0", f"{A_.prefix}/gm_abs_t1b12k1")]
 EXTRA = [("1.0 (kappa=0, prior only)", f"{A_.prefix}/gm_abs_t1b1k0"),
          ("1.0 (beta=0, c(s) only)",   f"{A_.prefix}/gm_abs_t1b0k1"),
          ("1.0 SHUFFLE",               f"{A_.prefix}/gm_abs_t1b1k1_shuf"),
@@ -141,7 +151,8 @@ if not B:
     sys.exit(f"missing baseline {BASE}")
 bs = {x for x in B if B[x][1]}
 npk = sum(1 for x in bs if peaked(x))
-print(f"\n### GOLDMINER  OPTION 9 additive (tau=1, kappa=1)   arm = real ###")
+print(f"\n### GOLDMINER  OPTION 9 additive, beta MATCHED to the binc axis "
+      f"(tau=1, kappa=0)   arm = real ###")
 print(f"baseline {BASE}: {len(bs)}/{len(B)} solved, median "
       f"{st.median([B[x][0] for x in bs]):.0f} expansions")
 print(f"peakedness: def={A_.peak_def} thresh={A_.peak_thresh} -> "
@@ -182,6 +193,12 @@ for label, d in ARMS:
 print()
 if missing:
     print("not run yet: " + ", ".join(f"beta={l} ({os.path.basename(d)})" for l, d in missing))
+print("\n### beta_new beyond the old formulation's reach (kappa=1) ###")
+print(HDR); print(SEP)
+for label, d in BEYOND:
+    out = row(label, d)
+    if out:
+        print(out)
 print("\n### channel-split and control arms (same columns) ###")
 print(HDR); print(SEP)
 for label, d in EXTRA:
