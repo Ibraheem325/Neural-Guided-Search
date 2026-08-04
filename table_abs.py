@@ -185,23 +185,17 @@ def row(label, d):
             f"{len(imp)} | {len(reg)} | {wp:.0f}% | {lp:.0f}% |")
 
 
+ALL = [("--- arms you ran (beta_new as submitted, kappa=1) ---", None)] + BEYOND + \
+      [("--- channel split and controls ---", None)] + EXTRA + \
+      [("--- beta matched to the binc axis (kappa=0) ---", None)] + ARMS
+
 print(HDR); print(SEP)
 missing = []
-for label, d in ARMS:
+for label, d in ALL:
+    if d is None:
+        print(f"| **{label}** | | | | | | | |")
+        continue
     out = row(label, d)
     print(out) if out else missing.append((label, d))
-print()
 if missing:
-    print("not run yet: " + ", ".join(f"beta={l} ({os.path.basename(d)})" for l, d in missing))
-print("\n### beta_new beyond the old formulation's reach (kappa=1) ###")
-print(HDR); print(SEP)
-for label, d in BEYOND:
-    out = row(label, d)
-    if out:
-        print(out)
-print("\n### channel-split and control arms (same columns) ###")
-print(HDR); print(SEP)
-for label, d in EXTRA:
-    out = row(label, d)
-    if out:
-        print(out)
+    print("\nnot run yet: " + ", ".join(os.path.basename(d) for _, d in missing))
