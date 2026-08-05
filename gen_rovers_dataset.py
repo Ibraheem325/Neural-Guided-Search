@@ -1,4 +1,5 @@
-"""Generate a rovers dataset whose ROVER COUNT spans 1..8 in every split.
+"""Generate a rovers dataset. By default the ROVER COUNT spans 1..8 in every split;
+--rovers R pins it instead.
 
 Why: example/rovers_dataset has 391/400 single-rover training instances but 1-8 rovers
 at test. That is the same structural blind spot that broke logistics (trained c2s1 only,
@@ -9,19 +10,40 @@ Object count is exact:  n = 2*rovers + waypoints + objectives + cameras + 4
   (2 per rover = rover + store; +4 = 3 modes + 1 lander)
 so an instance needs n >= 2*r + 8, i.e. 8 rovers needs n >= 24.
 
+FIXED TOPOLOGY (--rovers R). Supervisor: the model must see how the state-space topology
+can VARY, otherwise a structure absent from training fails at test -- train only on cities
+of size 2 and size 3 breaks. But holding the topology FIXED is fine as long as train and
+test hold it at the SAME value. --rovers R does that: every instance in every split gets
+exactly R rovers, and only the map size (waypoints/objectives) varies. Rovers, waypoints
+and objectives are exact from rovgen; cameras are NOT (it adds extras to keep goals
+achievable), so cameras cannot be pinned.
+
+--objects LO:HI overrides the per-split object ranges. Worth knowing: the DEFAULT ranges
+are disjoint (train 11-40, val 41-50, test 51-101), so every test instance is larger than
+anything seen in training. That is a scale extrapolation, which is a SEPARATE issue from
+the topology point above and is not fixed by --rovers.
+
 Usage:
   venv/bin/python gen_rovers_dataset.py <rovgen_path> <out_dir> [--plans <fast-downward.py>]
+                                        [--rovers R] [--objects LO:HI]
 """
 import sys, os, random, subprocess, collections, re
 
 ROVGEN = sys.argv[1]
 OUT = sys.argv[2]
 FD = sys.argv[sys.argv.index("--plans") + 1] if "--plans" in sys.argv else None
+FIX_R = int(sys.argv[sys.argv.index("--rovers") + 1]) if "--rovers" in sys.argv else None
+_OBJ = sys.argv[sys.argv.index("--objects") + 1] if "--objects" in sys.argv else None
 
 # (split, tag, count, n_lo, n_hi) -- object ranges copied from the original dataset
 SPLITS = [("train", "TR3r", 400, 11, 40),
           ("val",   "VAL3r", 120, 41, 50),
           ("test",  "TST3r", 120, 51, 101)]
+if _OBJ:
+    _lo, _hi = (int(x) for x in _OBJ.split(":"))
+    SPLITS = [(s_, t, c, _lo, _hi) for s_, t, c, _, _ in SPLITS]
+if FIX_R is not None:
+    SPLITS = [(s_, f"R{FIX_R}", c, lo, hi) for s_, t, c, lo, hi in SPLITS]
 RSEED = 20260803
 
 
@@ -29,10 +51,15 @@ def pick(n_lo, n_hi, rng):
     """Choose (r, w, o, c) with 2r+w+o+c+4 in [n_lo, n_hi], rover count as uniform as
     the object budget allows."""
     for _ in range(500):
-        r_max = min(8, (n_hi - 8) // 2)
-        if r_max < 1:
-            r_max = 1
-        r = rng.randint(1, r_max)
+        if FIX_R is not None:
+            r = FIX_R                      # pinned topology: same rover count everywhere
+            if 2 * r + 8 > n_hi:
+                return None                # object budget cannot fit this many rovers
+        else:
+            r_max = min(8, (n_hi - 8) // 2)
+            if r_max < 1:
+                r_max = 1
+            r = rng.randint(1, r_max)
         n = rng.randint(max(n_lo, 2 * r + 8), n_hi)
         rest = n - 2 * r - 4                      # split across w, o, c
         if rest < 4:
