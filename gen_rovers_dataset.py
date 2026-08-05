@@ -36,8 +36,28 @@ Usage:
 """
 import sys, os, random, subprocess, collections, re
 
-ROVGEN = sys.argv[1]
-OUT = sys.argv[2]
+# Validate argv BEFORE anything else. This script parses by index and used to ignore
+# whatever it did not recognise -- so an unsupported flag (or one added after the copy on
+# the cluster was last pulled) silently produced the DEFAULT dataset and printed a
+# normal-looking summary. Fail loudly instead.
+_KNOWN = {"--plans", "--rovers", "--objects"}
+_pos, _i = [], 1
+while _i < len(sys.argv):
+    _a = sys.argv[_i]
+    if _a.startswith("--"):
+        if _a not in _KNOWN:
+            sys.exit(f"unknown option {_a}\n  known: {' '.join(sorted(_KNOWN))}\n"
+                     f"  (if you expected this flag to exist, `git pull` -- an older copy "
+                     f"of this script would have IGNORED it and generated the default set)")
+        if _i + 1 >= len(sys.argv):
+            sys.exit(f"{_a} needs a value")
+        _i += 2
+        continue
+    _pos.append(_a); _i += 1
+if len(_pos) != 2:
+    sys.exit(f"expected <rovgen_path> <out_dir>, got {len(_pos)}: {_pos}")
+
+ROVGEN, OUT = _pos
 FD = sys.argv[sys.argv.index("--plans") + 1] if "--plans" in sys.argv else None
 def _rspec(t):
     """'2' -> (2,2);  '2-4' -> (2,4)"""
