@@ -7,8 +7,13 @@ away the absolute scale. The new one keeps e_a and squashes it:
 so the report has to be computed from RAW e_a. This script dumps them; all the
 tau/beta/kappa arithmetic lives in new_signal_report.py so sweeps are free.
 
-Usage: venv/bin/python new_signal_probe.py [n_instances] [max_plan_steps]
-Writes new_signal_data.json
+Usage:
+  venv/bin/python new_signal_probe.py [n_instances] [max_plan_steps]        # grid+goldminer
+  venv/bin/python new_signal_probe.py --set NAME:PROBE_DIR:IQN:POLICY [...] [-o OUT]
+Writes new_signal_data.json (or -o).
+
+If a probe directory has no .plan files the walk falls back to the INITIAL state only,
+which is all that is needed for the g_s / matched-w measurement.
 """
 import json, glob, os, sys, torch, pymimir as mm
 from pathlib import Path
@@ -17,13 +22,23 @@ from train_iqn import _load_model as _load_iqn
 import pymimir_rgnn as rgnn
 
 GAMMA, REWARD = 0.999, -1.0      # matches every other probe script in the repo
-N_INST = int(sys.argv[1]) if len(sys.argv) > 1 else 90
-N_STEP = int(sys.argv[2]) if len(sys.argv) > 2 else 6
+OUT_PATH = "new_signal_data.json"
+if "-o" in sys.argv:
+    OUT_PATH = sys.argv[sys.argv.index("-o") + 1]
+_custom = [sys.argv[i + 1] for i, a in enumerate(sys.argv) if a == "--set"]
+_pos = [a for a in sys.argv[1:] if a.isdigit()]
+N_INST = int(_pos[0]) if _pos else 90
+N_STEP = int(_pos[1]) if len(_pos) > 1 else 6
 
-SETS = [("grid", "example/probe_near_goal_d5-20",
-         "models/grid_iqn_qrdqn_best.pth", "models/grid_sac_policy.pth"),
-        ("goldminer", "example/probeGold_near_goal_d5-20",
-         "models/goldminer_iqn.pth", "models/goldminer_sac_policy.pth")]
+if _custom:
+    SETS = [tuple(c.split(":")) for c in _custom]
+    for c in SETS:
+        assert len(c) == 4, f"--set needs NAME:PROBE_DIR:IQN:POLICY, got {c}"
+else:
+    SETS = [("grid", "example/probe_near_goal_d5-20",
+             "models/grid_iqn_qrdqn_best.pth", "models/grid_sac_policy.pth"),
+            ("goldminer", "example/probeGold_near_goal_d5-20",
+             "models/goldminer_iqn.pth", "models/goldminer_sac_policy.pth")]
 
 dev = create_device(False)
 canon = lambda x: str(x).lower().replace(" ", "")
@@ -83,13 +98,26 @@ for name, PROBE, IQN_M, POL_M in SETS:
 
     recs = []
     files = sorted(f for f in glob.glob(PROBE + "/*.pddl") if "domain" not in os.path.basename(f))
+    if not files:                                  # dataset layout: probe dir has splits
+        for sub in ("val", "test", "train"):
+            files = sorted(f for f in glob.glob(f"{PROBE}/{sub}/*.pddl")
+                           if "domain" not in os.path.basename(f))
+            if files:
+                print(f"  ({name}: no instances at top level, using {sub}/)", flush=True)
+                break
     files = files[:: max(1, len(files) // N_INST)][:N_INST]
     for pf in files:
         prob = mm.Problem(dom, pf)
         s = prob.get_initial_state(); g = prob.get_goal_condition()
-        if not os.path.exists(pf + ".plan"):
+        # No plan file -> measure the initial state only. Enough for g_s / matched w.
+        plan = ([l.strip() for l in open(pf + ".plan") if l.strip().startswith("(")]
+                if os.path.exists(pf + ".plan") else [])
+        if not plan:
+            r = record(s, g, None)
+            if r is not None:
+                r["plan"] = -1
+                recs.append(r)
             continue
-        plan = [l.strip() for l in open(pf + ".plan") if l.strip().startswith("(")]
         for t in range(min(N_STEP, len(plan))):
             r = record(s, g, plan[t])
             if r is not None and r["plan"] >= 0:
@@ -102,5 +130,5 @@ for name, PROBE, IQN_M, POL_M in SETS:
     out[name] = recs
     print(f"{name}: {len(recs)} states from {len(files)} instances", flush=True)
 
-json.dump(out, open("new_signal_data.json", "w"))
-print("wrote new_signal_data.json")
+json.dump(out, open(OUT_PATH, "w"))
+print(f"wrote {OUT_PATH}")
