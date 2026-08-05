@@ -10,13 +10,20 @@ Object count is exact:  n = 2*rovers + waypoints + objectives + cameras + 4
   (2 per rover = rover + store; +4 = 3 modes + 1 lander)
 so an instance needs n >= 2*r + 8, i.e. 8 rovers needs n >= 24.
 
-FIXED TOPOLOGY (--rovers R). Supervisor: the model must see how the state-space topology
-can VARY, otherwise a structure absent from training fails at test -- train only on cities
-of size 2 and size 3 breaks. But holding the topology FIXED is fine as long as train and
-test hold it at the SAME value. --rovers R does that: every instance in every split gets
-exactly R rovers, and only the map size (waypoints/objectives) varies. Rovers, waypoints
-and objectives are exact from rovgen; cameras are NOT (it adds extras to keep goals
-achievable), so cameras cannot be pinned.
+TOPOLOGY CONTROL (--rovers). Supervisor's rule, in three cases:
+  train {2},    test {3}    -> FAILS. A structure never seen is not learned.
+  train {2},    test {2}    -> fine. Pinning is allowed if both sides pin the same value;
+                              use it when it makes data generation easier.
+  train {2..4}, test {5}    -> likely fine. Seeing a RANGE teaches how the topology varies,
+                              and that extrapolates a step beyond the range.
+Accepted forms:
+  --rovers 2          pin 2 everywhere                      (case 2)
+  --rovers 2-4        uniform in 2..4 in every split        (case 3, no extrapolation)
+  --rovers 2-4:2-5    train 2..4, val+test 2..5             (case 3, tests the step beyond)
+Default (flag absent) is 1..8 in every split.
+
+Rovers, waypoints and objectives are exact from rovgen; cameras are NOT (it adds extras to
+keep goals achievable), so cameras cannot be pinned.
 
 --objects LO:HI overrides the per-split object ranges. Worth knowing: the DEFAULT ranges
 are disjoint (train 11-40, val 41-50, test 51-101), so every test instance is larger than
@@ -25,14 +32,27 @@ the topology point above and is not fixed by --rovers.
 
 Usage:
   venv/bin/python gen_rovers_dataset.py <rovgen_path> <out_dir> [--plans <fast-downward.py>]
-                                        [--rovers R] [--objects LO:HI]
+                                        [--rovers SPEC] [--objects LO:HI]
 """
 import sys, os, random, subprocess, collections, re
 
 ROVGEN = sys.argv[1]
 OUT = sys.argv[2]
 FD = sys.argv[sys.argv.index("--plans") + 1] if "--plans" in sys.argv else None
-FIX_R = int(sys.argv[sys.argv.index("--rovers") + 1]) if "--rovers" in sys.argv else None
+def _rspec(t):
+    """'2' -> (2,2);  '2-4' -> (2,4)"""
+    if "-" in t:
+        a, b = t.split("-"); return (int(a), int(b))
+    return (int(t), int(t))
+
+
+_R = sys.argv[sys.argv.index("--rovers") + 1] if "--rovers" in sys.argv else None
+if _R:
+    _parts = _R.split(":")
+    R_TRAIN = _rspec(_parts[0])
+    R_EVAL = _rspec(_parts[1]) if len(_parts) > 1 else R_TRAIN
+else:
+    R_TRAIN = R_EVAL = None
 _OBJ = sys.argv[sys.argv.index("--objects") + 1] if "--objects" in sys.argv else None
 
 # (split, tag, count, n_lo, n_hi) -- object ranges copied from the original dataset
@@ -42,19 +62,24 @@ SPLITS = [("train", "TR3r", 400, 11, 40),
 if _OBJ:
     _lo, _hi = (int(x) for x in _OBJ.split(":"))
     SPLITS = [(s_, t, c, _lo, _hi) for s_, t, c, _, _ in SPLITS]
-if FIX_R is not None:
-    SPLITS = [(s_, f"R{FIX_R}", c, lo, hi) for s_, t, c, lo, hi in SPLITS]
+if R_TRAIN is not None:
+    def _tag(sp):
+        lo, hi = R_TRAIN if sp == "train" else R_EVAL
+        return f"R{lo}" if lo == hi else f"R{lo}t{hi}"
+    SPLITS = [(s_, _tag(s_), c, lo, hi) for s_, t, c, lo, hi in SPLITS]
 RSEED = 20260803
 
 
-def pick(n_lo, n_hi, rng):
+def pick(n_lo, n_hi, rng, rspec=None):
     """Choose (r, w, o, c) with 2r+w+o+c+4 in [n_lo, n_hi], rover count as uniform as
     the object budget allows."""
     for _ in range(500):
-        if FIX_R is not None:
-            r = FIX_R                      # pinned topology: same rover count everywhere
-            if 2 * r + 8 > n_hi:
+        if rspec is not None:
+            r_lo, r_hi = rspec             # controlled topology
+            r_hi = min(r_hi, max(r_lo, (n_hi - 8) // 2))
+            if 2 * r_lo + 8 > n_hi:
                 return None                # object budget cannot fit this many rovers
+            r = rng.randint(r_lo, r_hi)
         else:
             r_max = min(8, (n_hi - 8) // 2)
             if r_max < 1:
@@ -92,7 +117,7 @@ def main():
         rovhist = collections.Counter(); nhist = []
         while made < count and tries < count * 60:
             tries += 1
-            got = pick(n_lo, n_hi, rng)
+            got = pick(n_lo, n_hi, rng, R_TRAIN if split == "train" else R_EVAL)
             if not got:
                 continue
             r, w, o, c, n = got
