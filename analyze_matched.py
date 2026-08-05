@@ -19,6 +19,10 @@ if "--base" in sys.argv:
     base = sys.argv[sys.argv.index("--base") + 1]
     args = [a for a in args if a != base]
 PRE = "results"
+# Arms this session's follow-ups produce, for convenience:
+#   gm_flat028_binc4 / _shuf / gm_flat028_binc12   flatten + binc composition
+#   gm_abs_t1b1k1_rndm                             the random rung
+#   gm_mul_e040_k0 / e060 / e040_shuf              eps_p sweep on the multiplicative arm
 
 
 def load(d):
