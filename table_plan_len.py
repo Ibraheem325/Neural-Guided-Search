@@ -141,6 +141,24 @@ for title, rows in TABLES:
     if missing:
         print("\nmissing dirs: " + ", ".join(missing))
 
+    # Reference: the baseline over ALL the instances it solved, not just the common set.
+    # This is the number people expect ("the baseline solved 337, what were its plans?"),
+    # but it CANNOT be compared to the arm rows -- it is measured on different instances.
+    # The gap between it and the BASELINE row above is a property of which instances the
+    # common set drops, i.e. how much harder the excluded ones were.
+    own = [i for i, v in base.items() if v[2] and i in OPT]
+    bpl, bopt = st.mean(base[i][1] for i in own), st.mean(OPT[i] for i in own)
+    print(f"\nreference -- BASELINE over all {len(own)} instances it solved: "
+          f"plan {bpl:.2f}, opt {bopt:.2f}, vs opt {bpl/bopt:.3f}")
+    dropped = [i for i in own if i not in set(common)]
+    if dropped:
+        dpl, dopt = st.mean(base[i][1] for i in dropped), st.mean(OPT[i] for i in dropped)
+        print(f"  the {len(dropped)} instances the common set DROPS: baseline plan "
+              f"{dpl:.2f}, opt {dopt:.2f}, vs opt {dpl/dopt:.3f}")
+        print(f"  (dropped because at least one arm failed them -- this is why the "
+              f"BASELINE row above\n   differs between the additive and multiplicative "
+              f"tables despite being the same runs)")
+
 print("\n'vs opt' = mean plan length / mean optimal length on the common set. 1.000 means")
 print("the arm returns optimal-length plans there, i.e. no quality headroom to win back.")
 print(f"optimal source: {SRC}")
