@@ -24,13 +24,63 @@ Usage: venv/bin/python table_plan_len.py [--prefix results] [--probe example/pro
 """
 import re, glob, os, argparse, statistics as st
 
+DOMAINS = {
+    "goldminer": dict(
+        base="gm_base",
+        probe="example/probeGold_near_goal_d5-20",
+        optlen="optlen_goldminer.json",
+        tables=[
+            ("ADDITIVE", [
+                ("beta=1 kappa=1",         "gm_abs_t1b1k1"),
+                ("beta=1 kappa=0 (prior)", "gm_abs_t1b1k0"),
+                ("beta=2 kappa=1",         "gm_abs_t1b2k1"),
+                ("beta=0 kappa=1 (c(s))",  "gm_abs_t1b0k1"),
+                ("shuffle",                "gm_abs_t1b1k1_shuf"),
+                ("random",                 "gm_abs_t1b1k1_rndm"),
+            ]),
+            ("MULTIPLICATIVE", [
+                ("eps=0.001 kappa=0",      "gm_mul_e001_k0"),
+                ("eps=0.001 kappa=1",      "gm_mul_e001_k1"),
+                ("eps=0.28 kappa=0",       "gm_mul_e028_k0"),
+                ("eps=0.40 kappa=0",       "gm_mul_e040_k0"),
+                ("eps=0.60 kappa=0",       "gm_mul_e060_k0"),
+                ("eps=0.28 shuffle",       "gm_mul_e028_k0_shuf"),
+            ]),
+        ]),
+    "grid": dict(
+        base="az_probe_qrval_base",
+        probe="example/probe_near_goal_d5-20",
+        optlen="optlen_grid.json",
+        tables=[
+            ("ADDITIVE", [
+                ("beta=1 kappa=1",         "grid_abs_t1b1k1"),
+                ("beta=1 kappa=0",         "grid_abs_t1b1k0"),
+                ("beta=2 kappa=1",         "grid_abs_t1b2k1"),
+                ("beta=0 kappa=1 (c(s))",  "grid_abs_t1b0k1"),
+                ("shuffle",                "grid_abs_t1b1k1_shuf"),
+                ("random",                 "grid_abs_t1b1k1_rndm"),
+            ]),
+            ("MULTIPLICATIVE", [
+                ("eps=0.001 kappa=0",      "grid_mul_e001_k0"),
+                ("eps=0.001 kappa=1",      "grid_mul_e001_k1"),
+                ("eps=0.27 kappa=0",       "grid_mul_e027_k0"),
+                ("eps=0.27 shuffle",       "grid_mul_e027_k0_shuf"),
+                ("eps=0.40 kappa=0",       "grid_mul_e040_k0"),
+                ("eps=0.40 shuffle",       "grid_mul_e040_k0_shuf"),
+                ("eps=0.60 kappa=0",       "grid_mul_e060_k0"),
+            ]),
+        ]),
+}
+
 ap = argparse.ArgumentParser()
+ap.add_argument("--domain", default="goldminer", choices=sorted(DOMAINS))
 ap.add_argument("--prefix", default="results")
-ap.add_argument("--probe", default="example/probeGold_near_goal_d5-20")
-ap.add_argument("--optlen", default="optlen_goldminer.json",
+ap.add_argument("--probe", default=None, help="override the domain's probe dir")
+ap.add_argument("--optlen", default=None,
                 help="json from collect_fd.py mapping probe -> FD plan length. Used in "
                      "place of the distance encoded in the probe name where available; "
-                     "falls back to the encoded d for probes FD did not solve.")
+                     "falls back to the encoded d for probes FD did not solve. Defaults "
+                     "to the domain's optlen_<domain>.json.")
 ap.add_argument("--set", default="perarm", choices=["perarm", "common"],
                 help="Which instance set net%%/mean/improved/regressed use. The existing "
                      "results tables are INCONSISTENT about this: the additive table came "
@@ -41,25 +91,11 @@ ap.add_argument("--set", default="perarm", choices=["perarm", "common"],
                      "other. Pick one and state it; do not mix them in one document.")
 A_ = ap.parse_args()
 
-BASE = "gm_base"
-TABLES = [
-    ("ADDITIVE", [
-        ("beta=1 kappa=1",          "gm_abs_t1b1k1"),
-        ("beta=1 kappa=0 (prior)",  "gm_abs_t1b1k0"),
-        ("beta=2 kappa=1",          "gm_abs_t1b2k1"),
-        ("beta=0 kappa=1 (c(s))",   "gm_abs_t1b0k1"),
-        ("shuffle",                 "gm_abs_t1b1k1_shuf"),
-        ("random",                  "gm_abs_t1b1k1_rndm"),
-    ]),
-    ("MULTIPLICATIVE", [
-        ("eps=0.001 kappa=0",       "gm_mul_e001_k0"),
-        ("eps=0.001 kappa=1",       "gm_mul_e001_k1"),
-        ("eps=0.28 kappa=0",        "gm_mul_e028_k0"),
-        ("eps=0.40 kappa=0",        "gm_mul_e040_k0"),
-        ("eps=0.60 kappa=0",        "gm_mul_e060_k0"),
-        ("eps=0.28 shuffle",        "gm_mul_e028_k0_shuf"),
-    ]),
-]
+CFG = DOMAINS[A_.domain]
+BASE = CFG["base"]
+TABLES = CFG["tables"]
+PROBE = A_.probe or CFG["probe"]
+OPTLEN = A_.optlen or CFG["optlen"]
 
 DEPTH = re.compile(r"^\d+_d(\d+)_")
 
@@ -79,18 +115,18 @@ def load(d):
 
 # optimal length per probe: FD's answer where we have it, else the encoded distance.
 OPT, SRC = {}, "encoded distance d (NOT verified -- run run_fd_optimal.sh + collect_fd.py)"
-for p in glob.glob(A_.probe + "/*.pddl"):
+for p in glob.glob(PROBE + "/*.pddl"):
     n = os.path.basename(p)[:-5]
     m = DEPTH.match(n)
     if m:
         OPT[n] = int(m.group(1))
-if os.path.exists(A_.optlen):
+if os.path.exists(OPTLEN):
     import json
-    fd = json.load(open(A_.optlen))
+    fd = json.load(open(OPTLEN))
     n_fd = sum(1 for k in fd if k in OPT)
     n_diff = sum(1 for k, v in fd.items() if k in OPT and v != OPT[k])
     OPT.update({k: v for k, v in fd.items() if k in OPT})
-    SRC = (f"Fast Downward ({A_.optlen}), {n_fd} probes; {len(OPT)-n_fd} fall back to d"
+    SRC = (f"Fast Downward ({OPTLEN}), {n_fd} probes; {len(OPT)-n_fd} fall back to d"
            + (f"; {n_diff} differ from d" if n_diff else "; identical to d everywhere"))
 
 base = load(BASE)
@@ -109,7 +145,7 @@ for title, rows in TABLES:
         common &= {i for i, v in a.items() if v[2]}
     common = sorted(common)
 
-    print(f"\n### GOLDMINER {title} ###")
+    print(f"\n### {A_.domain.upper()} {title} ###")
     if not common:
         print("  empty common set -- one arm solves nothing the others do")
         if missing:
