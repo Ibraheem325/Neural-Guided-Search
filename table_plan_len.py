@@ -47,6 +47,19 @@ DOMAINS = {
                 ("eps=0.28 shuffle",       "gm_mul_e028_k0_shuf"),
             ]),
         ]),
+    "satellite": dict(
+        base="sat_base",
+        probe="example/probeSat_val_d5-20",
+        optlen="optlen_satellite.json",
+        tables=[
+            ("ADDITIVE", [
+                ("beta=1 kappa=1",         "sat_abs_t1b1k1"),
+                ("beta=1 kappa=0 (prior)", "sat_abs_t1b1k0"),
+                ("beta=0 kappa=1 (c(s))",  "sat_abs_t1b0k1"),
+                ("shuffle",                "sat_abs_t1b1k1_shuf"),
+                ("random",                 "sat_abs_t1b1k1_rndm"),
+            ]),
+        ]),
     "logistics": dict(
         base="multiloc_base_topopolicy",
         probe="example/probeLog_multiloc_d5-20",
