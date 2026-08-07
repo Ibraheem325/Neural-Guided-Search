@@ -27,6 +27,10 @@ import re, glob, os, argparse, statistics as st
 ap = argparse.ArgumentParser()
 ap.add_argument("--prefix", default="results")
 ap.add_argument("--probe", default="example/probeGold_near_goal_d5-20")
+ap.add_argument("--optlen", default="optlen_goldminer.json",
+                help="json from collect_fd.py mapping probe -> FD plan length. Used in "
+                     "place of the distance encoded in the probe name where available; "
+                     "falls back to the encoded d for probes FD did not solve.")
 A_ = ap.parse_args()
 
 BASE = "gm_base"
@@ -65,13 +69,21 @@ def load(d):
     return out
 
 
-# optimal length per probe, from the encoded distance (see caveat in the docstring)
-OPT = {}
+# optimal length per probe: FD's answer where we have it, else the encoded distance.
+OPT, SRC = {}, "encoded distance d (NOT verified -- run run_fd_optimal.sh + collect_fd.py)"
 for p in glob.glob(A_.probe + "/*.pddl"):
     n = os.path.basename(p)[:-5]
     m = DEPTH.match(n)
     if m:
         OPT[n] = int(m.group(1))
+if os.path.exists(A_.optlen):
+    import json
+    fd = json.load(open(A_.optlen))
+    n_fd = sum(1 for k in fd if k in OPT)
+    n_diff = sum(1 for k, v in fd.items() if k in OPT and v != OPT[k])
+    OPT.update({k: v for k, v in fd.items() if k in OPT})
+    SRC = (f"Fast Downward ({A_.optlen}), {n_fd} probes; {len(OPT)-n_fd} fall back to d"
+           + (f"; {n_diff} differ from d" if n_diff else "; identical to d everywhere"))
 
 base = load(BASE)
 if not base:
@@ -122,4 +134,6 @@ for title, rows in TABLES:
 
 print("\n'vs opt' = mean plan length / mean optimal length on the common set. 1.000 means")
 print("the arm returns optimal-length plans there, i.e. no quality headroom to win back.")
-print("Run verify_optimal.py before trusting the optimal column.")
+print(f"optimal source: {SRC}")
+print("Within a table every arm shares the same denominator, so if the optimal lengths are")
+print("an upper bound, all ratios shift together and the RANKING is unaffected.")
