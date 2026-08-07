@@ -55,9 +55,21 @@ DOMAINS = {
             ("ADDITIVE", [
                 ("beta=1 kappa=1",         "sat_abs_t1b1k1"),
                 ("beta=1 kappa=0 (prior)", "sat_abs_t1b1k0"),
+                ("beta=2 kappa=1",         "sat_abs_t1b2k1"),
                 ("beta=0 kappa=1 (c(s))",  "sat_abs_t1b0k1"),
                 ("shuffle",                "sat_abs_t1b1k1_shuf"),
                 ("random",                 "sat_abs_t1b1k1_rndm"),
+            ]),
+            # eps=0.23 is satellite's OWN matched mass (W=0.227 at beta=1), the analogue of
+            # grid 0.27 / goldminer 0.28 / logistics 0.29.
+            ("MULTIPLICATIVE", [
+                ("eps=0.001 kappa=0",      "sat_mul_e001_k0"),
+                ("eps=0.001 kappa=1",      "sat_mul_e001_k1"),
+                ("eps=0.23 kappa=0",       "sat_mul_e023_k0"),
+                ("eps=0.23 shuffle",       "sat_mul_e023_k0_shuf"),
+                ("eps=0.40 kappa=0",       "sat_mul_e040_k0"),
+                ("eps=0.40 shuffle",       "sat_mul_e040_k0_shuf"),
+                ("eps=0.60 kappa=0",       "sat_mul_e060_k0"),
             ]),
         ]),
     "logistics": dict(
