@@ -24,9 +24,17 @@
 # probe_near_goal_d5-20 (480 probes, d5-20) so the domains are compared on the same design.
 # NOT the train-split probes -- the models trained on those instances.
 #
-# The RANDOM control is not here: it needs a lognormal fitted to satellite's OWN raw-e
-# marginal (goldminer's mu=-0.585 sigma=1.003 and logistics' mu=-0.461 sigma=0.992 are
-# domain fits, not constants). Run new_signal_probe.py on this probe set first.
+# RANDOM CONTROL, fitted to satellite's OWN raw-e marginal (fit_random_control.py on
+# sat_signal_data.json, 90 states / 8302 edges): mu=-0.970 sigma=0.666. Note how different
+# this is from goldminer (-0.585/1.003) and logistics (-0.461/0.992) -- satellite's
+# residuals are both smaller and tighter, so copying another domain's spec would have put
+# g_s at the wrong level entirely. The fit is clean: mean g_s 0.2937 real vs 0.2935 drawn
+# (level preserved) while sd drops 0.0671 -> 0.0155 (state-to-state structure destroyed),
+# which is exactly the contrast the control is meant to isolate.
+#
+# Other satellite constants from the same fit, for later arms:
+#   mean g_s = 0.2937  ->  c(s) matched control c_puct = 1.94 (kappa=1)
+#   W at beta=1 = 0.227  ->  eps_p for a mass-matched flattening control
 #
 # Run from a COMPUTE node:  bash submit_satellite.sh
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
@@ -38,12 +46,14 @@ SQ1=models/satellite_s18_sac_q1_best.pth; SQ2=models/satellite_s18_sac_q2_best.p
 SI=models/satellite_s18_qrdqn_best.pth
 N=480
 
-# sub <outdir> <shuffle> <mode> <beta> <kappa>
-# args 8..37; 23=SHUFFLE, 25=C_PUCT 1.5, 26=QRDQN_VALUE 1, 33-37=ABS_*.
+LN=lognormal:0.666:-0.970      # fitted to satellite's OWN raw-e marginal
+
+# sub <outdir> <shuffle> <mode> <beta> <kappa> [random_spec]
+# args 8..37; 23=SHUFFLE, 25=C_PUCT 1.5, 26=QRDQN_VALUE 1, 32=SIB_RANDOM, 33-37=ABS_*.
 sub () {
   sbatch $CPU --array=1-$N run_alphazero_bellman.sh $SD $ST $SP $SQ1 $SQ2 $SI \
     results/$1 0.0 4 bellman 1800 0.0 0.95 "" 0.0 0.0 0.0 "" 5 0.0 0 0.0 \
-    $2 0.0 1.5 1 0.0 0.0 binc 2.0 1.0 "" $3 1.0 $4 $5 0.001
+    $2 0.0 1.5 1 0.0 0.0 binc 2.0 1.0 "${6:-}" $3 1.0 $4 $5 0.001
 }
 
 # BASELINE: abs_signal=off, so no prior transform and no explore_mult. qrdqn_value=1 keeps
@@ -55,6 +65,7 @@ sbatch $CPU --array=1-$N run_alphazero_bellman.sh $SD $ST $SP $SQ1 $SQ2 $SI \
 sub sat_abs_t1b1k1       0 add 1.0 1.0    # the doc's configuration
 sub sat_abs_t1b1k0       0 add 1.0 0.0    # prior tilt only
 sub sat_abs_t1b0k1       0 add 0.0 1.0    # c(s) only -- the mechanism control
-sub sat_abs_t1b1k1_shuf  1 add 1.0 1.0    # signal-blind placement
+sub sat_abs_t1b1k1_shuf  1 add 1.0 1.0        # signal-blind placement, spread preserved
+sub sat_abs_t1b1k1_rndm  0 add 1.0 1.0 "$LN"  # values discarded, only the level preserved
 
 squeue -u $USER -h -o "%T" | sort | uniq -c
