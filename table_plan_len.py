@@ -31,6 +31,14 @@ ap.add_argument("--optlen", default="optlen_goldminer.json",
                 help="json from collect_fd.py mapping probe -> FD plan length. Used in "
                      "place of the distance encoded in the probe name where available; "
                      "falls back to the encoded d for probes FD did not solve.")
+ap.add_argument("--set", default="perarm", choices=["perarm", "common"],
+                help="Which instance set net%%/mean/improved/regressed use. The existing "
+                     "results tables are INCONSISTENT about this: the additive table came "
+                     "from analyze_abs.py (perarm -- each arm's own shared-solved set with "
+                     "the baseline) and the multiplicative table from analyze_matched.py "
+                     "(common -- instances solved by the baseline AND every arm). perarm "
+                     "gives each arm the most data; common makes rows comparable to each "
+                     "other. Pick one and state it; do not mix them in one document.")
 A_ = ap.parse_args()
 
 BASE = "gm_base"
@@ -109,8 +117,13 @@ for title, rows in TABLES:
         continue
 
     opt_mean = st.mean(OPT[i] for i in common)
-    print(f"net% / mean / improved / regressed: each arm's OWN shared-solved set with the")
-    print(f"  baseline (this is what the existing tables report, so the numbers match).")
+    if A_.set == "common":
+        print(f"net% / mean / improved / regressed: the COMMON set (--set common), matching")
+        print(f"  analyze_matched.py, which produced the existing MULTIPLICATIVE table.")
+    else:
+        print(f"net% / mean / improved / regressed: each arm's OWN shared-solved set with the")
+        print(f"  baseline (--set perarm), matching analyze_abs.py, which produced the")
+        print(f"  existing ADDITIVE table.")
     print(f"plan len / vs opt: the COMMON set of {len(common)} instances solved by the")
     print(f"  baseline AND all {len(present)} arms, so plan lengths are comparable row to row.")
     print(f"  optimal on that set: mean {opt_mean:.2f} "
@@ -121,8 +134,12 @@ for title, rows in TABLES:
 
     def row(lbl, a, is_base=False):
         ns = sum(1 for v in a.values() if v[2])
-        # arm's own shared-solved set with the baseline -- matches the existing tables
-        k = [i for i in a if i in base and a[i][2] and base[i][2] and base[i][0] > 0]
+        # perarm: this arm's own shared-solved set with the baseline (analyze_abs.py)
+        # common: the all-arm intersection (analyze_matched.py). See --set.
+        if A_.set == "common":
+            k = [i for i in common if base[i][0] > 0]
+        else:
+            k = [i for i in a if i in base and a[i][2] and base[i][2] and base[i][0] > 0]
         tb = sum(base[i][0] for i in k); ta = sum(a[i][0] for i in k)
         r = [a[i][0] / base[i][0] for i in k]
         imp = sum(1 for i in k if a[i][0] < base[i][0])
