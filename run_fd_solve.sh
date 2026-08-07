@@ -39,6 +39,7 @@ DOMAIN="$PWD/$INST_DIR/domain.pddl"
 FILES=($(ls ${INST_DIR}/*.pddl | grep -v domain | sort))
 IDX=$((SLURM_ARRAY_TASK_ID - 1))
 PROB="$PWD/${FILES[$IDX]}"
+NAME=$(basename "$PROB" .pddl)
 OUT="${PROB}.plan"
 
 if [ -f "$OUT" ]; then
@@ -64,9 +65,16 @@ BEST=$(ls sas_plan* 2>/dev/null | sort -V | tail -1)
 if [ -n "$BEST" ] && [ -f "$BEST" ]; then
     grep '^(' "$BEST" > "$OUT"
     echo "solved $(basename "$PROB"): $(wc -l < "$OUT") steps"
+    cd "$OLDPWD" || exit 1
+    rm -rf "$WORK"
 else
-    echo "FAILED $(basename "$PROB")"
+    # Do NOT discard fd.log on failure. The first version deleted the scratch dir
+    # unconditionally, so when 84 tasks died in under a second there was no way to see
+    # why -- the only signal was the word FAILED. Echo the tail and keep the log.
+    echo "FAILED $(basename "$PROB") -- fd.log tail:"
+    tail -20 fd.log 2>/dev/null | sed 's/^/    /'
+    cd "$OLDPWD" || exit 1
+    mkdir -p fd_failures
+    cp "$WORK/fd.log" "fd_failures/$NAME.log" 2>/dev/null
+    rm -rf "$WORK"
 fi
-
-cd "$OLDPWD" || exit 1
-rm -rf "$WORK"
