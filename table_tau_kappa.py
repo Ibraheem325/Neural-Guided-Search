@@ -68,7 +68,53 @@ def compare(a, b):
 base, _ = load(BASE)
 ncov = lambda d: sum(1 for v in d.values() if v[1])
 
-print(f"baseline {BASE}: {ncov(base)}/{len(base)} solved\n")
+# ---------------------------------------------------------------------------
+# TABLE 1: every arm and control vs the BASELINE, in the standard column format
+# (cov / net% / mean / improved / regressed), so this sits alongside the binc,
+# shuffle and random tables. 'ties' is the column that carries the result here:
+# instances where the arm expanded EXACTLY as many nodes as the comparison.
+# ---------------------------------------------------------------------------
+ROWS = []
+for label, ad, cd, cp in PAIRS:
+    ROWS.append((f"{label}  ARM  (c_puct=1.5)", ad))
+    ROWS.append((f"{label}  CTL  (c_puct={cp})", cd))
+
+print(f"### GOLDMINER  c(s)=c_puct*(1+kappa*g_s)   vs baseline {BASE} "
+      f"({ncov(base)}/{len(base)}) ###\n")
+print("| arm | cov | net% | mean | median | improved | regressed |")
+print("| --- | --- | ---- | ---- | ------ | -------- | --------- |")
+bs = {x for x in base if base[x][1]}
+for label, d in ROWS:
+    A, _ = load(d)
+    if not A:
+        continue
+    sv = {x for x in A if A[x][1]}
+    k = sorted(sv & bs)
+    if not k:
+        continue
+    tb = sum(base[x][0] for x in k); ta = sum(A[x][0] for x in k)
+    r = [A[x][0] / base[x][0] for x in k]
+    imp = sum(1 for x in k if A[x][0] < base[x][0])
+    reg = sum(1 for x in k if A[x][0] > base[x][0])
+    print(f"| {label} | {len(sv)} | {100*(tb-ta)/tb:+.1f}% | {sum(r)/len(r):.3f} "
+          f"| {st.median(r):.3f} | {imp} | {reg} |")
+
+# ---------------------------------------------------------------------------
+# TABLE 2: each arm against its OWN matched-level control.
+# ---------------------------------------------------------------------------
+print(f"\n\n### ARM vs MATCHED-LEVEL CONTROL (the actual test of c(s)) ###\n")
+print("| pair | shared | median | net% | improved | regressed | identical |")
+print("| ---- | ------ | ------ | ---- | -------- | --------- | --------- |")
+for label, ad, cd, cp in PAIRS:
+    arm, _ = load(ad); ctl, _ = load(cd)
+    c = compare(arm, ctl) if (arm and ctl) else None
+    if c is None:
+        continue
+    tie = c["n"] - c["win"] - c["loss"]
+    print(f"| {label} | {c['n']} | {c['med']:.3f} | {c['net']:+.1f}% | "
+          f"{c['win']} | {c['loss']} | {tie} ({100*tie/c['n']:.0f}%) |")
+
+print(f"\n\n### LEVEL-MATCH AUDIT ###\n")
 print(f"{'pair':<18} {'cov arm':>8} {'cov ctl':>8} {'realised':>20} "
       f"{'n':>4} {'median':>7} {'net%':>7} {'win/loss':>10}")
 print("-" * 92)
