@@ -106,7 +106,17 @@ for name, PROBE, IQN_M, POL_M in SETS:
                 print(f"  ({name}: no instances at top level, using {sub}/)", flush=True)
                 break
     files = files[:: max(1, len(files) // N_INST)][:N_INST]
-    for pf in files:
+    # Progress matters here: record() does one IQN forward per APPLICABLE ACTION per state,
+    # so on a domain with wide branching (satellite: satellites x instruments x directions)
+    # this is tens of thousands of CPU forwards and used to print nothing until finished,
+    # which is indistinguishable from a hang.
+    print(f"{name}: {len(files)} instances x up to {N_STEP} plan steps "
+          f"(lower these with positional args: new_signal_probe.py <n_inst> <n_steps> ...)",
+          flush=True)
+    for _i, pf in enumerate(files, 1):
+        if _i % 10 == 0 or _i == 1:
+            print(f"  {name}: instance {_i}/{len(files)}, {len(recs)} states so far",
+                  flush=True)
         prob = mm.Problem(dom, pf)
         s = prob.get_initial_state(); g = prob.get_goal_condition()
         # No plan file -> measure the initial state only. Enough for g_s / matched w.
