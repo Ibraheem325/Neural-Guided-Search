@@ -101,8 +101,7 @@ for title, rows in TABLES:
         common &= {i for i, v in a.items() if v[2]}
     common = sorted(common)
 
-    print(f"\n### GOLDMINER {title}   common set = {len(common)} instances "
-          f"(solved by baseline and all {len(present)} arms) ###\n")
+    print(f"\n### GOLDMINER {title} ###")
     if not common:
         print("  empty common set -- one arm solves nothing the others do")
         if missing:
@@ -110,23 +109,33 @@ for title, rows in TABLES:
         continue
 
     opt_mean = st.mean(OPT[i] for i in common)
-    print(f"optimal plan length on the common set: mean {opt_mean:.2f}  "
+    print(f"net% / mean / improved / regressed: each arm's OWN shared-solved set with the")
+    print(f"  baseline (this is what the existing tables report, so the numbers match).")
+    print(f"plan len / vs opt: the COMMON set of {len(common)} instances solved by the")
+    print(f"  baseline AND all {len(present)} arms, so plan lengths are comparable row to row.")
+    print(f"  optimal on that set: mean {opt_mean:.2f} "
           f"(min {min(OPT[i] for i in common)}, max {max(OPT[i] for i in common)})\n")
 
-    print("| arm | solved | cov% | plan len | vs opt | exp (common) | net% vs base |")
-    print("| --- | ------ | ---- | -------- | ------ | ------------ | ------------ |")
+    print("| arm | solved | cov% | net% | mean | improved | regressed | plan len | opt | vs opt |")
+    print("| --- | ------ | ---- | ---- | ---- | -------- | --------- | -------- | --- | ------ |")
 
-    def row(lbl, a):
+    def row(lbl, a, is_base=False):
         ns = sum(1 for v in a.values() if v[2])
+        # arm's own shared-solved set with the baseline -- matches the existing tables
+        k = [i for i in a if i in base and a[i][2] and base[i][2] and base[i][0] > 0]
+        tb = sum(base[i][0] for i in k); ta = sum(a[i][0] for i in k)
+        r = [a[i][0] / base[i][0] for i in k]
+        imp = sum(1 for i in k if a[i][0] < base[i][0])
+        reg = sum(1 for i in k if a[i][0] > base[i][0])
+        net = 100.0 * (tb - ta) / tb if tb else 0.0
+        # plan length on the COMMON set, so rows share a denominator
         pl = st.mean(a[i][1] for i in common)
-        ex = st.mean(a[i][0] for i in common)
-        bex = sum(base[i][0] for i in common)
-        aex = sum(a[i][0] for i in common)
-        net = 100.0 * (bex - aex) / bex if bex else 0.0
-        print(f"| {lbl} | {ns} | {100.0*ns/ntot:.1f}% | {pl:.2f} | "
-              f"{pl/opt_mean:.3f} | {ex:.0f} | {net:+.1f}% |")
+        cells = ("|    — |    — |     — |      — " if is_base
+                 else f"| {net:+.1f}% | {st.mean(r):.3f} | {imp} | {reg} ")
+        print(f"| {lbl} | {ns} | {100.0*ns/ntot:.1f}% {cells}"
+              f"| {pl:.2f} | {opt_mean:.2f} | {pl/opt_mean:.3f} |")
 
-    row("BASELINE", base)
+    row("BASELINE", base, is_base=True)
     for lbl, d, a in present:
         row(lbl, a)
     if missing:
