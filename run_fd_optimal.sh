@@ -29,7 +29,17 @@ MODE=${3:-opt}
 TIMEOUT=${4:-1800}
 
 FD=/work/rleap1/ibrahim.eisawy/downward/fast-downward.py
-DOMAIN="$PWD/$PROBE_DIR/domain.pddl"
+# Probe dirs carry their own domain.pddl; dataset splits share one at the root. Accept both
+# -- assuming the former is what made 84 satellite val solves die instantly with translate
+# exit code 30 (see run_fd_solve.sh).
+if [ -f "$PWD/$PROBE_DIR/domain.pddl" ]; then
+    DOMAIN="$PWD/$PROBE_DIR/domain.pddl"
+elif [ -f "$PWD/$PROBE_DIR/../domain.pddl" ]; then
+    DOMAIN="$(cd "$PROBE_DIR/.." && pwd)/domain.pddl"
+else
+    echo "ERROR: no domain.pddl in $PROBE_DIR or its parent" >&2
+    exit 1
+fi
 
 FILES=($(ls ${PROBE_DIR}/*.pddl | grep -v domain | sort))
 IDX=$((SLURM_ARRAY_TASK_ID - 1))

@@ -34,7 +34,19 @@ MODE=${2:-lama}
 TIMEOUT=${3:-1800}
 
 FD=/work/rleap1/ibrahim.eisawy/downward/fast-downward.py
-DOMAIN="$PWD/$INST_DIR/domain.pddl"
+
+# The domain may sit INSIDE the split dir (probe sets) or at the DATASET ROOT one level up
+# (example/<dataset>/{train,val,test}/ share one domain.pddl). Assuming the former made 84
+# of 120 satellite val tasks die in 0.15s with translate exit code 30 -- a missing-file
+# error that looked like FD failing on hard instances.
+if [ -f "$PWD/$INST_DIR/domain.pddl" ]; then
+    DOMAIN="$PWD/$INST_DIR/domain.pddl"
+elif [ -f "$PWD/$INST_DIR/../domain.pddl" ]; then
+    DOMAIN="$(cd "$INST_DIR/.." && pwd)/domain.pddl"
+else
+    echo "ERROR: no domain.pddl in $INST_DIR or its parent" >&2
+    exit 1
+fi
 
 FILES=($(ls ${INST_DIR}/*.pddl | grep -v domain | sort))
 IDX=$((SLURM_ARRAY_TASK_ID - 1))
