@@ -30,18 +30,33 @@ HINDSIGHT=${3:-lifted}          # matches the grid QR-DQN training
 TRAIN_STEPS=${4:-32}
 
 # --- CUDA MPS (same rationale as the search jobs: many tiny kernels) ---
-export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps-$USER
-export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-mps-log-$USER
-mkdir -p "$CUDA_MPS_PIPE_DIRECTORY" "$CUDA_MPS_LOG_DIRECTORY" 2>/dev/null
-if command -v nvidia-cuda-mps-control >/dev/null 2>&1; then
-    nvidia-cuda-mps-control -d >/dev/null 2>&1
-    if [ -e "$CUDA_MPS_PIPE_DIRECTORY/control" ]; then
-        echo "[MPS] ACTIVE on $(hostname)"
-    else
-        echo "[MPS] control binary found but NO daemon pipe -- running WITHOUT MPS"
-    fi
+# --- CUDA MPS: OFF by default for TRAINING jobs ---
+# MPS exists to let MANY TINY array tasks share one GPU context (see
+# run_alphazero_bellman.sh). A single training job gains nothing from it, and it can
+# actively break: on cn-412 the daemon reported ACTIVE while the client failed with
+# "Error 805: MPS client failed to connect", CUDA init failed, and PyTorch fell back to
+# CPU -- silently, so the job "ran" for two hours producing one episode. Torch only warns.
+# Set USE_MPS=1 to re-enable if a future job genuinely needs it.
+if [ "${USE_MPS:-0}" = "1" ]; then
+    export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps-$USER
+    export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-mps-log-$USER
+    mkdir -p "$CUDA_MPS_PIPE_DIRECTORY" "$CUDA_MPS_LOG_DIRECTORY" 2>/dev/null
+    command -v nvidia-cuda-mps-control >/dev/null 2>&1 && nvidia-cuda-mps-control -d >/dev/null 2>&1
+    echo "[MPS] requested via USE_MPS=1 on $(hostname)"
 else
-    echo "[MPS] nvidia-cuda-mps-control NOT FOUND -- running WITHOUT MPS"
+    unset CUDA_MPS_PIPE_DIRECTORY CUDA_MPS_LOG_DIRECTORY
+    echo "[MPS] disabled for training (set USE_MPS=1 to enable)"
+fi
+
+# FAIL LOUDLY if the GPU is not visible. A silent CPU fallback wastes the whole
+# allocation; better to die in 10 seconds than to discover it 20 hours later.
+if [ "${ALLOW_CPU:-0}" != "1" ]; then
+    venv/bin/python -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)" || {
+        echo "ERROR: torch.cuda.is_available() is False on $(hostname) -- refusing to train on CPU."
+        echo "       Re-run with ALLOW_CPU=1 to override."
+        exit 1
+    }
+    echo "[GPU] CUDA visible on $(hostname)"
 fi
 
 mkdir -p models
