@@ -2,10 +2,18 @@
 # Satellite: baseline + the additive arms, on the NEW val probe set.
 #
 # WHY SATELLITE IS WORTH RUNNING AT ALL, given the signal is already a controlled negative
-# on goldminer, grid and logistics: it is a third test of the PLAN-QUALITY MECHANISM, with
-# the prediction recorded before the run. Satellite's SAC collapsed alpha to 0.005-0.009
-# with entropy 0.02-0.05 (logs 3170334 / 3171742) -- the same pathology that produced
-# goldminer's P_max=0.939 and made prior flattening the winning intervention there. So:
+# on goldminer, grid and logistics: it is a third test of the PLAN-QUALITY MECHANISM.
+#
+# CORRECTION (2026-08-08, after the run): this header originally justified prediction 1 by
+# claiming satellite's SAC "collapsed alpha to 0.005-0.009 with entropy 0.02-0.05 (logs
+# 3170334 / 3171742)". Those logs are JULY BARMAN runs -- sacct -B shows train_sac.sbatch
+# with the barman hindsight header, and they ended 2026-07-23, while the satellite models
+# were written 2026-08-05/06. The rovers/satellite training logs are not in logs/ at all.
+# Measured instead with prior_peak.py on satellite's own policy: top-1 70.8% (uniform 1.4%,
+# median 99 applicable actions), median P_max 1.0000, confidently-wrong only 4.9% vs
+# goldminer's 11.0% and grid's 20.8%. So satellite's prior is peaked AND accurate -- the
+# opposite of the claimed pathology. The search result is unaffected; only this rationale
+# was wrong. Predictions 1-3 below are kept verbatim as submitted.
 #
 #   PREDICTION 1  prior-touching arms (b1k1, b1k0) improve plan quality vs the baseline
 #   PREDICTION 2  beta=0 kappa=1 (c(s), the only arm that does NOT touch the prior) moves
