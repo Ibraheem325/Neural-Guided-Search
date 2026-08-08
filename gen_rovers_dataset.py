@@ -25,14 +25,23 @@ Default (flag absent) is 1..8 in every split.
 Rovers, waypoints and objectives are exact from rovgen; cameras are NOT (it adds extras to
 keep goals achievable), so cameras cannot be pinned.
 
---objects LO:HI overrides the per-split object ranges. Worth knowing: the DEFAULT ranges
-are disjoint (train 11-40, val 41-50, test 51-101), so every test instance is larger than
-anything seen in training. That is a scale extrapolation, which is a SEPARATE issue from
-the topology point above and is not fixed by --rovers.
+--objects overrides the per-split object ranges, in either form:
+  --objects 8:22                one range for every split
+  --objects 10:24,25:46,47:95   per-split: train,val,test
+Worth knowing: the DEFAULT ranges are disjoint (train 11-40, val 41-50, test 51-101), so
+every test instance is larger than anything seen in training. That is a scale
+extrapolation, a SEPARATE issue from the topology point above, and not fixed by --rovers.
+
+SIZING AGAINST SATELLITE. satellite_dataset_s18 uses train 8-22 / val 23-45 / test 46-95,
+and its QR-DQN trained to a calibration slope of -0.921 while rovers_dataset_r18
+(train 12-40, median 31 objects) produced a FLAT -0.007 -- unusable. Copying satellite's
+shape is therefore worth trying, but 8:22 cannot be copied literally: satellite needs
+n >= 2s+6 so 8 satellites fit in 22, while rovers needs n >= 2r+8 so 8 rovers need 24.
+Use train 10:24 to keep the full 1..8 rover range, or keep 8:22 and pin --rovers 1-7.
 
 Usage:
   venv/bin/python gen_rovers_dataset.py <rovgen_path> <out_dir> [--plans <fast-downward.py>]
-                                        [--rovers SPEC] [--objects LO:HI]
+                                        [--rovers SPEC] [--objects SPEC]
 """
 import sys, os, random, subprocess, collections, re
 
@@ -80,8 +89,31 @@ SPLITS = [("train", "TR3r", 400, 11, 40),
           ("val",   "VAL3r", 120, 41, 50),
           ("test",  "TST3r", 120, 51, 101)]
 if _OBJ:
-    _lo, _hi = (int(x) for x in _OBJ.split(":"))
-    SPLITS = [(s_, t, c, _lo, _hi) for s_, t, c, _, _ in SPLITS]
+    # Two forms:
+    #   --objects 8:22                  one range for every split (original behaviour)
+    #   --objects 10:24,25:46,47:95     per-split: train,val,test
+    # Per-split is needed to mirror the satellite dataset's shape (small train, disjoint
+    # larger val/test). NOTE the rovers constraint n >= 2*r + 8: a train range topping out
+    # at 22 caps the rover count at 7, so 1..8 rovers needs n_hi >= 24 in train.
+    _specs = _OBJ.split(",")
+    if len(_specs) == 1:
+        _lo, _hi = (int(x) for x in _specs[0].split(":"))
+        SPLITS = [(s_, t, c, _lo, _hi) for s_, t, c, _, _ in SPLITS]
+    elif len(_specs) == len(SPLITS):
+        _rng = [tuple(int(x) for x in sp.split(":")) for sp in _specs]
+        SPLITS = [(s_, t, c, lo, hi)
+                  for (s_, t, c, _, _), (lo, hi) in zip(SPLITS, _rng)]
+    else:
+        sys.exit(f"--objects takes 1 or {len(SPLITS)} ranges, got {len(_specs)}: {_OBJ}")
+    for s_, _t, _c, lo, hi in SPLITS:
+        if lo > hi:
+            sys.exit(f"--objects: {s_} range {lo}:{hi} is inverted")
+        _rmax = (hi - 8) // 2
+        if _rmax < 1:
+            sys.exit(f"--objects: {s_} tops out at {hi} objects, which cannot fit even "
+                     f"1 rover (needs n >= 10)")
+        print(f"[objects] {s_}: {lo}-{hi} objects -> at most {_rmax} rovers "
+              f"(constraint n >= 2r+8)")
 if R_TRAIN is not None:
     def _tag(sp):
         lo, hi = R_TRAIN if sp == "train" else R_EVAL
