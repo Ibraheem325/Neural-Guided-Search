@@ -42,7 +42,20 @@ TRAIN_STEPS=${4:-32}
 #   1. with MPS      (needed when the GPU is exclusive-process and shared)
 #   2. without MPS   (works when we effectively have the device to ourselves)
 # and only exit if neither yields a visible CUDA device. ALLOW_CPU=1 overrides.
-_cuda_ok () { venv/bin/python -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)" 2>/dev/null; }
+# NOT just torch.cuda.is_available() -- that only COUNTS devices. On cn-408 it returned
+# True without MPS and the job then died 14s later inside model.to(device) with
+# cudaErrorDevicesUnavailable. The check has to actually ALLOCATE on the device.
+_cuda_ok () {
+  venv/bin/python -c "
+import torch, sys
+try:
+    if not torch.cuda.is_available(): sys.exit(1)
+    torch.zeros(8, device='cuda').sum().item()   # real allocation + kernel launch
+    sys.exit(0)
+except Exception:
+    sys.exit(1)
+" 2>/dev/null
+}
 
 export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps-$USER
 export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-mps-log-$USER
