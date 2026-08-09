@@ -34,33 +34,40 @@ DATASET=$1                      # e.g. example/logistics_dataset_topo
 PREFIX=$2                       # e.g. models/logistics_topo_sac_   (note trailing _)
 HINDSIGHT=${3:-lifted}          # matches the QR-DQN training
 
-# --- CUDA MPS: OFF by default for TRAINING jobs ---
-# MPS exists to let MANY TINY array tasks share one GPU context (see
-# run_alphazero_bellman.sh). A single training job gains nothing from it, and it can
-# actively break: on cn-412 the daemon reported ACTIVE while the client failed with
-# "Error 805: MPS client failed to connect", CUDA init failed, and PyTorch fell back to
-# CPU -- silently, so the job "ran" for two hours producing one episode. Torch only warns.
-# Set USE_MPS=1 to re-enable if a future job genuinely needs it.
-if [ "${USE_MPS:-0}" = "1" ]; then
-    export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps-$USER
-    export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-mps-log-$USER
-    mkdir -p "$CUDA_MPS_PIPE_DIRECTORY" "$CUDA_MPS_LOG_DIRECTORY" 2>/dev/null
-    command -v nvidia-cuda-mps-control >/dev/null 2>&1 && nvidia-cuda-mps-control -d >/dev/null 2>&1
-    echo "[MPS] requested via USE_MPS=1 on $(hostname)"
-else
-    unset CUDA_MPS_PIPE_DIRECTORY CUDA_MPS_LOG_DIRECTORY
-    echo "[MPS] disabled for training (set USE_MPS=1 to enable)"
-fi
+# --- GPU ACQUISITION: try MPS, then without, then give up -------------------
+# Sharded GPU allocations (--gres=shard:...) normally need MPS, because the GPUs are in
+# exclusive-process mode and several users share a node. But the MPS daemon is flaky:
+# cn-412 and cn-406 both returned "Error 805: MPS client failed to connect", CUDA init
+# failed, and torch silently fell back to CPU -- a 2-hour run that produced one episode.
+# cn-404 works fine. So it is per-node luck.
+#
+# Queue waits are hours; a failed acquisition costs 20 seconds. Therefore TRY BOTH paths
+# on the node we were given before surrendering the slot:
+#   1. with MPS      (needed when the GPU is exclusive-process and shared)
+#   2. without MPS   (works when we effectively have the device to ourselves)
+# and only exit if neither yields a visible CUDA device. ALLOW_CPU=1 overrides.
+_cuda_ok () { venv/bin/python -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)" 2>/dev/null; }
 
-# FAIL LOUDLY if the GPU is not visible. A silent CPU fallback wastes the whole
-# allocation; better to die in 10 seconds than to discover it 20 hours later.
-if [ "${ALLOW_CPU:-0}" != "1" ]; then
-    venv/bin/python -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)" || {
-        echo "ERROR: torch.cuda.is_available() is False on $(hostname) -- refusing to train on CPU."
-        echo "       Re-run with ALLOW_CPU=1 to override."
+export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps-$USER
+export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-mps-log-$USER
+mkdir -p "$CUDA_MPS_PIPE_DIRECTORY" "$CUDA_MPS_LOG_DIRECTORY" 2>/dev/null
+command -v nvidia-cuda-mps-control >/dev/null 2>&1 && nvidia-cuda-mps-control -d >/dev/null 2>&1
+sleep 3
+if _cuda_ok; then
+    echo "[GPU] acquired WITH MPS on $(hostname)"
+else
+    echo "[GPU] MPS path failed on $(hostname) -- retrying without MPS"
+    unset CUDA_MPS_PIPE_DIRECTORY CUDA_MPS_LOG_DIRECTORY
+    if _cuda_ok; then
+        echo "[GPU] acquired WITHOUT MPS on $(hostname)"
+    elif [ "${ALLOW_CPU:-0}" = "1" ]; then
+        echo "[GPU] no CUDA on $(hostname) -- ALLOW_CPU=1 set, continuing on CPU"
+    else
+        echo "ERROR: no usable CUDA device on $(hostname) (tried with and without MPS)."
+        echo "       Slot surrendered. Resubmit; a different node will likely work."
+        echo "       Re-run with ALLOW_CPU=1 to train on CPU anyway."
         exit 1
-    }
-    echo "[GPU] CUDA visible on $(hostname)"
+    fi
 fi
 
 mkdir -p models
