@@ -72,6 +72,19 @@ DOMAINS = {
                 ("eps=0.60 kappa=0",       "sat_mul_e060_k0"),
             ]),
         ]),
+    "rovers": dict(
+        base="rov_base",
+        probe="example/probeRov_small_d5-20",
+        optlen="optlen_rovers.json",
+        tables=[
+            ("ADDITIVE", [
+                ("beta=1 kappa=1",         "rov_abs_t1b1k1"),
+                ("beta=1 kappa=0 (prior)", "rov_abs_t1b1k0"),
+                ("beta=0 kappa=1 (c(s))",  "rov_abs_t1b0k1"),
+                ("shuffle",                "rov_abs_t1b1k1_shuf"),
+                ("random",                 "rov_abs_t1b1k1_rndm"),
+            ]),
+        ]),
     "logistics": dict(
         base="multiloc_base_topopolicy",
         probe="example/probeLog_multiloc_d5-20",
