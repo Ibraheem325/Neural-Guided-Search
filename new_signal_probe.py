@@ -15,7 +15,7 @@ Writes new_signal_data.json (or -o).
 If a probe directory has no .plan files the walk falls back to the INITIAL state only,
 which is all that is needed for the g_s / matched-w measurement.
 """
-import json, glob, os, sys, torch, pymimir as mm
+import json, glob, os, sys, time, torch, pymimir as mm
 from pathlib import Path
 from utils import create_device
 from train_iqn import _load_model as _load_iqn
@@ -113,10 +113,14 @@ for name, PROBE, IQN_M, POL_M in SETS:
     print(f"{name}: {len(files)} instances x up to {N_STEP} plan steps "
           f"(lower these with positional args: new_signal_probe.py <n_inst> <n_steps> ...)",
           flush=True)
+    _t0 = time.time()
     for _i, pf in enumerate(files, 1):
-        if _i % 10 == 0 or _i == 1:
-            print(f"  {name}: instance {_i}/{len(files)}, {len(recs)} states so far",
-                  flush=True)
+        # Every instance, not every tenth: on satellite one instance can take minutes, and a
+        # gap from instance 1 to instance 10 is indistinguishable from a hang. The elapsed
+        # time and the running edge count are what tell you whether to wait or to cut N_INST.
+        _ed = sum(len(r["e"]) for r in recs)
+        print(f"  {name}: instance {_i}/{len(files)}, {len(recs)} states, {_ed} edges, "
+              f"{time.time() - _t0:.0f}s elapsed", flush=True)
         prob = mm.Problem(dom, pf)
         s = prob.get_initial_state(); g = prob.get_goal_condition()
         # No plan file -> measure the initial state only. Enough for g_s / matched w.
