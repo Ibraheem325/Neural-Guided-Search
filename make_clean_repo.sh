@@ -245,28 +245,98 @@ for f in "$DEST"/slurm/*.sh "$DEST"/training/*.sh; do
 done
 echo "  repointed --chdir / R= to $DEST_ABS in $n scripts"
 
+# 5. Cross-folder imports. Moving files into benchmark/ and training/ breaks two sets:
+#      root      alphaZero_bellman.py, check_qrdqn_calibration.py, new_signal_probe.py
+#                all do `from train_iqn import ...`, and train_iqn.py is now in training/
+#      benchmark all six algorithms do `from utils import ...`, and utils.py is at the root
+#    PYTHONPATH in the launchers is not enough -- these are also run directly by hand. Insert
+#    an explicit sys.path bootstrap so they work from any CWD, launcher or not.
+venv/bin/python - "$DEST" <<'BOOTSTRAP'
+import ast, os, sys
+dest = sys.argv[1]
+JOBS = [(os.path.join(dest, f), '"training"') for f in
+        ("alphaZero_bellman.py","check_qrdqn_calibration.py","new_signal_probe.py")]
+JOBS += [(os.path.join(dest,"benchmark",f), None) for f in
+         ("alphaZero.py","greedy_sac_plan.py","greedy_value_plan.py","qstar.py","search.py","wastar.py")]
+for path, sub in JOBS:
+    if not os.path.exists(path): continue
+    src = open(path).read()
+    if "_NGS_PATH_BOOTSTRAP" in src: continue
+    tree = ast.parse(src)
+    first = next((n.lineno for n in tree.body if isinstance(n,(ast.Import, ast.ImportFrom))), 1)
+    tgt = (f'os.path.join(os.path.dirname(os.path.abspath(__file__)), {sub})' if sub
+           else 'os.path.dirname(os.path.dirname(os.path.abspath(__file__)))')
+    boot = ("# _NGS_PATH_BOOTSTRAP: this file lives in a subdirectory of the repo but imports a\n"
+            "# module from another one, so make that importable regardless of CWD.\n"
+            "import sys as _sys, os as _os\n"
+            f"_sys.path.insert(0, {tgt.replace('os.','_os.')})\n")
+    lines = src.split("\n")
+    out = "\n".join(lines[:first-1] + [boot] + lines[first-1:])
+    open(path,"w").write(out)
+    print(f"  bootstrap -> {os.path.relpath(path, dest)}")
+BOOTSTRAP
+
 # ---------------------------------------------------------------- sanity check ---------
-# Every .py invoked by a copied .sh must exist in the tree. run_alphazero.sh calling
-# alphaZero.py was missed once; this makes that class of omission impossible to ship.
+# IMPORT-TEST every python file, rather than reasoning about imports statically. The static
+# version passed a tree in which alphaZero_bellman.py could not import train_iqn at all --
+# it assumed a PYTHONPATH that only the launchers set. Actually importing is the only check
+# that cannot be fooled that way.
 echo
+echo "checking that every import RESOLVES (without executing anything):"
+"$SRC/venv/bin/python" - "$DEST" <<'IMPORTCHECK'
+# Resolve every top-level import against the sys.path each file will actually have,
+# including its _NGS_PATH_BOOTSTRAP. Deliberately does NOT execute the modules: these are
+# scripts, so importing them runs them (loads torch, parses argv, starts searches). An
+# earlier version did execute, and stalled. Resolution is what we need to verify anyway --
+# the failure this guards against is `from train_iqn import ...` when train_iqn.py moved to
+# training/, which is a lookup failure, not a runtime one.
+import ast, importlib.util, os, sys
+dest = sys.argv[1]
+bad = []
+for sub in (".", "benchmark", "training"):
+    d = os.path.join(dest, sub)
+    if not os.path.isdir(d): continue
+    # the path this file will see: its own dir, plus whatever its bootstrap adds
+    search = [d, dest, os.path.join(dest, "training")]
+    for f in sorted(os.listdir(d)):
+        if not f.endswith(".py"): continue
+        src = open(os.path.join(d, f)).read()
+        try: tree = ast.parse(src)
+        except SyntaxError as e:
+            bad.append((f"{sub}/{f}", f"SyntaxError: {e}")); continue
+        mods = set()
+        for n in ast.walk(tree):
+            if isinstance(n, ast.Import): mods |= {a.name.split(".")[0] for a in n.names}
+            elif isinstance(n, ast.ImportFrom) and n.module and n.level == 0:
+                mods.add(n.module.split(".")[0])
+        for m in mods:
+            if any(os.path.exists(os.path.join(p, m + ".py")) for p in search): continue
+            saved = sys.path[:]
+            sys.path[:0] = search
+            try: found = importlib.util.find_spec(m) is not None
+            except Exception: found = False
+            finally: sys.path[:] = saved
+            if not found:
+                bad.append((f"{sub}/{f}", f"cannot resolve `{m}`"))
+print("  every import resolves" if not bad else "  UNRESOLVED IMPORTS:")
+for p, e in sorted(set(bad)): print(f"    {p}: {e}")
+IMPORTCHECK
+
+# every .py invoked by a copied .sh must exist somewhere in the tree
 missing_py=""
 for sh in "$DEST"/slurm/*.sh "$DEST"/training/*.sh; do
   [ -e "$sh" ] || continue
   for py in $(grep -oE '[A-Za-z0-9_/]+\.py' "$sh" | sort -u); do
-    case "$py" in *downward*) continue;; esac
+    case "$py" in *downward*) continue;; *beam.py) continue;; esac
     base=$(basename "$py")
-    case "$py" in *beam.py) continue;; esac   # deliberately excluded
     if [ ! -e "$DEST/$base" ] && [ ! -e "$DEST/training/$base" ] \
        && [ ! -e "$DEST/benchmark/$base" ] && [ ! -e "$DEST/$py" ]; then
       missing_py="$missing_py\n  $(basename $sh) invokes $py -- NOT IN TREE"
     fi
   done
 done
-if [ -n "$missing_py" ]; then
-  echo "WARNING: broken script references:"; printf "$missing_py\n"
-else
-  echo "check: every .py invoked by a copied .sh is present"
-fi
+[ -n "$missing_py" ] && { echo "WARNING: broken script references:"; printf "$missing_py\n"; } \
+                     || echo "  every .py invoked by a copied .sh is present"
 
 echo
 echo "$DEST"
