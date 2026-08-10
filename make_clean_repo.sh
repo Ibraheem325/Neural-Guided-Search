@@ -59,7 +59,6 @@ mkdir -p "$DEST" "$DEST/benchmark" "$DEST/training" "$DEST/slurm"
 # submit_abs_goldminer.sh's header cites.
 ROOT_PY="evaluate.py
          aggregate_qstar_weight.py aggregate_alphazero.py summarize_results.py
-         alphaZero_bellman.py
          utils.py rgnn_readout_fix.py
          gen_rovers_dataset.py gen_satellite_dataset.py make_probes.py
          solve_dataset.py verify_dataset.py collect_fd.py
@@ -84,12 +83,13 @@ TRAIN_FILES="train_iqn.py train_sac.py train_dqn.py train_supervised.py
              train_sac.sbatch train_grid.sbatch train_iqn_ensemble.sbatch"
 
 # SLURM: every launcher and per-domain sweep submitter -- the record of what was run.
-SLURM_FILES="run_alphazero_bellman.sh run_search.sh run_qstar_weight.sh run_alphazero.sh
-             run_fd_solve.sh run_fd_optimal.sh
-             submit_satellite.sh submit_satellite_rest.sh submit_satellite_test.sh
-             submit_rovers.sh submit_rovers_rest.sh submit_rovers_flat.sh
-             submit_abs_goldminer.sh submit_abs_grid.sh submit_abs_logistics.sh
-             submit_flat_sweep.sh submit_tau_kappa.sh"
+# NOTE the 11 submit_*.sh are NOT shipped yet. They build the archived launcher's 37-
+# positional-argument line, which includes flags the cleaned search no longer accepts
+# (--binc_beta, --add_beta, --width_beta, ...), so they would fail immediately. They need
+# regenerating against run_search_signal.sh's 19 arguments. Until then the originals remain
+# in the archive as the record of what was actually run.
+SLURM_FILES="run_search_signal.sh run_search.sh run_qstar_weight.sh run_alphazero.sh
+             run_fd_solve.sh run_fd_optimal.sh"
 
 # ---------------------------------------------------------------- datasets -------------
 # The five sweep domains and the dataset each domain's models were trained on:
@@ -170,6 +170,11 @@ copyfiles () {   # copyfiles <label> <under> <files...>  -- SRC/<under>/f -> DES
 }
 
 copy ROOT     .         $ROOT_PY
+# The CLEANED search ships as alphaZero_bellman.py: 794 lines against the archive's 1556.
+# Eight abandoned channels removed; behaviour verified byte-identical on 4 probes x 7
+# configurations (off/add/add-k0/mul/shuffle/random/flat).
+cp "$SRC/alphaZero_clean.py" "$DEST/alphaZero_bellman.py"
+echo "ROOT         1 -> .           alphaZero_clean.py -> alphaZero_bellman.py (cleaned)"
 copy BENCHMARK benchmark $BENCH_FILES
 copy TRAINING training  $TRAIN_FILES
 copy SLURM    slurm     $SLURM_FILES
@@ -206,7 +211,7 @@ done
 for f in "$DEST"/slurm/submit_*.sh; do
   [ -e "$f" ] || continue
   if grep -q ' run_alphazero_bellman.sh' "$f"; then
-    perl -0pi -e 's{ run_alphazero_bellman\.sh}{ slurm/run_alphazero_bellman.sh}g' "$f"
+    perl -0pi -e 's{ run_alphazero_bellman\.sh}{ slurm/run_search_signal.sh}g' "$f"
     echo "  slurm/$(basename $f): -> slurm/run_alphazero_bellman.sh"
   fi
 done
