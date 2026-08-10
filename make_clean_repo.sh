@@ -81,12 +81,48 @@ done
 # travel with the analysis rather than being recomputed.
 for f in "$SRC"/optlen_*.json; do [ -e "$f" ] && cp "$f" "$DEST/"; done
 
+
+# --- 8. DATASETS AND PROBE SETS -------------------------------------------------------
+# Two generations, and BOTH are needed.
+#
+# ORIGINAL: what the start-of-thesis benchmark (Q*, weighted A*, GBFS, beam) ran on.
+# STUDY:    regenerated because the originals had a structural blind spot -- logistics
+#           trained on c2s1 only, rovers had 391/400 single-rover training instances,
+#           satellite pinned train at 1-2 satellites while test ran 1-8. Scale generalises,
+#           structure does not; that is what broke logistics and it is why the _topo /
+#           _small / _s18 variants exist. goldminer and grid needed no replacement.
+# PROBES:   the evaluation sets. Each is 480 states (288 for logistics) lifted from inside
+#           solved instances at known distance 5-20 from the goal, so the value function
+#           stays in its calibrated range while the problems stay large enough to have
+#           search room.
+DS_ORIGINAL="barman_dataset_v2 goldminer_dataset grid_dataset
+             logistics_dataset rovers_dataset satellite_dataset"
+DS_STUDY="logistics_dataset_topo rovers_dataset_small satellite_dataset_s18"
+PROBES="probeGold_near_goal_d5-20 probe_near_goal_d5-20 probeLog_multiloc_d5-20
+        probeSat_val_d5-20 probeSat_test_d5-20 probeRov_test_d5-20"
+
+copydirs () {
+  local group=$1; shift
+  local n=0 miss=""
+  mkdir -p "$DEST/example"
+  for d in $@; do
+    if [ -d "$SRC/example/$d" ]; then cp -r "$SRC/example/$d" "$DEST/example/"; n=$((n+1))
+    else miss="$miss $d"; fi
+  done
+  printf "%-12s %2d copied" "$group" "$n"
+  [ -n "$miss" ] && printf "   NOT PRESENT HERE:%s" "$miss"
+  echo
+}
+
+copydirs DS-ORIG   $DS_ORIGINAL
+copydirs DS-STUDY  $DS_STUDY
+copydirs PROBES    $PROBES
+
 echo
-echo "copied $(ls "$DEST" | wc -l) files to $DEST"
+echo "copied $(ls "$DEST" | wc -l) top-level entries to $DEST"
+du -sh "$DEST" 2>/dev/null
 echo
-echo "NOT copied (deliberately): models/, example/, results/, venv/ -- large, and better"
-echo "symlinked or left in place. To link them instead of duplicating gigabytes:"
+echo "NOT copied (deliberately): models/, results/, venv/ -- gigabytes. Link them:"
 echo "  ln -s $SRC/models   $DEST/models"
-echo "  ln -s $SRC/example  $DEST/example"
 echo "  ln -s $SRC/results  $DEST/results"
 echo "  ln -s $SRC/venv     $DEST/venv"
