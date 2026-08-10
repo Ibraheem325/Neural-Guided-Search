@@ -28,13 +28,12 @@
 # camera inflation pushed 7-8 rover instances out of a small object budget -- but matched on
 # both sides, which is what the logistics failure showed actually matters.
 #
-# PROBE SET: example/probeRov_test_d5-20 -- the TEST split, 480 probes / 37 distinct
-# sources. Deliberately NOT the val probes: grid, goldminer and logistics all evaluate on
-# TEST, and building satellite/rovers on val was an inconsistency. Test also closes the
-# extrapolation gap -- probes are 51-95 objects (median 72) against a train median of 23,
-# i.e. 3.1x, versus grid's 8.4x and goldminer's 3.6x; the val probes were only 1.7x.
-# The frozen QR-DQN calibrates BETTER here (-1.195) than on the val probes it was
-# selected against (-0.804), which refutes the obvious selection-bias objection.
+# PROBE SET: example/probeRov_distinct_d5-22 -- 120 probes from 120 DISTINCT test problems,
+# one probe each, 6-7 per depth over d5-22. The previous set took up to 16 probes from the
+# same problem to fill a per-depth quota, so its 480 probes were only 37 independent units
+# and every count needed aggregating through cluster_contrib.py first. Here each probe IS a
+# unit: 120 against 37, from a quarter of the searches.
+
 #
 # CONSTANTS from fit_random_control.py on rov_signal_data_test.json (90 states, 2829 edges,
 # measured on the TEST probes this script actually runs on):
@@ -54,13 +53,13 @@
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
-RD=example/probeRov_test_d5-20/domain.pddl; RT=example/probeRov_test_d5-20
+RD=example/probeRov_distinct_d5-22/domain.pddl; RT=example/probeRov_distinct_d5-22
 RP=models/rovers_small_sac_policy_best.pth
 RQ1=models/rovers_small_sac_q1_best.pth; RQ2=models/rovers_small_sac_q2_best.pth
 RI=models/rovers_small_qrdqn_frozen.pth      # FROZEN copy -- never point at _best.pth while
                                              # training runs: 480 tasks would load different
                                              # models as the file is rewritten mid-sweep.
-N=480
+N=120
 LN=lognormal:1.098:-0.483                    # fitted on the TEST probes (val gave
                                              # 0.846:-0.675 -- refit was necessary)
 

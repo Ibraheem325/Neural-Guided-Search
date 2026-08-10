@@ -31,11 +31,11 @@
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
-RD=example/probeRov_test_d5-20/domain.pddl; RT=example/probeRov_test_d5-20
+RD=example/probeRov_distinct_d5-22/domain.pddl; RT=example/probeRov_distinct_d5-22
 RP=models/rovers_small_sac_policy_best.pth
 RQ1=models/rovers_small_sac_q1_best.pth; RQ2=models/rovers_small_sac_q2_best.pth
 RI=models/rovers_small_qrdqn_frozen.pth
-N=480
+N=120
 
 # sub <outdir> <shuffle> <mode> <beta> <kappa> <eps_p>
 sub () {

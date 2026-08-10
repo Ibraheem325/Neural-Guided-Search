@@ -58,8 +58,8 @@ DOMAINS = {
         ]),
     "rovers": dict(
         base="rov_base",
-        probe="example/probeRov_test_d5-20",
-        optlen="optlen_rovers_test.json",
+        probe="example/probeRov_distinct_d5-22",
+        optlen="optlen_rovers_distinct.json",
         tables=[
             ("ADDITIVE", [
                 ("beta=1 kappa=1",         "rov_abs_t1b1k1"),
