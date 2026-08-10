@@ -90,6 +90,10 @@ TRAIN_FILES="train_iqn.py train_sac.py train_dqn.py train_supervised.py
 # in the archive as the record of what was actually run.
 SLURM_FILES="run_search_signal.sh run_search.sh run_qstar_weight.sh run_alphazero.sh
              run_fd_solve.sh run_fd_optimal.sh"
+# The 11 submit_*.sh come from clean_submit/ -- the same arms, PORTED to
+# run_search_signal.sh's 19 positional arguments. The originals in the repo root target the
+# archived 37-argument launcher and its eight abandoned channels; they stay there as the
+# record of what was actually run.
 
 # ---------------------------------------------------------------- datasets -------------
 # The five sweep domains and the dataset each domain's models were trained on:
@@ -178,6 +182,8 @@ echo "ROOT         1 -> .           alphaZero_clean.py -> alphaZero_bellman.py (
 copy BENCHMARK benchmark $BENCH_FILES
 copy TRAINING training  $TRAIN_FILES
 copy SLURM    slurm     $SLURM_FILES
+n=0; for f in "$SRC"/clean_submit/*.sh; do [ -e "$f" ] && cp "$f" "$DEST/slurm/" && n=$((n+1)); done
+printf "%-11s %2d -> %-10s  (ported to the 19-arg launcher)\n" "SUBMIT" "$n" "slurm"
 copytree DATASETS example $DS_SWEEP
 copytree PROBES   example $PROBES
 copyfiles MODELS  models  $MODELS_SWEEP
