@@ -83,23 +83,33 @@ for f in "$SRC"/optlen_*.json; do [ -e "$f" ] && cp "$f" "$DEST/"; done
 
 
 # --- 8. DATASETS AND PROBE SETS -------------------------------------------------------
-# Two generations, and BOTH are needed.
+# THE FIVE SWEEP DOMAINS -- the dataset each domain's models were actually trained on, and
+# the probe set its sweep was actually evaluated on. Model naming tracks the dataset:
 #
-# ORIGINAL: what the start-of-thesis benchmark (Q*, weighted A*, GBFS, beam) ran on.
-# STUDY:    regenerated because the originals had a structural blind spot -- logistics
-#           trained on c2s1 only, rovers had 391/400 single-rover training instances,
-#           satellite pinned train at 1-2 satellites while test ran 1-8. Scale generalises,
-#           structure does not; that is what broke logistics and it is why the _topo /
-#           _small / _s18 variants exist. goldminer and grid needed no replacement.
-# PROBES:   the evaluation sets. Each is 480 states (288 for logistics) lifted from inside
-#           solved instances at known distance 5-20 from the goal, so the value function
-#           stays in its calibrated range while the problems stay large enough to have
-#           search room.
-DS_ORIGINAL="barman_dataset_v2 goldminer_dataset grid_dataset
-             logistics_dataset rovers_dataset satellite_dataset"
-DS_STUDY="logistics_dataset_topo rovers_dataset_small satellite_dataset_s18"
+#   goldminer   goldminer_dataset        goldminer_sac_*, goldminer_iqn
+#   grid        grid_dataset             grid_sac_*, grid_iqn_qrdqn_best
+#   logistics   logistics_dataset_topo   logistics_topo_sac_*, logistics_topo_frozen
+#   satellite   satellite_dataset_s18    satellite_s18_sac_*, satellite_s18_qrdqn_best
+#   rovers      rovers_dataset_small     rovers_small_sac_*, rovers_small_qrdqn_frozen
+#
+# goldminer and grid were never regenerated -- their originals already varied the structural
+# axis. The other three WERE: logistics_dataset trained on c2s1 only, rovers_dataset had
+# 391/400 single-rover training instances, satellite_dataset pinned train at 1-2 satellites
+# while test ran 1-8. Scale generalises, structure does not; that is what broke logistics,
+# and it is why _topo / _small / _s18 exist.
+DS_SWEEP="goldminer_dataset grid_dataset logistics_dataset_topo
+          rovers_dataset_small satellite_dataset_s18"
+
+# The evaluation sets: states lifted from inside solved instances at known distance 5-20
+# from the goal, so the value function stays inside its calibrated range while the problems
+# stay large enough to have search room. satellite has both because its full 14-arm sweep
+# ran on val and the headline was replicated on test.
 PROBES="probeGold_near_goal_d5-20 probe_near_goal_d5-20 probeLog_multiloc_d5-20
         probeSat_val_d5-20 probeSat_test_d5-20 probeRov_test_d5-20"
+
+# SUPERSEDED, benchmark chapter only -- the Q* / weighted-A* / GBFS / beam comparison ran on
+# these before the structural problem was found. Set KEEP_BENCH=0 to leave them out.
+DS_BENCH="barman_dataset_v2 logistics_dataset rovers_dataset satellite_dataset"
 
 copydirs () {
   local group=$1; shift
@@ -114,9 +124,9 @@ copydirs () {
   echo
 }
 
-copydirs DS-ORIG   $DS_ORIGINAL
-copydirs DS-STUDY  $DS_STUDY
+copydirs SWEEP     $DS_SWEEP
 copydirs PROBES    $PROBES
+[ "${KEEP_BENCH:-1}" = "1" ] && copydirs BENCH-DS  $DS_BENCH
 
 echo
 echo "copied $(ls "$DEST" | wc -l) top-level entries to $DEST"
