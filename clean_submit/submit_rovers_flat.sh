@@ -1,5 +1,5 @@
 #!/bin/bash
-# PORTED to run_search_signal.sh (19 positional args, was 37). The archived original
+# PORTED to slurm/run_search_signal.sh (19 positional args, was 37). The archived original
 # targets the pre-cleanup search and its eight abandoned channels; this one is the
 # same arms against the cleaned alphaZero_bellman.py. Arms and comments unchanged.
 #
@@ -35,6 +35,14 @@
 # Baseline: results/rov_base. qrdqn_value=1 keeps the leaf value on the same model as every
 # other rovers arm, so the only difference is the prior transform.
 # Run from a COMPUTE node:  bash submit_rovers_flat.sh
+# Locate the launcher. It sits at the repo root in the archive and under slurm/ in the
+# clean tree, and a submit script that names the wrong one fails per-arm with
+# "sbatch: error: Unable to open file run_search_signal.sh" -- while the submit script
+# itself still exits 0, so a whole sweep silently queues nothing. Resolve it, or stop.
+LAUNCH=run_search_signal.sh
+[ -f "$LAUNCH" ] || LAUNCH=slurm/run_search_signal.sh
+[ -f "$LAUNCH" ] || { echo "ERROR: run_search_signal.sh not found in . or slurm/ (cwd=$PWD)" >&2; exit 1; }
+
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
@@ -46,7 +54,7 @@ N=120
 
 # flat <outdir> <w>   -- args 10=constant, 12=13=w, 33=abs_signal off
 flat () {
-  sbatch $CPU --array=1-$N run_search_signal.sh $RD $RT $RP $RQ1 $RQ2 $RI \
+  sbatch $CPU --array=1-$N "$LAUNCH" $RD $RT $RP $RQ1 $RQ2 $RI \
     results/$1 1800 constant $2 1.5 1 0 "" off 1.0 1.0 1.0 0.001
 }
 

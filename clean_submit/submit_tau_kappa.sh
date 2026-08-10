@@ -1,5 +1,5 @@
 #!/bin/bash
-# PORTED to run_search_signal.sh (19 positional args, was 37). The archived original
+# PORTED to slurm/run_search_signal.sh (19 positional args, was 37). The archived original
 # targets the pre-cleanup search and its eight abandoned channels; this one is the
 # same arms against the cleaned alphaZero_bellman.py. Arms and comments unchanged.
 #
@@ -39,6 +39,14 @@
 # separately (gm_abs_t1b1k0) and the two together as gm_abs_t1b1k1.
 # Baseline: results/gm_base (same 480 instances, same qrdqn_value=1).
 # Run from a COMPUTE node:  bash submit_tau_kappa.sh
+# Locate the launcher. It sits at the repo root in the archive and under slurm/ in the
+# clean tree, and a submit script that names the wrong one fails per-arm with
+# "sbatch: error: Unable to open file run_search_signal.sh" -- while the submit script
+# itself still exits 0, so a whole sweep silently queues nothing. Resolve it, or stop.
+LAUNCH=run_search_signal.sh
+[ -f "$LAUNCH" ] || LAUNCH=slurm/run_search_signal.sh
+[ -f "$LAUNCH" ] || { echo "ERROR: run_search_signal.sh not found in . or slurm/ (cwd=$PWD)" >&2; exit 1; }
+
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
@@ -50,7 +58,7 @@ MI=models/goldminer_iqn.pth
 # Positional args 8..36; arg 25 = C_PUCT, 33-36 = ABS_SIGNAL TAU_STEP ABS_BETA ABS_KAPPA.
 # arg 26 = qrdqn_value = 1, matching gm_base. arg 37 (eps_p) defaults to 0.001.
 sub () {
-  sbatch $CPU --array=1-480 run_search_signal.sh $MD $MT $MP $MQ1 $MQ2 $MI \
+  sbatch $CPU --array=1-480 "$LAUNCH" $MD $MT $MP $MQ1 $MQ2 $MI \
     results/$1 1800 bellman 0.0 $2 1 0 "" add $3 0.0 $4 0.001
 }
 

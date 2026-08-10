@@ -214,12 +214,20 @@ for f in "$DEST"/training/run_train_*.sh; do
   echo "  training/$(basename $f): trainer path + PYTHONPATH"
 done
 
-# 2. submit_*.sh call run_alphazero_bellman.sh, now under slurm/.
+# 2. submit_*.sh sbatch the launcher, which lives under slurm/ in the destination.
+#    Two spellings: the archived scripts say run_alphazero_bellman.sh, the ported ones in
+#    clean_submit/ already say run_search_signal.sh. Only the first was handled, so every
+#    ported script shipped calling a bare `run_search_signal.sh` that sbatch cannot find --
+#    "sbatch: error: Unable to open file run_search_signal.sh", nothing queued, exit 0 from
+#    the submit script so it looks like it worked. Rewrite both, idempotently: the second
+#    substitution collapses slurm/slurm/ so re-running is safe.
 for f in "$DEST"/slurm/submit_*.sh; do
   [ -e "$f" ] || continue
-  if grep -q ' run_alphazero_bellman.sh' "$f"; then
-    perl -0pi -e 's{ run_alphazero_bellman\.sh}{ slurm/run_search_signal.sh}g' "$f"
-    echo "  slurm/$(basename $f): -> slurm/run_alphazero_bellman.sh"
+  if grep -qE ' (run_alphazero_bellman|run_search_signal)\.sh' "$f"; then
+    perl -0pi -e 's{ run_alphazero_bellman\.sh}{ slurm/run_search_signal.sh}g;
+                   s{ run_search_signal\.sh}{ slurm/run_search_signal.sh}g;
+                   s{slurm/slurm/}{slurm/}g' "$f"
+    echo "  slurm/$(basename $f): launcher -> slurm/run_search_signal.sh"
   fi
 done
 

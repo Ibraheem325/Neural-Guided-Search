@@ -1,5 +1,5 @@
 #!/bin/bash
-# PORTED to run_search_signal.sh (19 positional args, was 37). The archived original
+# PORTED to slurm/run_search_signal.sh (19 positional args, was 37). The archived original
 # targets the pre-cleanup search and its eight abandoned channels; this one is the
 # same arms against the cleaned alphaZero_bellman.py. Arms and comments unchanged.
 #
@@ -54,6 +54,14 @@
 #   W at beta=2 = 0.397  ->  eps_p 0.40, which the ladder already carries
 #
 # Run from a COMPUTE node:  bash submit_satellite.sh
+# Locate the launcher. It sits at the repo root in the archive and under slurm/ in the
+# clean tree, and a submit script that names the wrong one fails per-arm with
+# "sbatch: error: Unable to open file run_search_signal.sh" -- while the submit script
+# itself still exits 0, so a whole sweep silently queues nothing. Resolve it, or stop.
+LAUNCH=run_search_signal.sh
+[ -f "$LAUNCH" ] || LAUNCH=slurm/run_search_signal.sh
+[ -f "$LAUNCH" ] || { echo "ERROR: run_search_signal.sh not found in . or slurm/ (cwd=$PWD)" >&2; exit 1; }
+
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
@@ -69,13 +77,13 @@ LN=lognormal:0.717:-0.831      # refit on probeSat_distinct_d5-22, not the old s
 # Positional args 8..19 of the cleaned launcher: max_time 1800, signal bellman, const_w 0.0,
 # c_puct 1.5, qrdqn_value 1, then shuffle, random_spec, abs_signal, tau, beta, kappa, eps_p.
 sub () {
-  sbatch $CPU --array=1-$N run_search_signal.sh $SD $ST $SP $SQ1 $SQ2 $SI \
+  sbatch $CPU --array=1-$N "$LAUNCH" $SD $ST $SP $SQ1 $SQ2 $SI \
     results/$1 1800 bellman 0.0 1.5 1 $2 "${6:-}" $3 1.0 $4 $5 0.001
 }
 
 # BASELINE: abs_signal=off, so no prior transform and no explore_mult. qrdqn_value=1 keeps
 # the leaf value on the same model the signal would use, matching gm_base / az_probe_qrval_base.
-sbatch $CPU --array=1-$N run_search_signal.sh $SD $ST $SP $SQ1 $SQ2 $SI \
+sbatch $CPU --array=1-$N "$LAUNCH" $SD $ST $SP $SQ1 $SQ2 $SI \
   results/sat_base 1800 bellman 0.0 1.5 1 0 "" off 1.0 1.0 1.0 0.001
 
 sub sat_abs_t1b1k1       0 add 1.0 1.0    # the doc's configuration

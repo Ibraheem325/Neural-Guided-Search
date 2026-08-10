@@ -1,5 +1,5 @@
 #!/bin/bash
-# PORTED to run_search_signal.sh (19 positional args, was 37). The archived original
+# PORTED to slurm/run_search_signal.sh (19 positional args, was 37). The archived original
 # targets the pre-cleanup search and its eight abandoned channels; this one is the
 # same arms against the cleaned alphaZero_bellman.py. Arms and comments unchanged.
 #
@@ -20,6 +20,14 @@
 # so gm-style pairing is: t1b1k1 <-> flat027, t1b2k1 <-> flat043.
 #
 # Run from a COMPUTE node:  bash submit_abs_grid.sh
+# Locate the launcher. It sits at the repo root in the archive and under slurm/ in the
+# clean tree, and a submit script that names the wrong one fails per-arm with
+# "sbatch: error: Unable to open file run_search_signal.sh" -- while the submit script
+# itself still exits 0, so a whole sweep silently queues nothing. Resolve it, or stop.
+LAUNCH=run_search_signal.sh
+[ -f "$LAUNCH" ] || LAUNCH=slurm/run_search_signal.sh
+[ -f "$LAUNCH" ] || { echo "ERROR: run_search_signal.sh not found in . or slurm/ (cwd=$PWD)" >&2; exit 1; }
+
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
@@ -29,11 +37,11 @@ GI=models/grid_iqn_qrdqn_best.pth
 
 # arg 26 = qrdqn_value = 1, matching the az_probe_qrval_base baseline.
 abs () {   # abs <outdir> <shuffle> <beta> <kappa>
-  sbatch $CPU --array=1-480 run_search_signal.sh $GD $GT $GP $GQ1 $GQ2 $GI \
+  sbatch $CPU --array=1-480 "$LAUNCH" $GD $GT $GP $GQ1 $GQ2 $GI \
     results/$1 1800 bellman 0.0 1.5 1 $2 "" add 1.0 $3 $4 0.001
 }
 flat () {  # flat <outdir> <w>
-  sbatch $CPU --array=1-480 run_search_signal.sh $GD $GT $GP $GQ1 $GQ2 $GI \
+  sbatch $CPU --array=1-480 "$LAUNCH" $GD $GT $GP $GQ1 $GQ2 $GI \
     results/$1 1800 constant $2 1.5 1 0 "" off 1.0 1.0 1.0 0.001
 }
 

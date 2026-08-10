@@ -39,6 +39,14 @@
 # leaf value on the same model as every other satellite arm, so the only difference is the
 # prior transform.
 # Run from a COMPUTE node:  bash submit_satellite_flat.sh
+# Locate the launcher. It sits at the repo root in the archive and under slurm/ in the
+# clean tree, and a submit script that names the wrong one fails per-arm with
+# "sbatch: error: Unable to open file run_search_signal.sh" -- while the submit script
+# itself still exits 0, so a whole sweep silently queues nothing. Resolve it, or stop.
+LAUNCH=run_search_signal.sh
+[ -f "$LAUNCH" ] || LAUNCH=slurm/run_search_signal.sh
+[ -f "$LAUNCH" ] || { echo "ERROR: run_search_signal.sh not found in . or slurm/ (cwd=$PWD)" >&2; exit 1; }
+
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
@@ -52,7 +60,7 @@ N=120
 # Positional args 8..19: max_time 1800, signal constant, const_w $2, c_puct 1.5,
 # qrdqn_value 1, shuffle 0, no random spec, abs_signal off (no IQN, no residual).
 flat () {
-  sbatch $CPU --array=1-$N run_search_signal.sh $SD $ST $SP $SQ1 $SQ2 $SI \
+  sbatch $CPU --array=1-$N "$LAUNCH" $SD $ST $SP $SQ1 $SQ2 $SI \
     results/$1 1800 constant $2 1.5 1 0 "" off 1.0 1.0 1.0 0.001
 }
 
