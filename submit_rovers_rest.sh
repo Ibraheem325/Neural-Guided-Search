@@ -27,7 +27,7 @@
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
-RD=example/probeRov_small_d5-20/domain.pddl; RT=example/probeRov_small_d5-20
+RD=example/probeRov_test_d5-20/domain.pddl; RT=example/probeRov_test_d5-20
 RP=models/rovers_small_sac_policy_best.pth
 RQ1=models/rovers_small_sac_q1_best.pth; RQ2=models/rovers_small_sac_q2_best.pth
 RI=models/rovers_small_qrdqn_frozen.pth
@@ -46,8 +46,8 @@ sub rov_abs_t1b2k1        0 add 2.0 1.0 0.001
 # ---- multiplicative ladder ----
 sub rov_mul_e001_k0       0 mul 1.0 0.0 0.001
 sub rov_mul_e001_k1       0 mul 1.0 1.0 0.001
-sub rov_mul_e027_k0       0 mul 1.0 0.0 0.27    # rovers' own matched mass (W=0.265)
-sub rov_mul_e027_k0_shuf  1 mul 1.0 0.0 0.27
+sub rov_mul_e029_k0       0 mul 1.0 0.0 0.29    # rovers' own matched mass (W=0.288)
+sub rov_mul_e029_k0_shuf  1 mul 1.0 0.0 0.29
 sub rov_mul_e040_k0       0 mul 1.0 0.0 0.40
 sub rov_mul_e040_k0_shuf  1 mul 1.0 0.0 0.40
 sub rov_mul_e060_k0       0 mul 1.0 0.0 0.60
