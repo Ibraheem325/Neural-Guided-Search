@@ -49,8 +49,8 @@ sub rov_abs_t1b2k1        0 add 2.0 1.0 0.001
 # ---- multiplicative ladder ----
 sub rov_mul_e001_k0       0 mul 1.0 0.0 0.001
 sub rov_mul_e001_k1       0 mul 1.0 1.0 0.001
-sub rov_mul_e029_k0       0 mul 1.0 0.0 0.29    # rovers' own matched mass (W=0.288)
-sub rov_mul_e029_k0_shuf  1 mul 1.0 0.0 0.29
+sub rov_mul_e027_k0       0 mul 1.0 0.0 0.27    # rovers' own matched mass (W=0.274)
+sub rov_mul_e027_k0_shuf  1 mul 1.0 0.0 0.27
 sub rov_mul_e040_k0       0 mul 1.0 0.0 0.40
 sub rov_mul_e040_k0_shuf  1 mul 1.0 0.0 0.40
 sub rov_mul_e060_k0       0 mul 1.0 0.0 0.60

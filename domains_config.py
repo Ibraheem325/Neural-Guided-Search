@@ -69,12 +69,12 @@ DOMAINS = {
                 ("shuffle",                "rov_abs_t1b1k1_shuf"),
                 ("random",                 "rov_abs_t1b1k1_rndm"),
             ]),
-            # eps=0.29 is rovers' OWN matched mass (W=0.288 at beta=1, TEST probes).
+            # eps=0.27 is rovers' OWN matched mass (W=0.274 at beta=1, distinct TEST probes).
             ("MULTIPLICATIVE", [
                 ("eps=0.001 kappa=0",      "rov_mul_e001_k0"),
                 ("eps=0.001 kappa=1",      "rov_mul_e001_k1"),
-                ("eps=0.29 kappa=0",       "rov_mul_e029_k0"),
-                ("eps=0.29 shuffle",       "rov_mul_e029_k0_shuf"),
+                ("eps=0.27 kappa=0",       "rov_mul_e027_k0"),
+                ("eps=0.27 shuffle",       "rov_mul_e027_k0_shuf"),
                 ("eps=0.40 kappa=0",       "rov_mul_e040_k0"),
                 ("eps=0.40 shuffle",       "rov_mul_e040_k0_shuf"),
                 ("eps=0.60 kappa=0",       "rov_mul_e060_k0"),
@@ -93,12 +93,12 @@ DOMAINS = {
                 ("shuffle",                "rov_abs_t1b1k1_shuf"),
                 ("random",                 "rov_abs_t1b1k1_rndm"),
             ]),
-            # eps=0.29 is rovers' OWN matched mass (W=0.288 at beta=1, TEST probes).
+            # eps=0.27 is rovers' OWN matched mass (W=0.274 at beta=1, distinct TEST probes).
             ("MULTIPLICATIVE", [
                 ("eps=0.001 kappa=0",      "rov_mul_e001_k0"),
                 ("eps=0.001 kappa=1",      "rov_mul_e001_k1"),
-                ("eps=0.29 kappa=0",       "rov_mul_e029_k0"),
-                ("eps=0.29 shuffle",       "rov_mul_e029_k0_shuf"),
+                ("eps=0.27 kappa=0",       "rov_mul_e027_k0"),
+                ("eps=0.27 shuffle",       "rov_mul_e027_k0_shuf"),
                 ("eps=0.40 kappa=0",       "rov_mul_e040_k0"),
                 ("eps=0.40 shuffle",       "rov_mul_e040_k0_shuf"),
                 ("eps=0.60 kappa=0",       "rov_mul_e060_k0"),

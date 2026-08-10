@@ -35,19 +35,22 @@
 # unit: 120 against 37, from a quarter of the searches.
 
 #
-# CONSTANTS from fit_random_control.py on rov_signal_data_test.json (90 states, 2829 edges,
-# measured on the TEST probes this script actually runs on):
-#   RANDOM control  lognormal:1.098:-0.483   (level: mean g_s 0.4042 real vs 0.4059 drawn;
-#                                             structure: sd 0.1237 -> 0.0519)
-#   mean g_s 0.4042 -> c(s) matched control c_puct = 2.11 at kappa=1
-#   W at beta=1 = 0.288 -> eps_p 0.29 for a mass-matched flattening control
-# The val-probe fit gave 0.846:-0.675 / g_s 0.3611 / W 0.265, so the refit was NOT cosmetic.
-# These are DOMAIN AND PROBE-SET FITS. goldminer -0.585/1.003, logistics -0.461/0.992,
-# satellite -0.970/0.666. Copying one puts g_s at the wrong level entirely.
+# CONSTANTS from fit_random_control.py on rov_signal_distinct.json (90 states, 2737 edges),
+# measured on the probeRov_distinct_d5-22 probes this script runs on:
+#   RANDOM control  lognormal:1.030:-0.578   (level: mean g_s 0.3779 real vs 0.3891 drawn;
+#                                             structure: sd 0.0980 -> 0.0474)
+#   mean g_s 0.3779 -> c(s) matched control c_puct = 2.07 at kappa=1
+#   W at beta=1 = 0.274 -> eps_p 0.27 for a mass-matched flattening control
+# These moved from the old probe set's fit (1.098:-0.483 / 0.4042 / 0.288), which is why the
+# refit is not optional: the random control is only a control if it matches the states being
+# evaluated, not just the model.
+
 #
-# PRIOR ON THE TEST PROBES (prior_peak.py): top-1 43.0% against a uniform 4.0%, median P_max
-# 0.9534, P(a*) < 1e-3 on 27.7% of states, CONFIDENTLY WRONG on 21.1%. That is grid's regime
-# (20.8%), not satellite's (4.9%) -- which is what the prediction above rests on.
+# PRIOR ON THESE PROBES (prior_peak.py, 497 on-plan states from 40 of the 120): top-1 42.7%
+# against a uniform 4.7%, median P_max 0.9140, P(a*) < 1e-3 on 27.0% of states, CONFIDENTLY
+# WRONG on 18.7%. Still grid's regime (20.8%), not satellite's (4.9%) -- which is what the
+# prediction above rests on. The old set read 21.1%; dropping the 16-probes-per-problem
+# clustering moved it 2.4pp, not enough to change which regime rovers sits in.
 #
 # Run from a COMPUTE node:  bash submit_rovers.sh
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
@@ -60,11 +63,13 @@ RI=models/rovers_small_qrdqn_frozen.pth      # FROZEN copy -- never point at _be
                                              # training runs: 480 tasks would load different
                                              # models as the file is rewritten mid-sweep.
 N=120
-LN=lognormal:1.098:-0.483                    # fitted on the TEST probes (val gave
-                                             # 0.846:-0.675 -- refit was necessary)
+LN=lognormal:1.030:-0.578                    # refitted on THIS probe set; the old set gave
+                                             # 1.098:-0.483, and a control fitted elsewhere
+                                             # is not a control
 
 # sub <outdir> <shuffle> <mode> <beta> <kappa> [random_spec]
-# args 8..37; 23=SHUFFLE, 25=C_PUCT 1.5, 26=QRDQN_VALUE 1, 32=SIB_RANDOM, 33-37=ABS_*.
+# Positional args 8..19 of the cleaned launcher: max_time 1800, signal bellman, const_w 0.0,
+# c_puct 1.5, qrdqn_value 1, then shuffle, random_spec, abs_signal, tau, beta, kappa, eps_p.
 sub () {
   sbatch $CPU --array=1-$N run_search_signal.sh $RD $RT $RP $RQ1 $RQ2 $RI \
     results/$1 1800 bellman 0.0 1.5 1 $2 "${6:-}" $3 1.0 $4 $5 0.001

@@ -50,7 +50,7 @@ flat () {
     results/$1 1800 constant $2 1.5 1 0 "" off 1.0 1.0 1.0 0.001
 }
 
-flat rov_flat029 0.29     # matches eps=0.29 (rovers' own W at beta=1)
+flat rov_flat027 0.27     # matches eps=0.27 (rovers' own W at beta=1)
 flat rov_flat040 0.40     # matches eps=0.40
 flat rov_flat060 0.60     # matches eps=0.60 -- the arm that looks different
 
