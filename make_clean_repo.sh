@@ -231,6 +231,20 @@ for f in "$DEST"/slurm/run_search.sh "$DEST"/slurm/run_alphazero.sh "$DEST"/slur
   echo "  slurm/$(basename $f): -> benchmark/ + PYTHONPATH"
 done
 
+# 4. Every copied .sh hardcodes the SOURCE repo in --chdir and in R=. Left alone, the clean
+#    tree's scripts would cd into the OLD repo and write results there -- the sweeps would
+#    look like they ran while quietly filling the archive. Point them at the destination.
+DEST_ABS=$(cd "$DEST" && pwd)
+n=0
+for f in "$DEST"/slurm/*.sh "$DEST"/training/*.sh; do
+  [ -e "$f" ] || continue
+  if grep -qE '(--chdir=|^R=)/' "$f"; then
+    perl -0pi -e "s{(--chdir=)\S+}{\$1$DEST_ABS}g; s{^R=\S+}{R=$DEST_ABS}mg" "$f"
+    n=$((n+1))
+  fi
+done
+echo "  repointed --chdir / R= to $DEST_ABS in $n scripts"
+
 # ---------------------------------------------------------------- sanity check ---------
 # Every .py invoked by a copied .sh must exist in the tree. run_alphazero.sh calling
 # alphaZero.py was missed once; this makes that class of omission impossible to ship.
