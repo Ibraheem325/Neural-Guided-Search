@@ -128,6 +128,52 @@ copydirs SWEEP     $DS_SWEEP
 copydirs PROBES    $PROBES
 [ "${KEEP_BENCH:-1}" = "1" ] && copydirs BENCH-DS  $DS_BENCH
 
+# --- 9. MODELS ------------------------------------------------------------------------
+# SWEEP MODELS: exactly what the five domains' submit scripts load. Taken from the scripts
+# rather than by name-matching, because two of them are counter-intuitive:
+#
+#   goldminer uses goldminer_iqn.pth -- the OLD IQN, not a QR-DQN. It already calibrated at
+#     slope -1.213, so it never needed the retrain that grid and the others got.
+#   rovers uses rovers_small_* and the FROZEN QR-DQN. rovers_iqn.pth / rovers_sac_* are the
+#     superseded r18 generation. The frozen copy matters: _best.pth is a later, worse
+#     checkpoint (-0.600) and _latest.pth had collapsed entirely (-0.017), while the frozen
+#     mid-run checkpoint is -0.804 and is what every rovers arm actually ran on.
+MODELS_SWEEP="goldminer_iqn.pth goldminer_sac_policy.pth goldminer_sac_q1.pth goldminer_sac_q2.pth
+              grid_iqn_qrdqn_best.pth grid_sac_policy.pth grid_sac_q1.pth grid_sac_q2.pth
+              logistics_topo_frozen.pth logistics_topo_sac_policy_best.pth
+              logistics_topo_sac_q1_best.pth logistics_topo_sac_q2_best.pth
+              satellite_s18_qrdqn_best.pth satellite_s18_sac_policy_best.pth
+              satellite_s18_sac_q1_best.pth satellite_s18_sac_q2_best.pth
+              rovers_small_qrdqn_frozen.pth rovers_small_sac_policy_best.pth
+              rovers_small_sac_q1_best.pth rovers_small_sac_q2_best.pth"
+
+# BENCHMARK MODELS: the DQN and supervised policy per domain, used by the Q* / weighted-A* /
+# GBFS / beam comparison. barman has both but no usable SAC or QR-DQN, so it appears here
+# only. barman_v2 is the real benchmark set -- barman_dqn/supervised are the easy v1 pool
+# where weighting merely halves expansions (99% coverage at w=1), not the 3.7% -> 50.5% story.
+MODELS_BENCH="barman_v2_dqn.pth barman_v2_supervised.pth
+              goldminer_dqn.pth goldminer_supervised.pth
+              grid_dqn.pth grid_supervised.pth
+              logistics_dqn.pth logistics_supervised.pth
+              rovers_dqn.pth rovers_supervised.pth
+              satellite_dqn.pth satellite_supervised.pth"
+
+copymodels () {
+  local group=$1; shift
+  local n=0 miss=""
+  mkdir -p "$DEST/models"
+  for f in $@; do
+    if [ -e "$SRC/models/$f" ]; then cp "$SRC/models/$f" "$DEST/models/"; n=$((n+1))
+    else miss="$miss $f"; fi
+  done
+  printf "%-12s %2d copied" "$group" "$n"
+  [ -n "$miss" ] && printf "   NOT PRESENT HERE:%s" "$miss"
+  echo
+}
+
+copymodels MODELS    $MODELS_SWEEP
+[ "${KEEP_BENCH:-1}" = "1" ] && copymodels MODELS-BM $MODELS_BENCH
+
 echo
 echo "copied $(ls "$DEST" | wc -l) top-level entries to $DEST"
 du -sh "$DEST" 2>/dev/null
