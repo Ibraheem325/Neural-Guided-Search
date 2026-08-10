@@ -1,6 +1,6 @@
 """Validate a probe set before spending a sweep on it.
 
-Five checks, each guarding a mistake this project actually made:
+Six checks, each guarding a mistake this project actually made:
 
   1. INDEPENDENCE   how many DISTINCT source problems, and how many probes each contributes.
                     The old sets drew 480 probes from 29-44 problems (up to 16 states from
@@ -12,15 +12,21 @@ Five checks, each guarding a mistake this project actually made:
                     instance at different depths are legitimately different states, but a
                     generator bug can emit the same state twice.
 
-  3. LEAKAGE        does any probe's state coincide with a TRAIN or VAL instance? A probe is
+  3. PROVENANCE     were the probes actually cut from the dataset you named? Pointed at a
+                    sibling dataset the checks below pass VACUOUSLY -- nothing collides with
+                    instances that were never there. probeSat_distinct_d5-22 was checked
+                    against satellite_dataset when it came from satellite_dataset_s18 and
+                    reported a clean PASS with 0 of 120 sources in range.
+
+  4. LEAKAGE        does any probe's state coincide with a TRAIN or VAL instance? A probe is
                     a state lifted from partway through a test plan, and nothing structurally
                     prevents it from matching an instance the model trained on.
 
-  4. SPLIT OVERLAP  are the underlying dataset splits themselves disjoint? The datasets are
+  5. SPLIT OVERLAP  are the underlying dataset splits themselves disjoint? The datasets are
                     randomly generated, so a collision between train and test is possible and
                     would invalidate everything downstream.
 
-  5. SHAPE          depth histogram, object range, and how far out of distribution the probes
+  6. SHAPE          depth histogram, object range, and how far out of distribution the probes
                     are relative to train. Grid's probes turned out to be 8.4x the training
                     median object count while satellite's were 2.2x -- worth knowing, since a
                     method that fails at 8x and succeeds at 2x may be telling you about
@@ -111,17 +117,33 @@ else:
     print(f"   OK: all {len(probes)} probes are distinct states")
 
 # --- dataset-dependent checks ----------------------------------------------------------
+# The dataset must be the one the probes were CUT FROM. Pointed at a sibling dataset, every
+# check below passes vacuously -- nothing collides with instances that were never there.
+# That happened: probeSat_distinct_d5-22 was checked against satellite_dataset when it came
+# from satellite_dataset_s18, and reported a clean PASS with 0/120 sources in range.
 ds = A_.dataset
+srcs_wanted = [r["source_problem"] for r in rows if r.get("source_problem")]
+
+
+def sources_found(d):
+    """How many of the probes' source problems exist under this dataset root."""
+    have = {os.path.basename(f) for sp in ("train", "val", "test")
+            for f in glob.glob(os.path.join(d, sp, "*.pddl"))}
+    return sum(1 for s in srcs_wanted if s in have)
+
+
 if ds is None and rows:
     sp = rows[0].get("source_split", "")
     guess = os.path.dirname(A_.probe_dir.rstrip("/"))
-    for cand in glob.glob(os.path.join(guess, "*")):
-        if os.path.isdir(os.path.join(cand, sp)):
-            ds = cand; break
+    cands = [c for c in glob.glob(os.path.join(guess, "*"))
+             if os.path.isdir(os.path.join(c, sp))]
+    # rank by how many sources actually resolve, not by merely having a split of that name
+    ds = max(cands, key=sources_found, default=None) if srcs_wanted else \
+        (cands[0] if cands else None)
     if ds: print(f"\n   (dataset inferred: {ds})")
 
 if ds is None or not os.path.isdir(ds):
-    print("\n3-4. LEAKAGE / SPLIT OVERLAP: skipped, pass --dataset <dir>")
+    print("\n3-5. PROVENANCE / LEAKAGE / SPLIT OVERLAP: skipped, pass --dataset <dir>")
 else:
     split_fp = {}
     for sp in ("train", "val", "test"):
@@ -130,7 +152,31 @@ else:
         split_fp[sp] = {canon(f): os.path.basename(f) for f in glob.glob(d + "/*.pddl")
                         if os.path.basename(f) != "domain.pddl"}
 
-    print("\n3. LEAKAGE: does any probe state match a TRAIN or VAL instance?")
+    print(f"\n3. PROVENANCE: were these probes cut from {ds}?")
+    if not srcs_wanted:
+        print("   labels.csv has no source_problem column, cannot verify -- treat 4/5 as weak")
+    else:
+        n = sources_found(ds)
+        if n == 0:
+            fails.append(f"none of the probes' sources are in {ds}")
+            print(f"   FAIL: 0 of {len(srcs_wanted)} source problems exist under {ds}.")
+            print("         Wrong dataset -- checks 4 and 5 below are vacuous, not clean.")
+        elif n < len(srcs_wanted):
+            fails.append(f"{len(srcs_wanted)-n} sources missing from {ds}")
+            print(f"   FAIL: only {n} of {len(srcs_wanted)} source problems exist under {ds}")
+        else:
+            print(f"   OK: all {n} source problems resolve in this dataset")
+
+    # duplicates INSIDE a split: not leakage, but 400 files holding 348 unique instances
+    # means 13% of a training set was spent re-showing what the model already had.
+    for sp, fpm in split_fp.items():
+        n_files = len([f for f in glob.glob(os.path.join(ds, sp, "*.pddl"))
+                       if os.path.basename(f) != "domain.pddl"])
+        if n_files > len(fpm):
+            print(f"   note: {sp} has {n_files} files but only {len(fpm)} unique instances "
+                  f"({n_files - len(fpm)} duplicated within the split)")
+
+    print("\n4. LEAKAGE: does any probe state match a TRAIN or VAL instance?")
     hit = []
     for p in probes:
         h = canon(p)
@@ -145,7 +191,7 @@ else:
         n = sum(len(split_fp.get(s, {})) for s in ("train", "val"))
         print(f"   OK: none of {len(probes)} probes matches any of the {n} train/val instances")
 
-    print("\n4. SPLIT OVERLAP: are the dataset splits themselves disjoint?")
+    print("\n5. SPLIT OVERLAP: are the dataset splits themselves disjoint?")
     bad = False
     for a, b in (("train", "val"), ("train", "test"), ("val", "test")):
         if a in split_fp and b in split_fp:
@@ -163,7 +209,7 @@ else:
             print("   FAIL: probes come from a split used for training or model selection")
 
 # --- 5. SHAPE --------------------------------------------------------------------------
-print("\n5. SHAPE")
+print("\n6. SHAPE")
 if rows:
     d = [int(r["distance_to_goal"]) for r in rows]
     o = [int(r["num_objects"]) for r in rows if r.get("num_objects", "").strip().isdigit()]
