@@ -37,17 +37,21 @@
 # from val, the split used for checkpoint selection.
 
 #
-# RANDOM CONTROL, fitted to satellite's OWN raw-e marginal (fit_random_control.py on
-# sat_signal_data.json, 90 states / 8302 edges): mu=-0.970 sigma=0.666. Note how different
-# this is from goldminer (-0.585/1.003) and logistics (-0.461/0.992) -- satellite's
-# residuals are both smaller and tighter, so copying another domain's spec would have put
-# g_s at the wrong level entirely. The fit is clean: mean g_s 0.2937 real vs 0.2935 drawn
-# (level preserved) while sd drops 0.0671 -> 0.0155 (state-to-state structure destroyed),
-# which is exactly the contrast the control is meant to isolate.
+# RANDOM CONTROL, refitted on THESE probes (fit_random_control.py on sat_signal_distinct.json,
+# 90 states / 26019 edges): mu=-0.831 sigma=0.717. Still far from goldminer (-0.585/1.003)
+# and logistics (-0.461/0.992) -- satellite's residuals are smaller and tighter, so copying
+# another domain's spec would put g_s at the wrong level entirely. The fit is clean: mean
+# g_s 0.3286 real vs 0.3224 drawn (level preserved) while sd drops 0.0969 -> 0.0087
+# (state-to-state structure destroyed), which is the contrast the control isolates.
+#
+# The old probe set gave 0.666:-0.970 / g_s 0.2937 / W 0.227. Every constant moved, which is
+# why the refit is mandatory whenever the probe set changes: a control fitted on other states
+# is not a control.
 #
 # Other satellite constants from the same fit, for later arms:
-#   mean g_s = 0.2937  ->  c(s) matched control c_puct = 1.94 (kappa=1)
-#   W at beta=1 = 0.227  ->  eps_p for a mass-matched flattening control
+#   mean g_s = 0.3286  ->  c(s) matched control c_puct = 1.99 (kappa=1)
+#   W at beta=1 = 0.247  ->  eps_p 0.25 for a mass-matched flattening control
+#   W at beta=2 = 0.397  ->  eps_p 0.40, which the ladder already carries
 #
 # Run from a COMPUTE node:  bash submit_satellite.sh
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
@@ -59,10 +63,11 @@ SQ1=models/satellite_s18_sac_q1_best.pth; SQ2=models/satellite_s18_sac_q2_best.p
 SI=models/satellite_s18_qrdqn_best.pth
 N=120
 
-LN=lognormal:0.666:-0.970      # fitted to satellite's OWN raw-e marginal
+LN=lognormal:0.717:-0.831      # refit on probeSat_distinct_d5-22, not the old set
 
 # sub <outdir> <shuffle> <mode> <beta> <kappa> [random_spec]
-# args 8..37; 23=SHUFFLE, 25=C_PUCT 1.5, 26=QRDQN_VALUE 1, 32=SIB_RANDOM, 33-37=ABS_*.
+# Positional args 8..19 of the cleaned launcher: max_time 1800, signal bellman, const_w 0.0,
+# c_puct 1.5, qrdqn_value 1, then shuffle, random_spec, abs_signal, tau, beta, kappa, eps_p.
 sub () {
   sbatch $CPU --array=1-$N run_search_signal.sh $SD $ST $SP $SQ1 $SQ2 $SI \
     results/$1 1800 bellman 0.0 1.5 1 $2 "${6:-}" $3 1.0 $4 $5 0.001

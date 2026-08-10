@@ -11,12 +11,12 @@
 # rather than reproduce a ladder already measured cleanly on grid. This script closes the
 # gap if the tables are to be presented side by side.
 #
-# eps_p RUNGS. 0.23 is satellite's OWN matched mass: fit_random_control.py gives
-# W = beta*g_s/(1+beta*g_s) = 0.227 at beta=1, so eps_p=0.23 makes P0 identical to what a
+# eps_p RUNGS. 0.25 is satellite's OWN matched mass, refit on probeSat_distinct_d5-22:
+# W = beta*g_s/(1+beta*g_s) = 0.247 at beta=1, so eps_p=0.25 makes P0 identical to what a
 # flattening arm of that weight would produce and leaves the tilt as the only difference.
-# The parallel values are grid 0.27, goldminer 0.28, logistics 0.29 -- satellite's is lower
-# because its mean g_s is 0.2937 against ~0.39 for the others. 0.40 and 0.60 are carried
-# over unchanged so the ladders line up across domains.
+# The parallel values are rovers 0.27, grid 0.27, goldminer 0.28, logistics 0.29 -- satellite's
+# is lowest because its mean g_s is 0.3286 against ~0.38-0.40 for the others. 0.40 doubles as
+# the beta=2 matched rung (W=0.397); 0.60 is carried over so the ladders line up.
 #
 # At eps_p=0.001 the multiplicative variant is close to inert (median TV ~0.0003 on
 # goldminer) but NOT fully: the floor lifts an action from unselectable to selectable, and
@@ -45,9 +45,9 @@ sub sat_abs_t1b2k1        0 add 2.0 1.0 0.001
 # ---- multiplicative ladder ----
 sub sat_mul_e001_k0       0 mul 1.0 0.0 0.001
 sub sat_mul_e001_k1       0 mul 1.0 1.0 0.001
-sub sat_mul_e023_k0       0 mul 1.0 0.0 0.23    # satellite's own matched mass (W=0.227)
-sub sat_mul_e023_k0_shuf  1 mul 1.0 0.0 0.23
-sub sat_mul_e040_k0       0 mul 1.0 0.0 0.40
+sub sat_mul_e025_k0       0 mul 1.0 0.0 0.25    # satellite's own matched mass (W=0.247)
+sub sat_mul_e025_k0_shuf  1 mul 1.0 0.0 0.25
+sub sat_mul_e040_k0       0 mul 1.0 0.0 0.40    # also the beta=2 matched mass (W=0.397)
 sub sat_mul_e040_k0_shuf  1 mul 1.0 0.0 0.40
 sub sat_mul_e060_k0       0 mul 1.0 0.0 0.60
 
