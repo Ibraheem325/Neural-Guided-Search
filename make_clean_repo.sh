@@ -51,16 +51,23 @@ mkdir -p "$DEST" "$DEST/training" "$DEST/slurm"
 # under test, dataset/probe generation, the model gates, and the analysis pipeline.
 # utils.py and rgnn_readout_fix.py stay at root so plain `import utils` keeps working;
 # rgnn_readout_fix patches a silent pymimir_rgnn multi-output bug and is not optional.
+# alphaZero.py is the plain AlphaZero the benchmark runs (run_alphazero.sh invokes it);
+# alphaZero_bellman.py is the version under test. The other eight alphaZero_* variants
+# (decoupled/ensemble/mix/w1/width) are superseded experiments, deliberately left behind.
+# greedy_value_plan.py and greedy_sac_plan.py are run_search.sh's greedy_value / greedy_sac
+# modes; new_signal_report.py produced the offline arm-ranking and g_s AUC evidence that
+# submit_abs_goldminer.sh's header cites.
 ROOT_PY="search.py qstar.py wastar.py beam.py evaluate.py
          aggregate_qstar_weight.py aggregate_alphazero.py summarize_results.py
-         alphaZero_bellman.py
+         alphaZero.py alphaZero_bellman.py
          utils.py rgnn_readout_fix.py
          gen_rovers_dataset.py gen_satellite_dataset.py make_probes.py
          solve_dataset.py verify_dataset.py collect_fd.py
          check_qrdqn_calibration.py check_training.py prior_peak.py
          domains_config.py table_plan_len.py table_by_base.py
          cluster_contrib.py pair_contrib.py arm_totals.py
-         new_signal_probe.py fit_random_control.py"
+         new_signal_probe.py new_signal_report.py fit_random_control.py
+         greedy_value_plan.py greedy_sac_plan.py"
 
 # TRAINING: the trainers plus iqn_soft_bounds.py (SoftBoundsIQNOptimization, imported at
 # runtime by train_iqn.py) and the launchers/sbatch files.
@@ -195,6 +202,27 @@ for f in "$DEST"/slurm/submit_*.sh; do
     echo "  slurm/$(basename $f): -> slurm/run_alphazero_bellman.sh"
   fi
 done
+
+# ---------------------------------------------------------------- sanity check ---------
+# Every .py invoked by a copied .sh must exist in the tree. run_alphazero.sh calling
+# alphaZero.py was missed once; this makes that class of omission impossible to ship.
+echo
+missing_py=""
+for sh in "$DEST"/slurm/*.sh "$DEST"/training/*.sh; do
+  [ -e "$sh" ] || continue
+  for py in $(grep -oE '[A-Za-z0-9_/]+\.py' "$sh" | sort -u); do
+    case "$py" in *downward*) continue;; esac
+    base=$(basename "$py")
+    if [ ! -e "$DEST/$base" ] && [ ! -e "$DEST/training/$base" ] && [ ! -e "$DEST/$py" ]; then
+      missing_py="$missing_py\n  $(basename $sh) invokes $py -- NOT IN TREE"
+    fi
+  done
+done
+if [ -n "$missing_py" ]; then
+  echo "WARNING: broken script references:"; printf "$missing_py\n"
+else
+  echo "check: every .py invoked by a copied .sh is present"
+fi
 
 echo
 echo "$DEST"
