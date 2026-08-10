@@ -44,7 +44,7 @@ if [ -d "$DEST" ] && [ -n "$(ls -A "$DEST" 2>/dev/null)" ]; then
     exit 1
   fi
 fi
-mkdir -p "$DEST" "$DEST/training" "$DEST/slurm"
+mkdir -p "$DEST" "$DEST/benchmark" "$DEST/training" "$DEST/slurm"
 
 # ---------------------------------------------------------------- file groups ----------
 # ROOT: baseline search algorithms (the start-of-thesis benchmark), the AlphaZero search
@@ -57,17 +57,24 @@ mkdir -p "$DEST" "$DEST/training" "$DEST/slurm"
 # greedy_value_plan.py and greedy_sac_plan.py are run_search.sh's greedy_value / greedy_sac
 # modes; new_signal_report.py produced the offline arm-ranking and g_s AUC evidence that
 # submit_abs_goldminer.sh's header cites.
-ROOT_PY="search.py qstar.py wastar.py beam.py evaluate.py
+ROOT_PY="evaluate.py
          aggregate_qstar_weight.py aggregate_alphazero.py summarize_results.py
-         alphaZero.py alphaZero_bellman.py
+         alphaZero_bellman.py
          utils.py rgnn_readout_fix.py
          gen_rovers_dataset.py gen_satellite_dataset.py make_probes.py
          solve_dataset.py verify_dataset.py collect_fd.py
          check_qrdqn_calibration.py check_training.py prior_peak.py
          domains_config.py table_plan_len.py table_by_base.py
          cluster_contrib.py pair_contrib.py arm_totals.py
-         new_signal_probe.py new_signal_report.py fit_random_control.py
-         greedy_value_plan.py greedy_sac_plan.py"
+         new_signal_probe.py new_signal_report.py fit_random_control.py"
+
+# BENCHMARK: the search algorithms compared at the start of the thesis. run_search.sh
+# dispatches to search.py (Q*), wastar.py (weighted A*, w=2 and w=5), greedy_value_plan.py
+# and greedy_sac_plan.py; run_qstar_weight.sh drives the qstar.py weight sweep;
+# run_alphazero.sh runs plain alphaZero.py. beam.py is deliberately EXCLUDED -- so
+# run_search.sh's beam1/beam5 modes will not work in the clean tree, which is intended.
+BENCH_FILES="alphaZero.py greedy_sac_plan.py greedy_value_plan.py
+             qstar.py search.py wastar.py"
 
 # TRAINING: the trainers plus iqn_soft_bounds.py (SoftBoundsIQNOptimization, imported at
 # runtime by train_iqn.py) and the launchers/sbatch files.
@@ -163,6 +170,7 @@ copyfiles () {   # copyfiles <label> <under> <files...>  -- SRC/<under>/f -> DES
 }
 
 copy ROOT     .         $ROOT_PY
+copy BENCHMARK benchmark $BENCH_FILES
 copy TRAINING training  $TRAIN_FILES
 copy SLURM    slurm     $SLURM_FILES
 copytree DATASETS example $DS_SWEEP
@@ -203,6 +211,15 @@ for f in "$DEST"/slurm/submit_*.sh; do
   fi
 done
 
+# 3. the benchmark launchers invoke algorithms now under benchmark/, and need the repo root
+#    on PYTHONPATH so `import utils` resolves.
+for f in "$DEST"/slurm/run_search.sh "$DEST"/slurm/run_alphazero.sh "$DEST"/slurm/run_qstar_weight.sh; do
+  [ -e "$f" ] || continue
+  perl -0pi -e 's{venv/bin/python (alphaZero\.py|greedy_sac_plan\.py|greedy_value_plan\.py|qstar\.py|search\.py|wastar\.py)}{venv/bin/python benchmark/$1}g' "$f"
+  grep -q 'PYTHONPATH' "$f" || perl -0pi -e 's{(\nvenv/bin/python|\n *venv/bin/python)}{\nexport PYTHONPATH="\$PWD:\$PYTHONPATH"$1}' "$f"
+  echo "  slurm/$(basename $f): -> benchmark/ + PYTHONPATH"
+done
+
 # ---------------------------------------------------------------- sanity check ---------
 # Every .py invoked by a copied .sh must exist in the tree. run_alphazero.sh calling
 # alphaZero.py was missed once; this makes that class of omission impossible to ship.
@@ -213,7 +230,9 @@ for sh in "$DEST"/slurm/*.sh "$DEST"/training/*.sh; do
   for py in $(grep -oE '[A-Za-z0-9_/]+\.py' "$sh" | sort -u); do
     case "$py" in *downward*) continue;; esac
     base=$(basename "$py")
-    if [ ! -e "$DEST/$base" ] && [ ! -e "$DEST/training/$base" ] && [ ! -e "$DEST/$py" ]; then
+    case "$py" in *beam.py) continue;; esac   # deliberately excluded
+    if [ ! -e "$DEST/$base" ] && [ ! -e "$DEST/training/$base" ] \
+       && [ ! -e "$DEST/benchmark/$base" ] && [ ! -e "$DEST/$py" ]; then
       missing_py="$missing_py\n  $(basename $sh) invokes $py -- NOT IN TREE"
     fi
   done
@@ -226,7 +245,8 @@ fi
 
 echo
 echo "$DEST"
-echo "  root      $(ls -1 "$DEST"/*.py 2>/dev/null | wc -l) python files"
+echo "  root       $(ls -1 "$DEST"/*.py 2>/dev/null | wc -l) python files"
+echo "  benchmark/ $(ls -1 "$DEST"/benchmark 2>/dev/null | wc -l) files"
 echo "  training/ $(ls -1 "$DEST"/training 2>/dev/null | wc -l) files"
 echo "  slurm/    $(ls -1 "$DEST"/slurm 2>/dev/null | wc -l) files"
 echo "  example/  $(ls -1 "$DEST"/example 2>/dev/null | wc -l) datasets/probe sets"
