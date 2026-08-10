@@ -80,9 +80,20 @@ DOMAINS = {
             ("ADDITIVE", [
                 ("beta=1 kappa=1",         "rov_abs_t1b1k1"),
                 ("beta=1 kappa=0 (prior)", "rov_abs_t1b1k0"),
+                ("beta=2 kappa=1",         "rov_abs_t1b2k1"),
                 ("beta=0 kappa=1 (c(s))",  "rov_abs_t1b0k1"),
                 ("shuffle",                "rov_abs_t1b1k1_shuf"),
                 ("random",                 "rov_abs_t1b1k1_rndm"),
+            ]),
+            # eps=0.27 is rovers' OWN matched mass (W=0.265 at beta=1).
+            ("MULTIPLICATIVE", [
+                ("eps=0.001 kappa=0",      "rov_mul_e001_k0"),
+                ("eps=0.001 kappa=1",      "rov_mul_e001_k1"),
+                ("eps=0.27 kappa=0",       "rov_mul_e027_k0"),
+                ("eps=0.27 shuffle",       "rov_mul_e027_k0_shuf"),
+                ("eps=0.40 kappa=0",       "rov_mul_e040_k0"),
+                ("eps=0.40 shuffle",       "rov_mul_e040_k0_shuf"),
+                ("eps=0.60 kappa=0",       "rov_mul_e060_k0"),
             ]),
         ]),
     "logistics": dict(
