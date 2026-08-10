@@ -62,6 +62,7 @@ ROOT_PY="evaluate.py
          utils.py rgnn_readout_fix.py
          gen_rovers_dataset.py gen_satellite_dataset.py make_probes.py
          solve_dataset.py verify_dataset.py collect_fd.py make_probes_distinct.py
+         check_probe_set.py
          check_qrdqn_calibration.py check_training.py prior_peak.py
          domains_config.py table_plan_len.py table_by_base.py
          cluster_contrib.py pair_contrib.py arm_totals.py
