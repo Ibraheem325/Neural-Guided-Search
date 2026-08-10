@@ -96,6 +96,18 @@ DOMAINS = {
                 ("eps=0.60 kappa=0",       "rov_mul_e060_k0"),
             ]),
         ]),
+    "satellite_test": dict(
+        base="sat_base_test",
+        probe="example/probeSat_test_d5-20",
+        optlen="optlen_satellite_test.json",
+        tables=[
+            # Three-arm replication of the headline result on the TEST split. The full
+            # 14-arm sweep is under --domain satellite (val probes).
+            ("ADDITIVE (test-split replication)", [
+                ("beta=1 kappa=0 (prior)", "sat_abs_t1b1k0_test"),
+                ("shuffle",                "sat_abs_t1b1k1_shuf_test"),
+            ]),
+        ]),
     "logistics": dict(
         base="multiloc_base_topopolicy",
         probe="example/probeLog_multiloc_d5-20",
