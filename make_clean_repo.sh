@@ -26,6 +26,24 @@
 set -e
 DEST=${1:?usage: bash make_clean_repo.sh <destination-dir>}
 SRC=$(pwd)
+
+# Refuse to build into a non-empty directory. An earlier version of this script copied
+# everything flat; running the reorganised version over the top left BOTH layouts in place
+# (stale .py and .sh at the root alongside the new training/ and slurm/), which looks like
+# the reorganisation silently failed. Set FORCE=1 to wipe and rebuild.
+if [ -d "$DEST" ] && [ -n "$(ls -A "$DEST" 2>/dev/null)" ]; then
+  if [ "${FORCE:-0}" = "1" ]; then
+    echo "FORCE=1: removing existing $DEST"
+    rm -rf "$DEST"
+  else
+    echo "ERROR: $DEST already exists and is not empty."
+    echo "       Building over it would mix layouts. Either:"
+    echo "         rm -rf $DEST && bash $0 $DEST"
+    echo "       or:"
+    echo "         FORCE=1 bash $0 $DEST"
+    exit 1
+  fi
+fi
 mkdir -p "$DEST" "$DEST/training" "$DEST/slurm"
 
 # ---------------------------------------------------------------- file groups ----------
