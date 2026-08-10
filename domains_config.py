@@ -33,8 +33,8 @@ DOMAINS = {
         ]),
     "satellite": dict(
         base="sat_base",
-        probe="example/probeSat_val_d5-20",
-        optlen="optlen_satellite.json",
+        probe="example/probeSat_distinct_d5-22",
+        optlen="optlen_satellite_distinct.json",
         tables=[
             ("ADDITIVE", [
                 ("beta=1 kappa=1",         "sat_abs_t1b1k1"),
@@ -80,16 +80,28 @@ DOMAINS = {
                 ("eps=0.60 kappa=0",       "rov_mul_e060_k0"),
             ]),
         ]),
-    "satellite_test": dict(
-        base="sat_base_test",
-        probe="example/probeSat_test_d5-20",
-        optlen="optlen_satellite_test.json",
+    "rovers": dict(
+        base="rov_base",
+        probe="example/probeRov_distinct_d5-22",
+        optlen="optlen_rovers_distinct.json",
         tables=[
-            # Three-arm replication of the headline result on the TEST split. The full
-            # 14-arm sweep is under --domain satellite (val probes).
-            ("ADDITIVE (test-split replication)", [
-                ("beta=1 kappa=0 (prior)", "sat_abs_t1b1k0_test"),
-                ("shuffle",                "sat_abs_t1b1k1_shuf_test"),
+            ("ADDITIVE", [
+                ("beta=1 kappa=1",         "rov_abs_t1b1k1"),
+                ("beta=1 kappa=0 (prior)", "rov_abs_t1b1k0"),
+                ("beta=2 kappa=1",         "rov_abs_t1b2k1"),
+                ("beta=0 kappa=1 (c(s))",  "rov_abs_t1b0k1"),
+                ("shuffle",                "rov_abs_t1b1k1_shuf"),
+                ("random",                 "rov_abs_t1b1k1_rndm"),
+            ]),
+            # eps=0.29 is rovers' OWN matched mass (W=0.288 at beta=1, TEST probes).
+            ("MULTIPLICATIVE", [
+                ("eps=0.001 kappa=0",      "rov_mul_e001_k0"),
+                ("eps=0.001 kappa=1",      "rov_mul_e001_k1"),
+                ("eps=0.29 kappa=0",       "rov_mul_e029_k0"),
+                ("eps=0.29 shuffle",       "rov_mul_e029_k0_shuf"),
+                ("eps=0.40 kappa=0",       "rov_mul_e040_k0"),
+                ("eps=0.40 shuffle",       "rov_mul_e040_k0_shuf"),
+                ("eps=0.60 kappa=0",       "rov_mul_e060_k0"),
             ]),
         ]),
     "logistics": dict(

@@ -27,11 +27,11 @@
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
-SD=example/probeSat_val_d5-20/domain.pddl; ST=example/probeSat_val_d5-20
+SD=example/probeSat_distinct_d5-22/domain.pddl; ST=example/probeSat_distinct_d5-22
 SP=models/satellite_s18_sac_policy_best.pth
 SQ1=models/satellite_s18_sac_q1_best.pth; SQ2=models/satellite_s18_sac_q2_best.pth
 SI=models/satellite_s18_qrdqn_best.pth
-N=480
+N=120
 
 # sub <outdir> <shuffle> <mode> <beta> <kappa> <eps_p>
 sub () {

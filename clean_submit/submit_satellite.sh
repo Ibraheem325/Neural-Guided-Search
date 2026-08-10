@@ -31,10 +31,11 @@
 # (-0.007, i.e. V ~ -5 at every distance from d5 to d70), so its Bellman signal would be
 # noise and no search result from it could mean anything.
 #
-# PROBE SET: example/probeSat_val_d5-20, 480 probes / 44 distinct sources, built from the
-# VAL split (all 120 instances solved). Deliberately mirrors probeGold_near_goal_d5-20 and
-# probe_near_goal_d5-20 (480 probes, d5-20) so the domains are compared on the same design.
-# NOT the train-split probes -- the models trained on those instances.
+# PROBE SET: example/probeSat_distinct_d5-22 -- one probe per source problem from the TEST
+# split, so every probe is an independent unit and no cluster_contrib.py aggregation is
+# needed. Replaces probeSat_val_d5-20, which drew 480 probes from only 44 problems AND came
+# from val, the split used for checkpoint selection.
+
 #
 # RANDOM CONTROL, fitted to satellite's OWN raw-e marginal (fit_random_control.py on
 # sat_signal_data.json, 90 states / 8302 edges): mu=-0.970 sigma=0.666. Note how different
@@ -52,11 +53,11 @@
 R=/work/rleap1/ibrahim.eisawy/Neural-Guided-Search
 CPU="--chdir=$R --partition=rleap_cpu --gres=none --cpus-per-task=4 --mem=16G --time=1-00:00:00 --export=ALL,OMP_NUM_THREADS=4,MKL_NUM_THREADS=4,CUDA_VISIBLE_DEVICES="
 
-SD=example/probeSat_val_d5-20/domain.pddl; ST=example/probeSat_val_d5-20
+SD=example/probeSat_distinct_d5-22/domain.pddl; ST=example/probeSat_distinct_d5-22
 SP=models/satellite_s18_sac_policy_best.pth
 SQ1=models/satellite_s18_sac_q1_best.pth; SQ2=models/satellite_s18_sac_q2_best.pth
 SI=models/satellite_s18_qrdqn_best.pth
-N=480
+N=120
 
 LN=lognormal:0.666:-0.970      # fitted to satellite's OWN raw-e marginal
 
