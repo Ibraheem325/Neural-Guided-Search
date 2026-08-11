@@ -46,6 +46,17 @@ import torch
 
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+import os as _os, sys as _sys
+
+# utils.py and train_iqn.py sit beside this file in the archive but under training/ in the
+# clean tree. make_clean_repo.sh patches that on copy -- but the file gets hand-copied
+# between the two trees, which reverts the patch and fails at import. Resolve it here so the
+# same file works in either layout however it arrived. No-op in the archive.
+for _d in ("training", "benchmark"):
+    _p = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), _d)
+    if _os.path.isdir(_p) and _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
 from utils import create_device, get_state_key
 import pymimir_rl as rl
 from train_iqn import _load_model as _load_iqn_model
