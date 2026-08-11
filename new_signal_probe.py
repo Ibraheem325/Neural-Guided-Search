@@ -17,6 +17,16 @@ which is all that is needed for the g_s / matched-w measurement.
 """
 import json, glob, os, sys, time, torch, pymimir as mm
 from pathlib import Path
+
+# train_iqn.py sits beside this file in the archive but under training/ in the clean tree.
+# make_clean_repo.sh patches that on copy -- but these scripts get hand-copied between the
+# two trees, which silently reverts the patch and fails at import. Resolve it here instead,
+# so the same file works in either layout however it got there. No-op in the archive.
+for _d in ("training", "benchmark"):
+    _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), _d)
+    if os.path.isdir(_p) and _p not in sys.path:
+        sys.path.insert(0, _p)
+
 from utils import create_device
 from train_iqn import _load_model as _load_iqn
 import pymimir_rgnn as rgnn
