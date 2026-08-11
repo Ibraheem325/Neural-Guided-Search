@@ -236,3 +236,38 @@ DOMAINS = {
         ]),
 }
 
+# ---------------------------------------------------------------------------------------
+# The additive beta x eps_p sweep (submit_beta_eps_sweep.sh). 18 arms per domain, built as
+# a loop rather than 90 hand-written lines.
+#
+#   beta in {4,6,8}                  at eps_p = 0.001   -- the beta extension
+#   beta in {1,2,4,6,8} x eps_p in {0.26, 0.40, 0.60}   -- the beta x eps grid
+#
+# beta=1 and beta=2 at eps_p=0.001 already exist as <dom>_abs_t1b1k1 / _t1b2k1 and are
+# pulled in as the first row of the e001 table so the beta ladder reads 1,2,4,6,8.
+#
+# The eps rungs are the SAME on every domain so arms compare rung-for-rung. They are not
+# each domain's own matched mass W (satellite 0.25, goldminer 0.26, grid 0.27, rovers 0.27,
+# logistics 0.30) -- close, within 0.01-0.04, but say which you mean when reporting against
+# the flat controls.
+_BE_PREFIX = dict(goldminer="gm", grid="grid", logistics="log",
+                  rovers="rov", satellite="sat")
+_BE_LEGACY = {1: "_abs_t1b1k1", 2: "_abs_t1b2k1"}      # the existing eps=0.001 arms
+
+for _dom, _pfx in _BE_PREFIX.items():
+    _tables = []
+    for _e, _lab in (("001", "eps=0.001"), ("026", "eps=0.26"),
+                     ("040", "eps=0.40"), ("060", "eps=0.60")):
+        _arms = []
+        for _b in (1, 2, 4, 6, 8):
+            if _e == "001" and _b in _BE_LEGACY:
+                _arms.append((f"beta={_b} kappa=1", _pfx + _BE_LEGACY[_b]))
+            else:
+                _arms.append((f"beta={_b} kappa=1", f"{_pfx}_abs_b{_b}k1_e{_e}"))
+        _tables.append((f"ADDITIVE {_lab}", _arms))
+    DOMAINS[f"{_dom}_betaeps"] = dict(
+        base=DOMAINS[_dom]["base"],
+        probe=DOMAINS[_dom]["probe"],
+        optlen=DOMAINS[_dom]["optlen"],
+        tables=_tables,
+    )
