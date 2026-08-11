@@ -50,6 +50,7 @@ else:
             ("goldminer", "example/probeGold_near_goal_d5-20",
              "models/goldminer_iqn.pth", "models/goldminer_sac_policy.pth")]
 
+_INST = ""
 dev = create_device(False)
 canon = lambda x: str(x).lower().replace(" ", "")
 out = {}
@@ -104,7 +105,12 @@ for name, PROBE, IQN_M, POL_M in SETS:
         pidx = -1
         if plan_line is not None:
             pidx = next((j for j, a in enumerate(kacts) if canon(a) == canon(plan_line)), -1)
-        return dict(e=[round(v, 5) for v in es], p=[round(v, 6) for v in P], plan=pidx)
+        # `inst` lets a record be traced back to the probe it came from, which is what any
+        # per-instance analysis needs -- e.g. "do the instances the arm wins on actually
+        # have higher g_s, or is the win unrelated to the uncertainty the signal measures?"
+        # Without it the residuals are a pooled bag with no way back to the search results.
+        return dict(e=[round(v, 5) for v in es], p=[round(v, 6) for v in P], plan=pidx,
+                    inst=_INST)
 
     recs = []
     files = sorted(f for f in glob.glob(PROBE + "/*.pddl") if "domain" not in os.path.basename(f))
@@ -131,6 +137,7 @@ for name, PROBE, IQN_M, POL_M in SETS:
         _ed = sum(len(r["e"]) for r in recs)
         print(f"  {name}: instance {_i}/{len(files)}, {len(recs)} states, {_ed} edges, "
               f"{time.time() - _t0:.0f}s elapsed", flush=True)
+        globals()["_INST"] = os.path.basename(pf)[:-5]
         prob = mm.Problem(dom, pf)
         s = prob.get_initial_state(); g = prob.get_goal_condition()
         # No plan file -> measure the initial state only. Enough for g_s / matched w.
