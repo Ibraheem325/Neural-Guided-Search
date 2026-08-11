@@ -142,6 +142,20 @@ DOMAINS = {
                 ("eps=0.60 kappa=0",       "log_mul_e060_k0"),
             ]),
         ]),
+    # The c_puct = 2.97 rerun (goldminer's measured DeltaU/DeltaQ is 0.504).
+    # CAUTION: goldminer's median branching is 2, so the random control fails its own fit
+    # diagnostic (drawn g_s spread 0.1226 vs real 0.1222 -- no reduction). Read the random
+    # row here as weak evidence; the flat arms are the only clean control on this domain.
+    "goldminer_cp297": dict(
+        base="gm_base_cp297",
+        probe="example/probeGold_distinct_d5-22",
+        optlen="optlen_goldminer_distinct.json",
+        tables=[
+            ("ADDITIVE (c_puct=2.97)", [
+                ("beta=1 kappa=1",         "gm_abs_t1b1k1_cp297"),
+                ("random",                 "gm_abs_t1b1k1_rndm_cp297"),
+            ]),
+        ]),
     # The c_puct = 2.04 rerun (satellite's measured DeltaU/DeltaQ is 0.735, so 1.5/0.735).
     # Its own baseline, for the same reason as logistics_cp346: a comparison is only valid
     # within one exploration constant. Only the additive pair is listed so the table lines
