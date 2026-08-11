@@ -494,6 +494,42 @@ def _expand(node: Node,
     return _leaf_value(node.state, goal, q1_model, q2_model), generated
 
 
+class _SelectDiag:
+    """Relative influence of the prior term vs the value term inside _select.
+
+    Enabled by --diag_select. Costs two list appends per selection, so it is off by default.
+    """
+    __slots__ = ("on", "n", "dq", "du", "u_wins", "all_unvisited", "ratios")
+
+    def __init__(self):
+        self.on = False
+        self.n = 0
+        self.dq = 0.0
+        self.du = 0.0
+        self.u_wins = 0
+        self.all_unvisited = 0
+        self.ratios = []
+
+    def report(self):
+        if not self.on or self.n == 0:
+            return
+        import statistics as _st
+        fin = [r for r in self.ratios if r != float("inf")]
+        print(f"[Select] decisions {self.n}")
+        print(f"[Select] mean spread  q_norm {self.dq/self.n:.4f}   u {self.du/self.n:.4f}")
+        if fin:
+            print(f"[Select] spread ratio u/q  median {_st.median(fin):.3f}   "
+                  f"p10 {_st.quantiles(fin, n=10)[0]:.3f}  "
+                  f"p90 {_st.quantiles(fin, n=10)[8]:.3f}" if len(fin) >= 10 else
+                  f"[Select] spread ratio u/q  median {_st.median(fin):.3f}")
+        print(f"[Select] u spread exceeds q spread on {100.0*self.u_wins/self.n:.1f}% of decisions")
+        print(f"[Select] all siblings unvisited (prior alone decides) on "
+              f"{100.0*self.all_unvisited/self.n:.1f}% of decisions")
+
+
+_SEL = _SelectDiag()
+
+
 def _select(node: Node,
             c_puct: float,
             value_norm: _ValueNormalizer,
@@ -502,6 +538,7 @@ def _select(node: Node,
     best_action: Optional[mm.GroundAction] = None
     best_child: Optional[Node] = None
     sqrt_parent = math.sqrt(max(1, node.visit_count))
+    _qs, _us = [], []
     for action, child in node.children.items():
         if blocked is not None and child.state_key in blocked:
             continue
@@ -512,8 +549,27 @@ def _select(node: Node,
         # baseline, for the flattening control, and for prior-only arms.
         u = c_puct * node.explore_mult * node.prior[action] * sqrt_parent / (1 + n)
         score = q_norm + u
+        if _SEL.on:
+            _qs.append(q_norm); _us.append(u)
         if score > best_score:
             best_score, best_action, best_child = score, action, child
+    # WHO IS ACTUALLY DECIDING? The prior only enters through u, and q_norm is 0 for any
+    # action with n=0, so the prior's real job is choosing which actions get a FIRST visit.
+    # If the spread of u across siblings is small next to the spread of q_norm, the prior is
+    # decorative at this node and perturbing it -- with signal or with noise -- cannot matter.
+    # That is the hypothesis for why the random control matches the real signal on the
+    # low-branching domains, and it is not something the search results can answer.
+    if _SEL.on and len(_qs) >= 2:
+        dq = max(_qs) - min(_qs)
+        du = max(_us) - min(_us)
+        _SEL.n += 1
+        _SEL.dq += dq
+        _SEL.du += du
+        if du > dq:
+            _SEL.u_wins += 1
+        if all(q == 0.0 for q in _qs):        # nothing visited yet: prior alone decides
+            _SEL.all_unvisited += 1
+        _SEL.ratios.append(du / dq if dq > 0 else float("inf"))
     return best_action, best_child
 
 
@@ -637,6 +693,13 @@ def _parse_arguments() -> argparse.Namespace:
                              "Low-room probes solve before the gate opens (baseline, no "
                              "over-widening); high-room probes get the channel once they show "
                              "struggle. 0 = no gate. Try ~80-150.")
+    parser.add_argument("--diag_select", action="store_true",
+                        help="report how much the prior term (u) actually moves the pUCT "
+                             "decision relative to the value term (q_norm). The prior only "
+                             "enters through u, and q_norm is 0 for unvisited actions, so "
+                             "this measures whether perturbing the prior can matter at all "
+                             "on this domain -- the hypothesis behind random matching the "
+                             "real signal where branching is low.")
     parser.add_argument("--sib_random", default="",
                         help="RANDOM control, stronger than --sib_shuffle. Discards the signal "
                              "values entirely and draws an independent weight per child "
@@ -700,6 +763,7 @@ def _plan(problem: mm.Problem,
             stop_on_first_solution=not args.keep_searching,
         )
         print(f"[Final] Expanded: {generated}, Generated: {generated}", flush=True)
+        _SEL.report()
         print(f"[Cost] IQN forward calls: {_SIG.iqn_calls}", flush=True)
         mean_w = (_SIG.w_sum / _SIG.w_count) if _SIG.w_count else 0.0
         print(f"[Widen] nodes widened: {_SIG.w_count}, mean w: {mean_w:.4f}", flush=True)
@@ -723,6 +787,7 @@ def _plan(problem: mm.Problem,
 
 def _main(args: argparse.Namespace) -> None:
     print(f"Torch: {torch.__version__}", flush=True)
+    _SEL.on = args.diag_select
     domain = mm.Domain(str(args.domain))
     problem = mm.Problem(domain, str(args.problem))
     device = create_device(False)
