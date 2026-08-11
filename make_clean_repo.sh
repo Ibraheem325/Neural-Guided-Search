@@ -89,7 +89,7 @@ TRAIN_FILES="train_iqn.py train_sac.py train_dqn.py train_supervised.py
 # (--binc_beta, --add_beta, --width_beta, ...), so they would fail immediately. They need
 # regenerating against run_search_signal.sh's 19 arguments. Until then the originals remain
 # in the archive as the record of what was actually run.
-SLURM_FILES="run_search_signal.sh run_search.sh run_qstar_weight.sh run_alphazero.sh
+SLURM_FILES="run_search_signal.sh run_diag_select.sh run_search.sh run_qstar_weight.sh run_alphazero.sh
              run_fd_solve.sh run_fd_optimal.sh"
 # The 11 submit_*.sh come from clean_submit/ -- the same arms, PORTED to
 # run_search_signal.sh's 19 positional arguments. The originals in the repo root target the
