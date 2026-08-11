@@ -5,7 +5,8 @@ it while the typical instance is unchanged. This has bitten us before: a goldmin
 once had 82% of its total savings come from ONE probe. Run this before treating any net%
 as a real effect.
 
-Prints the top contributors to the total saving, the share carried by the top 1/3/5/10,
+Prints the top contributors to the total saving, the share carried by the top
+1/3/5/10/20/50 (with what fraction of the instance count that is),
 and the net% recomputed with the single largest contributor removed.
 
 Usage: venv/bin/python pair_contrib.py <arm_dir> <ctl_dir> [--prefix results]
@@ -60,9 +61,12 @@ for s, i in sorted(neg)[:A_.top]:
     print(f"{i:<34} {ctl[i][0]:>9,} {arm[i][0]:>9,} {s:>9,} {100.0*s/net:>8.1f}%")
 
 print("\nconcentration of the NET saving:")
-for k in (1, 3, 5, 10):
+for k in (1, 3, 5, 10, 20, 50):
+    if k > len(pos):
+        break
     share = sum(s for s, _ in pos[:k])
-    print(f"  top {k:>2} winners contribute {share:>9,}  = {100.0*share/net:>6.1f}% of net")
+    print(f"  top {k:>2} winners contribute {share:>9,}  = {100.0*share/net:>6.1f}% of net"
+          f"   ({100.0*k/len(shared):>4.1f}% of instances)")
 
 if pos:
     drop_s, drop_i = pos[0]
