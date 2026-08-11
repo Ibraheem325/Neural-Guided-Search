@@ -22,6 +22,11 @@ Six checks, each guarding a mistake this project actually made:
                     a state lifted from partway through a test plan, and nothing structurally
                     prevents it from matching an instance the model trained on.
 
+  4b. TRAINING-SET  --trained-on, for when the model was trained on a DIFFERENT dataset than
+      LEAKAGE       the probes came from. Logistics is that case: probes from
+                    logistics_dataset/test, models logistics_topo_*, trained on
+                    logistics_dataset_topo. Check 4 compares against the wrong dataset there.
+
   5. SPLIT OVERLAP  are the underlying dataset splits themselves disjoint? The datasets are
                     randomly generated, so a collision between train and test is possible and
                     would invalidate everything downstream.
@@ -46,6 +51,13 @@ ap.add_argument("probe_dir")
 ap.add_argument("--dataset", default=None,
                 help="dataset root with train/ val/ test/. Enables the leakage and "
                      "split-overlap checks; inferred from labels.csv when omitted.")
+ap.add_argument("--trained-on", dest="trained_on", default=None,
+                help="dataset the MODEL was trained on, when that differs from the one the "
+                     "probes were cut from. Logistics is exactly this case: its probes come "
+                     "from logistics_dataset/test while the models are logistics_topo_*, "
+                     "trained on logistics_dataset_topo. Leakage against --dataset says "
+                     "nothing there -- what matters is whether a probe state appears in the "
+                     "instances the model actually saw.")
 A_ = ap.parse_args()
 
 NAME = re.compile(r"^\d+_d(\d+)_(.+)$")
@@ -207,6 +219,39 @@ else:
         if got & {"train", "val"}:
             fails.append("probes drawn from train/val")
             print("   FAIL: probes come from a split used for training or model selection")
+
+# --- 4b. LEAKAGE AGAINST THE TRAINING DATASET, when it differs ------------------------
+# The dataset the probes were CUT FROM is not always the dataset the MODEL SAW. Logistics
+# is exactly that case: probes from logistics_dataset/test, models logistics_topo_*, trained
+# on logistics_dataset_topo. Check 4 compares against the wrong one there and would report a
+# clean pass while saying nothing about the only leakage that could invalidate a result.
+if A_.trained_on:
+    print(f"\n4b. LEAKAGE vs the dataset the MODEL was trained on ({A_.trained_on})")
+    if not os.path.isdir(A_.trained_on):
+        fails.append(f"--trained-on {A_.trained_on} is not a directory")
+        print(f"   FAIL: {A_.trained_on} is not a directory")
+    else:
+        tfp = {}
+        for sp in ("train", "val"):
+            d = os.path.join(A_.trained_on, sp)
+            if os.path.isdir(d):
+                tfp[sp] = {canon(f): os.path.basename(f) for f in glob.glob(d + "/*.pddl")
+                           if os.path.basename(f) != "domain.pddl"}
+        hit2 = []
+        for p_ in probes:
+            h = canon(p_)
+            for sp, m in tfp.items():
+                if h in m:
+                    hit2.append((os.path.basename(p_), sp, m[h]))
+        n = sum(len(m) for m in tfp.values())
+        if hit2:
+            fails.append(f"{len(hit2)} probes match a {A_.trained_on} train/val instance")
+            print(f"   FAIL: {len(hit2)} probes are identical to an instance the model saw")
+            for a, sp, b in hit2[:5]:
+                print(f"      {a}  ==  {sp}/{b}")
+        else:
+            print(f"   OK: none of {len(probes)} probes matches any of the {n} "
+                  f"train/val instances the model was trained on")
 
 # --- 5. SHAPE --------------------------------------------------------------------------
 print("\n6. SHAPE")
