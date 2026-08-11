@@ -510,7 +510,7 @@ class _SelectDiag:
 
     Enabled by --diag_select. Costs two list appends per selection, so it is off by default.
     """
-    __slots__ = ("on", "n", "dq", "du", "u_wins", "all_unvisited", "ratios")
+    __slots__ = ("on", "n", "dq", "du", "u_wins", "all_unvisited", "q_flat", "ratios")
 
     def __init__(self):
         self.on = False
@@ -519,6 +519,7 @@ class _SelectDiag:
         self.du = 0.0
         self.u_wins = 0
         self.all_unvisited = 0
+        self.q_flat = 0
         self.ratios = []
 
     def report(self):
@@ -536,6 +537,9 @@ class _SelectDiag:
         print(f"[Select] u spread exceeds q spread on {100.0*self.u_wins/self.n:.1f}% of decisions")
         print(f"[Select] all siblings unvisited (prior alone decides) on "
               f"{100.0*self.all_unvisited/self.n:.1f}% of decisions")
+        print(f"[Select] q_norm identical across siblings (u is the only tiebreak) on "
+              f"{100.0*self.q_flat/self.n:.1f}% of decisions"
+              f"   [ratio median above is over the other {100.0*(1-self.q_flat/self.n):.1f}%]")
 
 
 _SEL = _SelectDiag()
@@ -580,6 +584,13 @@ def _select(node: Node,
             _SEL.u_wins += 1
         if all(q == 0.0 for q in _qs):        # nothing visited yet: prior alone decides
             _SEL.all_unvisited += 1
+        if dq == 0.0:
+            # q_norm identical across siblings -- the value function discriminates nothing
+            # here, so u is the sole tiebreaker whether or not anything has been visited.
+            # Distinct from all_unvisited, and NOT counted in the ratio median below (dq=0
+            # makes the ratio infinite), which is why u_wins can read 100% while the median
+            # ratio reads 0.06.
+            _SEL.q_flat += 1
         _SEL.ratios.append(du / dq if dq > 0 else float("inf"))
     return best_action, best_child
 
