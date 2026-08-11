@@ -22,7 +22,7 @@ Six checks, each guarding a mistake this project actually made:
                     a state lifted from partway through a test plan, and nothing structurally
                     prevents it from matching an instance the model trained on.
 
-  4b. TRAINING-SET  --trained-on, for when the model was trained on a DIFFERENT dataset than
+  5b. TRAINING-SET  --trained-on, for when the model was trained on a DIFFERENT dataset than
       LEAKAGE       the probes came from. Logistics is that case: probes from
                     logistics_dataset/test, models logistics_topo_*, trained on
                     logistics_dataset_topo. Check 4 compares against the wrong dataset there.
@@ -97,6 +97,7 @@ print(f"### {A_.probe_dir}")
 print(f"{len(probes)} probes\n")
 
 fails = []
+overlap_fails = []   # split-overlap findings, downgradable by 5b (see below)
 
 # --- 1. INDEPENDENCE -------------------------------------------------------------------
 src = collections.Counter()
@@ -209,7 +210,9 @@ else:
         if a in split_fp and b in split_fp:
             common = set(split_fp[a]) & set(split_fp[b])
             if common:
-                bad = True; fails.append(f"{a}/{b} share {len(common)} instances")
+                bad = True
+                overlap_fails.append(f"{a}/{b} share {len(common)} instances")
+                fails.append(f"{a}/{b} share {len(common)} instances")
                 print(f"   FAIL: {a} and {b} share {len(common)} identical instances")
             else:
                 print(f"   OK: {a} vs {b} disjoint ({len(split_fp[a])} vs {len(split_fp[b])})")
@@ -220,13 +223,13 @@ else:
             fails.append("probes drawn from train/val")
             print("   FAIL: probes come from a split used for training or model selection")
 
-# --- 4b. LEAKAGE AGAINST THE TRAINING DATASET, when it differs ------------------------
+# --- 5b. LEAKAGE AGAINST THE TRAINING DATASET, when it differs -----------------------
 # The dataset the probes were CUT FROM is not always the dataset the MODEL SAW. Logistics
 # is exactly that case: probes from logistics_dataset/test, models logistics_topo_*, trained
 # on logistics_dataset_topo. Check 4 compares against the wrong one there and would report a
 # clean pass while saying nothing about the only leakage that could invalidate a result.
 if A_.trained_on:
-    print(f"\n4b. LEAKAGE vs the dataset the MODEL was trained on ({A_.trained_on})")
+    print(f"\n5b. LEAKAGE vs the dataset the MODEL was trained on ({A_.trained_on})")
     if not os.path.isdir(A_.trained_on):
         fails.append(f"--trained-on {A_.trained_on} is not a directory")
         print(f"   FAIL: {A_.trained_on} is not a directory")
@@ -252,6 +255,30 @@ if A_.trained_on:
         else:
             print(f"   OK: none of {len(probes)} probes matches any of the {n} "
                   f"train/val instances the model was trained on")
+            # The point of check 5 is that overlapping splits IMPLY possible leakage. Here
+            # leakage against the dataset that actually trained the model has been measured
+            # directly and is zero, so an overlap in the provenance dataset's splits is a
+            # defect in a dataset this model never learned from. Demote it, or the tool
+            # reports an unfixable FAIL on a sound probe set and stops being worth running.
+            tsp = {}
+            for sp in ("train", "val", "test"):
+                d2 = os.path.join(A_.trained_on, sp)
+                if os.path.isdir(d2):
+                    tsp[sp] = {canon(f) for f in glob.glob(d2 + "/*.pddl")
+                               if os.path.basename(f) != "domain.pddl"}
+            tbad = [f"{a}/{b}" for a, b in (("train", "val"), ("train", "test"), ("val", "test"))
+                    if a in tsp and b in tsp and (tsp[a] & tsp[b])]
+            if tbad:
+                print(f"   FAIL: the TRAINING dataset's own splits overlap: {', '.join(tbad)}")
+                fails.append(f"{A_.trained_on} splits overlap: {', '.join(tbad)}")
+            elif overlap_fails:
+                for f_ in overlap_fails:
+                    if f_ in fails:
+                        fails.remove(f_)
+                print(f"   -> demoting check 5 ({'; '.join(overlap_fails)}): those splits belong")
+                print(f"      to {ds}, which did not train this model. {A_.trained_on}'s own")
+                print(f"      splits are disjoint and no probe leaks into them. Still a real")
+                print(f"      dataset defect -- state it -- but it cannot have leaked here.")
 
 # --- 5. SHAPE --------------------------------------------------------------------------
 print("\n6. SHAPE")
