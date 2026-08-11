@@ -105,25 +105,33 @@ DOMAINS = {
             ]),
         ]),
     "logistics": dict(
-        base="multiloc_base_topopolicy",
-        probe="example/probeLog_multiloc_d5-20",
-        optlen="optlen_logistics.json",
+        # Rebuilt on the distinct probe set (2026-08-11). The old set --
+        # probeLog_multiloc_d5-20, baseline multiloc_base_topopolicy -- drew 288 probes
+        # from only 18 source problems, the worst ratio in the study.
+        # eps=0.30 is logistics' OWN matched mass (W=0.301 at beta=1, refit on these
+        # probes); the old config said 0.29, fitted on the 288-probe set.
+        # CROSS-DATASET: probes come from logistics_dataset/test (v1) while the models are
+        # logistics_topo_*, trained on logistics_dataset_topo, which has no test split.
+        base="log_base",
+        probe="example/probeLog_distinct_d5-22",
+        optlen="optlen_logistics_distinct.json",
         tables=[
             ("ADDITIVE", [
-                ("beta=1 kappa=1",         "logi_abs_t1b1k1"),
-                ("beta=1 kappa=0",         "logi_abs_t1b1k0"),
-                ("beta=2 kappa=1",         "logi_abs_t1b2k1"),
-                ("beta=0 kappa=1 (c(s))",  "logi_abs_t1b0k1"),
-                ("shuffle",                "logi_abs_t1b1k1_shuf"),
-                ("random",                 "logi_abs_t1b1k1_rndm"),
+                ("beta=1 kappa=1",         "log_abs_t1b1k1"),
+                ("beta=1 kappa=0",         "log_abs_t1b1k0"),
+                ("beta=2 kappa=1",         "log_abs_t1b2k1"),
+                ("beta=0 kappa=1 (c(s))",  "log_abs_t1b0k1"),
+                ("shuffle",                "log_abs_t1b1k1_shuf"),
+                ("random",                 "log_abs_t1b1k1_rndm"),
             ]),
             ("MULTIPLICATIVE", [
-                ("eps=0.001 kappa=0",      "logi_mul_e001_k0"),
-                ("eps=0.001 kappa=1",      "logi_mul_e001_k1"),
-                ("eps=0.29 kappa=0",       "logi_mul_e029_k0"),
-                ("eps=0.29 shuffle",       "logi_mul_e029_k0_shuf"),
-                ("eps=0.40 kappa=0",       "logi_mul_e040_k0"),
-                ("eps=0.60 kappa=0",       "logi_mul_e060_k0"),
+                ("eps=0.001 kappa=0",      "log_mul_e001_k0"),
+                ("eps=0.001 kappa=1",      "log_mul_e001_k1"),
+                ("eps=0.30 kappa=0",       "log_mul_e030_k0"),
+                ("eps=0.30 shuffle",       "log_mul_e030_k0_shuf"),
+                ("eps=0.40 kappa=0",       "log_mul_e040_k0"),
+                ("eps=0.40 shuffle",       "log_mul_e040_k0_shuf"),
+                ("eps=0.60 kappa=0",       "log_mul_e060_k0"),
             ]),
         ]),
     "grid": dict(
