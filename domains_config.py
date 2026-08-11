@@ -127,9 +127,13 @@ DOMAINS = {
             ]),
         ]),
     "grid": dict(
-        base="az_probe_qrval_base",
-        probe="example/probe_near_goal_d5-20",
-        optlen="optlen_grid.json",
+        # Rebuilt on the distinct probe set (2026-08-11). The old set --
+        # probe_near_goal_d5-20, baseline az_probe_qrval_base -- drew 480 probes from
+        # only 30 source problems, so every per-probe count was inflated ~16x.
+        # eps=0.27 is grid's OWN matched mass (W=0.265 at beta=1, refit on these probes).
+        base="grid_base",
+        probe="example/probeGrid_distinct_d5-22",
+        optlen="optlen_grid_distinct.json",
         tables=[
             ("ADDITIVE", [
                 ("beta=1 kappa=1",         "grid_abs_t1b1k1"),
