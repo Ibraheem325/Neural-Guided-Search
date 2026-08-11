@@ -142,6 +142,28 @@ DOMAINS = {
                 ("eps=0.60 kappa=0",       "log_mul_e060_k0"),
             ]),
         ]),
+    # The c_puct = 2.87 rerun (grid's measured DeltaU/DeltaQ is 0.523).
+    "grid_cp287": dict(
+        base="grid_base_cp287",
+        probe="example/probeGrid_distinct_d5-22",
+        optlen="optlen_grid_distinct.json",
+        tables=[
+            ("ADDITIVE (c_puct=2.87)", [
+                ("beta=1 kappa=1",         "grid_abs_t1b1k1_cp287"),
+                ("random",                 "grid_abs_t1b1k1_rndm_cp287"),
+            ]),
+        ]),
+    # The c_puct = 2.69 rerun (rovers' measured DeltaU/DeltaQ is 0.558).
+    "rovers_cp269": dict(
+        base="rov_base_cp269",
+        probe="example/probeRov_distinct_d5-22",
+        optlen="optlen_rovers_distinct.json",
+        tables=[
+            ("ADDITIVE (c_puct=2.69)", [
+                ("beta=1 kappa=1",         "rov_abs_t1b1k1_cp269"),
+                ("random",                 "rov_abs_t1b1k1_rndm_cp269"),
+            ]),
+        ]),
     # The c_puct = 2.97 rerun (goldminer's measured DeltaU/DeltaQ is 0.504).
     # CAUTION: goldminer's median branching is 2, so the random control fails its own fit
     # diagnostic (drawn g_s spread 0.1226 vs real 0.1222 -- no reduction). Read the random
