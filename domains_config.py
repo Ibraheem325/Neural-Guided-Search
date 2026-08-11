@@ -142,6 +142,21 @@ DOMAINS = {
                 ("eps=0.60 kappa=0",       "log_mul_e060_k0"),
             ]),
         ]),
+    # The c_puct = 2.04 rerun (satellite's measured DeltaU/DeltaQ is 0.735, so 1.5/0.735).
+    # Its own baseline, for the same reason as logistics_cp346: a comparison is only valid
+    # within one exploration constant. Only the additive pair is listed so the table lines
+    # up row-for-row with logistics_cp346; sat_mul_e025_k0_cp204 and sat_flat025_cp204 also
+    # exist and are compared directly with cluster_contrib.
+    "satellite_cp204": dict(
+        base="sat_base_cp204",
+        probe="example/probeSat_distinct_d5-22",
+        optlen="optlen_satellite_distinct.json",
+        tables=[
+            ("ADDITIVE (c_puct=2.04)", [
+                ("beta=1 kappa=1",         "sat_abs_t1b1k1_cp204"),
+                ("random",                 "sat_abs_t1b1k1_rndm_cp204"),
+            ]),
+        ]),
     # The c_puct = 3.46 rerun (logistics' measured DeltaU/DeltaQ is 0.433, so 1.5/0.433).
     # Same probes, same optlen, different exploration constant -- so it needs its own
     # baseline: a comparison is only valid within one c_puct. Kept as a separate domain key
