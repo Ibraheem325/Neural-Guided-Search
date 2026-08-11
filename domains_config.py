@@ -10,9 +10,16 @@ results dir) in the order they should print.
 
 DOMAINS = {
     "goldminer": dict(
+        # Rebuilt on the distinct probe set (2026-08-11). The old set --
+        # probeGold_near_goal_d5-20 -- drew 480 probes from only 30 source problems, and
+        # 64 of them came from VAL, the split used for checkpoint selection.
+        # eps=0.26 is goldminer's OWN matched mass (W=0.258 at beta=1, refit on these
+        # probes); the old config said 0.28.
+        # CAUTION: median branching is 2, so shuffle degenerates and the random control
+        # fails its fit diagnostic. The flat arms are the only clean control here.
         base="gm_base",
-        probe="example/probeGold_near_goal_d5-20",
-        optlen="optlen_goldminer.json",
+        probe="example/probeGold_distinct_d5-22",
+        optlen="optlen_goldminer_distinct.json",
         tables=[
             ("ADDITIVE", [
                 ("beta=1 kappa=1",         "gm_abs_t1b1k1"),
@@ -25,10 +32,11 @@ DOMAINS = {
             ("MULTIPLICATIVE", [
                 ("eps=0.001 kappa=0",      "gm_mul_e001_k0"),
                 ("eps=0.001 kappa=1",      "gm_mul_e001_k1"),
-                ("eps=0.28 kappa=0",       "gm_mul_e028_k0"),
+                ("eps=0.26 kappa=0",       "gm_mul_e026_k0"),
                 ("eps=0.40 kappa=0",       "gm_mul_e040_k0"),
+                ("eps=0.40 shuffle",       "gm_mul_e040_k0_shuf"),
                 ("eps=0.60 kappa=0",       "gm_mul_e060_k0"),
-                ("eps=0.28 shuffle",       "gm_mul_e028_k0_shuf"),
+                ("eps=0.26 shuffle",       "gm_mul_e026_k0_shuf"),
             ]),
         ]),
     "satellite": dict(
