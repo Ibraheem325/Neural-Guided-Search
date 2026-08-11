@@ -142,6 +142,20 @@ DOMAINS = {
                 ("eps=0.60 kappa=0",       "log_mul_e060_k0"),
             ]),
         ]),
+    # The c_puct = 3.46 rerun (logistics' measured DeltaU/DeltaQ is 0.433, so 1.5/0.433).
+    # Same probes, same optlen, different exploration constant -- so it needs its own
+    # baseline: a comparison is only valid within one c_puct. Kept as a separate domain key
+    # rather than replacing "logistics", because both columns belong in the writeup.
+    "logistics_cp346": dict(
+        base="log_base_cp346",
+        probe="example/probeLog_distinct_d5-22",
+        optlen="optlen_logistics_distinct.json",
+        tables=[
+            ("ADDITIVE (c_puct=3.46)", [
+                ("beta=1 kappa=1",         "log_abs_t1b1k1_cp346"),
+                ("random",                 "log_abs_t1b1k1_rndm_cp346"),
+            ]),
+        ]),
     "grid": dict(
         # Rebuilt on the distinct probe set (2026-08-11). The old set --
         # probe_near_goal_d5-20, baseline az_probe_qrval_base -- drew 480 probes from
