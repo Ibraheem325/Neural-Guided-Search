@@ -77,9 +77,13 @@ for p in glob.glob(PROBE + "/*.pddl"):
 if os.path.exists(OPTLEN):
     import json
     fd = json.load(open(OPTLEN))
-    n_fd = sum(1 for k in fd if k in OPT)
+    # Whole-instance sets have no encoded d, so OPT starts EMPTY and the old intersection
+    # discarded every FD length -- leaving no optimal lengths and an empty common set.
+    # Accept any FD entry naming a probe in this set.
+    names = {os.path.basename(p)[:-5] for p in glob.glob(PROBE + "/*.pddl")}
+    n_fd = sum(1 for k in fd if k in OPT or k in names)
     n_diff = sum(1 for k, v in fd.items() if k in OPT and v != OPT[k])
-    OPT.update({k: v for k, v in fd.items() if k in OPT})
+    OPT.update({k: v for k, v in fd.items() if k in OPT or k in names})
     SRC = (f"Fast Downward ({OPTLEN}), {n_fd} probes; {len(OPT)-n_fd} fall back to d"
            + (f"; {n_diff} differ from d" if n_diff else "; identical to d everywhere"))
 

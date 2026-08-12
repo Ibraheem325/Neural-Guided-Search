@@ -74,13 +74,14 @@ if not base:
 all_probes = {}
 for p in glob.glob(CFG["probe"] + "/*.pddl"):
     n = os.path.basename(p)[:-5]
-    b = base_of(n)
-    if b:
-        all_probes.setdefault(b, set()).add(n)
+    b = base_of(n) or n      # no `_d<dd>_` group -> whole instance, its own base problem
+    all_probes.setdefault(b, set()).add(n)
 NBASE = len(all_probes)
 NPROBE = sum(len(v) for v in all_probes.values())
 
 print(f"### {A_.domain.upper()} -- BASE PROBLEMS AS THE UNIT ###")
+if not NBASE:
+    raise SystemExit(f"no instances found in {CFG['probe']}")
 print(f"probe set {CFG['probe']}: {NPROBE} probes from {NBASE} base problems "
       f"({NPROBE/NBASE:.1f} per problem)\n")
 

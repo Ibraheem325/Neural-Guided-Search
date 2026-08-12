@@ -61,10 +61,16 @@ groups = {}
 unparsed = 0
 for i in shared:
     m = PROBE.match(i)
-    if not m:
+    if m:
+        depth, base = int(m.group(1)), m.group(2)
+    else:
+        # WHOLE-INSTANCE sets (the in-distribution ones) carry no `_d<dd>_` group: they are
+        # not probes cut from a plan, so there is no depth and no shared source problem.
+        # Each instance IS its own base problem, which is the ideal case for this test --
+        # no clustering to correct for. Previously these fell through as "unparsed" and left
+        # zero groups, which divided by zero.
         unparsed += 1
-        continue
-    depth, base = int(m.group(1)), m.group(2)
+        depth, base = -1, i
     g = groups.setdefault(base, {"a": 0, "c": 0, "win": 0, "loss": 0, "tie": 0, "d": []})
     g["a"] += arm[i][0]; g["c"] += ctl[i][0]
     if arm[i][0] < ctl[i][0]:
@@ -77,7 +83,7 @@ for i in shared:
 
 print(f"{A_.arm}  vs  {A_.ctl}")
 print(f"probes shared: {len(shared)}   base problems: {len(groups)}"
-      + (f"   (unparsed names: {unparsed})" if unparsed else ""))
+      + (f"   ({unparsed} whole instances, each its own base problem)" if unparsed else ""))
 
 tot_c = sum(g["c"] for g in groups.values())
 tot_net = sum(g["c"] - g["a"] for g in groups.values())
