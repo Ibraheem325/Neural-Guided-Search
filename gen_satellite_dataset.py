@@ -20,13 +20,78 @@ Ranges rescaled upward so train can host 8 satellites (needs n >= 2s+6 = 22).
 
 Usage: venv/bin/python gen_satellite_dataset.py <satgen_path> <out_dir>
 """
-import sys, os, re, random, subprocess, collections
+import sys, os, re, glob, random, hashlib, subprocess, collections
 
-SATGEN, OUT = sys.argv[1], sys.argv[2]
+# Positionals, with flags stripped. Reading sys.argv[1]/[2] directly would silently take a
+# flag VALUE as the output directory if the flags were passed first, and gen_rovers_dataset
+# already learned that lesson: an unrecognised flag there once produced the DEFAULT dataset
+# and printed a normal-looking summary.
+_FLAGS_WITH_VALUE = {"--split", "--seed", "--exclude"}
+_pos, _i = [], 1
+while _i < len(sys.argv):
+    _a = sys.argv[_i]
+    if _a.startswith("--"):
+        if _a not in _FLAGS_WITH_VALUE:
+            sys.exit(f"unknown option {_a}\n  known: {' '.join(sorted(_FLAGS_WITH_VALUE))}")
+        _i += 2
+        continue
+    _pos.append(_a); _i += 1
+if len(_pos) != 2:
+    sys.exit(f"expected <satgen_path> <out_dir>, got {len(_pos)}: {_pos}")
+SATGEN, OUT = _pos
 SPLITS = [("train", "TR2s", 400, 8, 22),
           ("val",   "VAL2s", 120, 23, 45),
           ("test",  "TST2s", 120, 46, 95)]
 RSEED = 20260803
+
+# --- overrides, for building an IN-DISTRIBUTION test set with the REAL satgen ------------
+# The shipped SPLITS give each split a disjoint object range, which is what makes every
+# result in this study a size-extrapolation result. To build the missing condition, point a
+# split at the TRAINING range with a different seed:
+#
+#   --split test_ind:IND2s:120:8:22  --seed 20260812 \
+#   --exclude example/satellite_dataset_s18/train example/satellite_dataset_s18/val
+#
+# --exclude rejects any instance whose canonical (:objects)+(:init)+(:goal) matches one in
+# those directories. Without it, generating at the training range can and will re-emit
+# instances the model was trained on -- the disjoint ranges were previously the only thing
+# preventing that.
+_ov = [sys.argv[i + 1] for i, a in enumerate(sys.argv) if a == "--split"]
+if _ov:
+    SPLITS = []
+    for _o in _ov:
+        _n, _t, _c, _lo, _hi = _o.split(":")
+        SPLITS.append((_n, _t, int(_c), int(_lo), int(_hi)))
+if "--seed" in sys.argv:
+    RSEED = int(sys.argv[sys.argv.index("--seed") + 1])
+EXCLUDE = [sys.argv[i + 1] for i, a in enumerate(sys.argv) if a == "--exclude"]
+
+
+def _canon(txt):
+    txt = txt.lower(); parts = []
+    for sec in (":objects", ":init", ":goal"):
+        i = txt.find("(" + sec)
+        if i < 0:
+            parts.append(""); continue
+        j, d = i, 0
+        while j < len(txt):
+            if txt[j] == "(": d += 1
+            elif txt[j] == ")":
+                d -= 1
+                if d == 0: break
+            j += 1
+        parts.append("|".join(sorted(a.strip() for a in
+                                     re.findall(r"\(([^()]*)\)", txt[i:j + 1]) if a.strip())))
+    return hashlib.sha1("||".join(parts).encode()).hexdigest()
+
+
+_SEEN = set()
+for _d in EXCLUDE:
+    for _f in glob.glob(os.path.join(_d, "*.pddl")):
+        if os.path.basename(_f) != "domain.pddl":
+            _SEEN.add(_canon(open(_f, errors="ignore").read()))
+if EXCLUDE:
+    print(f"excluding {len(_SEEN)} fingerprints from {len(EXCLUDE)} directories")
 
 
 def count_objects(txt):
@@ -58,7 +123,7 @@ def main():
     for split, tag, count, n_lo, n_hi in SPLITS:
         d = os.path.join(OUT, split)
         os.makedirs(d, exist_ok=True)
-        made = tries = 0
+        made = tries = dup = 0
         sat = collections.Counter(); ins = collections.Counter(); nobj = []
         while made < count and tries < count * 200:
             tries += 1
@@ -90,12 +155,18 @@ def main():
             a_s = c.get("satellite", 0)
             if a_s != s:                                 # sanity: satellites must be exact
                 continue
+            h = _canon(txt)
+            if h in _SEEN:                               # never re-emit a training instance
+                dup += 1
+                continue
+            _SEEN.add(h)
             name = f"{made:03d}_p-{tag}-n{n}-s{s}i{i}m{m}t{t}-{seed}.pddl"
             with open(os.path.join(d, name), "w") as fh:
                 fh.write(txt)
             made += 1; sat[s] += 1; ins[c.get("instrument", 0)] += 1; nobj.append(n)
         print(f"{split}: {made} instances  objects {min(nobj)}-{max(nobj)} "
-              f"(median {sorted(nobj)[len(nobj)//2]})")
+              f"(median {sorted(nobj)[len(nobj)//2]})"
+              + (f"   [{dup} rejected as duplicates of excluded instances]" if dup else ""))
         print(f"   satellites: {dict(sorted(sat.items()))}")
         print(f"   total instruments: {dict(sorted(ins.items()))}")
 
