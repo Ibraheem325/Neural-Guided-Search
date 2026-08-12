@@ -10,6 +10,10 @@ uninformative rather than negative.
 
 Reports, over every probe in the directory:
 
+  DeltaQ, DeltaU  the two spreads SEPARATELY, as medians across probes. The ratio alone
+                 hides whether a small value means the prior term is tiny or the value term
+                 is huge, and those have different fixes -- the first is a c_puct problem,
+                 the second is not.
   ratio          per-probe median DeltaU/DeltaQ, then the median and IQR ACROSS probes.
                  Probe-level medians first, so one long search cannot dominate.
   implied c_puct the c_puct that would bring the median ratio to 1.0, = c_puct / ratio.
@@ -70,6 +74,19 @@ for d in sys.argv[1:]:
     dec = sum(r["n"] for r in rows)
     print(f"  decisions total            {dec:,}   (per probe: median "
           f"{st.median(r['n'] for r in rows):,.0f})")
+
+    # DeltaQ and DeltaU separately. The ratio alone hides whether a small ratio means the
+    # prior term is tiny or the value term is huge, and those have different fixes: the
+    # first is a c_puct problem, the second is not.
+    for k, lab in (("dq", "DeltaQ  mean spread of q_norm"),
+                   ("du", "DeltaU  mean spread of u     ")):
+        v = sorted(r[k] for r in rows if r[k] is not None)
+        if v:
+            vq = st.quantiles(v, n=4) if len(v) >= 4 else [float("nan")] * 3
+            print(f"  {lab}   median {st.median(v):.4f}   "
+                  f"p25 {vq[0]:.4f}  p75 {vq[2]:.4f}   "
+                  f"min {v[0]:.4f}  max {v[-1]:.4f}")
+
     print(f"  DeltaU/DeltaQ  median      {med:.3f}   "
           f"p25 {q[0]:.3f}  p75 {q[2]:.3f}   min {rs[0]:.3f}  max {rs[-1]:.3f}")
     print(f"  probes with ratio >= 1.0   {sum(1 for r in rs if r >= 1.0)}/{len(rs)}")
