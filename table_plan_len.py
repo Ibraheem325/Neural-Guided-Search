@@ -80,7 +80,8 @@ if os.path.exists(OPTLEN):
     # Whole-instance sets have no encoded d, so OPT starts EMPTY and the old intersection
     # discarded every FD length -- leaving no optimal lengths and an empty common set.
     # Accept any FD entry naming a probe in this set.
-    names = {os.path.basename(p)[:-5] for p in glob.glob(PROBE + "/*.pddl")}
+    names = {os.path.basename(p)[:-5] for p in glob.glob(PROBE + "/*.pddl")
+             if os.path.basename(p) != "domain.pddl"}
     n_fd = sum(1 for k in fd if k in OPT or k in names)
     n_diff = sum(1 for k, v in fd.items() if k in OPT and v != OPT[k])
     OPT.update({k: v for k, v in fd.items() if k in OPT or k in names})

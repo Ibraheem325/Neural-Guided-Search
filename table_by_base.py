@@ -62,8 +62,14 @@ def binom_p(k, n):
 
 
 def base_of(name):
+    """Base problem for a probe name.
+
+    Probe sets encode `<idx>_d<dd>_<source>` and several probes share one source. WHOLE
+    INSTANCE sets (the in-distribution ones) have no such group -- each file is its own
+    problem -- so the name itself is the group. Returning None there left the results
+    grouping empty and every arm reported 0 improved / 0 regressed."""
     m = PROBE.match(name)
-    return m.group(2) if m else None
+    return m.group(2) if m else name
 
 
 base = load(CFG["base"])
@@ -73,9 +79,10 @@ if not base:
 # every probe in the set, grouped by base problem -- the denominator for BP coverage
 all_probes = {}
 for p in glob.glob(CFG["probe"] + "/*.pddl"):
+    if os.path.basename(p) == "domain.pddl":
+        continue
     n = os.path.basename(p)[:-5]
-    b = base_of(n) or n      # no `_d<dd>_` group -> whole instance, its own base problem
-    all_probes.setdefault(b, set()).add(n)
+    all_probes.setdefault(base_of(n), set()).add(n)
 NBASE = len(all_probes)
 NPROBE = sum(len(v) for v in all_probes.values())
 
