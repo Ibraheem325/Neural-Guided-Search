@@ -20,7 +20,9 @@ Per eps it reports:
   unreachable   share of states with P(a*) < 1e-3, the threshold prior_peak.py uses for
                 "numerically unreachable by the exploration term".
   sims to try   N at which the plan action's u first matches a q_norm gap of --qgap, for an
-                UNVISITED action (n_a = 0):
+                UNVISITED action (n_a = 0). REPORTED AT THE MEDIAN AND AT p90 -- the median
+                describes states that were never the problem, where P(a*) is already large
+                and eps only takes mass away from it. The mechanism lives in the tail.
                       c * P0(a*) * sqrt(N) = qgap   =>   N = (qgap / (c P0))^2
                 Reported as a median over states. This is the honest form of "the count
                 bonus can now surface it": not whether it is possible, but when.
@@ -57,7 +59,7 @@ for name, recs in sets.items():
     print(f"### {name}   {len(on_plan)} on-plan states   K: median {st.median(ks):.0f} "
           f"(min {min(ks)}, max {max(ks)})   c_puct={A_.c}  qgap={A_.qgap}")
     print(f"  {'eps':>6}  {'floor eps/K':>12}  {'P(a*) med':>10}  {'<1e-3':>7}  "
-          f"{'sims to try a*':>16}  {'spread(P0)':>11}")
+          f"{'sims med':>13}  {'sims p90':>15}  {'spread(P0)':>11}")
 
     for eps in EPS:
         pstar, unreach, sims, spread = [], 0, [], []
@@ -71,10 +73,14 @@ for name, recs in sets.items():
             # N at which c * P0(a*) * sqrt(N) reaches qgap, for an unvisited action
             sims.append((A_.qgap / (A_.c * ps)) ** 2 if ps > 0 else float("inf"))
             spread.append(max(p0) - min(p0))
-        fin = [s for s in sims if s != float("inf")]
+        fin = sorted(s for s in sims if s != float("inf"))
         med_sims = st.median(fin) if fin else float("inf")
+        # The MEDIAN describes states that were never the problem -- P(a*) is already fine
+        # there and eps only takes mass away from it. The mechanism lives in the tail, so
+        # p90 is the number that answers "how long before the neglected action is tried".
+        p90 = fin[int(0.9 * (len(fin) - 1))] if fin else float("inf")
         print(f"  {eps:>6.3f}  {eps/st.median(ks):>12.5f}  {st.median(pstar):>10.5f}  "
-              f"{100.0*unreach/len(on_plan):>6.1f}%  {med_sims:>16,.0f}  "
+              f"{100.0*unreach/len(on_plan):>6.1f}%  {med_sims:>13,.0f}  {p90:>15,.0f}  "
               f"{st.median(spread):>11.4f}")
 
     print("  (sims to try a* is the median over states of the simulation count at which the")
