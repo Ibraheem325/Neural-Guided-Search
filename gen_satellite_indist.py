@@ -40,7 +40,7 @@ Usage:
                                                example/satIndist_120 120 \\
                                                --val example/satellite_dataset_s18/val
 """
-import sys, os, re, glob, random, hashlib, argparse, collections, statistics as st
+import sys, os, re, csv, glob, random, hashlib, argparse, collections, statistics as st
 
 ap = argparse.ArgumentParser()
 ap.add_argument("train_dir")
@@ -192,7 +192,7 @@ else:
     print(f"WARNING: no domain.pddl found near {A_.train_dir}")
 
 written, collisions, tries = 0, 0, 0
-made = []
+made, rows = [], []
 while written < A_.n:
     tries += 1
     if tries > A_.n * A_.max_tries:
@@ -213,7 +213,18 @@ while written < A_.n:
     name = f"{written:03d}_p-IND-n{sat+ins+mod+dirs}-s{sat}i{ins}m{mod}d{dirs}g{nimg}p{npnt}"
     open(os.path.join(A_.out_dir, name + ".pddl"), "w").write(txt)
     made.append((sat + ins + mod + dirs, nimg, npnt))
+    rows.append(dict(file=name + ".pddl", distance_to_goal="", source_split="generated",
+                     source_problem="", source_plan_len="",
+                     num_objects=sat + ins + mod + dirs))
     written += 1
+
+# labels.csv so check_probe_set.py's SHAPE section works and the set is self-describing.
+# distance_to_goal is deliberately EMPTY: these are whole instances used from their initial
+# state, so there is no depth to record -- that is the difference from the probe sets.
+with open(os.path.join(A_.out_dir, "labels.csv"), "w", newline="") as fh:
+    w = csv.DictWriter(fh, fieldnames=["file", "distance_to_goal", "source_split",
+                                       "source_problem", "source_plan_len", "num_objects"])
+    w.writeheader(); w.writerows(rows)
 
 o = [m[0] for m in made]
 g = [m[1] for m in made]
