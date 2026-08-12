@@ -291,3 +291,36 @@ for _dom, _stem, _lab in (
             ("random",   f"{_stem}_rndm"),
         ])],
     )
+
+# Satellite IN-DISTRIBUTION (example/satIndist_120, submit_sat_indist.sh). Whole instances
+# whose shape is resampled from the training split, so the model is evaluated on the kind of
+# problem it was trained on rather than on 4.5x-larger ones. eps=0.22 is this set's own
+# matched mass (W=0.218 at beta=1); the extrapolated set's was 0.25.
+DOMAINS["satellite_indist"] = dict(
+    base="sind_base",
+    probe="example/satIndist_120",
+    optlen="optlen_satellite_indist.json",
+    tables=[
+        ("ADDITIVE", [
+            ("beta=1 kappa=1",         "sind_abs_t1b1k1"),
+            ("beta=1 kappa=0",         "sind_abs_t1b1k0"),
+            ("beta=2 kappa=1",         "sind_abs_t1b2k1"),
+            ("beta=0 kappa=1 (c(s))",  "sind_abs_t1b0k1"),
+            ("shuffle",                "sind_abs_t1b1k1_shuf"),
+            ("random",                 "sind_abs_t1b1k1_rndm"),
+        ]),
+        ("ADDITIVE beta=8 + controls", [
+            ("beta=8 kappa=1",         "sind_abs_b8k1_e001"),
+            ("shuffle",                "sind_abs_b8k1_e001_shuf"),
+            ("random",                 "sind_abs_b8k1_e001_rndm"),
+        ]),
+        ("MULTIPLICATIVE", [
+            ("eps=0.001 kappa=0",      "sind_mul_e001_k0"),
+            ("eps=0.001 kappa=1",      "sind_mul_e001_k1"),
+            ("eps=0.22 kappa=0",       "sind_mul_e022_k0"),
+            ("eps=0.22 shuffle",       "sind_mul_e022_k0_shuf"),
+            ("eps=0.40 kappa=0",       "sind_mul_e040_k0"),
+            ("eps=0.40 shuffle",       "sind_mul_e040_k0_shuf"),
+            ("eps=0.60 kappa=0",       "sind_mul_e060_k0"),
+        ]),
+    ])
