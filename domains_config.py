@@ -323,4 +323,12 @@ DOMAINS["satellite_indist"] = dict(
             ("eps=0.40 shuffle",       "sind_mul_e040_k0_shuf"),
             ("eps=0.60 kappa=0",       "sind_mul_e060_k0"),
         ]),
+        # Flattening arms are listed here, unlike every other domain, so one invocation
+        # covers all 20 arms that were run. They were previously compared only by hand with
+        # cluster_contrib, which is why no domain's tables ever included them.
+        ("FLATTENING (signal-free)", [
+            ("w=0.22 (matched)",       "sind_flat022"),
+            ("w=0.40",                 "sind_flat040"),
+            ("w=0.60",                 "sind_flat060"),
+        ]),
     ])
