@@ -271,3 +271,23 @@ for _dom, _pfx in _BE_PREFIX.items():
         optlen=DOMAINS[_dom]["optlen"],
         tables=_tables,
     )
+
+# High-beta controls (submit_highbeta_controls.sh). At beta=8 both the real arm and its
+# controls have discarded the policy -- P+ -> x_a/(K g_s) -- so these compare a
+# residual-ordered prior against a shuffled one and a random one. That is a sharper test
+# than the beta=1 controls, which only ever compared small nudges.
+for _dom, _stem, _lab in (
+        ("satellite", "sat_abs_b8k1_e001", "beta=8 eps=0.001"),
+        ("satellite", "sat_abs_b4k1_e026", "beta=4 eps=0.26"),
+        ("logistics", "log_abs_b6k1_e001", "beta=6 eps=0.001"),
+        ("rovers",    "rov_abs_b4k1_e026", "beta=4 eps=0.26")):
+    DOMAINS[f"{_stem}_ctl"] = dict(
+        base=DOMAINS[_dom]["base"],
+        probe=DOMAINS[_dom]["probe"],
+        optlen=DOMAINS[_dom]["optlen"],
+        tables=[(f"ADDITIVE {_lab} + controls", [
+            (_lab,       _stem),
+            ("shuffle",  f"{_stem}_shuf"),
+            ("random",   f"{_stem}_rndm"),
+        ])],
+    )
