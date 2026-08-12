@@ -283,11 +283,16 @@ if A_.trained_on:
 # --- 5. SHAPE --------------------------------------------------------------------------
 print("\n6. SHAPE")
 if rows:
-    d = [int(r["distance_to_goal"]) for r in rows]
+    # Whole-instance sets leave distance_to_goal EMPTY -- they are not cut d steps from the
+    # goal, so there is no depth. Skip the depth report rather than crashing on int("").
+    d = [int(r["distance_to_goal"]) for r in rows if str(r.get("distance_to_goal", "")).strip()]
     o = [int(r["num_objects"]) for r in rows if r.get("num_objects", "").strip().isdigit()]
-    hd = collections.Counter(d)
-    print(f"   distance-to-goal : {min(d)}-{max(d)}   per depth "
-          f"min {min(hd.values())} max {max(hd.values())}")
+    if d:
+        hd = collections.Counter(d)
+        print(f"   distance-to-goal : {min(d)}-{max(d)}   per depth "
+              f"min {min(hd.values())} max {max(hd.values())}")
+    else:
+        print("   distance-to-goal : none recorded (whole instances, not probes cut at depth)")
     if o:
         print(f"   objects          : {min(o)}-{max(o)} (median {st.median(o):.0f})")
         if ds and os.path.isdir(os.path.join(ds, "train")):
