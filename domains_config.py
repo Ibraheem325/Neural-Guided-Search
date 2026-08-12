@@ -332,3 +332,43 @@ DOMAINS["satellite_indist"] = dict(
             ("w=0.60",                 "sind_flat060"),
         ]),
     ])
+
+# Goldminer IN-DISTRIBUTION (example/gmIndist_120, submit_gm_indist.sh). Whole instances
+# whose grid size, rock density and clear-cell count are resampled from the training split.
+# eps=0.26 is this set's own matched mass (W=0.261), which happens to equal the extrapolated
+# set's rung. NOTE the random arm is degenerate on goldminer in BOTH conditions -- median
+# branching 3, so fit_random_control cannot reduce the g_s spread (0.1091 -> 0.1066). The
+# flat arms are the only clean control here.
+DOMAINS["goldminer_indist"] = dict(
+    base="gind_base",
+    probe="example/gmIndist_120",
+    optlen="optlen_goldminer_indist.json",
+    tables=[
+        ("ADDITIVE", [
+            ("beta=1 kappa=1",         "gind_abs_t1b1k1"),
+            ("beta=1 kappa=0",         "gind_abs_t1b1k0"),
+            ("beta=2 kappa=1",         "gind_abs_t1b2k1"),
+            ("beta=0 kappa=1 (c(s))",  "gind_abs_t1b0k1"),
+            ("shuffle",                "gind_abs_t1b1k1_shuf"),
+            ("random",                 "gind_abs_t1b1k1_rndm"),
+        ]),
+        ("ADDITIVE beta=8 + controls", [
+            ("beta=8 kappa=1",         "gind_abs_b8k1_e001"),
+            ("shuffle",                "gind_abs_b8k1_e001_shuf"),
+            ("random",                 "gind_abs_b8k1_e001_rndm"),
+        ]),
+        ("MULTIPLICATIVE", [
+            ("eps=0.001 kappa=0",      "gind_mul_e001_k0"),
+            ("eps=0.001 kappa=1",      "gind_mul_e001_k1"),
+            ("eps=0.26 kappa=0",       "gind_mul_e026_k0"),
+            ("eps=0.26 shuffle",       "gind_mul_e026_k0_shuf"),
+            ("eps=0.40 kappa=0",       "gind_mul_e040_k0"),
+            ("eps=0.40 shuffle",       "gind_mul_e040_k0_shuf"),
+            ("eps=0.60 kappa=0",       "gind_mul_e060_k0"),
+        ]),
+        ("FLATTENING (signal-free)", [
+            ("w=0.26 (matched)",       "gind_flat026"),
+            ("w=0.40",                 "gind_flat040"),
+            ("w=0.60",                 "gind_flat060"),
+        ]),
+    ])
