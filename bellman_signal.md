@@ -1,6 +1,6 @@
 # Bellman inconsistency signal
 
-As implemented in `alphaZero_bellman.py` (OPTION 9, flags `--abs_signal add|mul`).
+As implemented in `alphaZero_bellman.py`. Selected with `--abs_signal add|mul`.
 
 Transitions are deterministic. Let
 
