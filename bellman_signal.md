@@ -205,7 +205,13 @@ Where the code differs from the equations above, or resolves something they leav
 - **Dead-end children are skipped.** If $Z(s',\cdot)$ has no applicable actions, no $e_a$ is computed and that action takes $x_a = 0$ — never boosted, never penalised.
 - **$K_s$ counts all applicable actions**, including any whose $e_a$ was skipped. So skipped actions lower $g_s$.
 - **A node with fewer than two residuals is left untouched.**
-- **Costs one IQN forward for the parent plus one per child.** At $K_s = 19$ (logistics) that is ~20 forwards per expanded node.
+- **Successor curves are batched and cached.** One forward for the parent, then a single
+  batched forward for the successors not already in the cache. Only the rows tied for the
+  highest mean are kept (~400 bytes per state instead of ~116 KB), which is all
+  $w_1.\min()$ needs. Dead ends are cached as such. The cache is safe because $Z$ depends
+  only on $(s, g)$ and the model is frozen for the run. Measured on `sext_abs_t1b1k1`:
+  124,326 evaluations for 78,709 unique states, i.e. 1.58x rather than the 2x you get
+  without it (each state is otherwise evaluated once as a successor and once as a parent).
 
 ## Controls
 
