@@ -20,7 +20,15 @@ is the explanation. If it does not, something else is driving the sweep.
 Only grid and rovers have .plan files on BOTH sides; the other four domains cannot be
 measured this way.
 
-Usage: venv/bin/python heuristic_calibration.py NAME:DATASET_DIR:MODEL [...] [--n 40]
+TWO MODEL KINDS. The DQN is what qstar.py actually searches with: readout('q') over
+(state, actions, goal), so h = -max_a Q(s,a). The supervised model is a DIRECT
+distance-to-goal regressor: readout('value') over (state, goal), trained with L1 loss
+against the true goal distance, so h = value with no sign flip and no max. Its training
+distances are bounded by max_steps_to_goal() of the ENUMERATED training state spaces.
+
+Usage:
+  venv/bin/python heuristic_calibration.py NAME:DIR:MODEL[:READOUT] [...] [--n 40]
+  READOUT is q (default) or value.
 """
 import sys, glob, os, statistics as st, torch, pymimir as mm, pymimir_rgnn as rgnn
 from pathlib import Path
@@ -34,20 +42,27 @@ dev = create_device(False)
 canon = lambda x: str(x).lower().replace(" ", "")
 
 for spec in SETS:
-    name, ddir, mpath = spec.split(":")
+    parts = spec.split(":")
+    name, ddir, mpath = parts[0], parts[1], parts[2]
+    readout = parts[3] if len(parts) > 3 else "q"
     dom = mm.Domain(ddir + "/domain.pddl")
     model, _ = rgnn.RelationalGraphNeuralNetwork.load(dom, Path(mpath), dev)
     model.eval()
 
     @torch.no_grad()
-    def h_of(state, goal):
+    def h_of(state, goal, _r=None):
+        r = _r or readout
+        if r == "value":                # supervised: predicts the distance directly
+            v = model.forward([(state, goal)]).readout("value")
+            return float(v.reshape(-1)[0].item())
         acts = state.generate_applicable_actions()
         if len(acts) == 0:
             return None
         q = model.forward([(state, list(acts), goal)]).readout("q")[0]
         return -q.max().item()          # best action's estimate of cost-to-go
 
-    print(f"\n{'='*78}\n{name.upper()}   model={os.path.basename(mpath)}\n{'='*78}")
+    print(f"\n{'='*78}\n{name.upper()}   model={os.path.basename(mpath)}   "
+          f"readout={readout}\n{'='*78}")
     per_split = {}
     for split in ("train", "test"):
         pts = []
