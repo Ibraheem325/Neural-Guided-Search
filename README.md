@@ -1,148 +1,168 @@
-# Relational Neural Network for Classical Planning
+# Beyond Greedy Execution: Neural-Guided Search in Classical Planning
 
-This repository is related to the relational neural network architecture presented in *Ståhlberg, Bonet, Geffner, ICAPS 2022* (https://ojs.aaai.org/index.php/ICAPS/article/view/19851/19610).
-The relationship is not strictly faithful to the original and includes a few optimizations to reduce training time, such as residual connections.
-The actual implementation of the architecture is provided by the Python package `pymimir-rgnn` (https://github.com/simon-stahlberg/mimir-rgnn).
+Code, trained models and datasets for my Bachelor's thesis at the
+Chair of Machine Learning and Reasoning, RWTH Aachen University
+(supervised by Dr. Simon Ståhlberg, examined by Prof. Hector Geffner and Prof. Christopher Morris).
 
-The purpose of this repository is to serve as a starting point for developing new approaches and is thus very barebones.
-It contains a very simple training loop without any optimizations like learning rate schedulers, curriculum learning, gradient clipping, and so on.
-The testing code is also very simple, greedily following the successor state with the lowest predicted value.
-Cycle detection is commonly used, but it is not implemented here to keep the code simple.
+📄 **Thesis:** [`thesis.pdf`](thesis.pdf)
 
-## Dependencies
+---
 
-The three main dependencies are `torch`, `pymimir` and `pymimir-rgnn`, all of which are available via pip.
-Please see https://pytorch.org/ for instructions on how to install `torch`.
-The packages, `pymimir` and `pymimir-rgnn`, can be installed by running `pip install pymimir pymimir-rgnn`.
+## In short
 
-## Example
+Learned value functions and policies (here: relational graph neural networks) can solve
+classical-planning problems by **greedily** following their predictions. But they are imperfect,
+especially on instances larger than the ones they were trained on. A greedy executor cannot tell
+when its guidance has gone wrong, and it has no way to recover.
 
-A pre-trained model for Blocks is included in the repository to demonstrate the architecture's capabilities.
-This model can be found in `example/blocks-supervised.pth`.
-This file contains the hyperparameters to initialize the model, the model weights, and the state of the optimizer.
-The last part is useful for pausing and resuming training.
-Training and testing files for Blocks are located in `example/blocks` and `example/blocks/test`, respectively.
+This thesis asks two questions:
 
-### Training
+1. **Which search algorithm best compensates for imperfect learned guidance?** I benchmark A\*,
+   Weighted A\*, GBFS, Beam Search, Q\*, Weighted Q\* and AlphaZero-style MCTS on six domains
+   (Barman, Grid, Logistics, Rovers, Satellite, Goldminer). Each algorithm is compared with greedy
+   execution of the model that guides it.
+2. **Can the strongest search, AlphaZero-style MCTS, be improved?** First by flattening its policy
+   prior, and then by redistributing the prior towards actions where a distributional (QR-DQN)
+   model is **least self-consistent**, as measured by its one-step Bellman residual.
 
-You can call `train_supervised.py` with `--help` to see the possible arguments for the training procedure.
-The only required input is a path to either a single PDDL problem file or a directory containing them.
+### Key findings
 
-```
-$ python3 train_supervised.py --help
-usage: train_supervised.py [-h] --input INPUT [--model MODEL] [--embedding_size EMBEDDING_SIZE] [--layers LAYERS] [--batch_size BATCH_SIZE] [--learning_rate LEARNING_RATE] [--num_epochs NUM_EPOCHS]
+- **Robustness to value scale decides the benchmark.** A\* and Q\* often solve *fewer* instances than
+  greedy execution of the same model. Learned estimates are compressed relative to the path cost
+  `g(s)`, so many states receive near-identical `f`-values. Beam Search and AlphaZero only use the
+  *ordering* of estimates (min-max normalised in MCTS), and they give the strongest results.
+- **AlphaZero-style MCTS is the only method that improves on its greedy baseline in both coverage
+  and plan length.** For example, Satellite coverage rises from 45.8% to 74.2% and plan length drops
+  from 63.4 to 23.7 on matched instances.
+- **Prior flattening is strongly domain-dependent.** It lifts Goldminer from 74.6% to 100% coverage,
+  but it only hurts Satellite, where the learned prior is already reliable.
+- **The Bellman-residual signal carries real information in 3 of 5 domains.** The action with the
+  largest residual lies on the plan 4.4× (Satellite), 2.9× (Rovers) and 2.5× (Logistics) more often
+  than chance, but only 1.0× in Grid and Goldminer. Where it is informative, it beats matched
+  *shuffled* and *random* controls. Satellite needs 34% of the baseline's expansions (controls: about
+  63%), and Rovers needs 34% with higher coverage.
+- **Its cost is the limit.** The signal needs two network calls per expansion, so it only pays off
+  on searches that need few expansions. It keeps 100% coverage on unbounded Satellite, but it times
+  out on long Rovers searches.
 
-Settings for training
+<details>
+<summary>Coverage on the out-of-distribution test set (Table 5.5)</summary>
 
-options:
-  -h, --help            show this help message and exit
-  --input INPUT         Path to the training dataset
-  --model MODEL         Path to a pre-trained model to continue training from
-  --embedding_size EMBEDDING_SIZE
-                        Dimension of the embedding vector for each object
-  --layers LAYERS       Number of layers in the model
-  --batch_size BATCH_SIZE
-                        Number of samples per batch
-  --learning_rate LEARNING_RATE
-                        Learning rate for the training process
-  --num_epochs NUM_EPOCHS
-                        Number of epochs for the training process
-```
+| Algorithm      | Satellite | Rovers | Logistics | Grid  | Barman | Goldminer |
+|----------------|----------:|-------:|----------:|------:|-------:|----------:|
+| GBFS           | 24.2%     | 14.2%  | 90.0%     | 39.8% | 10.1%  | 0.8%      |
+| Beam Search    | 45.0%     | 45.8%  | 88.3%     | 64.6% | 45.9%  | **94.2%** |
+| Weighted Q\*   | 38.3%     | 25.8%  | 83.3%     | **90.3%** | **50.5%** | 0.8% |
+| Greedy-SAC     | 45.8%     | 42.5%  | 90.0%     | 82.3% | 0.0%   | 70.0%     |
+| AlphaZero MCTS | **74.2%** | **54.2%** | **92.5%** | 89.4% | —   | 93.3%     |
 
-The following command was used to train the model for Blocks.
+With prior flattening, AlphaZero reaches 100% on Satellite, 84.2% on Rovers and 95.0% on
+Logistics (Table 7.4).
+</details>
 
-```
-$ python3 train_supervised.py --input example/blocks
-Torch: 2.3.0+cu121
-GPU is available. Using GPU: NVIDIA GeForce RTX 3090
-Parsing files...
-Generating state spaces...
-> Expanding: example/blocks/probBLOCKS-4-0.pddl
-- # States: 125
-> Expanding: example/blocks/probBLOCKS-4-1.pddl
-- # States: 125
-...
-> Expanding: example/blocks/probBLOCKS-8-2.pddl
-- # States: 695417
-> Expanding: example/blocks/probBLOCKS-9-0.pddl
-- Skipped
-> Expanding: example/blocks/probBLOCKS-9-1.pddl
-- Skipped
-> Expanding: example/blocks/probBLOCKS-9-2.pddl
-- Skipped
-Creating state samplers...
-Creating a new model and optimizer...
-Creating datasets...
-Training model...
-[1/1000; 100/10000] Loss: 2.1691
-[1/1000; 200/10000] Loss: 1.7916
-[1/1000; 300/10000] Loss: 1.2292
-...
-```
+---
 
-During the training process, the network is evaluated against the validation set after each epoch.
-Two models are saved: `latest.pth` and `best.pth`.
-The first model, `latest.pth`, is saved after every epoch.
-The second model, `best.pth`, is the one with the lowest error on the validation set.
-
-### Testing
-
-Supervised value models can be run greedily on an instance, even if it is not part of the training set, using the following command:
+## Repository layout
 
 ```
-$ python3 greedy_value_plan.py --model example/blocks-supervised.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
-Torch: 2.3.0+cu121
-GPU is available. Using GPU: NVIDIA GeForce RTX 3090
-Creating parser...
-Loading model... (example/blocks-supervised.pth)
-49.440: (unstack l f)
-48.403: (put-down l)
-47.138: (unstack g d)
-...
-1.635: (stack n l)
-0.929: (pick-up q)
--0.018: (stack q n)
-Found a solution of length 46!
-1: (unstack l f)
-2: (put-down l)
-3: (unstack g d)
-...
-44: (stack n l)
-45: (pick-up q)
-46: (stack q n)
+alphaZero_bellman.py   AlphaZero-style MCTS with prior flattening + the Bellman-inconsistency signal
+                       (additive / multiplicative injection, shuffle and random controls)
+utils.py               shared helpers (device, state keys, ...)
+rgnn_readout_fix.py    patch for a multi-output readout bug in pymimir-rgnn (required)
+
+benchmark/             the Chapter 5 algorithms
+  search.py              A*                     wastar.py         Weighted A*
+  gbfs.py                Greedy Best-First      beam.py           Beam Search (also Greedy-V at k=1)
+  qstar.py               Q* / Weighted Q*       alphaZero.py      plain AlphaZero-style MCTS
+  greedy_value_plan.py   greedy execution of V(s)
+  greedy_q_plan.py       greedy execution of Q(s,a)
+  greedy_sac_plan.py     greedy execution of the SAC policy
+
+training/              model training (all R-GNN based)
+  train_supervised.py    V(s) from optimal distances (Fast Downward labels)
+  train_dqn.py           Q(s,a) via DQN
+  train_sac.py           discrete Soft Actor-Critic policy + two critics
+  train_iqn.py           distributional Z(s,a), trained as QR-DQN (file name is historical)
+
+data_generation/       instance generation, Fast Downward solving/verification,
+                       and the bounded-distance probe sets (Section 4.3)
+analysis/              aggregation scripts that produce the thesis tables, plus model diagnostics
+slurm/                 the SLURM launchers and per-domain sweeps that were run on the cluster
+
+datasets/              PDDL datasets (train/val/test) and bounded-distance probe sets
+models/                trained checkpoints (.pth)
+thesis.pdf             the thesis
 ```
 
-In the output, the selected action is printed along with the predicted value of the resulting successor state.
-Here, the network predicted the final solution would require at least 49 steps, but it ended up taking 46 steps.
-If a plan is found, it is also printed at the end.
-By default, the greedy planners maintain a closed set and avoid revisiting previously seen states when an unvisited successor is available. This can be disabled with `--disable_closed_set`.
+## Setup
 
-Models trained with DQN expose Q-values instead of state values, and should therefore be evaluated with `greedy_q_plan.py` rather than `greedy_value_plan.py`.
-
-Models trained with IQN expose a return distribution for each applicable action. They can be evaluated with `greedy_iqn_plan.py`, which prints the selected action together with its predicted quantile distribution and supports a `--risk_averseness` override to bias planning toward the lower tail of the return distribution and `--num_quantiles` to control the planning/printing resolution.
-
-```
-$ python3 greedy_iqn_plan.py --model best.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl --risk_averseness 0.25 --num_quantiles 64
+```bash
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt      # torch, pymimir, pymimir-rgnn, pymimir-rl
 ```
 
-It is also possible to use a value model as a heuristic function for A*:
+Fast Downward is only needed to regenerate optimal plans (`data_generation/solve_dataset.py`,
+`slurm/run_fd_*.sh`).
 
-```
-$ python3 search.py --model example/blocks-supervised.pth --domain example/blocks/test/domain.pddl --problem example/blocks/test/probBLOCKS-17-0.pddl
-Torch: 2.3.0+cu121
-GPU is available. Using GPU: NVIDIA GeForce RTX 3090
-Creating parser...
-Loading model... (example/blocks-supervised.pth)
-[f = 50.755] Expanded: 0; Generated: 0
-[Final] Expanded: 50; Generated: 338
-Solved using 46 actions
-1: (unstack l f)
-2: (put-down l)
-3: (unstack g d)
-...
-44: (stack n l)
-45: (pick-up q)
-46: (stack q n)
+## Quick start
+
+Run everything **from the repository root**.
+
+```bash
+D=datasets/probeGold_near_goal_d5-20
+P=$D/000_d05_003_p-6x8-5.pddl
+
+# Beam Search guided by the supervised value function
+python benchmark/beam.py --domain $D/domain.pddl --problem $P \
+    --model models/goldminer_supervised.pth --beam 20
+
+# AlphaZero-style MCTS with the additive Bellman signal (QR-DQN supplies leaf values)
+python alphaZero_bellman.py --domain $D/domain.pddl --problem $P \
+    --policy_model models/goldminer_sac_policy.pth \
+    --q1_model models/goldminer_sac_q1.pth --q2_model models/goldminer_sac_q2.pth \
+    --iqn_model models/goldminer_iqn.pth --qrdqn_value \
+    --abs_signal add --abs_beta 1 --abs_kappa 1 --eps_p 0.9 --max_time 1800
 ```
 
-However, there is no way to batch, so the GPU may be underutilized.
+Variants of `alphaZero_bellman.py` used in Chapter 7:
+
+| Configuration                  | Flags                                                        |
+|--------------------------------|--------------------------------------------------------------|
+| Baseline (learned prior)       | `--abs_signal off`                                           |
+| Prior flattening with weight w | `--signal constant --const_w w`                              |
+| Additive / multiplicative      | `--abs_signal add` / `--abs_signal mul`, with `--abs_beta`, `--abs_kappa`, `--eps_p` |
+| Shuffle control                | add `--sib_shuffle`                                          |
+| Random control                 | add `--sib_random lognormal:SIGMA:MU` (fitted by `analysis/fit_random_control.py`) |
+
+Training example:
+
+```bash
+python training/train_supervised.py --help
+python training/train_sac.py --help
+```
+
+## Models
+
+| Domain    | V(s) / Q(s,a) (Ch. 5)              | SAC policy + critics                                   | QR-DQN Z(s,a) (Ch. 7)           |
+|-----------|------------------------------------|--------------------------------------------------------|---------------------------------|
+| Barman    | `barman_v2_{supervised,dqn}.pth`   | did not converge (see §4.1)                            | –                               |
+| Goldminer | `goldminer_{supervised,dqn}.pth`   | `goldminer_sac_*.pth`                                  | `goldminer_iqn.pth`             |
+| Grid      | `grid_{supervised,dqn}.pth`        | `grid_sac_*.pth`                                       | `grid_iqn_qrdqn_best.pth`       |
+| Logistics | `logistics_{supervised,dqn}.pth`   | `logistics_sac_*.pth` (Ch. 5), `logistics_topo_sac_*_best.pth` (Ch. 7) | `logistics_topo_frozen.pth` |
+| Rovers    | `rovers_{supervised,dqn}.pth`      | `rovers_sac_*.pth` (Ch. 5)                             | –                               |
+| Satellite | `satellite_{supervised,dqn}.pth`   | `satellite_sac_*.pth` (Ch. 5)                          | `satellite_s18_qrdqn_best.pth`  |
+
+The Chapter 7 Rovers models and Satellite SAC models were trained on the cluster and are not included here.
+
+## Notes
+
+- The `slurm/` scripts were written for the RWTH HPC cluster. Partition names are cluster-specific,
+  and absolute paths are replaced with `/path/to/...` placeholders.
+- Built on [`relational-neural-network-python`](https://github.com/simon-stahlberg/relational-neural-network-python)
+  by Simon Ståhlberg, using [`pymimir`](https://github.com/simon-stahlberg/mimir) and
+  [`pymimir-rgnn`](https://github.com/simon-stahlberg/mimir-rgnn).
+  Instances come from the [AI-Planning PDDL generators](https://github.com/AI-Planning/pddl-generators).
+
+## License
+
+See [LICENSE](LICENSE).
