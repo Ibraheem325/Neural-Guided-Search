@@ -10,7 +10,7 @@ Chair of Machine Learning and Reasoning, RWTH Aachen University
 
 ## In short
 
-Learned value functions and policies (here: relational graph neural networks) can solve
+Learned value functions and policies can solve
 classical-planning problems by **greedily** following their predictions. But they are imperfect,
 especially on instances larger than the ones they were trained on. A greedy executor cannot tell
 when its guidance has gone wrong, and it has no way to recover.
